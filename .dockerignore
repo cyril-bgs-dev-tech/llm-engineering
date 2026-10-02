@@ -1,0 +1,7 @@
+.venv/
+data/
+models/
+artifacts/
+.git/
+knowledge/
+__pycache__/

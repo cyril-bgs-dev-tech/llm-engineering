@@ -1,0 +1,63 @@
+[project]
+name = "llm-finetuning"
+version = "0.0.0"
+description = "Affiner et distiller des LLM sur des textes cliniques français, sur RTX 5090"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "torch",
+  "transformers",
+  "peft",
+  "trl",
+  "accelerate",
+  "bitsandbytes",
+  "datasets",
+  "huggingface_hub",
+  "numpy",
+  "pandas",
+  "pyarrow",
+  "scikit-learn",
+  "scipy",
+  "statsmodels",
+  "pydantic",
+  "pyyaml",
+]
+
+[dependency-groups]
+dev = ["pytest", "pytest-cov", "ruff", "mypy", "types-pyyaml", "pip-audit"]
+
+# Les versions exactes sont figées dans uv.lock : `uv sync --frozen` les reproduit.
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+markers = ["gpu: nécessite la RTX 5090 et le cache de tokenizer (make test-gpu)"]
+
+[tool.ruff]
+line-length = 110
+src = ["src", "tests", "scripts"]
+# Skills et wiki tiers : jamais réécrits par un outil automatique
+extend-exclude = [".claude", ".agents", ".codex", "knowledge", "data/raw", "artifacts"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+
+# Bibliothèques scientifiques sans stubs complets : le typage strict porte sur notre code
+[[tool.mypy.overrides]]
+module = ["pandas.*", "sklearn.*", "scipy.*", "statsmodels.*", "transformers.*", "peft.*", "trl.*", "datasets.*"]
+ignore_missing_imports = true
+follow_untyped_imports = true
+disallow_untyped_calls = false
+
+[[tool.mypy.overrides]]
+module = ["llmft.splits", "llmft.leakage", "llmft.models"]
+disallow_untyped_calls = false
+warn_return_any = false

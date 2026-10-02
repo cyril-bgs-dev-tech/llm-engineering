@@ -1,0 +1,7 @@
+# Règles par défaut de gitleaks, plus l'exclusion des dossiers de données et d'environnement (jamais versionnés).
+[extend]
+useDefault = true
+
+[allowlist]
+description = "dossiers non versionnés ou de données publiques binaires"
+paths = ['''(^|/)\.venv/''', '''(^|/)data/raw/''', '''(^|/)artifacts/''', '''(^|/)\.git/''']

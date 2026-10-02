@@ -1,0 +1,29 @@
+# Données sous conditions d'usage : jamais versionnées. Seuls les fiches, scripts et manifestes d'empreintes le sont.
+data/*
+!data/cards/
+!data/scripts/
+!data/manifests/
+!data/splits/
+models/
+artifacts/
+# Environnements et caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+# Sorties de runs lourdes (les fiches JSON de results/ restent versionnées)
+results/preds/
+logs/
+# Secrets et jetons
+.env
+.env.*
+*.pem
+*.key
+hf_token*
+# Réglages locaux d'outils
+.claude/settings.local.json
+.coverage
+coverage.json

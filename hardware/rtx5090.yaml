@@ -1,0 +1,7 @@
+# Profil de la carte cible des tests et de la démo. Mesures : page wiki env-blackwell (01/10/2026).
+name: rtx5090
+compute_capability: sm_120
+vram_gib: 31.8          # 31,84 Gio vus par torch
+vram_budget_gib: 28.0   # marge pour l'affichage Windows et les processus tiers (3,1 Gio déjà occupés au repos)
+precision_default: bf16
+notes: "Weights de 20 Gio et plus lus depuis /mnt/d (environ 270 Mo/s) ; élèves et points de sauvegarde sur ext4."
