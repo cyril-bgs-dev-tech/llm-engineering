@@ -1,0 +1,70 @@
+{
+  "created_at": "2026-10-02T22:34:18Z",
+  "kind": "measure",
+  "metrics": {
+    "lines_hours_low_high": {
+      "confirmatoire_4_recettes_5_graines (P3-07)": [
+        17.5,
+        31.51
+      ],
+      "criblage_3_eleves_2_taux (P1-11)": [
+        5.76,
+        5.76
+      ],
+      "professeur_5_plis (P2-02), optimiste": [
+        15.8,
+        17.8
+      ],
+      "reglage_3_variantes_4_taux_1_graine": [
+        8.4,
+        15.12
+      ],
+      "reglage_reference_4_taux_1_graine (P1-13)": [
+        2.8,
+        5.04
+      ],
+      "reglage_taux_professeur_1_taux_1_pli (P2-01)": [
+        3.16,
+        3.56
+      ],
+      "rejeu_reference (P1-26)": [
+        0.7,
+        1.26
+      ],
+      "variance_5_graines_reference (P1-19)": [
+        3.5,
+        6.3
+      ]
+    },
+    "not_counted": [
+      "pre-entrainement tache voisine (P2-07)",
+      "spike de distillation (RM-19)",
+      "encodeur 4 taux (P1-07)",
+      "relances apres panne",
+      "inference hors pli",
+      "calibration et conforme",
+      "chargements",
+      "vagues V2 a V5"
+    ],
+    "total_hours_optimistic_low_high": [
+      57.6,
+      86.3
+    ],
+    "total_hours_pessimistic_teacher_only_low_high": [
+      65.8,
+      97.5
+    ]
+  },
+  "params": {
+    "dev_over_fold_patients": 1.2503,
+    "epochs": 2,
+    "source_run": "20261002-115918-p0-45-budget-hypotheses",
+    "student_high": "Qwen3.5-9B",
+    "student_low": "Gemma-4-E4B"
+  },
+  "run_id": "20261002-223418-budget-v2-premier-cycle",
+  "schema": "mini-1",
+  "slug": "budget-v2-premier-cycle",
+  "status": "ok",
+  "summary": "Budget du premier cycle apres relecture du 03/10/2026 : reglage sur une graine pour toutes les familles, avec P2-01 et P1-26 ajoutes ; hypotheses, pas des durees ; postes non comptes listes"
+}
