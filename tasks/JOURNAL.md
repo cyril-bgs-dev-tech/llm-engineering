@@ -180,3 +180,17 @@ Relecteur : second sous-agent `code-reviewer`, contexte neuf, lecture seule, **s
 
 **Écart de méthode à dire** : `src/llmft/frozen.py` et son test ont été écrits dans le même geste, pas test d'abord en rouge. Les 4 tests passent ; ils couvrent les quatre cas.
 **Gel** : non fait. Il manque C6, C7, C8 de Cyril, puis une dernière passe limitée aux lignes modifiées depuis la seconde relecture (6.9), puis les empreintes. Non commité depuis `4dbf597`.
+
+## 03/10/2026 : troisième relecture traitée, PROTOCOLE.md GELÉ (P0-46 coché)
+- Relecteur 3 : 20 constats (2 bloquants). **Traités** : sortie anticipée de la règle de puissance supprimée (contradiction avec la moyenne) ; 6.4 et 6.8 alignés par comparaison (une graine divergente ne perd que sa comparaison) ; règle de puissance entièrement spécifiée (R = 10 000, PCG64, graine 20261002, paires, seuil strict, cas à moins de 5 graines) ; temps A et B de l'ouverture du test précisés (deux fonctions dans `sealed.py`, marqueur à chemin fixe, répétition générale) ; couverture conforme abandonnée si P4-04 et P4-05 ne sont pas prêts ; dépendances P3-07 et RM-20 sans boucle ; ADR-007 et ADR-010 alignées (6.3 prévaut) ; budget v3 corrigé (P2-01 au débit pessimiste ; run `20261002-230546-budget-v3-premier-cycle` : 57,6 à 99,8 h selon élève et professeur) ; périmètre du gel élargi à 9 fichiers, errata bornés, `check_frozen` durci (tests d'abord, 7 verts) ; règle 5 étendue ; repli (3) déclaré ouvert.
+- **Non traité par du code** : classement des échecs par le registre, `sealed.py` à deux temps, répétition générale du temps B : portés par P1-19 et RM-20 (cellules du backlog mises à jour).
+- **Limite dite** : ces corrections n'ont été relues que par moi.
+- **Gel** : instantanés dans `experiments/frozen/`, neuf empreintes dans `experiments/INDEX.md` et la page wiki `protocole-gele-2026-10-03` ; PROTOCOLE.md SHA-256 `aba89842a1c7da2c…` (instantané `PROTOCOLE-2026-10-03.md`). Mentions d'ouverture restantes jugées admises : « hypothèse » (budget par nature), « défaut » (expression « pas un défaut à cacher »), définition de « local » d'ADR-004 (ne touche aucune règle), motif de recherche de la règle de gel.
+- **Écart de méthode** : mon cahier pour GLM avait des défauts de conception (renvois à des fichiers que GLM ne lit pas, format de réponse ajouté après coup, missions sans étapes ni gabarit) : refait en version autonome.
+- Non commité depuis `0996e55`.
+
+## 03/10/2026 : contrat de nuit écrit (`tasks/CONTRAT_NUIT.md`)
+- Sources lues, sur le chemin donné par Cyril (`/mnt/d/POJECT_Tune_The_Swarm_v1`, WSL) : `AGENTS.md` (R1 à R33), `docs/JOURNAL_NUIT_2026-09-30.md` et `2026-10-01.md` (contrats, délégations, file ordonnée, prolongations, conditions d'arrêt), `docs/RESUME_NUIT_2026-09-30.md`. Rien d'autre n'a été lu ; aucun identifiant ouvert.
+- Transposition : 20 règles N1 à N20, interdits propres à ce dépôt (test scellé, protocole gelé, push, envoi hors machine, GPU, `~`), file par défaut dans l'état actuel, réserve perpétuelle, gabarit de journal, table des skills à charger. Le défaut constaté dans l'autre projet (contrats trop maigres, arrêt avant le réveil) est traité par la prolongation obligatoire de la file.
+- Écart assumé avec l'autre projet : là-bas l'assistant commite pendant la nuit ; ici `CLAUDE.md` exige une demande explicite : commits locaux seulement si Cyril les délègue à la question de départ.
+- Non commité. `CLAUDE.md` n'est pas modifié (fichier de Cyril) : à lui d'ajouter une ligne « mode nuit » s'il le veut.

@@ -105,3 +105,7 @@ Cocher ou répondre « validé » ; chaque ligne est indépendante.
 - [ ] Sous réserve de validation : les portes qui disent « continuer » avec preuves nettes se franchissent à titre provisoire (§ 4).
 
 Date de validation : ____ ; remarques : ____
+
+---
+
+**Mode nuit** : quand Cyril dit « je vais me coucher » (ou « mode nuit »), c'est `tasks/CONTRAT_NUIT.md` qui s'applique (règles reprises de `POJECT_Tune_The_Swarm_v1`, adaptées à ce dépôt) ; le présent contrat reste la base de la journée.
