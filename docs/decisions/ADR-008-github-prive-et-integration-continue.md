@@ -14,7 +14,7 @@ Le plan et l'offre du CHU citent GitLab, et la feuille de route réservait la CI
 | Sujet | Décision |
 |---|---|
 | Dépôt de code | `cyril-bgs-dev-tech/llm-finetuning-code`, **privé** (nom par convention du compte, modifiable en une commande) |
-| Vitrine publique | **Non créée par cette ADR.** Elle exige un texte passé par `claim-gate` et ne contient aucune donnée ni source brute ; question Q9 de `tasks/QUESTIONS_POUR_CYRIL.md` |
+| Vitrine publique | **Non créée.** Cyril a répondu le 02/10/2026 d'attendre un premier résultat de fine-tuning (jalon A). Elle exigera un texte passé par `claim-gate` et ne contiendra aucune donnée ni source brute |
 | CI | GitHub Actions, mêmes commandes qu'en local (`make check`, `make smoke`, `pip-audit`), actions **épinglées par SHA** |
 | Ce que la CI ne couvre pas | Les tests marqués `gpu` (`make test-gpu`) et ceux qui lisent les données PARHAF, absentes du dépôt : ils restent **locaux** et la CI le dit au lieu de les compter comme verts |
 | Déploiement | Aucun service n'existe avant R15 : le « CD » se limite à une release GitHub sur tag `vX.Y.Z`, après rejeu des contrôles. Rien d'autre n'est déployé |
