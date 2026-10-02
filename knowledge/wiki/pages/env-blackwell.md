@@ -5,7 +5,7 @@ summary: Ce qui fonctionne sur la RTX 5090 le 01/10/2026 (PyTorch cu128, bf16, a
 tags: [environnement, blackwell, sm120, spike]
 sources: [spike-p0-04-torch-blackwell, spike-p0-05-lora-nf4, rm06-machine-wsl]
 created: 2026-10-01
-updated: 2026-10-01
+updated: 2026-10-02
 ---
 
 # Environnement Blackwell (RTX 5090, sm_120)
@@ -44,7 +44,7 @@ Conséquences : les poids de modèle de 20 Gio et plus (professeurs de 27 à 31 
 
 ## Limites
 
-- Aucune mesure sur un modèle de 7 à 31 milliards de paramètres : le dimensionnement de mémoire reste à faire (`vram-preflight`, P0-45).
+- Le dimensionnement de mémoire des modèles de 4 à 31 milliards de paramètres est mesuré le 02/10/2026 dans [[compatibilite-modeles-p0-06](pages/compatibilite-modeles-p0-06.md)] ; le budget de calcul par vague reste à écrire (P0-45).
 - 3,1 Gio de mémoire GPU étaient déjà occupés avant les spikes par un processus que je n'ai pas lancé : non touché, à signaler à Cyril.
 - FlashAttention, vLLM, FP8 et NVFP4 ne sont pas testés ici.
 

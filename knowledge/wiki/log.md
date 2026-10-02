@@ -27,3 +27,7 @@ Pages créées : parhaf-corpus-paper, learning-rate-matters, causal-llm-classifi
 ## [2026-10-02] update | overview
 Reason: les trois papiers du Lot A (A4, A5, A6) sont ingérés ; la vue d'ensemble ne dit plus « aucune source ingérée » et les relie.
 Source: wiki/pages/parhaf-corpus-paper.md, wiki/pages/learning-rate-matters.md, wiki/pages/causal-llm-classification-heads.md
+
+## [2026-10-02] create | compatibilite-modeles-p0-06
+Reason: tableau de compatibilité de classification des cinq modèles testés (P0-06) et banc du plus gros professeur en QLoRA 4 bits (P0-08) ; limites dites (padding non exercé, qualité non mesurée, MedGemma exclu).
+Source: raw/spike-p0-06-qwen3-5-4b.json, raw/spike-p0-06-qwen3-5-9b.json, raw/spike-p0-06-gemma-4-e4b.json, raw/spike-p0-06-qwen3-8-27b.json, raw/spike-p0-06-gemma-4-31b.json
