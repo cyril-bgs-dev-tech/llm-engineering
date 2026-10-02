@@ -1,0 +1,3 @@
+agent-skills: github.com/addyosmani/agent-skills @ 2686b620 (MIT), copié le 2026-10-01, sans hooks ni commandes
+wiki-skills: github.com/kfchou/wiki-skills @ d9267ec9 (MIT), copié le 2026-10-01
+Relus avant installation. Exclus: frontend-ui-engineering, browser-testing-with-devtools, deprecation-and-migration, idea-refine, hooks/.
