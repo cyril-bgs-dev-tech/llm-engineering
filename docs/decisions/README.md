@@ -12,4 +12,4 @@ Une décision structurante, un fichier `ADR-NNN-titre.md`, jamais supprimé : un
 | ADR-004 | Cap du premier cycle : objectif neutre, métrique primaire, « local », B, N, seuil utile | RM-02 | Proposée, valeurs chiffrées non fixées |
 | ADR-007 | Estimand, rééchantillonnage hiérarchique, règle de décision à trois verdicts, seuil utile | RM-11 | Proposée, δ, K et B à fixer par Cyril |
 | ADR-008 | Dépôt GitHub privé, intégration continue, vitrine à décider ; remplace la plateforme d'ADR-002 | P5-06 (avancée) | Acceptée sur demande de Cyril |
-| ADR-élève | Présélection de l'élève du premier cycle | RM-13 | À écrire en R4 |
+| ADR-009 | Présélection de l'élève du premier cycle : trois candidats, deux taux chacun, règle de choix écrite avant les résultats | RM-13 | Acceptée provisoirement, à ratifier |
