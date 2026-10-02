@@ -21,6 +21,7 @@ La sortie des scripts est forcée en UTF-8 : sous Windows, définir `PYTHONUTF8=
 | Contrôle rapide à chaque édition (types, lint, plancher, secrets) | `make check-fast` | existe (CONSTRAINTS.md) |
 | Contrôle de fin de tâche (plus tests, couverture des lignes modifiées, backlog, feuille de route, wiki) | `make check` | existe |
 | Contrôle avant partage (plus audit des dépendances) | `make check-full` | existe |
+| Intégration continue (GitHub Actions) : `make check`, `make smoke`, `pip-audit` sur chaque push et pull request ; release sur tag `vX.Y.Z` | `.github/workflows/` | existe (ADR-008) ; ne couvre ni le GPU ni les tests qui lisent les données |
 | Reproduction à froid | `make reproduce-small` | cible (P5-09) |
 
 Les noms exacts des sous-commandes `llmft` sont à approuver à l'écriture de l'interface (P0-35).

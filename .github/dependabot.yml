@@ -1,0 +1,9 @@
+# Seules les actions GitHub sont suivies. Les dépendances Python restent figées par uv.lock : la pile PyTorch
+# (torch 2.11.0+cu128) est validée par les spikes P0-04, P0-05 et P0-13, et une mise à jour automatique l'invaliderait.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3

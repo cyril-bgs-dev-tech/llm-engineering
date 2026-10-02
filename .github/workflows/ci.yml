@@ -1,0 +1,74 @@
+# Intégration continue : mêmes commandes qu'en local (Makefile). Le GPU n'est pas disponible ici :
+# les tests marqués `gpu` (make test-gpu) et les tests qui lisent les données PARHAF (absentes du dépôt) restent locaux.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Qualité (make check) et fil synthétique
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # le diff de couverture des lignes modifiées a besoin de l'historique
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+
+      - name: Environnement figé (uv.lock)
+        run: uv sync --frozen
+
+      - name: Base du diff pour la couverture des lignes modifiées
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          empty_tree=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+          if [ "$EVENT" = "pull_request" ]; then base="origin/$BASE_REF"
+          elif [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then base="$BEFORE"
+          else base="$empty_tree"; fi
+          echo "CHANGED_COVERAGE_BASE=$base" >> "$GITHUB_ENV"
+
+      - name: make check (types, lint, plancher, secrets, tests, couverture, backlog, feuille de route, wiki, scorecards)
+        run: make check
+
+      - name: make smoke (fil synthétique de bout en bout)
+        run: make smoke
+
+      - name: Rapport du fil synthétique
+        if: always()
+        run: cat results/smoke_report.md || true
+
+  audit:
+    name: Audit des dépendances
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+
+      - run: uv sync --frozen
+
+      # Exception W1 de CONSTRAINTS.md (échéance 2026-12-31) : même commande que `make check-full`
+      - name: pip-audit
+        run: .venv/bin/python -m pip_audit --progress-spinner off --ignore-vuln PYSEC-2026-3447

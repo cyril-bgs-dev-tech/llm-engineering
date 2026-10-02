@@ -1,0 +1,33 @@
+# Déploiement continu, version honnête : il n'y a aucun service à déployer avant l'étape R15 du plan.
+# Un tag `vX.Y.Z` rejoue les contrôles puis publie une release GitHub reproductible (code, notes, rapport du fil synthétique).
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - run: uv sync --frozen
+      - run: make check
+        env:
+          CHANGED_COVERAGE_BASE: 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+      - run: make smoke
+      - name: Publier la release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: gh release create "$TAG" --title "$TAG" --generate-notes results/smoke_report.md
