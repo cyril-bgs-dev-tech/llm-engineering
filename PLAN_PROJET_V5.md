@@ -1,0 +1,468 @@
+# LLM_finetuning : distiller des LLM sur des comptes rendus médicaux français, sur RTX 5090 (location de GPU en option)
+
+Plan v5, 01/10/2026. Statut : **à valider avant toute ligne de code.**
+V2 : la recette LMSYS devient un point de départ ; ajout d'un état de l'art complet (section 2 bis) et d'un programme en vagues.
+V3 : ajout de la solution 5e de LMSYS (Team Danube) : pré-entraînement sur tâche voisine et criblage des points de départ, en concurrence avec la distillation.
+V4 : stratégie matérielle (section 2 ter) : RTX 5090 pour les tests et la démo, location de GPU prévue dès la conception avec ses déclencheurs.
+V5 : contrat de cible unique (section 1 bis) : même type de cible que LMSYS, catégories fermées et descriptives, format de sortie fixe, code transposable aux données du CHU.
+
+## 0. Pourquoi ce projet
+
+**L'offre visée.** CHU Grenoble Alpes (CHUGA), Cellule d'Ingénierie des Données de Santé (EDS + CIC-IT),
+poste « Ingénieur.e Data Science » pour **fine-tuner et évaluer des LLM sur les comptes rendus hospitaliers**,
+dans le cadre du projet national **PARTAGES** (Plateforme des Données de Santé + AP-HP : corpus médicaux
+français ouverts, modèles génératifs ouverts, « analyse, structuration et génération de comptes rendus »).
+Missions : jeux de données textuels et leur mise en qualité, déploiement et **évaluation** d'algorithmes NLP,
+**protocoles d'évaluation de la performance**, industrialisation, maintenance, documentation, GitLab.
+Stack citée : Python, R, SQL, NoSQL, architectures NLP, ElasticSearch, GitLab, Wiki.
+
+**Le trou à combler, dit honnêtement.** Cyril n'a encore jamais fine-tuné de LLM (vérifié le 01/10 :
+le « fine-tuning » du Master 2 concerne un CNN d'images ; les lignes « CamemBERT, fine-tuning LLMs » de
+`portfolio_master_projects.md` sont un gabarit non rempli). Ce projet existe pour que la réponse à
+« avez-vous déjà fine-tuné un LLM ? » devienne « oui, voici le protocole, les chiffres et le code ».
+**Rien n'en sera affiché sur le CV ou LinkedIn avant d'être réellement mesuré.**
+
+**La méthode de départ (pas la seule).** La solution 1re de la compétition Kaggle *LMSYS Chatbot Arena Human Preference
+Predictions* (sayoulala, août 2024, « Distill is all you need ») :
+
+| # | Stratégie gagnante | Ce qu'elle résout |
+|---|---|---|
+| S1 | LLM décodeur + tête de classification (`AutoModelForSequenceClassification`), LoRA sur toutes les couches linéaires (r=64, α=128), max_len 1024, 2 époques, batch global 64 | Utiliser un LLM comme classifieur, pas comme générateur |
+| S2 | « Post-pretrain » : 1 époque sur des données étiquetées mais bruitées (jeu « ut »), lr 1e-5 | Mettre le modèle dans le bon régime avant la vraie tâche |
+| S3 | Gros professeurs (70B / 72B) en QLoRA, entraînés en 5 plis, qui produisent des probabilités hors pli sur tout le jeu d'entraînement | Fabriquer des étiquettes « souples » de qualité |
+| S4 | Distillation vers un élève 9B : perte classique + KL vers les professeurs (plusieurs pertes), lr 5e-5, cosinus avec 100 pas d'échauffement ; plusieurs professeurs = plus stable | Garder la qualité des gros modèles dans un modèle déployable |
+| S5 | Moyenne directe des poids LoRA des 5 plis, tête de classification comprise | Un seul modèle au lieu d'un ensemble de 5 |
+| S6 | Quantification 8 bits GPTQ | Tenir le budget d'inférence |
+| S7 | Augmentation au test (TTA), préférée à un contexte plus long | Gagner en robustesse à budget constant |
+
+Le parallèle avec le CHU est direct : **les données de santé ne sortent pas de l'hôpital et le GPU sur place
+est limité.** Un gros modèle sert à enseigner, un petit modèle quantifié sert en production. C'est exactement
+la contrainte de la compétition (inférence sur 2 × T4), transposée à un serveur hospitalier.
+
+---
+
+## 1. Les tâches et les données (toutes publiques, aucune donnée patient réelle)
+
+Choix guidé par l'offre : **texte clinique français**, **structuration** et **évaluation**.
+Source principale : **DrBenchmark** (Univ. Avignon, 20 tâches biomédicales françaises, jeux sur Hugging Face).
+Licences à revérifier jeu par jeu en phase 0 (certains jeux DrBenchmark, comme CAS et ESSAI, exigent un accord d'usage).
+
+### Piste A : classification de cas cliniques (reproduction fidèle de la méthode)
+| Jeu | Contenu | Tâche | Licence annoncée |
+|---|---|---|---|
+| **DiaMED** | 739 cas cliniques français | Chapitre CIM-10 du diagnostic principal (multiclasse) | CC BY-SA 4.0 |
+| **MorFITT** | 3 624 résumés PMC, 12 spécialités | Spécialités médicales (multi-label) | CC BY-SA 4.0 |
+| DEFT 2021 (tâche 1), si accessible | Cas cliniques français | Profil clinique (multi-label) | à vérifier |
+
+DiaMED est le plus proche d'un compte rendu et d'un geste de **codage**, mais petit (739 cas) :
+c'est précisément là que la distillation et les données bruitées (S2) doivent prouver leur intérêt.
+Le codage CIM-10 n'est **pas** cité dans l'offre : il est présenté comme un cas de « structuration », pas comme une exigence.
+
+### Piste B : comparaison par paires (le format exact de LMSYS)
+| Jeu | Contenu | Tâche |
+|---|---|---|
+| **CLISTER** | Paires de phrases issues de cas cliniques français | Similarité sémantique (score 0 à 5) |
+
+LMSYS compare deux textes ; CLISTER aussi. C'est la transposition la plus fidèle de l'architecture gagnante
+(deux segments dans une même entrée, tête de sortie unique), et elle sert directement l'**évaluation** de
+textes générés, cœur de PARTAGES.
+
+### Piste C (optionnelle) : structuration générative
+| Jeu | Contenu | Tâche |
+|---|---|---|
+| **QUAERO** (EMEA, MEDLINE) | Textes médicaux français annotés | Extraction d'entités vers JSON (GFDL 1.3) |
+| **E3C** (couche française) | Cas cliniques annotés | Entités cliniques (CC BY-NC, usage non commercial) |
+
+Ici la distillation devient « par séquence » : le professeur génère le JSON, l'élève apprend à le reproduire.
+Piste lancée seulement si A et B sont closes.
+
+### Données « bruitées » pour S2 (l'équivalent du jeu « ut »)
+- étiquettes produites en zéro-shot par le professeur sur des textes médicaux français non annotés (cas cliniques E3C, résumés) ;
+- étiquettes de tâches voisines (MorFITT pour pré-chauffer DiaMED).
+Leur bruit est **mesuré** sur un échantillon relu, pas supposé.
+
+---
+
+## 1 bis. Contrat de cible unique : le même type de cible que LMSYS, pour que le code se transpose
+
+**Décision du 01/10/2026 (Cyril).** Toutes les tâches du projet partagent le **même type de cible** que la compétition LMSYS :
+un ou deux textes en entrée, une **catégorie descriptive choisie dans une liste fermée** en sortie, sous un **format de sortie
+fixe et vérifiable**. Aucune cible en texte libre. Le jour où le CHU fournit ses comptes rendus et ses catégories, on écrit
+un nouveau contrat ; le code ne change pas.
+
+### Les trois règles du contrat
+1. **Catégories fermées et descriptives.** Chaque classe a un identifiant stable, un **nom en clair** et une **définition
+   opérationnelle** (ce qui entre, ce qui n'entre pas, un exemple limite). Jamais une étiquette nue (« 9 », « label_3 ») :
+   le nom en clair sert au verbaliseur, aux professeurs en zéro-shot, à la lecture humaine des erreurs, et les définitions
+   forment un guide d'annotation réutilisable par les équipes du CHU.
+2. **Format de sortie objectif.** Selon la variante, le modèle produit soit une distribution de probabilités sur les
+   identifiants de classe (tête de classification, comme LMSYS), soit une chaîne au gabarit exact
+   `{"categorie": "<nom exact>"}` obtenue par décodage contraint à la liste. Les deux se convertissent l'une dans l'autre,
+   donc se comparent et se distillent.
+3. **Un seul contrat par tâche, dans un fichier.** Tout le code (chargement, entraînement, distillation, calibration,
+   prédiction conforme, service, évaluation) lit ce fichier ; rien de propre à une tâche n'est écrit en dur.
+
+### Le fichier `task_specs/<task_id>.yaml`
+```yaml
+task_id: diamed_cim10_chapitre
+version: 1
+type: multiclass              # multiclass | multilabel | pair_ordinal
+inputs:
+  - name: texte
+    role: cas_clinique         # demain : compte_rendu
+    max_tokens: 1024           # réglage mesuré, voir lora-classifier-recipe
+    truncation: middle
+labels:
+  - id: C09
+    name: "Maladies de l'appareil circulatoire"
+    definition: "Diagnostic principal relevant du chapitre IX de la CIM-10 (I00-I99)."
+    exclut: "Malformations congénitales du cœur (chapitre XVII)."
+  # ... une entrée par classe
+output_format: '{"categorie": "<name>"}'
+metrics: {principale: macro_f1, secondaires: [log_loss, ece]}
+abstention: {methode: conformal_aps, couverture: 0.90}
+data_card: data/cards/diamed.md
+```
+
+### Les trois types, et comment chaque jeu s'y range
+| Type | Forme | Jeux du projet | Équivalent hospitalier plausible |
+|---|---|---|---|
+| `multiclass` | 1 texte → 1 catégorie | DiaMED (chapitre CIM-10) | type de compte rendu, motif principal, orientation |
+| `multilabel` | 1 texte → plusieurs catégories | MorFITT (spécialités) | spécialités concernées, antécédents présents |
+| `pair_ordinal` | 2 textes → 1 niveau ordonné | CLISTER (niveaux 0 à 5, chacun nommé et défini ; Spearman calculé sur l'espérance des niveaux) | proximité entre deux comptes rendus, accord entre un texte généré et sa référence |
+
+La piste C (structuration) suit la même logique : son JSON de sortie n'a que des champs à **valeurs fermées**, et chaque
+champ s'évalue comme une classification. Les « équivalents hospitaliers » ci-dessus sont des hypothèses de transposition :
+l'offre parle de structuration de comptes rendus sans lister de catégories.
+
+### Preuve de transposabilité (porte de P0 et de P5)
+- **P0** : une tâche jouet et DiaMED passent par la même chaîne complète (entraînement court, évaluation, calibration,
+  service) **sans une ligne de code propre à l'une ou l'autre** ; un test le vérifie.
+- **P5** : `docs/TRANSPOSER_AU_CHU.md` dit exactement quoi fournir pour une nouvelle tâche : le contrat YAML, un
+  adaptateur de chargement (identifiant, texte, étiquette) et les définitions de classes ; rien d'autre.
+
+---
+
+## 2. Modèles compatibles RTX 5090 (32 Go VRAM, ~96 Go RAM)
+
+Principe : **professeur en QLoRA 4 bits, élève en LoRA**, tous ouverts et exécutables hors ligne.
+Les choix définitifs sont figés en phase 0, après un banc de mémoire réel.
+
+| Rôle | Candidats | Raison | Budget VRAM estimé (à mesurer) |
+|---|---|---|---|
+| Professeur 1 | **Qwen 3.6 27B** (déjà utilisé dans Multi-Agent-Lab) | Bon niveau multilingue, déjà en local | QLoRA 4 bits, 1 024 tokens, gradient checkpointing : ~22 à 28 Go |
+| Professeur 2 | **Mistral Small 3.2 24B** (déjà utilisé, Apache 2.0) | Famille française, second avis pour S4 | ~20 à 26 Go |
+| Élève | un 7-9B : Qwen 2.5 7B, BioMistral 7B (spécialisé médical), Gemma 2 9B (celui de la solution gagnante) | Taille déployable sur un GPU hospitalier | LoRA bf16 ~24 à 30 Go, sinon QLoRA |
+| Élève léger | un modèle de 1 à 4B | Mesurer jusqu'où la distillation descend | < 16 Go |
+| **Référence classique** | **DrBERT / CamemBERT-bio** (encodeurs français médicaux) | Ce qu'un CHU utilise déjà : le LLM doit le battre, sinon on le dit | < 8 Go |
+
+Écart assumé avec la solution gagnante : professeurs de 24-27B au lieu de 70-72B (8 × A100 chez l'auteur).
+La question de recherche devient : **la distillation garde-t-elle son intérêt quand le professeur n'est que 3 fois plus gros que l'élève ?**
+Option si la réponse l'exige : un professeur 70B sur GPU loué, selon les déclencheurs de la section 2 ter.
+
+Points techniques à valider en phase 0 sur Blackwell (sm_120) : PyTorch avec CUDA 12.8+, bitsandbytes,
+FlashAttention, outil GPTQ (GPTQModel ou llm-compressor).
+
+---
+
+## 2 bis. État de l'art : tout ce qui peut améliorer la qualité (brainstorm, octobre 2026)
+
+La solution LMSYS 2024 n'est qu'un point de départ. Ce catalogue rassemble les leviers connus à ce jour,
+regroupés par famille. Pour chacun : ce que c'est, pourquoi il compte pour des comptes rendus hospitaliers,
+et sa faisabilité sur une RTX 5090.
+
+Légende faisabilité : **F** faisable tel quel · **C** faisable sous contrainte (taille de modèle, durée) · **H** hors budget local.
+Légende priorité : **P1** testé à coup sûr · **P2** testé si P1 laisse de la marge · **P3** veille, mentionné seulement.
+
+### Deux leçons à garder en tête avant d'empiler les techniques
+- **Le taux d'apprentissage d'abord.** Une étude de 2026 (« Learning Rate Matters: Vanilla LoRA May Suffice »)
+  montre qu'une bonne part des gains attribués aux variantes de LoRA disparaît quand on règle correctement
+  le taux d'apprentissage de la référence. Toute variante sera donc comparée à une LoRA **déjà réglée**,
+  jamais à une LoRA par défaut. L'auteur de LMSYS dit la même chose : 1e-5 contre 5e-5 = 0,01 point.
+- **Le successeur de LMSYS a déjà amélioré la recette.** La 1re place du WSDM Cup 2025 (Multilingual Chatbot Arena,
+  même format) a ajouté trois choses à la distillation : **5 professeurs** au lieu de 2, la **relecture manuelle des
+  exemples où les professeurs contredisent l'étiquette humaine** (correction du bruit d'annotation), et des **données
+  synthétiques**. Elle entraînait aussi les deux ordres d'une paire dans le même pas de gradient, et tronquait par le milieu.
+
+- **Le 5e de LMSYS (Team Danube) a pris le chemin inverse, sans aucune distillation.** Leur levier principal :
+  un **pré-entraînement sur une tâche voisine** avant la vraie tâche. En criblant des modèles déjà publiés
+  (classement RewardBench), ils ont vu que des modèles entraînés sur des données de préférence (UltraFeedback)
+  partaient mieux que les versions de base ou « instruct ». Ils ont donc pré-entraîné Gemma 2 9B sur UltraFeedback
+  (simple étiquette gagné / perdu) : **jusqu'à 20 points de gain** en validation croisée comme au classement public.
+  Détails donnés en commentaire : LoRA de pré-entraînement fusionnée, **tête de classification jetée puis réapprise**
+  (la garder était un peu moins bon), réglages du pré-entraînement peu sensibles. Le reste : 2 entraînements sur toutes
+  les données avec l'ordre des réponses inversé, et l'ordre inversé aussi à l'inférence (TTA).
+  Côté inférence, une observation précieuse : **pour une classification (un seul token produit), INT8 bitsandbytes
+  était plus rapide que GPTQ et AWQ**, qui ralentissent le premier token ; tri des textes par longueur, répartition
+  équilibrée entre GPU, contexte de 4 000 à 8 000 tokens au lieu de 2 000.
+  Limite à garder en tête : un participant du WSDM Cup 2025 rapporte n'avoir rien gagné avec la même recette.
+  Le gain d'un pré-entraînement voisin dépend donc de la proximité réelle entre les deux tâches : **il se mesure, il ne se suppose pas.**
+
+### L1. Données (souvent le levier le plus rentable)
+| Technique | Pourquoi ici | Faisab. | Prio. |
+|---|---|---|---|
+| **Pré-entraînement sur une tâche voisine étiquetée (Danube)**, puis fusion de la LoRA et nouvelle tête. Candidats : MorFITT avant DiaMED (spécialités puis chapitres CIM-10), FrenchMedMCQA, similarité générale en français avant CLISTER, autres tâches DrBenchmark | Équivalent direct d'UltraFeedback pour LMSYS : beaucoup de données proches avant peu de données cibles | F | P1 |
+| Pré-entraînement continu sur corpus médical français (DAPT, ex. corpus NACHOS de DrBERT si accessible) | Le vocabulaire des comptes rendus est loin du web généraliste | C (petit élève, quelques centaines de millions de tokens) | P2 |
+| Données synthétiques générées par le professeur (cas cliniques fictifs par classe rare) | DiaMED n'a que 739 cas et des chapitres CIM-10 très rares | F | P1 |
+| Correction du bruit d'étiquettes : désaccords professeurs / étiquette relus (WSDM 2025), apprentissage « confiant » (cleanlab) | Les annotations médicales sont imparfaites ; c'est aussi la « mise en qualité » demandée par l'offre | F | P1 |
+| Pseudo-étiquetage itératif (« noisy student ») sur textes non annotés | Exploiter le texte médical sans étiquette, comme le jeu « ut » de LMSYS | F | P2 |
+| Déduplication et détection de quasi-doublons entre plis | Éviter des scores gonflés | F | P1 (hygiène) |
+
+### L2. Adaptation des paramètres
+| Technique | Pourquoi ici | Faisab. | Prio. |
+|---|---|---|---|
+| LoRA réglée (rang, alpha, lr, couches ciblées), **référence obligatoire** | Voir leçon 1 | F | P1 |
+| rsLoRA (mise à l'échelle stable du rang) | Permet des rangs élevés sans réglage fin du lr | F | P1 (1 drapeau) |
+| DoRA (magnitude + direction) | Réduit l'écart avec le fine-tuning complet, +5 à 10 % de VRAM | F | P1 |
+| PiSSA (initialisation par valeurs singulières principales) ; LoftQ pour QLoRA | Convergence plus rapide ; LoftQ réduit l'erreur de quantification des professeurs | F | P2 |
+| LoRA+ (lr différent pour A et B) | Gain de vitesse annoncé, une ligne de configuration | F | P2 |
+| Fine-tuning complet d'un petit élève (≤ 3B, AdamW 8 bits) | Mesurer ce que LoRA laisse sur la table | C | P2 |
+| GaLore, sélection de couches (Spectrum) | Fine-tuning quasi complet à mémoire réduite | C | P3 |
+
+### L3. Comment faire classer un LLM
+| Technique | Pourquoi ici | Faisab. | Prio. |
+|---|---|---|---|
+| Tête de classification sur le dernier token (méthode LMSYS) | Référence de la compétition | F | P1 |
+| « Verbaliseur » : probabilités des tokens d'étiquette générés (« Chapitre IX ») | Exploite le savoir du modèle sur le nom des classes, utile quand il y a peu d'exemples | F | P1 |
+| Attention bidirectionnelle (type LLM2Vec) + mise en commun des représentations | Les décodeurs ne voient pas la suite du texte ; les comptes rendus se lisent en entier | C | P2 |
+| Troncature par le milieu (WSDM) ou tête + fin ; découpage en morceaux puis agrégation | Les comptes rendus dépassent souvent 1 024 tokens | F | P1 |
+| Pour CLISTER : les deux ordres de la paire dans le même pas (WSDM), prédiction symétrisée | La similarité est symétrique, le modèle doit l'être aussi | F | P1 |
+
+### L4. Pertes et déséquilibre des classes
+| Technique | Faisab. | Prio. |
+|---|---|---|
+| KL directe, KL inverse, KL « asymétrique » (DistiLLM) ; température du professeur | F | P1 |
+| Pondération des classes, perte focale, lissage des étiquettes | F | P1 |
+| Pondération des professeurs selon leur score hors pli | F | P2 |
+
+### L5. Distillation avancée
+| Technique | Pourquoi ici | Faisab. | Prio. |
+|---|---|---|---|
+| Distillation des **justifications** (« Distilling step-by-step ») : le professeur explique son classement, l'élève apprend étiquette + explication | Gains forts quand les données sont rares ; l'explication est un atout pour un clinicien | F | P1 |
+| Distillation « sur politique » (GKD, MiniLLM) : l'élève génère, le professeur corrige ses propres sorties | État de l'art 2025-2026 pour les tâches génératives | C | P2 (piste C) |
+| Distillation par séquence (le professeur produit le JSON complet) | Base de la structuration générative | F | P1 (piste C) |
+
+### L6. Post-entraînement génératif (piste C, structuration)
+| Technique | Pourquoi ici | Faisab. | Prio. |
+|---|---|---|---|
+| SFT puis préférences (DPO, ORPO, SimPO, KTO) | Aligner le format et la prudence des sorties | F | P2 |
+| **GRPO avec récompense vérifiable** (RLVR) : récompense = F1 des entités extraites + validité du JSON | Méthode dominante en 2025-2026 ; la structuration a une vérité terrain, donc une récompense calculable sans juge | C (élève ≤ 8B, LoRA) | P1 si piste C |
+| Décodage contraint par schéma JSON (xgrammar, outlines) | Zéro sortie mal formée, exigence d'un système hospitalier | F | P1 si piste C |
+
+### L7. Fusion de modèles et ensembles
+| Technique | Faisab. | Prio. |
+|---|---|---|
+| Moyenne des LoRA des plis (LMSYS), comparée à l'ensemble des 5 plis | F | P1 |
+| TIES, DARE, SLERP, « model soups » ; WiSE-FT (interpolation avec le modèle de base pour la robustesse) | F | P2 |
+
+### L8. Calcul au moment de l'inférence
+| Technique | Pourquoi ici | Faisab. | Prio. |
+|---|---|---|---|
+| TTA (LMSYS) : variantes de troncature, ordres de paire | Robustesse à budget connu | F | P1 |
+| Auto-cohérence (plusieurs raisonnements, vote) | Souvent utile en génération ; à mesurer en classification où le raisonnement peut nuire | F | P2 |
+| Modèles de raisonnement comme professeurs (traces longues) | Peut améliorer les étiquettes souples sur les cas ambigus | C | P2 |
+
+### L9. Compression et service (contrainte hospitalière)
+| Technique | Pourquoi ici | Faisab. | Prio. |
+|---|---|---|---|
+| GPTQ 8 et 4 bits (LMSYS), AWQ, **INT8 bitsandbytes** | Danube a mesuré bitsandbytes INT8 plus rapide que GPTQ et AWQ en classification (un seul token produit) : la vitesse dépend du type de charge, elle se mesure sur notre tâche | F | P1 |
+| Tri par longueur et lots dynamiques ; contexte long (4 000 à 8 000 tokens) contre troncature | Les comptes rendus sont longs : garder plus de texte peut valoir plus que la TTA | F | P1 |
+| **FP8 et NVFP4 natifs de Blackwell** (la 5090 les accélère en matériel) | Format d'avenir des serveurs d'inférence ; peu de retours publics sur des tâches médicales françaises | C (support logiciel à valider) | P2 |
+| Entraînement conscient de la quantification (QAT) | Limiter la perte au passage en 4 bits | C | P3 |
+| Service vLLM ou SGLang, décodage spéculatif | Débit réel d'un service hospitalier | F | P2 (P5) |
+
+### L10. Calibration et abstention (sûreté clinique)
+| Technique | Pourquoi ici | Faisab. | Prio. |
+|---|---|---|---|
+| Mise à l'échelle par température, mesure de l'ECE | Une probabilité doit vouloir dire quelque chose pour un codeur ou un clinicien | F | P1 |
+| **Prédiction conforme** : le modèle renvoie un ensemble de classes garanti à 90 % ou s'abstient et passe la main à l'humain | Le bon usage hospitalier : automatiser les cas sûrs, router les autres. Garantie statistique, simple à mettre en œuvre | F | P1 |
+
+### L11. Points de départ et références à battre
+**Criblage des points de départ (Danube)** : avant tout réglage, affiner rapidement (1 pli, réglages identiques) plusieurs
+modèles déjà spécialisés et garder le meilleur départ, au lieu de supposer que la version « instruct » est la bonne.
+Candidats médicaux ouverts à cribler en P0-P1 (licences à vérifier) : MedGemma (Google, 4B et 27B), BioMistral 7B,
+Meditron, à côté des modèles généralistes (Qwen, Mistral, Gemma).
+
+| Modèle | Pourquoi |
+|---|---|
+| DrBERT, CamemBERT-bio | Encodeurs médicaux français : sur peu de données, ils battent souvent les LLM |
+| Encodeurs de type ModernBERT français médicaux (ex. doctomodernbert-fr de Doctolib) | Génération d'encodeurs plus récente, contexte long |
+| LLM professeur en zéro-shot et en few-shot | Ce que donne « juste un prompt », sans entraînement |
+
+### L12. Évaluation par LLM-juge (pour la génération, cœur de PARTAGES)
+Un travail de 2026 (« Who Judges the Judge? ») évalue précisément les LLM-juges sur des questions médicales françaises ouvertes.
+Si la piste C produit du texte libre, le juge sera lui-même validé contre un petit jeu annoté à la main, avec
+juge distinct du générateur et stabilité mesurée (méthode déjà employée dans Aegis-RCA).
+
+### Comment éviter l'explosion combinatoire
+Plus de 40 leviers, chacun avec ses réglages : tout croiser est impossible sur un seul GPU. Règles :
+1. **Vagues successives, gloutonnes** : chaque vague part de la meilleure configuration de la précédente.
+2. **Budget GPU fixé par vague** avant de commencer, consigné dans le protocole.
+3. **Décisions sur les jeux qui ont la puissance statistique** : DiaMED (≈ 150 cas de test) donne des intervalles
+   de confiance larges ; les comparaisons fines se font sur MorFITT et CLISTER, ou en validation croisée répétée.
+4. Un levier qui ne bat pas la référence réglée est **publié comme résultat négatif** et sort du programme.
+
+### Programme proposé
+| Vague | Leviers | Objectif |
+|---|---|---|
+| V0 | L11 références, LoRA réglée (L2), tête vs verbaliseur (L3) | Savoir où l'on part |
+| V1 | **Deux recettes du top 5 de LMSYS, face à face** : distillation (1re place, S1 à S7) contre pré-entraînement sur tâche voisine + criblage des départs (5e place, Danube) | Savoir laquelle des deux philosophies tient sur des textes médicaux français, puis si elles se cumulent |
+| V2 | Recette WSDM 2025 : plus de professeurs, correction des étiquettes, synthétiques (L1) | Mesurer l'amélioration publiée depuis |
+| V3 | DoRA / rsLoRA / PiSSA (L2), KL et pertes (L4), distillation des justifications (L5) | Gains d'entraînement récents |
+| V4 | Fusion (L7), FP8 / NVFP4 contre GPTQ (L9), calibration et prédiction conforme (L10) | Déployable et sûr |
+| V5 (option) | Piste C : SFT, GRPO à récompense vérifiable, décodage contraint (L6) | Structuration générative |
+
+## 2 ter. Stratégie matérielle : la RTX 5090 d'abord, la location prévue dès la conception
+
+**Décision du 01/10/2026 (Cyril).** Tous les tests, toutes les vagues de référence et la démo tournent sur la RTX 5090
+(32 Go). La location de GPU est une **option prévue dans l'architecture**, pas un plan B improvisé. La qualité du travail
+ne baisse pas pour autant : la contrainte de mémoire se traite par la méthode, pas en renonçant aux expériences.
+
+### Tenir la qualité dans 32 Go
+| Levier | Effet |
+|---|---|
+| QLoRA 4 bits (NF4, double quantification) pour les professeurs 24-27B | Professeurs de bon niveau sur une seule carte |
+| Gradient checkpointing, accumulation de gradient | Même batch effectif que la recette publiée (64), mémoire réduite |
+| Noyaux optimisés (Liger, Unsloth si compatibles sm_120), FlashAttention | Moins de mémoire d'activation, plus de vitesse |
+| Lots triés par longueur, sans remplissage inutile (packing quand la tâche le permet) | Contexte long sans exploser la mémoire |
+| Logits des professeurs calculés une fois et stockés (`distillation-pipeline`) | Le professeur ne tourne jamais en même temps que l'élève |
+| Optimiseurs 8 bits et paginés, déchargement CPU en dernier recours (96 Go de RAM) | Fine-tuning complet des petits élèves |
+| Plus de temps plutôt que plus de matériel : runs de nuit, reprise sur point de sauvegarde | La durée remplace la puissance |
+
+### Prêt pour la location sans réécriture
+- **Code indépendant du matériel** : tout ce qui dépend de la carte (précision, quantification, batch par pas, nombre de GPU)
+  vient de la configuration YAML, jamais du code. Un profil `hardware/rtx5090.yaml` et des profils de location
+  (`hardware/a100-80g.yaml`, `hardware/h100-80g.yaml`, multi-GPU) partagent tout le reste.
+- **Environnement reproductible** : image Docker (ou `uv` verrouillé) identique en local et sur machine louée ;
+  lancement multi-GPU via `accelerate` ou `torchrun` prévu dès le départ, testé sur 1 GPU.
+- **Registre** : le champ `env` de chaque run consigne la carte, le nombre de GPU et le profil matériel ; deux runs ne se
+  comparent (`paired-comparison`) qu'à protocole égal, et le changement de matériel est signalé.
+- **Points de sauvegarde et artefacts portables** : adaptateurs LoRA, logits de professeurs et prédictions sont des fichiers
+  qui voyagent ; une machine louée ne produit que des artefacts, rapatriés puis réutilisés sur la 5090.
+- **Données** : seuls des jeux dont la licence autorise le traitement chez un hébergeur tiers partent sur une machine louée
+  (vérifié par `dataset-intake`) ; aucun secret ni jeton dans l'image.
+
+### Quand louer (déclencheurs écrits d'avance)
+La location ne sert qu'à répondre à une **question scientifique que la 5090 ne peut pas trancher**, jamais à aller plus vite :
+1. **Professeur 70B** : si la vague V1 montre que l'écart professeur / élève (24-27B vers 7-9B) est trop faible pour juger
+   la distillation, un professeur 70B en QLoRA (1 GPU de 80 Go) répond à la question « plus gros professeur = meilleur élève ? ».
+2. **Fine-tuning complet** d'un élève 7-9B, pour mesurer ce que LoRA laisse sur la table (levier L2).
+3. **Plus de professeurs** (recette WSDM 2025 à 5 professeurs) si le temps de calcul local dépasse le budget de la vague.
+
+Chaque location passe par une fiche `experiment-preregistration` avec un **plafond de dépense chiffré** validé par Cyril,
+et ses résultats sont présentés à côté des résultats 5090, jamais à leur place.
+
+### La démo
+La démo (service FastAPI, indexation ElasticSearch, modèle élève quantifié, abstention conforme) tourne **sur la 5090**.
+C'est aussi l'argument pour le CHU : un modèle utile sur une seule carte, comme sur un serveur hospitalier.
+
+---
+
+## 3. Protocole d'évaluation (le livrable que le CHU demande explicitement)
+
+L'offre parle de « protocoles d'évaluation de la performance des modèles » et de « capitalisation des méthodes ».
+Le protocole est donc **écrit et figé avant toute mesure comparative**, dans l'esprit de Multi-Agent-Lab.
+
+- **Découpage** : test scellé tiré une fois (graine fixée, empreinte SHA-256 du fichier), jamais vu pendant le réglage ;
+  validation croisée en 5 plis sur le reste, **stratifiée par classe**.
+- **Métriques** : macro-F1 (classes rares du CIM-10), log loss (métrique de LMSYS), calibration (ECE), Spearman pour CLISTER.
+- **Incertitude** : intervalles de confiance par bootstrap sur le test ; comparaisons **appariées** entre variantes.
+- **Coûts mesurés à chaque fois** : VRAM de pointe, durée d'entraînement, latence et débit d'inférence, taille du modèle.
+- **Ablation, levier par levier** : chaque stratégie (S1 à S7, puis les leviers L1 à L12 retenus) est ajoutée seule à la meilleure configuration du moment et son gain est mesuré.
+  Une stratégie sans gain significatif est publiée comme telle.
+- **Analyse d'erreurs** : matrice de confusion par chapitre CIM-10, relecture d'un échantillon d'erreurs.
+- **Hygiène** : aucune fuite entre plis (les probabilités du professeur sont strictement hors pli) ; recherche de
+  quasi-doublons entre entraînement et test.
+
+---
+
+## 4. Phases et portes de validation
+
+Chaque phase se ferme sur une **preuve** (fichier de résultats, test, mesure), pas sur une impression.
+
+| Phase | Contenu | Porte de sortie |
+|---|---|---|
+| **P0. Socle** | Environnement Blackwell, téléchargement et licences des jeux, banc VRAM des modèles candidats, protocole écrit et figé | Chaque modèle candidat entraîne 10 pas sans erreur de mémoire ; environnement reproductible (image ou `uv` verrouillé) ; profil `hardware/rtx5090.yaml` ; lancement `accelerate` testé sur 1 GPU ; contrats `task_specs/` de DiaMED, MorFITT, CLISTER et d'une tâche jouet ; test de transposabilité vert (même chaîne, zéro code propre à une tâche) ; protocole daté et figé ; licences consignées |
+| **P1. Références (vague V0)** | DrBERT / CamemBERT-bio / encodeur ModernBERT médical français affinés ; LLM en zéro-shot et few-shot ; LoRA réglée, tête contre verbaliseur | Tableau de référence sur DiaMED, MorFITT, CLISTER avec intervalles de confiance |
+| **P2. Professeurs (V1, V2)** | S2 puis S3 : post-pretrain bruité, professeurs en 5 plis, probabilités hors pli ; puis recette WSDM : professeurs supplémentaires, correction des étiquettes contestées, données synthétiques | Probabilités sauvegardées pour 100 % du jeu d'entraînement ; score hors pli de chaque professeur |
+| **P3. Distillation (V1, V3)** | S4 : élève avec CE + KL, un puis plusieurs professeurs ; balayage lr et température ; puis variantes de KL, DoRA / rsLoRA / PiSSA, distillation des justifications | Gain (ou absence de gain) de la distillation mesuré contre P1, apparié |
+| **P4. Compression et sûreté (V4)** | S5 moyenne des LoRA et fusions TIES / DARE / WiSE-FT ; S6 GPTQ contre FP8 / NVFP4 Blackwell ; S7 TTA ; calibration et prédiction conforme avec abstention | Perte de qualité due à la quantification mesurée ; latence et VRAM en inférence |
+| **P5. Industrialisation** | Service FastAPI d'inférence, indexation des textes et des prédictions dans ElasticSearch (cité par l'offre), CI GitLab, carte de modèle, règles de maintenance (dérive, seuils de réentraînement), `docs/TRANSPOSER_AU_CHU.md` | Service qui tourne hors ligne, tests verts, carte de modèle publiée |
+| **P6. Piste C (V5, option)** | Structuration générative (QUAERO / E3C vers JSON) : distillation par séquence, SFT, GRPO à récompense vérifiable, décodage contraint, juge validé | F1 par entité contre la référence encodeur |
+
+---
+
+## 5. Arborescence prévue
+
+```
+LLM_finetuning/
+├── PLAN_PROJET.md          ← ce document
+├── PROTOCOLE.md            ← figé en P0, jamais modifié après (versions datées sinon)
+├── task_specs/             ← un contrat de cible par tâche (catégories fermées et descriptives, format de sortie)
+├── configs/                ← un YAML par expérience (modèle, LoRA, lr, graine, pli)
+├── hardware/               ← profils matériels : rtx5090.yaml (référence), profils de location
+├── data/                   ← hors Git ; scripts de téléchargement et empreintes seulement
+├── src/
+│   ├── data/               ← chargement, nettoyage, découpage, détection de doublons
+│   ├── train/              ← S1 classification LoRA, S2 post-pretrain, S4 distillation (CE + KL)
+│   ├── merge/              ← S5 moyenne des LoRA et des têtes
+│   ├── quantize/           ← S6 GPTQ
+│   ├── infer/              ← S7 TTA, inférence par lots
+│   └── eval/               ← métriques, bootstrap, comparaisons appariées, rapports
+├── service/                ← FastAPI + indexation ElasticSearch (P5)
+├── results/                ← un JSON par run, jamais écrasé
+├── tests/                  ← pytest : fuite entre plis, déterminisme, formats
+└── RESULTATS.md            ← chiffres réels uniquement, résultats négatifs compris
+```
+
+---
+
+## 6. Ce que le projet permettra de dire en entretien au CHUGA
+
+Seulement une fois mesuré :
+- « J'ai affiné des LLM de 7 à 27 milliards de paramètres en local, en LoRA et QLoRA, sur des cas cliniques français. »
+- « J'ai mis face à face la distillation (1re place LMSYS) et le pré-entraînement sur tâche voisine (5e place),
+  reproduit la recette du WSDM 2025, puis testé les techniques
+  plus récentes (DoRA, distillation des justifications, GRPO, FP8, prédiction conforme), en mesurant ce que chaque brique
+  apporte vraiment, y compris celles qui n'apportent rien. »
+- « Mon LLM distillé fait [X] de macro-F1 contre [Y] pour DrBERT, pour [Z] ms par compte rendu sur un seul GPU. »
+- « J'ai écrit le protocole d'évaluation avant de mesurer : c'est ce que vous demandez pour PARTAGES. »
+
+Les crochets restent vides tant que les résultats n'existent pas.
+
+---
+
+## 7. Décisions à prendre par Cyril avant P0
+
+1. **Emplacement** : le dossier est créé dans `Projet Assistante IA/` ; le déplacer vers `D:\Projets persos\` avec les autres projets ?
+2. **Dépôt** : GitLab (cité par l'offre) en privé dès le début, miroir GitHub plus tard ?
+3. **Périmètre** : vagues V0 à V4 sur les pistes A + B (recommandé ; durée à chiffrer après le banc de P0), ou jusqu'à V5 (piste C) ?
+   Ordre de grandeur indicatif, à confirmer : V0 + V1 en 2 à 3 semaines, le programme complet en plusieurs mois de temps GPU.
+4. **Calendrier** : date limite de candidature au CHUGA, pour savoir quelle phase doit être close avant l'envoi
+   (P1 + P3 suffisent pour répondre « oui, et voici les chiffres »).
+5. ~~Location GPU~~ : **tranché le 01/10** (section 2 ter). Reste à fixer, le moment venu : le plafond de dépense par location et le fournisseur.
+
+## Sources
+- 5e place LMSYS (Team Danube : Psi, Pascal Pfeiffer, dott), kaggle.com/competitions/lmsys-chatbot-arena/writeups/team-danube-5th-place-solution-team-danube (lue le 01/10/2026, précisions des auteurs en commentaires : tête jetée, INT8 plus rapide que GPTQ/AWQ)
+- 1re place WSDM Cup 2025 Multilingual Chatbot Arena (whitefebruary) : kaggle.com/competitions/wsdm-cup-multilingual-chatbot-arena/writeups/whitefebruary-1st-place-solution
+- « Learning Rate Matters: Vanilla LoRA May Suffice for LLM Fine-tuning », arxiv.org/abs/2602.04998
+- PiSSA, arxiv.org/abs/2404.02948 ; comparatif DoRA / GaLore / PiSSA / VeRA (Spheron, 2026)
+- Survol de la distillation sur politique, arxiv.org/abs/2604.00626
+- « Who Judges the Judge? Evaluating LLM-as-a-Judge for French Medical open-ended QA », arxiv.org/abs/2603.04033
+- « Structuration automatique de la posologie en français : quel rôle pour les LLM ? », TALN 2025 (le fine-tuning seul égale les systèmes de référence)
+- doctomodernbert-fr-base (Doctolib), huggingface.co/doctolib-lab/doctomodernbert-fr-base
+- Solution 1re LMSYS : kaggle.com/competitions/lmsys-chatbot-arena/writeups/blackpearl-no-leak-1st-place-solution-distill-is-a
+  (lue le 01/10/2026, réponses de l'auteur en commentaires : perte KL, cosinus avec 100 pas d'échauffement, 8 × A100, moyenne des têtes)
+- Code d'entraînement de l'auteur : github.com/shyoulala/LMSYS_BlackPearl
+- DrBenchmark : drbenchmark.univ-avignon.fr, arxiv.org/abs/2402.13432
+- Offre CHUGA : texte collé par Cyril dans une autre session, résumé transmis le 01/10/2026 (aucun fichier sur disque)
+
+---
+
+## 8. Outillage agentique (ajouté le 01/10/2026)
+
+- `CLAUDE.md` : règles permanentes de l'agent et cycle d'une expérience.
+- `PROMPT_LANCEMENT.md` : prompt qui démarre la phase P0, et elle seule (pointe sur la V5).
+- `.claude/skills/` : 21 skills de génie logiciel d'Addy Osmani (`addyosmani/agent-skills`), 7 skills wiki (`kfchou/wiki-skills`, motif LLM Wiki de Karpathy), et 10 skills propres au projet : `experiment-preregistration`, `dataset-intake`, `vram-preflight`, `lora-classifier-recipe`, `distillation-pipeline`, `leakage-guard`, `run-registry`, `paired-comparison`, `model-card-calibration`, `claim-gate`.
+- `.claude/agents/` : relecteurs `code-reviewer`, `test-engineer`, `security-auditor`.
+- `knowledge/` : wiki du projet (sources, méthodes, modèles, jeux de données, décisions, expériences, analyses).
