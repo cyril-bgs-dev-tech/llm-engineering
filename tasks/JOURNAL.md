@@ -2,6 +2,16 @@
 
 Format : le plus récent en haut. Une entrée par tâche ou par événement, avec la preuve. Voir `CONTRAT_DE_TRAVAIL.md` § 2 et § 10.
 
+## 02/10/2026 : push GitHub privé et CI (demande explicite de Cyril)
+
+- **Contexte retrouvé** (un niveau au-dessus du projet, sur autorisation de Cyril, GitHub seulement) : compte `cyril-bgs-dev-tech` ; convention existante vitrine publique + dépôt de code privé (`multi-agent-lab` et `multi-agent-lab-code`).
+- **Avant l'envoi** : 275 fichiers, aucun de plus de 1 Mo ; gitleaks sur l'arbre et sur tout l'historique (11 commits) : aucun secret ; aucun motif de jeton ; 300 extraits du corpus cherchés dans les fichiers suivis : un seul fichier en contient (`knowledge/raw/parhaf-readme-*.md`, la carte officielle du jeu, CC BY 4.0), restreint au dépôt privé.
+- **Fait** : 12 commits atomiques (identité locale au dépôt, adresse noreply GitHub), dépôt **privé** `cyril-bgs-dev-tech/llm-finetuning-code` créé et vérifié `PRIVATE` côté GitHub, `main` poussé.
+- **CI** (GitHub Actions, actions épinglées par SHA) : `make check`, `make smoke`, `pip-audit`, audit hebdomadaire, release sur tag `v*`, Dependabot limité aux actions. Premier run **rouge** (20 × EXE001, incohérence de droits entre drvfs et Git, invisible en local) ; reproduit sur un clone neuf ext4, corrigé sans toucher à ruff ; run suivant **vert en 169 s**.
+- **Limites dites** : la CI ne couvre ni le GPU ni les 6 tests qui lisent les données ; la protection de branche exige GitHub Pro pour un dépôt privé (403) et n'est pas activée ; `actionlint` non installé, la syntaxe a été validée par le run réel.
+- **Écart à signaler** : « local-données » (ADR-004) interdisait qu'un artefact dérivé quitte la machine ; pousser vers un dépôt privé le contredit pour les découpages, empreintes et statistiques. Tracé dans ADR-008 comme décision de Cyril, à confirmer.
+- **Vitrine publique** : non créée, en attente de Q9.
+
 ## 02/10/2026 : P0-06 et P0-08, gros professeur Qwen3.8-27B (prédictions avant le run)
 
 **Élèves validés (P0-06)** : Qwen3.5-4B et 9B en voie A (`Qwen3_5ForSequenceClassification`), Gemma-4-E4B en voie B (aucune classe de classification pour `Gemma4Config`). Runs `p0-06-*-compat` au registre. Trois prédictions écrites avant, trois confirmées. **Cause de l'OOM de Gemma prouvée** : le gradient checkpointing n'était pas activé en voie B (le `if hasattr` sautait sans bruit) ; la part de `logits_to_keep` dans le gain n'est pas isolée, les deux corrections ont été appliquées ensemble.

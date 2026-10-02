@@ -30,6 +30,7 @@ Le plan et l'offre du CHU citent GitLab, et la feuille de route réservait la CI
 - **Dependabot sur `uv`** : écarté, une mise à jour automatique de torch invaliderait les spikes.
 
 ## Consequences
-- `main` est protégé par ce que GitHub autorise sur un dépôt privé du plan de Cyril ; si la protection de branche n'est pas disponible, c'est dit, pas contourné.
+- **La protection de branche n'est pas disponible** : essayée le 02/10/2026, GitHub répond 403 (« Upgrade to GitHub Pro or make this repository public »). Le dépôt reste privé. Conséquence : la CI signale un échec mais rien n'empêche un push direct sur `main` ; la discipline repose sur le crochet pré-commit local (`make check-fast`) et sur la lecture du résultat de la CI. Si Cyril passe à GitHub Pro, il suffit de rendre les deux jobs obligatoires.
+- Premier run vert sur GitHub : 169 s. Il a d'abord échoué sur 20 erreurs EXE001, que la machine locale ne voyait pas (drvfs affiche tout en `rwx`, `core.fileMode=false`) ; le bit exécutable des scripts à shebang est désormais enregistré dans l'index, sans toucher à une règle de ruff.
 - L'exception W1 de `pip-audit` expire le 2026-12-31 : la CI échouera alors si elle n'est pas réexaminée, ce qui est voulu.
 - L'ADR-002 reste vraie pour le périmètre, la démo locale et la date limite.
