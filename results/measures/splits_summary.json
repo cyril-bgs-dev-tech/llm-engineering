@@ -55,6 +55,26 @@
  "near_duplicate_pairs_same_author": 9,
  "near_duplicate_pairs_same_label": 8,
  "clusters_with_several_patients": 9,
+ "test_class_counts": {
+  "II": 174,
+  "X": 72,
+  "XIV": 58,
+  "XI": 56,
+  "IX": 51,
+  "XVIII": 39,
+  "III": 31,
+  "XIII": 27,
+  "XV": 24,
+  "XIX": 27,
+  "VI": 19,
+  "I": 16,
+  "V": 9,
+  "IV": 9,
+  "XXI": 7,
+  "XII": 6,
+  "XXII": 4,
+  "AUTRE": 4
+ },
  "split_sha256": "5c06b068a6c9b977e30a8d3b99ca3ae4b72bb32c527ee98bcfa24eee9e8b33c2",
  "problems": []
 }

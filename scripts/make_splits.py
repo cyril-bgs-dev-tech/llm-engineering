@@ -65,6 +65,7 @@ def main() -> int:
         "near_duplicate_pairs_same_author": sum(author_of[a] == author_of[b] for a, b, _ in pairs),
         "near_duplicate_pairs_same_label": sum(label_of[a] == label_of[b] for a, b, _ in pairs),
         "clusters_with_several_patients": int(df["cluster"].value_counts().gt(1).sum()),
+        "test_class_counts": {c: int(label_of[s.test].eq(c).sum()) for c in df["label"].value_counts().index},
         "split_sha256": s.sha256(), "problems": problems,
     }
     (ROOT / "results/measures/splits_summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
