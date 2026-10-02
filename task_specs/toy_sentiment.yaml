@@ -1,0 +1,30 @@
+# Contrat de tâche généré par scripts/gen_task_contracts.py ; ne pas éditer à la main.
+task_id: toy_sentiment
+title: Tâche jouet synthétique (deux classes)
+type: multiclass
+input:
+  unit: document
+  max_tokens: 128
+  truncation: head_tail
+classes:
+- id: positif
+  name: Positif
+  definition: Le texte exprime une satisfaction explicite.
+  exclusions:
+  - 'Texte neutre ou mitigé : non généré'
+- id: negatif
+  name: Négatif
+  definition: Le texte exprime une insatisfaction explicite.
+  exclusions:
+  - 'Texte neutre ou mitigé : non généré'
+output:
+  format: '{class_id}'
+metrics:
+  primary: macro_f1
+  secondary:
+  - accuracy
+  - log_loss
+  - ece
+abstention:
+  enabled: false
+source: Données générées par src/llmft/toy.py, déterministes, aucune donnée réelle.

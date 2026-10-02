@@ -1,0 +1,57 @@
+# Contrat de tâche généré par scripts/gen_task_contracts.py ; ne pas éditer à la main.
+task_id: parhaf_doctype
+title: Type de document (PARHAF, tâche de contrôle)
+type: multiclass
+input:
+  unit: document
+  max_tokens: 4096
+  truncation: head_tail
+classes:
+- id: anapath
+  name: Compte rendu d'anatomopathologie (ANAPATH)
+  definition: Compte rendu décrivant l'examen macroscopique et microscopique d'un prélèvement et sa conclusion anatomopathologique.
+  exclusions:
+  - Le type est celui de l'enregistrement d'origine du document, pas celui que le contenu évoque.
+- id: crh
+  name: Compte rendu d'hospitalisation (CRH)
+  definition: 'Compte rendu de séjour hospitalier : motif d''admission, histoire de la maladie, évolution, conclusion
+    et conduite à tenir à la sortie.'
+  exclusions:
+  - Le type est celui de l'enregistrement d'origine du document, pas celui que le contenu évoque.
+- id: crc
+  name: Compte rendu de consultation (CRC)
+  definition: 'Compte rendu d''une consultation externe : motif, examen clinique, avis et projet de suivi.'
+  exclusions:
+  - Le type est celui de l'enregistrement d'origine du document, pas celui que le contenu évoque.
+- id: cro
+  name: Compte rendu opératoire (CRO)
+  definition: 'Compte rendu d''une intervention chirurgicale : indication, technique, constatations peropératoires,
+    suites immédiates.'
+  exclusions:
+  - Le type est celui de l'enregistrement d'origine du document, pas celui que le contenu évoque.
+- id: urgences
+  name: Compte rendu de passage aux urgences (URGENCES)
+  definition: 'Compte rendu d''un passage au service d''accueil des urgences : motif de recours, examens, orientation.'
+  exclusions:
+  - Le type est celui de l'enregistrement d'origine du document, pas celui que le contenu évoque.
+- id: accouchement
+  name: Compte rendu d'accouchement (ACCOUCHEMENT)
+  definition: 'Compte rendu de la naissance : déroulement du travail, mode d''accouchement, état du nouveau-né.'
+  exclusions:
+  - Le type est celui de l'enregistrement d'origine du document, pas celui que le contenu évoque.
+- id: maternite
+  name: Compte rendu de séjour en maternité (MATERNITE)
+  definition: Compte rendu du séjour de la mère et du nouveau-né en maternité après la naissance.
+  exclusions:
+  - Le type est celui de l'enregistrement d'origine du document, pas celui que le contenu évoque.
+output:
+  format: '{class_id}'
+metrics:
+  primary: macro_f1
+  secondary:
+  - accuracy
+  - log_loss
+  - ece
+abstention:
+  enabled: false
+source: 'Colonne `documents.type` de PARHAF ; signification des codes : fiche du jeu, section Controlled Vocabularies.'

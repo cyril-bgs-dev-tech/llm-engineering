@@ -1,0 +1,157 @@
+# Contrat de tâche généré par scripts/gen_task_contracts.py ; ne pas éditer à la main.
+task_id: parhaf_specialty
+title: Spécialité du service rédacteur (PARHAF, tâche de contrôle)
+type: multiclass
+input:
+  unit: patient
+  max_tokens: 4096
+  truncation: head_tail
+classes:
+- id: anatomopathologie
+  name: Anatomopathologie (ANATOMOPATHOLOGIE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité anatomopathologie : examen des prélèvements
+    et diagnostic lésionnel.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: cancero_adulte
+  name: Cancérologie adulte (CANCERO ADULTE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité cancérologie adulte : prise en charge
+    des tumeurs solides et traitements oncologiques de l''adulte.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: cardiologie
+  name: Cardiologie (CARDIOLOGIE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité cardiologie : maladies du cœur et de
+    la circulation.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: chir_ortho_et_traumato
+  name: Chirurgie orthopédique et traumatologique (CHIR ORTHO ET TRAUMATO)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité chirurgie orthopédique et traumatologique
+    : chirurgie de l''appareil locomoteur et des traumatismes.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: chir_cardio_vasc
+  name: Chirurgie cardio-vasculaire (CHIR.CARDIO-VASC.)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité chirurgie cardio-vasculaire : chirurgie
+    du cœur et des vaisseaux.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: chirurgie_viscerale
+  name: Chirurgie viscérale (CHIRURGIE VISCERALE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité chirurgie viscérale : chirurgie digestive
+    et abdominale.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: gynecologie
+  name: Gynécologie (GYNECOLOGIE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité gynécologie : maladies de l''appareil
+    génital féminin et du sein.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: hematologie_clinique
+  name: Hématologie clinique (HEMATOLOGIE CLINIQUE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité hématologie clinique : maladies du sang
+    et des organes hématopoïétiques.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: hepato_gastro_entero
+  name: Hépato-gastro-entérologie (HEPATO-GASTRO-ENTERO)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité hépato-gastro-entérologie : maladies
+    du tube digestif, du foie et du pancréas.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: maladies_infectieuses
+  name: Maladies infectieuses (MALADIES INFECTIEUSES)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité maladies infectieuses : diagnostic et
+    traitement des infections.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: medecine_geriatrique
+  name: Médecine gériatrique (MEDECINE GERIATRIQUE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité médecine gériatrique : prise en charge
+    du sujet âgé polypathologique.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: medecine_inter_specialites
+  name: Médecine inter-spécialités (MEDECINE INTER-SPECIALITES)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité médecine inter-spécialités : prise en
+    charge médicale à l''interface de plusieurs spécialités.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: medecine_interne
+  name: Médecine interne (MEDECINE INTERNE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité médecine interne : maladies systémiques
+    et auto-immunes, démarche diagnostique générale.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: medecine_pediatrique
+  name: Médecine pédiatrique (MEDECINE PEDIATRIQUE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité médecine pédiatrique : maladies de l''enfant.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: nephrologie
+  name: Néphrologie (NEPHROLOGIE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité néphrologie : maladies du rein et dialyse.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: neurologie
+  name: Neurologie (NEUROLOGIE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité neurologie : maladies du système nerveux.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: obstetrique
+  name: Obstétrique (OBSTETRIQUE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité obstétrique : grossesse, accouchement
+    et suites de couches.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: pneumologie
+  name: Pneumologie (PNEUMOLOGIE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité pneumologie : maladies de l''appareil
+    respiratoire.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: reanimation
+  name: Réanimation (REANIMATION)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité réanimation : prise en charge des défaillances
+    d''organes aiguës.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+- id: urologie
+  name: Urologie (UROLOGIE)
+  definition: 'Patient dont le compte rendu a été rédigé dans la spécialité urologie : maladies de l''appareil urinaire
+    et de l''appareil génital masculin.'
+  exclusions:
+  - C'est la spécialité du service rédacteur, pas la spécialité qu'évoque le diagnostic ; un patient peut être pris
+    en charge hors de la spécialité habituelle de sa maladie.
+output:
+  format: '{class_id}'
+metrics:
+  primary: macro_f1
+  secondary:
+  - accuracy
+  - log_loss
+  - ece
+abstention:
+  enabled: false
+source: Colonne `specialty` de PARHAF ; liste fermée de la fiche du jeu, section Controlled Vocabularies.
