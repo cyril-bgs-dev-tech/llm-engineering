@@ -1,0 +1,29 @@
+# Wiki Log
+
+Append-only fallback log (this wiki is not a git repo yet). Format:
+`## [YYYY-MM-DD] <operation> | <title>` — recent: `grep "^## \[" log.md | tail -10`
+
+---
+
+## [2026-10-01] init | Fine-tuning de LLM sur textes cliniques français
+
+## [2026-10-01] ingest | Environnement Blackwell (spikes P0-04 et P0-05)
+Pages créées : env-blackwell. Sources : raw/spike-p0-04-torch-blackwell.json, raw/spike-p0-05-lora-nf4.json (sorties des scripts `scripts/spikes/`, runs enregistrés dans `results/runs/`).
+
+## [2026-10-01] update | env-blackwell
+Reason: ajout de la section RM-06 (RAM visible 68,7 Gio contre 96 annoncés, débits ext4 et /mnt/d, disque libre) ; CLAUDE.md et AGENTS.md corrigés en conséquence.
+Source: raw/rm06-machine-wsl.json
+
+## [2026-10-01] ingest | Règles de formulation (P0-20)
+Pages créées : regles-de-formulation. Source : raw/parhaf-readme-60426cc.md (copie de la fiche du jeu à la révision 60426cc).
+
+## [2026-10-02] update | overview
+Reason: première synthèse mesurée (pile Blackwell, contraintes disque et RAM, règles de formulation) ; les deux pages existantes ne sont plus orphelines.
+Source: raw/spike-p0-04-torch-blackwell.json, raw/rm06-machine-wsl.json, raw/parhaf-readme-60426cc.md
+
+## [2026-10-02] ingest | Lot A, papiers A4 à A6 (P0-47)
+Pages créées : parhaf-corpus-paper, learning-rate-matters, causal-llm-classification-heads, reglage-taux-apprentissage-lora. Pages mises à jour : regles-de-formulation (lien vers l'article PARHAF). Sources : raw/arxiv-2603.20494.txt, raw/arxiv-2602.04998.txt, raw/arxiv-2512.12677.txt (texte extrait des PDF arXiv par pypdf, citations vérifiées mot pour mot par script).
+
+## [2026-10-02] update | overview
+Reason: les trois papiers du Lot A (A4, A5, A6) sont ingérés ; la vue d'ensemble ne dit plus « aucune source ingérée » et les relie.
+Source: wiki/pages/parhaf-corpus-paper.md, wiki/pages/learning-rate-matters.md, wiki/pages/causal-llm-classification-heads.md

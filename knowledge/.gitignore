@@ -1,0 +1,4 @@
+# Audit reports are regenerated local-only artifacts (wiki-audit).
+wiki/pages/audit-*.md
+# index.md is generated from page frontmatter by bin/generate-index.py.
+wiki/index.md
