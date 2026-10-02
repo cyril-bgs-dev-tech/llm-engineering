@@ -1,0 +1,47 @@
+{
+  "files": [
+    {
+      "bytes": 2622,
+      "path": ".gitattributes",
+      "sha256": "254cd8c563c5ea6524fa2f231a852368b24516721f13c9b5f208931c07604a2f"
+    },
+    {
+      "bytes": 22171,
+      "path": "README.md",
+      "sha256": "6248f188eff064287263ad48edc972fc5c053210caf638ac0fc31c0c0718eb9d"
+    },
+    {
+      "bytes": 9249774,
+      "path": "data/train-00000-of-00001.parquet",
+      "sha256": "e125c9e9726a3472227c94f54ec8a476c98b9dbabab4e52192021417985dfc85"
+    },
+    {
+      "bytes": 486609,
+      "path": "doc/PARTAGES_Guide_methodologique_de_redaction_et_de_relecture_des_CR_fictifs.pdf",
+      "sha256": "40bf9e673746fdfff2136c3c8f8f489eac5e2c18771f9600c7bc50baaab0dad7"
+    },
+    {
+      "bytes": 2758,
+      "path": "img/Logo-licence-ouverte2.svg",
+      "sha256": "3f9f3eb1af3f46c89d7c850e07bc2db89e67725e14fb7746dae97b9fc686ad80"
+    },
+    {
+      "bytes": 37426,
+      "path": "img/PARTAGES BASELINE_RVB.png",
+      "sha256": "0c81bcfa483b2345090b698b0aa714eb33d7b043072e657f1c1e10466809ac7c"
+    },
+    {
+      "bytes": 20132109,
+      "path": "standalone/data.zip",
+      "sha256": "1bed89e97af8377d4ed1f6c047eb7f95db3f3e02de640fdcb8d7b619dd53e496"
+    },
+    {
+      "bytes": 4262206,
+      "path": "standalone/patients.json",
+      "sha256": "5a0dc7807f545718f9b5e9c29dacbd42a30d7b924c551298fb43e57a2704d041"
+    }
+  ],
+  "revision": "60426ccdbbbb335e0281f2e5c236b89100ffbd42",
+  "schema": "manifest-1",
+  "source": "HealthDataHub/PARHAF"
+}

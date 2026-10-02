@@ -1,0 +1,137 @@
+{
+  "revision": "60426ccdbbbb335e0281f2e5c236b89100ffbd42",
+  "n_patients": 4254,
+  "n_documents": 6185,
+  "tokenizers": {
+    "Qwen/Qwen3.5-9B": {
+      "vocab_size": 248077,
+      "per_document": {
+        "n": 6185,
+        "median": 737.0,
+        "p95": 2217.7999999999993,
+        "p99": 3355.7599999999984,
+        "max": 6207,
+        "share_over_1024": 0.3221,
+        "share_over_2048": 0.0627,
+        "share_over_4096": 0.0011,
+        "share_over_8192": 0.0
+      },
+      "per_patient": {
+        "n": 4254,
+        "median": 1143.0,
+        "p95": 2826.3999999999996,
+        "p99": 3695.8200000000015,
+        "max": 6207,
+        "share_over_1024": 0.595,
+        "share_over_2048": 0.1281,
+        "share_over_4096": 0.0024,
+        "share_over_8192": 0.0
+      },
+      "tokens_per_word": 1.409
+    },
+    "Qwen/Qwen3.8-27B": {
+      "vocab_size": 248077,
+      "per_document": {
+        "n": 6185,
+        "median": 737.0,
+        "p95": 2217.7999999999993,
+        "p99": 3355.7599999999984,
+        "max": 6207,
+        "share_over_1024": 0.3221,
+        "share_over_2048": 0.0627,
+        "share_over_4096": 0.0011,
+        "share_over_8192": 0.0
+      },
+      "per_patient": {
+        "n": 4254,
+        "median": 1143.0,
+        "p95": 2826.3999999999996,
+        "p99": 3695.8200000000015,
+        "max": 6207,
+        "share_over_1024": 0.595,
+        "share_over_2048": 0.1281,
+        "share_over_4096": 0.0024,
+        "share_over_8192": 0.0
+      },
+      "tokens_per_word": 1.409
+    },
+    "google/gemma-4-E4B-it": {
+      "vocab_size": 262144,
+      "per_document": {
+        "n": 6185,
+        "median": 715.0,
+        "p95": 2170.399999999998,
+        "p99": 3268.7999999999993,
+        "max": 5924,
+        "share_over_1024": 0.3046,
+        "share_over_2048": 0.0572,
+        "share_over_4096": 0.0006,
+        "share_over_8192": 0.0
+      },
+      "per_patient": {
+        "n": 4254,
+        "median": 1109.0,
+        "p95": 2747.35,
+        "p99": 3606.8200000000015,
+        "max": 5924,
+        "share_over_1024": 0.5691,
+        "share_over_2048": 0.1161,
+        "share_over_4096": 0.0014,
+        "share_over_8192": 0.0
+      },
+      "tokens_per_word": 1.369
+    },
+    "google/gemma-4-31B-it": {
+      "vocab_size": 262144,
+      "per_document": {
+        "n": 6185,
+        "median": 715.0,
+        "p95": 2170.399999999998,
+        "p99": 3268.7999999999993,
+        "max": 5924,
+        "share_over_1024": 0.3046,
+        "share_over_2048": 0.0572,
+        "share_over_4096": 0.0006,
+        "share_over_8192": 0.0
+      },
+      "per_patient": {
+        "n": 4254,
+        "median": 1109.0,
+        "p95": 2747.35,
+        "p99": 3606.8200000000015,
+        "max": 5924,
+        "share_over_1024": 0.5691,
+        "share_over_2048": 0.1161,
+        "share_over_4096": 0.0014,
+        "share_over_8192": 0.0
+      },
+      "tokens_per_word": 1.369
+    },
+    "mistralai/Mistral-Small-3.2-24B-Instruct-2506": {
+      "vocab_size": 131072,
+      "per_document": {
+        "n": 6185,
+        "median": 715.0,
+        "p95": 2162.7999999999993,
+        "p99": 3281.5999999999985,
+        "max": 6055,
+        "share_over_1024": 0.3074,
+        "share_over_2048": 0.0574,
+        "share_over_4096": 0.0008,
+        "share_over_8192": 0.0
+      },
+      "per_patient": {
+        "n": 4254,
+        "median": 1110.0,
+        "p95": 2767.3999999999996,
+        "p99": 3582.160000000007,
+        "max": 6055,
+        "share_over_1024": 0.5715,
+        "share_over_2048": 0.1161,
+        "share_over_4096": 0.0014,
+        "share_over_8192": 0.0
+      },
+      "tokens_per_word": 1.37
+    }
+  }
+}

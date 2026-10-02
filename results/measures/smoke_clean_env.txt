@@ -1,0 +1,7 @@
+[ok] contrat : toy_sentiment, 2 classes
+[ok] contrat invalide rejeté : contrat : Value error, identifiants de classe dupliqués : ['positif']
+[ok] chaîne complète : run 20261002-095922-chain-toy-sentiment-cpu, macro_f1 1.000
+[ok] rejeu identique : mêmes partitions (SHA-256) et mêmes métriques à graine égale
+[ok] fuite piégée détectée (partitions) : identifiant toy0024 présent dans le test et le pli 0
+[ok] fuite piégée détectée (quasi-doublon) : similarité 0.8571
+{"ok": true, "seconds": 0.7}

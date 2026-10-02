@@ -1,0 +1,16 @@
+{
+  "created_at": "2026-10-01T21:43:41Z",
+  "kind": "data-intake",
+  "metrics": {
+    "common_identical_text": 4220,
+    "json_total": 4259,
+    "only_json": 39,
+    "only_parquet": 34,
+    "parquet_total": 4254
+  },
+  "run_id": "20261001-214341-parhaf-format-gap",
+  "schema": "mini-1",
+  "slug": "parhaf-format-gap",
+  "status": "ok",
+  "summary": "Parquet et JSON canonique PARHAF ne contiennent pas les memes patients : 4220 communs identiques, 39 seulement JSON, 34 seulement parquet, tous pool CU 5a"
+}

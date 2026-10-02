@@ -1,0 +1,30 @@
+{
+ "n": 3586,
+ "n_classes_scored": 17,
+ "protocol_threshold_points": 3.0,
+ "stratified_folds": {
+  "macro_f1_author_only": 0.3765,
+  "macro_f1_specialty_only": 0.3851,
+  "macro_f1_majority": 0.0252,
+  "accuracy_author_only": 0.5613,
+  "accuracy_specialty_only": 0.6185,
+  "diff_author_minus_specialty": -0.0086,
+  "diff_ci95": [
+   -0.0216,
+   0.0038
+  ]
+ },
+ "control_folds_by_author": {
+  "macro_f1_author_only": 0.0252,
+  "macro_f1_specialty_only": 0.3841,
+  "macro_f1_majority": 0.0252,
+  "accuracy_author_only": 0.273,
+  "accuracy_specialty_only": 0.6082,
+  "diff_author_minus_specialty": -0.3588,
+  "diff_ci95": [
+   -0.3694,
+   -0.3475
+  ]
+ },
+ "shortcut_flagged": false
+}

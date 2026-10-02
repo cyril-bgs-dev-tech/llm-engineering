@@ -1,0 +1,71 @@
+{
+ "chapter": {
+  "classes": 21,
+  "classes_lt_5": 3,
+  "classes_lt_10": 3,
+  "classes_lt_20": 4,
+  "classes_lt_30": 4,
+  "classes_lt_50": 7,
+  "exemples_dans_classes_lt_20": 18,
+  "top5": {
+   "II": 1187,
+   "X": 486,
+   "XIV": 382,
+   "XI": 368,
+   "IX": 341
+  },
+  "bottom5": {
+   "XXII": 31,
+   "XVII": 10,
+   "XVI": 4,
+   "VIII": 2,
+   "VII": 2
+  }
+ },
+ "block": {
+  "classes": 165,
+  "classes_lt_5": 55,
+  "classes_lt_10": 77,
+  "classes_lt_20": 105,
+  "classes_lt_30": 120,
+  "classes_lt_50": 138,
+  "exemples_dans_classes_lt_20": 635,
+  "top5": {
+   "C15-C26": 268,
+   "C30-C39": 208,
+   "C76-C80": 148,
+   "C50-C50": 142,
+   "J09-J18": 131
+  },
+  "bottom5": {
+   "G35-G37": 1,
+   "H46-H48": 1,
+   "B35-B49": 1,
+   "N99-N99": 1,
+   "A50-A64": 1
+  }
+ },
+ "cat3": {
+  "classes": 554,
+  "classes_lt_5": 335,
+  "classes_lt_10": 424,
+  "classes_lt_20": 506,
+  "classes_lt_30": 528,
+  "classes_lt_50": 545,
+  "exemples_dans_classes_lt_20": 2324,
+  "top5": {
+   "C34": 192,
+   "C50": 142,
+   "C18": 76,
+   "C79": 71,
+   "D50": 66
+  },
+  "bottom5": {
+   "T40": 1,
+   "N99": 1,
+   "Q55": 1,
+   "A63": 1,
+   "R32": 1
+  }
+ }
+}

@@ -1,0 +1,26 @@
+{
+  "created_at": "2026-10-01T21:50:36Z",
+  "kind": "measure",
+  "metrics": {
+    "disk_free_gib": {
+      "ext4_root": 33,
+      "mnt_d": 186
+    },
+    "ext4_scratch_write_read_MBps": [
+      6031,
+      8160
+    ],
+    "gpu": "NVIDIA GeForce RTX 5090, 610.47, 32607 MiB, 3088 MiB",
+    "mnt_d_write_read_MBps": [
+      209,
+      272
+    ],
+    "nproc": 32,
+    "ram_gib_total_visible": 68.7
+  },
+  "run_id": "20261001-215036-rm06-machine-wsl",
+  "schema": "mini-1",
+  "slug": "rm06-machine-wsl",
+  "status": "ok",
+  "summary": "WSL voit 68.7 Gio de RAM (CLAUDE.md disait 96), /mnt/d environ 30 fois plus lent qu'ext4, ext4 33 Gio libres"
+}
