@@ -41,16 +41,25 @@ lines = {
 }
 total_low = sum(a for a, _ in lines.values())
 total_high = sum(b for _, b in lines.values())
-pess_extra_low = 5 * EPOCHS * (t_pes - t_opt)
-pess_extra_high = 5 * EPOCHS * (t_pes_hi - t_opt_hi)
+student_h = {n.split(" ")[0]: v["heures_pli_epoque_optimiste"] for n, v in SOURCE.items() if "élève" in n}
+teacher_h = {n.split(" ")[0]: (v["heures_pli_epoque_optimiste"], v["heures_pli_epoque_pessimiste"]) for n, v in SOURCE.items() if "prof" in n}
+FOLD_RUNS = 4 + 5 + 1 + 12  # réglage de la référence, variance, rejeu, réglage des trois variantes (un pli chacun)
+combos = {}
+for s_name, hs in student_h.items():
+    for t_name, (t_o, t_p) in teacher_h.items():
+        base = 5.76 + (FOLD_RUNS + 20 * DEV_OVER_FOLD) * EPOCHS * hs
+        combos[f"{s_name} + {t_name}"] = [round(base + 6 * EPOCHS * t_o, 1), round(base + 6 * EPOCHS * t_p, 1)]  # optimiste, pessimiste (professeur P2-01 et P2-02)
+pess_extra_low = 6 * EPOCHS * (t_pes - t_opt)  # le réglage P2-01 (1 pli) compte aussi au débit pessimiste
+pess_extra_high = 6 * EPOCHS * (t_pes_hi - t_opt_hi)
 record = {
-    "kind": "measure", "slug": "budget-v2-premier-cycle", "status": "ok",
-    "summary": "Budget du premier cycle apres relecture du 03/10/2026 : reglage sur une graine pour toutes les familles, avec P2-01 et P1-26 ajoutes ; hypotheses, pas des durees ; postes non comptes listes",
+    "kind": "measure", "slug": "budget-v3-premier-cycle", "status": "ok",
+    "summary": "Budget du premier cycle (v3, corrige P2-01 au debit pessimiste ; combinaisons eleve et professeur) apres relecture du 03/10/2026 : reglage sur une graine pour toutes les familles, avec P2-01 et P1-26 ajoutes ; hypotheses, pas des durees ; postes non comptes listes",
     "params": {"source_run": "20261002-115918-p0-45-budget-hypotheses", "epochs": EPOCHS, "dev_over_fold_patients": round(DEV_OVER_FOLD, 4), "student_low": "Gemma-4-E4B", "student_high": "Qwen3.5-9B"},
     "metrics": {
         "lines_hours_low_high": {k: [round(a, 2), round(b, 2)] for k, (a, b) in lines.items()},
         "total_hours_optimistic_low_high": [round(total_low, 1), round(total_high, 1)],
-        "total_hours_pessimistic_teacher_only_low_high": [round(total_low + pess_extra_low, 1), round(total_high + pess_extra_high, 1)],
+        "total_hours_pessimistic_teacher_incl_p2_01_low_high": [round(total_low + pess_extra_low, 1), round(total_high + pess_extra_high, 1)],
+        "total_optimistic_pessimistic_by_student_teacher": combos,
         "not_counted": ["pre-entrainement tache voisine (P2-07)", "spike de distillation (RM-19)", "encodeur 4 taux (P1-07)", "relances apres panne", "inference hors pli", "calibration et conforme", "chargements", "vagues V2 a V5"],
     },
 }
