@@ -9,7 +9,8 @@ Une décision structurante, un fichier `ADR-NNN-titre.md`, jamais supprimé : un
 | ADR-003 | Location de GPU, revue croisée externe, relecture d'étiquettes | P0-03 | Non décidé, daté |
 | ADR-006 | Porte RM-08 : viabilité des données, GO au niveau chapitre | RM-08 | Acceptée provisoirement |
 | ADR-005 | Jeu de travail PARHAF : intersection des deux formats | P0-28 | Proposée |
-| ADR-004 | Cap du premier cycle : objectif neutre, métrique primaire, « local », B, N, seuil utile | RM-02 | Proposée, valeurs chiffrées non fixées |
-| ADR-007 | Estimand, rééchantillonnage hiérarchique, règle de décision à trois verdicts, seuil utile | RM-11 | Proposée, δ, K et B à fixer par Cyril |
+| ADR-004 | Cap du premier cycle : objectif neutre, métrique primaire, « local », B, N, seuil utile | RM-02 | Valeurs chiffrées fixées (B = 90 h, N = 4, δ = 2,0), « local » provisoire |
+| ADR-007 | Estimand, rééchantillonnage hiérarchique, règle de décision à trois verdicts, seuil utile | RM-11 | Acceptée le 03/10/2026 (δ = 2,0, K = 5) |
 | ADR-008 | Dépôt GitHub privé, intégration continue, vitrine à décider ; remplace la plateforme d'ADR-002 | P5-06 (avancée) | Acceptée sur demande de Cyril |
-| ADR-009 | Présélection de l'élève du premier cycle : trois candidats, deux taux chacun, règle de choix écrite avant les résultats | RM-13 | Acceptée provisoirement, à ratifier |
+| ADR-009 | Présélection de l'élève du premier cycle : trois candidats, deux taux chacun, règle de choix écrite avant les résultats | RM-13 | Acceptée (ratifiée le 03/10/2026) |
+| ADR-010 | Écarts du protocole au plan V6 et au backlog (relecture adversariale) | P0-46 | Acceptée le 03/10/2026 |

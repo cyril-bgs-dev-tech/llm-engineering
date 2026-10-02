@@ -1,7 +1,7 @@
 # ADR-009 : présélection de l'élève du premier cycle (micro-tâche RM-13)
 
 ## Status
-Acceptée **provisoirement** le 02/10/2026, à ratifier par Cyril. La règle est écrite **avant tout résultat de macro-F1** sur la tâche principale : aucun n'existe à cette date (seuls des spikes de mémoire et de compatibilité ont tourné). Elle ne s'applique qu'au premier cycle.
+**Acceptée** : écrite le 02/10/2026, ratifiée par Cyril le 03/10/2026. La règle est écrite **avant tout résultat de macro-F1** sur la tâche principale : aucun n'existe à cette date (seuls des spikes de mémoire et de compatibilité ont tourné). Elle ne s'applique qu'au premier cycle.
 
 ## Date
 2026-10-02
@@ -19,7 +19,7 @@ P1-11 crible deux à trois points de départ, P1-12 choisit l'élève. Le spike 
 | Qwen3.5-9B | A | 19,9 Gio | taille intermédiaire, même famille |
 | Gemma-4-E4B | B | 17,7 Gio | autre famille de tokenizer, pour tester si la famille compte |
 
-Tous sont des modèles **généralistes** : aucun modèle médical ne figure dans la liste tant que Cyril n'a pas accepté les conditions de MedGemma (ADR-001, Q6). S'il l'accepte, MedGemma-4B s'ajoute comme quatrième candidat. Mistral Small 3.2 24B et les professeurs ne sont pas candidats élèves (coût hors de proportion). La distillation se faisant **au niveau des classes** (probabilités sur les 17 classes), une différence de vocabulaire entre professeur et élève ne gêne pas.
+Tous sont des modèles **généralistes** : aucun modèle médical ne figure dans la liste tant que Cyril n'a pas accepté les conditions de MedGemma (ADR-001, Q6). S'il l'accepte, MedGemma-4B s'ajoute comme quatrième candidat. Mistral Small 3.2 24B et les professeurs ne sont pas candidats élèves (coût hors de proportion). La distillation se faisant **au niveau des classes** (probabilités sur les 18 sorties : 17 chapitres plus `AUTRE`), une différence de vocabulaire entre professeur et élève ne gêne pas.
 
 **Protocole du criblage (P1-11).** Un seul pli de développement (pli 0), même rang, même nombre d'époques, même longueur maximale, même graine pour les trois candidats ; **deux taux d'apprentissage par candidat**, les deux bornes de la grille de P1-13 (1e-5 et 1e-4), le meilleur des deux est retenu pour chacun. Les valeurs exactes et le nombre d'époques sont fixés dans la fiche préenregistrée de P1-11, avant le premier run.
 
@@ -32,6 +32,6 @@ Tous sont des modèles **généralistes** : aucun modèle médical ne figure dan
 - **Intégrer un modèle médical** : bloqué par une décision de Cyril.
 
 ## Consequences
-- Coût estimé du criblage, hypothèse non annoncée comme durée : environ 5,8 heures de GPU (3 candidats × 2 taux × 2 époques d'un pli ; voir PROTOCOLE.md section 5), à recaler par RM-16.
+- Coût estimé du criblage, hypothèse non annoncée comme durée : environ 5,8 heures de GPU (3 candidats × 2 taux × 2 époques d'un pli ; voir PROTOCOLE.md section 5), à recaler par RM-16 ; la section 5 du protocole l'a repris à 5,8 h le 03/10/2026.
 - **Limites dites** : un pli, une graine : le criblage choisit un point de départ, il ne démontre aucune supériorité ; le choix de l'élève reste ouvert si le balayage de P1-13 le contredit nettement, par une nouvelle ADR et non en silence.
 - Le résultat remplace la ligne « ADR-élève » de l'index.
