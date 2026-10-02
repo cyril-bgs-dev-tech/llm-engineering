@@ -127,3 +127,56 @@ Format : le plus récent en haut. Une entrée par tâche ou par événement, ave
 - Page `tripod-llm-reporting-guideline` (A8) : 17 notes à lignes, tableau des items qui touchent une étude de fine-tuning pour la classification (5, 6, 7, 12, 13, 14c-f, 16, 19b, 19d). Texte brut `raw/pmc-12104976-tripod-llm.txt` (page PMC du manuscrit d'auteur, nettoyée de ses balises). Licence de réutilisation non vérifiée : items résumés, pas recopiés.
 - Preuve : `lint-mechanical.py` sans constat (orphelins corrigés par liens retour), `check_wiki` et `check_wiki_quotes` verts. **Aucune conformité TRIPOD-LLM n'est revendiquée** : la page liste ce qu'il faudra rapporter.
 - Progression : 49 tâches cochées sur 165. RM-18 reste ouvert (A2 et A3, Q10).
+
+## 02/10/2026 : valeurs de Cyril enregistrées, relecture de cohérence, alerte de puissance
+- Valeurs fixées par Cyril : δ = 2,0 ; K = 5 ; B = 90 h (réponse à `AskUserQuestion`). Commits `4b74439`, `e0f6374`, `feb7f11`, `4dbf597` poussés, CI verte.
+- Relecture de cohérence de `PROTOCOLE.md` § 6 contre ADR-007 (par moi, **pas** la relecture adversariale en contexte neuf de P0-46, qui reste à faire avant le gel) : deux défauts corrigés. (1) La lettre B désignait à la fois le budget de GPU et les 10 000 répliques de bootstrap : ADR-007 parle maintenant de R. (2) § 6.4 admettait un verdict avec 3 graines ou plus alors qu'ADR-007 impose la présentation « non combiné » sous K = 5 : § 6.4 s'aligne sur ADR-007.
+- **Alerte** : esquisse de puissance enregistrée (`scripts/spikes/power_sketch.py`, run `20261002-200851-power-sketch-ic-width`). Sur 628 patients simulés, l'IC apparié à 98,33 % fait 7,5 à 13,5 points de large pour 4 admis. Prédictions simulées, borne basse : à confirmer ou infirmer par RM-15. Question Q12. Non commité.
+
+## 03/10/2026 : relecture adversariale de PROTOCOLE.md (P0-46), constats classés, gel NON fait
+Relecteur : sous-agent `code-reviewer` du dépôt, contexte neuf, lecture seule, rien envoyé hors machine (autorisé par Cyril le 03/10). Verdict : **ne pas geler en l'état** (4 bloquants). J'ai vérifié ses chiffres avant d'agir (effectifs du test, 2,9 h contre 5,8 h, plis de contrôle, raccourci d'auteur) : tous exacts.
+
+| # | Gravité | Sujet | Classement | Où |
+|---|---|---|---|---|
+| 1 | bloquant | verdict impossible avec δ = 2,0 ; repli laissé libre | **accepté, décision de Cyril (C1)** : repli écrit (EXPLORE si largeur > 4 points, δ inchangé) | 6.3 |
+| 2 | bloquant | B = 90 h ne finance pas le réglage égal des variantes ; criblage compté 2,9 h au lieu de 5,8 h | **accepté, corrigé** (section 5 : 51 à 76 h sans réglage des variantes, 76 à 122 h avec 3 graines de réglage, 54 à 81 h avec 1 graine) ; **décision de Cyril (C2)** | 5, 6.10 |
+| 3 | bloquant | mentions de brouillon et de proposition dans le fichier haché ; ADR-009 provisoire | **accepté, corrigé** (liste de mentions, grep au gel) ; ratification d'ADR-009 = **C3** | 6.10 |
+| 4 | bloquant | empreinte de fichier entier invérifiable ; section 5 condamnée à changer | **accepté, corrigé** : instantané dans `experiments/frozen/`, exception de la section 5 | 6.10 |
+| 5 | important | « une seule ouverture » contre couverture conforme, candidat final | **accepté, corrigé** : un seul script, « consommé sans résultat » défini | 6.8 |
+| 6 | important | graine défaillante : « non résolu d'office » contredit ADR-007 | **accepté, corrigé** : panne relancée, divergence non remplacée, K < 5 = pas de verdict | 6.4 |
+| 7 | important | recettes confirmatoires non définies, règle de choix du taux absente | **accepté, corrigé** (professeur, α, T, pré-entraînement fixés avant ; départage ; bord de grille) | 6.5 |
+| 8 | important | paramètres statistiques indéfinis (type d'intervalle, niveau EXPLORE, Wilson, Holm, générateur) | **accepté, corrigé** | 6.2 |
+| 9 | important | REP/ADAPT/EXPLORE se recouvrent | **accepté, corrigé** (précédence, statut séparé) | 6.7 |
+| 10 | important | contradictions avec P2-08, P3-07, candidat final du plan | **accepté** : estimations exploratoires, TF-IDF et encodeurs EXPLORE ; **confirmation de Cyril (C5)** | 6.2 |
+| 11 | important | valeurs des sections 1 à 4 « proposées par Claude » | **accepté** : confirmation de Cyril (**C4**) | 6.10 |
+| 12 | important | traitement d'`AUTRE` non uniforme | **accepté, corrigé** (18 sorties, macro-F1 sur 17 ; ADR-009 corrigée) | 6.1 |
+| 13 | mineur | raccourci d'auteur conditionnel alors que mesuré | **accepté, corrigé** (−0,86 point, non signalé) | 6.8 |
+| 14 | mineur | effectifs du test faux dans ADR-007 ; ADR-006 périmée | **accepté, corrigé** (champ `test_class_counts` ajouté à `make_splits`, partition inchangée, empreinte 5c06b068 ; esquisse de puissance refaite : run `20261002-221006-power-sketch-ic-width-v2`, 7,8 à 13,7 points ; erratum) | 6.1, 6.11, ADR-007 |
+| 15 | mineur | unité de δ (points ou 0 à 1) | **accepté, corrigé** | 6.1 |
+| 16 | mineur | fuite professeur/élève en développement ; échangeabilité conforme ; égalité à trois candidats ; même graine ; facteur (K−1)/K | **accepté en partie** : fuite bornée dite (6.8), échangeabilité dite (6.6) ; **non traité** : règle d'égalité d'ADR-009 avec un troisième candidat indiscernable, facteur (K−1)/K (négligeable devant les patients) | 6.6, 6.8 |
+
+**Ma première esquisse était fausse sur un point** : elle utilisait des effectifs de test proportionnels (15 % des effectifs de classe) que ADR-007 décrivait comme « réels ». Corrigé ci-dessus ; l'ancien run reste au registre (ajout seul) et est cité comme tel.
+**À signaler honnêtement** : le relecteur dit avoir recalculé les effectifs par classe du test depuis le parquet et les identifiants de split, donc lu les étiquettes de la partition scellée **hors de la porte d'accès** (comptes agrégés, aucun usage pour un choix). Je les ai reproduits par `scripts/make_splits.py` (module autorisé à fabriquer les partitions), et ils sont maintenant publiés dans `splits_summary.json`. Les prochaines relectures n'ont pas à toucher aux étiquettes du test.
+**Gel** : non fait. Il manque C1 à C5 de Cyril, puis une seconde relecture de la version corrigée.
+
+## 03/10/2026 : seconde relecture adversariale (version corrigée), constats classés, gel NON fait
+Relecteur : second sous-agent `code-reviewer`, contexte neuf, lecture seule, **sans lecture d'aucune étiquette** (consigne respectée). Verdict : ne pas geler (3 bloquants, 8 importants, mineurs). Ses recalculs de la section 5 concordent avec les miens ; la simulation et les effectifs aussi.
+
+| # | Gravité | Constat | Classement |
+|---|---|---|---|
+| 1 | bloquant | l'extension de grille 2e-4 casse l'ordre du backlog (référence gelée avant les variantes) et fait passer N de 4 à 5 | **accepté, règle supprimée** : grille jamais étendue, risque de sous-réglage signalé au bord (6.5) |
+| 2 | bloquant | règle de puissance inapplicable (source des prédictions, sous-échantillonnage infaisable sur un pli, paramètres, mauvaise porte, graines) | **accepté, réécrite** : porte RM-17, cinq graines de P1-19, bootstrap dans le pool du pli 0 aux effectifs du test, 10 paires, moyenne des largeurs, seuil strict 4,0, sortie anticipée ; ADR-007 et backlog alignés (6.3) |
+| 3 | bloquant | arrêt anticipé (section 5) contre pannes (6.4) ; une divergence tue tous les verdicts | **accepté, réécrit** : une définition (`failed`), classement par le code, risque dit à Cyril (**C8**) |
+| 4 | important | budget incomplet (puissance, 2e-4, P2-01, P1-26, RM-19, P1-07, P2-07), « pessimiste » seulement pour les professeurs | **accepté** : run `20261002-223418-budget-v2-premier-cycle` (57,6 à 86,3 h ; 65,8 à 97,5 h) ; postes non comptés listés ; **décision de Cyril (C7)** |
+| 5 | important | conflits restants avec backlog et plan | **accepté** : cellules de P1-13, P2-08, P3-07, RM-17, RM-20 mises à jour, `todo.md` régénéré, **ADR-010** |
+| 6 | important | P3-07 et P2-08 sans évaluation possible hors RM-20 | **accepté** : « entraînent sans évaluer » (6.8) |
+| 7 | important | branches réussite et échec de 6.3 incomplètes | **accepté** : porte, consignation du basculement, pas un changement de famille (6.3, 6.10) |
+| 8 | important | test consommé sans résultat, cas non prévus | **accepté** : condition préalable (K = 5 complet), deux temps A et B (6.8) |
+| 9 | important | verdict résolu rare en cas favorable | **accepté, vérifié** (≈ 12 % pour un vrai gain de 3 points à largeur 4) ; dit en 6.3 ; **C8** |
+| 10 | important | règles de gel incomplètes (grep, périmètre, errata dans le fichier haché, pas de contrôle de l'instantané) | **accepté** : grep insensible à la casse, périmètre élargi, errata hors fichier (`experiments/ERRATA-PROTOCOLE.md`), `scripts/check_frozen.py` dans `make check`, « avant P1-03 » |
+| 11 | important | valeurs implicites (époques, plafond de vague, candidat final, fiches) | **accepté** : 2 époques pour toutes les recettes (**C6**), plafond = B avec alerte à 80 %, candidat final désigné par Cyril, empreinte datée des fiches |
+| 12 | important | fuite des candidats distillés dans la calibration conforme | **accepté** : dite et rapportée avec réserve (6.6), pas de professeurs imbriqués |
+| 13 à 18 | mineur | chiffres ADR-007, départage, relance micro-lot, repli (3) et « local », minimum 5,7, facteur (K−1)/K | **acceptés et traités**, sauf (K−1)/K et couverture de l'intervalle à 83 répliques par queue : **à vérifier en P1-02** |
+
+**Écart de méthode à dire** : `src/llmft/frozen.py` et son test ont été écrits dans le même geste, pas test d'abord en rouge. Les 4 tests passent ; ils couvrent les quatre cas.
+**Gel** : non fait. Il manque C6, C7, C8 de Cyril, puis une dernière passe limitée aux lignes modifiées depuis la seconde relecture (6.9), puis les empreintes. Non commité depuis `4dbf597`.
