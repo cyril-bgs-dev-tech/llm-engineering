@@ -176,7 +176,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] P0-47 (doc) : Ingérer au wiki trois papiers du Lot A (A4 PARHAF, A5, A6 ; voir `BOITE_A_OUTILS.md`) ; A1, A2, A3 et A7 par RM-18, A8 par RM-23
   - Preuve de fin : Trois pages sources à citations par lignes ; `wiki-lint` sans erreur
   - Skills : wiki-ingest ; dépendances : aucune
-- [ ] P0-46 (doc) : Rédiger `PROTOCOLE.md` : métriques, tests statistiques, seuils de décision, graines, niveau conforme, règles de gel ; chaque expérience porte l'étiquette REP (vérification d'un mécanisme exact de la recette source), ADAPT (transfert au clinique français) ou EXPLORE ; développement sur plis, confirmation sur le test scellé ouvert une seule fois ; relecture adversariale en contexte neuf ; calcul de son SHA-256
+- [x] P0-46 (doc) : Rédiger `PROTOCOLE.md` : métriques, tests statistiques, seuils de décision, graines, niveau conforme, règles de gel ; chaque expérience porte l'étiquette REP (vérification d'un mécanisme exact de la recette source), ADAPT (transfert au clinique français) ou EXPLORE ; développement sur plis, confirmation sur le test scellé ouvert une seule fois ; relecture adversariale en contexte neuf ; calcul de son SHA-256
   - Preuve de fin : Fichier figé, empreinte consignée avant tout run de P1 et dans une page wiki datée, constats de la relecture classés
   - Skills : experiment-preregistration, doubt-driven-development ; dépendances : P0-32, P0-33, P0-34, P0-41, P0-44, P0-45, RM-02, RM-07, RM-11, RM-12
 - [ ] G-P0 (doc) : Scorecard G-P0 : note Q1 à Q12, une preuve par note, plan de rattrapage pour toute note sous le plancher du plan V6
@@ -225,7 +225,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
   - Preuve de fin : 4 runs ; courbe taux contre macro-F1
   - Skills : lora-classifier-recipe, vram-preflight ; dépendances : P1-12
 - [ ] P1-19 (GPU) : Variance entre graines : cinq graines de la configuration réglée
-  - Preuve de fin : Écart-type publié ; règle de décision de RM-11 appliquée
+  - Preuve de fin : Écart-type publié ; règle de décision de RM-11 appliquée ; runs sur le pli 0, prédictions par patient enregistrées avec empreinte (entrée de la règle de puissance, PROTOCOLE.md 6.3) ; registre étendu : classement divergence ou panne par le code, test sur cas piégés (perte non finie puis mémoire, mémoire seule, relance de la même graine)
   - Skills : paired-comparison, vram-preflight ; dépendances : P1-13
 - [ ] P1-20 (doc) : Geler la configuration de référence (LoRA réglée) : fichier de config et run_id
   - Preuve de fin : `configs/reference.yaml` citant le run_id
@@ -272,23 +272,23 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P2-06 (mesure) : Audit des étiquettes : cleanlab sur les probabilités hors pli, file de relecture, relecture de 100 cas pour cohérence avec les définitions
   - Preuve de fin : `relabel_queue.csv` et rapport ; aucune étiquette de test modifiée
   - Skills : distillation-pipeline ; dépendances : P2-02
-- [ ] P2-07 (GPU) : Pré-entraînement sur tâche voisine (`parhaf_specialty`, MorFITT en option), fusion de la LoRA, tête neuve
+- [ ] P2-07 (GPU) : Pré-entraînement sur tâche voisine (`parhaf_specialty`, MorFITT en option), fusion de la LoRA, tête neuve ; réglage du taux d'apprentissage de H2 sur le pli 0 (4 taux × 1 graine)
   - Preuve de fin : Runs et point de contrôle fusionné
   - Skills : lora-classifier-recipe, vram-preflight ; dépendances : P1-20, P0-37
 - [ ] P2-08 (mesure) : Entraîner H2 (tâche voisine) sur cinq graines ; l'évaluation est celle de RM-20, aucune estimation de développement
-  - Preuve de fin : Runs `ok` au registre ; aucun verdict avant RM-20
+  - Preuve de fin : Runs au registre (`ok` ou `failed` classés) ; ce sont les mêmes runs H2 que ceux de P3-07, sans double comptage ; aucun verdict avant RM-20
   - Skills : paired-comparison ; dépendances : P2-07, P1-19
 - [ ] G-P2 (doc) : Scorecard G-P2
   - Preuve de fin : `scorecards/G-P2.md`
   - Skills : claim-gate ; dépendances : *
-- [ ] P3-02 (GPU) : Élève distillé d'un professeur, alpha et T par défaut
+- [ ] P3-02 (GPU) : Élève distillé d'un professeur, alpha et T fixés dans la fiche préenregistrée (non réglés) ; réglage du taux d'apprentissage de chaque variante, 4 taux × 1 graine sur le pli 0 (PROTOCOLE.md 6.5)
   - Preuve de fin : Run au registre
   - Skills : distillation-pipeline, vram-preflight ; dépendances : P3-01, P2-03
 - [ ] P3-07 (mesure) : Entraîner les 20 modèles gelés (4 recettes × 5 graines : référence, distillation, tâche voisine, les deux), sans les évaluer ; l'évaluation est celle de RM-20
-  - Preuve de fin : 20 runs `ok` au registre avec leurs prédictions de texte du test enregistrées au temps A de RM-20
+  - Preuve de fin : 20 runs au registre (`ok` ou `failed` classés) avec adaptateurs sauvegardés et leur empreinte ; les prédictions sur le texte du test relèvent du temps A de RM-20
   - Skills : paired-comparison ; dépendances : P3-02, P2-08
 - [ ] RM-20 (mesure) : Ouverture unique du test scellé pour la comparaison confirmatoire, via le seul script autorisé
-  - Preuve de fin : Un seul accès journalisé ; verdict confirmatoire en trois valeurs seulement si la règle de puissance de PROTOCOLE.md 6.3 a réussi, sinon évaluation du candidat final sans verdict ; procédure en deux temps de 6.8
+  - Preuve de fin : Un seul accès journalisé ; verdict confirmatoire en trois valeurs seulement si la règle de puissance de PROTOCOLE.md 6.3 a réussi, sinon évaluation du candidat final sans verdict ; procédure en deux temps de 6.8 : code `sealed.py` à deux fonctions écrit avant, répétition générale du temps B réussie avant l'ouverture, marqueur à chemin fixe
   - Skills : leakage-guard ; dépendances : P3-07, P0-34
 - [ ] RM-21 (décision) : Porte go/no-go après le verdict de distillation : le meilleur candidat mérite-t-il calibration et robustesse, ou le budget manque-t-il pour lever l'incertitude
   - Preuve de fin : Décision datée

@@ -1,0 +1,140 @@
+# Contrat de tâche généré par scripts/gen_task_contracts.py ; ne pas éditer à la main.
+task_id: parhaf_cim10_chapter
+title: Chapitre CIM-10 du diagnostic principal (PARHAF)
+type: multiclass
+input:
+  unit: patient
+  max_tokens: 4096
+  truncation: head_tail
+classes:
+- id: ch_i
+  name: 'Chapitre I : Certaines maladies infectieuses et parasitaires'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage A00-B99 (chapitre I,
+    Certaines maladies infectieuses et parasitaires).
+  exclusions: []
+- id: ch_ii
+  name: 'Chapitre II : Tumeurs'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage C00-D48 (chapitre II,
+    Tumeurs).
+  exclusions:
+  - Une séance de chimiothérapie codée Z51.1 relève du chapitre XXI, pas de II, même si la maladie sous-jacente
+    est une tumeur.
+- id: ch_iii
+  name: 'Chapitre III : Maladies du sang et des organes hématopoïétiques et certains troubles du système immunitaire'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage D50-D89 (chapitre III,
+    Maladies du sang et des organes hématopoïétiques et certains troubles du système immunitaire).
+  exclusions: []
+- id: ch_iv
+  name: 'Chapitre IV : Maladies endocriniennes, nutritionnelles et métaboliques'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage E00-E90 (chapitre IV,
+    Maladies endocriniennes, nutritionnelles et métaboliques).
+  exclusions: []
+- id: ch_v
+  name: 'Chapitre V : Troubles mentaux et du comportement'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage F00-F99 (chapitre V,
+    Troubles mentaux et du comportement).
+  exclusions: []
+- id: ch_vi
+  name: 'Chapitre VI : Maladies du système nerveux'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage G00-G99 (chapitre VI,
+    Maladies du système nerveux).
+  exclusions: []
+- id: ch_ix
+  name: 'Chapitre IX : Maladies de l''appareil circulatoire'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage I00-I99 (chapitre IX,
+    Maladies de l'appareil circulatoire).
+  exclusions: []
+- id: ch_x
+  name: 'Chapitre X : Maladies de l''appareil respiratoire'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage J00-J99 (chapitre X,
+    Maladies de l'appareil respiratoire).
+  exclusions: []
+- id: ch_xi
+  name: 'Chapitre XI : Maladies de l''appareil digestif'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage K00-K93 (chapitre XI,
+    Maladies de l'appareil digestif).
+  exclusions: []
+- id: ch_xii
+  name: 'Chapitre XII : Maladies de la peau et du tissu cellulaire souscutané'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage L00-L99 (chapitre XII,
+    Maladies de la peau et du tissu cellulaire souscutané).
+  exclusions: []
+- id: ch_xiii
+  name: 'Chapitre XIII : Maladies du système ostéoarticulaire, des muscles et du tissu conjonctif'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage M00-M99 (chapitre XIII,
+    Maladies du système ostéoarticulaire, des muscles et du tissu conjonctif).
+  exclusions: []
+- id: ch_xiv
+  name: 'Chapitre XIV : Maladies de l''appareil génito-urinaire'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage N00-N99 (chapitre XIV,
+    Maladies de l'appareil génito-urinaire).
+  exclusions: []
+- id: ch_xv
+  name: 'Chapitre XV : Grossesse, accouchement et puerpéralité'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage O00-O99 (chapitre XV,
+    Grossesse, accouchement et puerpéralité).
+  exclusions:
+  - Seuls les codes O relèvent du chapitre XV ; la surveillance de grossesse et les suites de couches codées Z30
+    à Z39 relèvent de XXI.
+- id: ch_xviii
+  name: 'Chapitre XVIII : Symptômes, signes et résultats anormaux d''examens cliniques et de laboratoire, non classés
+    ailleurs'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage R00-R99 (chapitre XVIII,
+    Symptômes, signes et résultats anormaux d'examens cliniques et de laboratoire, non classés ailleurs).
+  exclusions:
+  - 'Un symptôme codé R relève de XVIII même s''il évoque une maladie d''organe : le chapitre suit le code du scénario,
+    pas le sens clinique.'
+- id: ch_xix
+  name: 'Chapitre XIX : Lésions traumatiques, empoisonnements et certaines autres conséquences de causes externes'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage S00-T98 (chapitre XIX,
+    Lésions traumatiques, empoisonnements et certaines autres conséquences de causes externes).
+  exclusions:
+  - Les complications de soins codées T80 à T88 et les empoisonnements relèvent de XIX, pas du chapitre de l'organe
+    touché.
+- id: ch_xxi
+  name: 'Chapitre XXI : Facteurs influant sur l''état de santé et motifs de recours aux services de santé'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage Z00-Z99 (chapitre XXI,
+    Facteurs influant sur l'état de santé et motifs de recours aux services de santé).
+  exclusions:
+  - Les codes Z (motifs de recours, séances, surveillance) relèvent de XXI, pas du chapitre de la maladie qui motive
+    le recours.
+- id: ch_xxii
+  name: 'Chapitre XXII : Codes d’utilisation particulière'
+  definition: Patient dont le diagnostic principal du scénario a un code CIM-10 de la plage U00-U99 (chapitre XXII,
+    Codes d’utilisation particulière).
+  exclusions:
+  - Les codes U relèvent de XXII, dont le COVID-19 (U07.1), et non de I ni de X malgré leur sens clinique.
+- id: autre
+  name: Autre chapitre
+  definition: 'Patient dont le diagnostic principal relève d''un chapitre CIM-10 qui compte moins de 20 patients
+    dans le jeu de travail : VII (H00-H59, 2 patients), VIII (H60-H95, 2 patients), XVI (P00-P96, 4 patients), XVII
+    (Q00-Q99, 10 patients). Le chapitre XX (V01-Y98, causes externes) n''apparaît pour aucun patient du corpus ;
+    un tel code serait rangé ici.'
+  exclusions:
+  - Un chapitre de 20 patients ou plus garde sa classe, même rare (XXII compte 31 patients).
+output:
+  format: '{class_id}'
+metrics:
+  primary: macro_f1
+  secondary:
+  - accuracy
+  - log_loss
+  - ece
+abstention:
+  enabled: false
+source: 'Noms et plages de chapitres : ATIH, CIM-10 FR à usage PMSI, ClaML 2019, reproduits tels quels (mention
+  d''origine, voir data/cards/cim10.md).'
+notes:
+- L'étiquette est le chapitre du code du diagnostic principal du scénario suggéré aux rédacteurs de PARHAF, pas
+  un codage médical ni une lecture du compte rendu. En cas de désaccord entre le texte et le scénario, le scénario
+  fait foi.
+- 'Chaque patient du scénario porte exactement un diagnostic principal ; le chapitre se lit sur les trois premiers
+  caractères du code (la lettre seule ne suffit pas : D et H sont à cheval sur deux chapitres). Les codes à suffixe
+  + ou étendus à 5 caractères sont ramenés à leurs trois premiers.'
+- 'La classe suit le code : pour les frontières entre chapitres, voir les exclusions de chaque classe.'
+- La macro-F1 principale exclut la classe `autre` ; l'exactitude, la perte logarithmique et l'ECE la comptent comme
+  une classe ordinaire.
+- 'Entrée tronquée au-delà de 4096 tokens (2048 premiers et 2048 derniers, PROTOCOLE.md section 1) : concerne 0,2
+  % des patients ; pas d''abstention au premier cycle.'
+- 'Les noms de chapitres reprennent les graphies de l''ATIH sans correction (par exemple « souscutané », « ostéoarticulaire
+  ») : la licence interdit de modifier le texte.'

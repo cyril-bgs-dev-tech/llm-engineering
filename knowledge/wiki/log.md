@@ -37,3 +37,7 @@ Pages créées : limited-impact-medical-adaptation, lmsys-first-place-distillati
 
 ## [2026-10-02] ingest | Lot A, A8 TRIPOD-LLM (RM-23)
 Pages créées : tripod-llm-reporting-guideline. Pages mises à jour : overview, compatibilite-modeles-p0-06, reglage-taux-apprentissage-lora (liens). Source : raw/pmc-12104976-tripod-llm.txt (texte extrait de la page PMC du manuscrit d'auteur). Licence de réutilisation non vérifiée, liste des items résumée et non recopiée.
+
+## [2026-10-03] create | protocole-gele-2026-10-03
+Reason: témoin daté du gel de PROTOCOLE.md (P0-46) : neuf instantanés et leurs empreintes SHA-256.
+Source: experiments/INDEX.md, experiments/frozen/

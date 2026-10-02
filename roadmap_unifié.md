@@ -279,7 +279,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P1-11 | Criblage de 2 à 3 candidats fixés par RM-13 | Un pli, réglages identiques |
 | P1-12 | Choix de l'élève par la règle écrite avant | |
 | RM-16 | Mesure pilote du débit : recaler budgets et calendrier | Première durée annoncée, sur mesure |
-| P1-13 | Balayage du taux d'apprentissage, trois graines | |
+| P1-13 | Balayage du taux d'apprentissage, une graine par taux (ADR-010) | |
 | P1-19 | Variance entre graines, cinq graines | |
 | P1-20 | Geler la configuration de référence | |
 | P1-26 | Rejeu à la même graine, déterminisme | |
@@ -318,7 +318,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P2-08 | Gain de la tâche voisine, test apparié | |
 | G-P2 | Scorecard G-P2 | |
 | P3-02 | Élève distillé | |
-| P3-07 | Verdict apparié V1 : distillation, tâche voisine, les deux | Sur prédictions hors pli |
+| P3-07 | Entraîner les 20 modèles gelés ; l'évaluation est celle de RM-20 (ADR-010) | Pas de verdict avant RM-20 |
 | RM-20 | Ouverture unique du test scellé | Un seul accès journalisé |
 | RM-21 | **Porte go/no-go après le verdict de distillation** | |
 | G-P3 | Scorecard G-P3 | Contre-lecture adversariale des verdicts exigée par le tableau « qui prouve quoi » |
