@@ -9,7 +9,7 @@ from llmft import frozen
 
 
 def main() -> int:
-    problems = frozen.check_index((ROOT / "experiments/INDEX.md").read_text(encoding="utf-8"), ROOT)
+    problems = frozen.check_index((ROOT / "experiments/INDEX.md").read_text(encoding="utf-8"), ROOT, frozen.REQUIRED)
     for p in problems:
         print(f"gel : {p}", file=sys.stderr)
     print("gel : " + ("défauts" if problems else "instantanés conformes à l'index"))

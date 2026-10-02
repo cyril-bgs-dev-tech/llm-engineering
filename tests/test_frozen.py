@@ -39,3 +39,21 @@ def test_missing_snapshot_is_reported(tmp_path):
 def test_rows_without_snapshot_are_ignored(tmp_path):
     only_old = "| Date | Objet | Fichier | SHA-256 | Avant |\n|---|---|---|---|---|\n| 2026-10-02 | x | `PROTOCOLE.md` | `" + "a" * 64 + "` | P0-28 |\n"
     assert frozen.check_index(only_old, tmp_path) == []
+
+
+def test_unreadable_frozen_row_is_reported(tmp_path):
+    bad = "| 2026-10-03 | gel | experiments/frozen/PROTOCOLE.md | pas d'empreinte | P1-02 |\n"
+    problems = frozen.check_index(bad, tmp_path)
+    assert len(problems) == 1 and "illisible" in problems[0]
+
+
+def test_missing_required_entry_is_reported_once_a_snapshot_exists(tmp_path):
+    _, sha = _snapshot(tmp_path)
+    index = _index(tmp_path, "experiments/frozen/PROTOCOLE-2026-10-03.md", sha)
+    problems = frozen.check_index(index, tmp_path, required=("PROTOCOLE", "ADR-007"))
+    assert problems == ["entrée obligatoire absente de l'index : ADR-007"]
+
+
+def test_required_entries_are_not_demanded_before_any_snapshot(tmp_path):
+    only_old = "| Date | Objet | Fichier | SHA-256 | Avant |\n|---|---|---|---|---|\n| 2026-10-02 | x | `PROTOCOLE.md` | `" + "a" * 64 + "` | P0-28 |\n"
+    assert frozen.check_index(only_old, tmp_path, required=("PROTOCOLE",)) == []
