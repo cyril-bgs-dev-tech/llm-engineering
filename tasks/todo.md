@@ -299,7 +299,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 
 ## Étape R10 : fiabilité du meilleur candidat
 
-- [ ] RM-23 (doc) : Ingérer au wiki TRIPOD-LLM (A8) avant la carte de modèle
+- [x] RM-23 (doc) : Ingérer au wiki TRIPOD-LLM (A8) avant la carte de modèle
   - Preuve de fin : Page source à citations ; `wiki-lint` vert
   - Skills : wiki-ingest ; dépendances : P0-47
 - [ ] P4-04 (code) : Calibration par température et ECE avant et après

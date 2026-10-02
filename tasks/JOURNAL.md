@@ -88,3 +88,42 @@ Format : le plus récent en haut. Une entrée par tâche ou par événement, ave
 - `tasks/CONTRAT_DE_TRAVAIL.md` (en attente de validation, § 11), `tasks/QUESTIONS_POUR_CYRIL.md` (Q1 à Q8).
 
 **Prochain pas** : relancer `make check` jusqu'au vert, puis RM-09 (rejouer `make smoke` sur environnement propre), puis R4 dans l'ordre.
+
+## 02/10/2026 : rapport de fin de session (R4 close, G-P0 en attente de Cyril)
+
+**Coché avec preuve (48 tâches sur 165)**
+- R4 : P0-06 (5 registres `p0-06-*-compat`), P0-08 (`p0-08-*-qlora-bench`), P0-45 (`p0-45-budget-hypotheses`), RM-13 (ADR-009). Synthèse : page wiki `compatibilite-modeles-p0-06`.
+- Dépôt privé GitHub + CI verte (ADR-008), run 169 s ; `make check` vert à la fin (165 tests).
+- Test `test_adding_a_task_of_the_same_family…` : écrit désormais sa mesure dans `tmp_path`, plus dans le fichier suivi `results/measures/task_addition_cost.json` (qui n'est plus modifié à chaque exécution). Changement non commité.
+
+**Prouvé / non prouvé**
+- Prouvé : chargement, passage avant-arrière et mémoire des 5 modèles sur la RTX 5090 ; le plus gros professeur tient sous 30 Gio (pic réservé 26,41 Gio).
+- Non prouvé : qualité de classification de tout modèle ; padding à longueurs variables ; MedGemma ; effet isolé de `logits_to_keep=1` ; budget total (hypothèses à recaler par RM-16).
+
+**Portes**
+- G-P0 : bloquée par Q5 (B, N, K, δ). P0-46 (gel de `PROTOCOLE.md`), RM-11 (ADR-007) et tout run comparatif attendent.
+- R0 : P0-02 (Q4), RM-04 (Q3) ; RM-03 : commit initial fait sur demande explicite, case à cocher à la validation de Cyril.
+
+**Questions, par priorité** : Q5, Q3, Q1, Q4, Q6, Q7, Q8 (défauts dans `QUESTIONS_POUR_CYRIL.md`).
+
+**Ressources** : Ollama (pid 204, ~1,4 Go VRAM) laissé en place ; aucun processus à moi sur le GPU. Disque : `artifacts/hf_cache` pèse 102 Go sur `/mnt/d` (85 Go libres), dont les poids Gemma-4-31B (~58 Go) ; aucune location, aucune API payante.
+
+**Ce que je ne fais pas sans toi** : fixer B/N/K/δ, geler le protocole, lancer un run comparatif, créer la vitrine publique, écrire aux auteurs de PARHAF, accepter les conditions de MedGemma.
+
+## 02/10/2026 : brouillon de la section 6 de PROTOCOLE.md (P0-46, non gelé)
+
+- Ajouté : métriques (macro-F1 sur 17 classes, `AUTRE` hors moyenne mais dans les prédictions), renvoi à ADR-007 pour les tests et le verdict, tableau des seuils, graines (`s_k = 1000 + k`, graine défaillante non remplacée), niveau conforme 90 % proposé, étiquettes REP/ADAPT/EXPLORE, séparation développement/confirmation, procédure de relecture adversariale, règles de gel.
+- **Trois marques `[À FIXER Q5]` restent** (δ, K, niveau conforme) ; B et N ne sont pas dans cette section (budget, section 5). Le gel est interdit tant qu'une marque subsiste. Rien n'est figé, aucune empreinte posée, `experiments/INDEX.md` inchangé.
+- Point de vigilance : `macro_f1` reçoit `labels` de l'appelant ; l'exclusion d'`AUTRE` n'est donc pas imposée par le code. À verrouiller par un test dans P1-01 (tâche suivante, après G-P0).
+- Preuve : `make check` vert. Non commité.
+
+## 02/10/2026 : RM-18 partiel (A7 et A1 ingérés, A2 et A3 bloqués)
+- Pages créées : `limited-impact-medical-adaptation` (A7, texte intégral du PDF, 11 notes à lignes) et `lmsys-first-place-distillation-readme` (A1, **README du dépôt**, pas le texte de la solution ; dit en tête de page). `overview`, `log`, index et lien retour mis à jour ; `check_wiki` et `check_wiki_quotes` verts.
+- Bloqué : A2 et A3 sont des pages Kaggle rendues par JavaScript ; curl ne rapporte que le titre et WebFetch n'a reçu aucun texte. Je n'ai ni résumé ni contenu de seconde main dans le wiki (un résumé de moteur de recherche n'est pas une source citable). Question Q10.
+- Écart au skill `wiki-ingest` : l'étape 3 demande d'attendre l'avis de Cyril avant d'écrire ; j'ai écrit sans emphase particulière (contrat : travail autonome) ; les points à retenir sont dans les pages.
+- RM-18 **non coché** : il exige quatre pages.
+
+## 02/10/2026 : RM-23 clos (TRIPOD-LLM ingéré)
+- Page `tripod-llm-reporting-guideline` (A8) : 17 notes à lignes, tableau des items qui touchent une étude de fine-tuning pour la classification (5, 6, 7, 12, 13, 14c-f, 16, 19b, 19d). Texte brut `raw/pmc-12104976-tripod-llm.txt` (page PMC du manuscrit d'auteur, nettoyée de ses balises). Licence de réutilisation non vérifiée : items résumés, pas recopiés.
+- Preuve : `lint-mechanical.py` sans constat (orphelins corrigés par liens retour), `check_wiki` et `check_wiki_quotes` verts. **Aucune conformité TRIPOD-LLM n'est revendiquée** : la page liste ce qu'il faudra rapporter.
+- Progression : 49 tâches cochées sur 165. RM-18 reste ouvert (A2 et A3, Q10).
