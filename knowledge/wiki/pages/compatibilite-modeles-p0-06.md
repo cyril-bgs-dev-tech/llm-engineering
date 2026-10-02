@@ -41,6 +41,7 @@ Mesures faites le 02/10/2026 sur la RTX 5090 (WSL2, torch 2.11.0+cu128, transfor
 - **Non testés** : MedGemma (exclu tant que Cyril n'a pas accepté ses conditions, ADR-001) et Mistral Small 3.2 24B (autorisé, hors liste de P0-06).
 - **Incident de méthode** : un premier run de Gemma-4-E4B a saturé la VRAM (32 Go) pendant des minutes parce que, en voie B, l'activation du gradient checkpointing était sautée sans bruit ; le script l'active désormais sur le modèle de base, consigne son état, et impose un plafond dur de 30 Gio. La part du calcul réduit des logits (`logits_to_keep=1`), appliqué en même temps, n'est pas isolée.
 - Les mesures valent pour ces versions de bibliothèques et ce jour (`vram-preflight`).
+- Le temps, les machines et la mémoire mesurés ici alimentent l'item de rapport « calcul requis » de [[tripod-llm-reporting-guideline](pages/tripod-llm-reporting-guideline.md)].
 
 [^1]: raw/spike-p0-06-qwen3-5-4b.json L6-L12,L26-L29 [synthesis] — classe de chargement, pad, mémoire après chargement, temps par pas, pics alloué et réservé
 [^2]: raw/spike-p0-06-qwen3-5-9b.json L6-L12,L26-L29 [synthesis] — même banc pour le 9B

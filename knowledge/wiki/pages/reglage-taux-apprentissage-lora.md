@@ -27,6 +27,8 @@ Cette page est une synthèse méthodologique ; ses affirmations factuelles renvo
 
 - [[learning-rate-matters](pages/learning-rate-matters.md)]
 - [[causal-llm-classification-heads](pages/causal-llm-classification-heads.md)]
+- [[limited-impact-medical-adaptation](pages/limited-impact-medical-adaptation.md)]
+- [[lmsys-first-place-distillation-readme](pages/lmsys-first-place-distillation-readme.md)] : la recette de distillation à laquelle cette référence LoRA sera comparée.
 
 [^1]: [[learning-rate-matters](pages/learning-rate-matters.md)] §Abstract L18-19 — "once learning rates are properly tuned, all methods achieve similar peak performance"
 [^2]: [[learning-rate-matters](pages/learning-rate-matters.md)] §1 L156-157 — "different methods operate within disparate learning rate ranges"

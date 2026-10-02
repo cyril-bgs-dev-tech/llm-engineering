@@ -31,3 +31,9 @@ Source: wiki/pages/parhaf-corpus-paper.md, wiki/pages/learning-rate-matters.md, 
 ## [2026-10-02] create | compatibilite-modeles-p0-06
 Reason: tableau de compatibilité de classification des cinq modèles testés (P0-06) et banc du plus gros professeur en QLoRA 4 bits (P0-08) ; limites dites (padding non exercé, qualité non mesurée, MedGemma exclu).
 Source: raw/spike-p0-06-qwen3-5-4b.json, raw/spike-p0-06-qwen3-5-9b.json, raw/spike-p0-06-gemma-4-e4b.json, raw/spike-p0-06-qwen3-8-27b.json, raw/spike-p0-06-gemma-4-31b.json
+
+## [2026-10-02] ingest | Lot A, A7 (arXiv 2411.08870) et A1 (README du dépôt du 1er LMSYS), RM-18 partiel
+Pages créées : limited-impact-medical-adaptation, lmsys-first-place-distillation-readme. Pages mises à jour : overview. Sources : raw/arxiv-2411.08870.txt (texte extrait du PDF par pypdf), raw/lmsys-blackpearl-readme.md (README du dépôt GitHub). A2 et A3 non ingérés : pages Kaggle illisibles hors navigateur ; texte à fournir par Cyril (Q10).
+
+## [2026-10-02] ingest | Lot A, A8 TRIPOD-LLM (RM-23)
+Pages créées : tripod-llm-reporting-guideline. Pages mises à jour : overview, compatibilite-modeles-p0-06, reglage-taux-apprentissage-lora (liens). Source : raw/pmc-12104976-tripod-llm.txt (texte extrait de la page PMC du manuscrit d'auteur). Licence de réutilisation non vérifiée, liste des items résumée et non recopiée.
