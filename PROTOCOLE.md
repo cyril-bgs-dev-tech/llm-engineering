@@ -42,7 +42,7 @@ Section ajoutée **après** la mesure des quasi-doublons du jeu de travail (sect
 
 ## 5. Budget de calcul par vague (P0-45), brouillon ajouté le 02/10/2026
 
-Section ajoutée après les empreintes des sections 1 à 4 ; elle ne modifie aucune règle figée. **Ce sont des hypothèses, pas des durées annoncées** : la règle 6 de la feuille de route interdit d'annoncer une durée avant la mesure pilote RM-16 (une LoRA réelle, 100 pas). Le budget **B** (heures de GPU du premier cycle) et le nombre d'essais **N** restent à fixer par Cyril (question Q5, ADR-004, ADR-007).
+Section ajoutée après les empreintes des sections 1 à 4 ; elle ne modifie aucune règle figée. **Ce sont des hypothèses, pas des durées annoncées** : la règle 6 de la feuille de route interdit d'annoncer une durée avant la mesure pilote RM-16 (une LoRA réelle, 100 pas). Le budget **B** est fixé à **90 h** par Cyril le 02/10/2026 (section 6.3) ; le nombre d'essais **N** reste à fixer (question Q11, ADR-004).
 
 **Entrées mesurées.** Débits du banc P0-08 et de P0-06 (runs `p0-06-*` et `p0-08-*` du registre, page [compatibilite-modeles-p0-06](knowledge/wiki/pages/compatibilite-modeles-p0-06.md)) ; longueurs réelles de P0-21 : environ 1 309 tokens par patient avec le tokenizer Qwen et 1 272 avec celui de Gemma ; 2 868 patients d'entraînement par pli de développement (4 plis sur 5, plis de 717 à 718) et 3 586 pour le développement entier. Calcul enregistré au run `p0-45-budget-hypotheses`.
 
@@ -71,3 +71,71 @@ Section ajoutée après les empreintes des sections 1 à 4 ; elle ne modifie auc
 **Arrêt anticipé (proposition, à valider avec B).** Un run est interrompu et enregistré `aborted` avec sa raison si : une perte devient non finie ; ou, après 10 % des pas, son temps projeté dépasse de 50 % la durée préenregistrée ; ou le plafond d'heures de sa vague est atteint. Un run interrompu n'est jamais compté comme un résultat.
 
 **Règle de repli (proposition, ordre à respecter).** Si B ne couvre pas le professeur en cinq plis : (1) réduire le nombre d'époques à la valeur retenue en P1-16 ; (2) choisir un professeur plus petit (Qwen3.5-9B contre un élève de 4B) en le disant dans le rapport ; (3) seulement ensuite, déclencheur de location de la section 5.2 du plan, avec fiche préenregistrée et plafond validé par Cyril. Aucun repli ne change la métrique, les plis ni le test scellé.
+
+## 6. Métriques, tests, seuils, graines, étiquettes et gel (P0-46), brouillon ajouté le 02/10/2026
+
+**Brouillon, non gelé.** Il reprend ADR-004 et ADR-007 (proposées) et n'invente aucune valeur qui appartient à Cyril : chaque valeur encore ouverte porte la marque `[À FIXER Q…]` et le gel (point 6.9) est **interdit tant qu'une marque subsiste**. Les sections 1 à 4 restent figées par leurs empreintes.
+
+### 6.1 Métriques
+
+- **Primaire : macro-F1 au niveau chapitre CIM-10** sur les 17 classes évaluées. La classe `AUTRE` reste dans l'espace de prédiction (un patient d'un chapitre évalué prédit `AUTRE` compte comme faux négatif de son chapitre) mais **n'entre pas dans la moyenne** : l'appelant passe à `llmft.metrics.macro_f1` la liste `labels` des 17 classes seulement. `AUTRE` est rapportée à part (précision, rappel, effectif).
+- **Secondaires** : exactitude ; log loss ; ECE à 10 tranches de confiance égales ; coût (heures de GPU, pic de VRAM, latence par patient). Le coefficient de Spearman (P1-01) ne s'applique pas aux tâches fermées sans ordre : il n'est pas calculé ici.
+- **Par classe** : F1, précision et rappel de chaque chapitre sont toujours publiés avec leur effectif de test ; les chapitres de moins de 10 patients de test sont marqués « effectif très faible » dans tout tableau.
+- Les fonctions sont celles de `src/llmft/metrics.py`, vérifiées sur cas construits à la main (P1-01) ; aucune autre implémentation n'est utilisée pour un chiffre publié.
+
+### 6.2 Tests statistiques et verdict
+
+- **Estimand, rééchantillonnage hiérarchique (patients stratifiés par classe, puis graines), famille confirmatoire de trois comparaisons, intervalle au niveau de Bonferroni de 98,33 %, verdict en trois valeurs** : tels que décrits dans ADR-007 (points 1 à 4), qui fait foi. Ce protocole ne les redéfinit pas ; il les rend contraignants au gel.
+- **Contrôles complémentaires, non décisionnels** : McNemar sur l'exactitude, permutation appariée sur la macro-F1, Wilcoxon sur les scores par pli. Un désaccord entre un contrôle et le verdict est signalé dans le rapport, il ne change pas le verdict.
+- **Nombre de rééchantillonnages** : 10 000, graine de rééchantillonnage fixée à 20261002 (valeur de graine déjà utilisée pour le découpage, conservée pour ne pas multiplier les conventions).
+- **Rien d'autre n'est confirmatoire.** Toute comparaison hors de la famille de trois est étiquetée EXPLORE, avec intervalle non ajusté et sans verdict.
+
+### 6.3 Seuils de décision
+
+| Paramètre | Valeur | Statut |
+|---|---|---|
+| δ, seuil « pratiquement utile » (points de macro-F1) | **2,0** | fixé par Cyril le 02/10/2026 (ADR-007, point 5) |
+| K, graines d'entraînement par recette confirmatoire | **5** | fixé par Cyril le 02/10/2026 (minimum d'ADR-007) |
+| B, heures de GPU du premier cycle | **90 h** | fixé par Cyril le 02/10/2026 ; à recaler après la mesure pilote RM-16, tout changement passant par Cyril |
+| N, essais de réglage par famille de méthodes | `[À FIXER Q11]` ; proposition : 4 (les quatre taux d'apprentissage de P1-13), même budget de réglage pour la référence et chaque variante | égalité de budget entre méthodes (ADR-004) |
+| Règle de puissance avant run confirmatoire | si la largeur de l'intervalle apparié à 98,33 % dépasse 2 × δ, on ne lance pas le test scellé : on réduit l'ambition, on augmente K ou on déclare la comparaison exploratoire | adoptée (ADR-007, point 5), vérifiée en RM-15 |
+| Seuil de quasi-doublon, taille minimale de classe, seuil du raccourci d'auteur | 0,8 ; 20 patients ; 3 points | figés (sections 3 et 4) |
+
+### 6.4 Graines
+
+- **Graine de découpage** : 20261002 (figée, section 3). Elle ne change jamais pendant un cycle.
+- **Graines d'entraînement** : `s_k = 1000 + k` pour `k = 0 … K-1`, la même liste pour toutes les recettes d'une comparaison (appariement). Une graine ne sert qu'à l'initialisation de la tête, de la LoRA (si non pré-entraînée), à l'ordre des lots et à l'abandon.
+- **Une graine défaillante n'est pas remplacée** : un run qui diverge ou s'interrompt reste au registre (`aborted` ou `failed`) et le verdict est calculé sur les graines restantes, en le disant ; si moins de 3 graines restent pour une recette, le verdict est « non résolu » d'office.
+- Les prédictions de chaque (recette, graine) sont conservées par identifiant de patient pour que l'appariement soit rejouable (`run-registry`).
+
+### 6.5 Niveau conforme (prédiction conforme, P4-05)
+
+- **Niveau de couverture visé : 90 %** (α = 0,10), `[À FIXER Q11]` pour confirmation. Les fonctions de score (LAC, APS, RAPS) sont comparées à ce niveau unique ; d'autres niveaux (80 %, 95 %) sont rapportés comme sensibilité.
+- **Données de calibration** : des prédictions hors pli du développement, jamais le test scellé ; la couverture est **mesurée** sur le test scellé, une seule fois, avec l'hypothèse d'échangeabilité énoncée (corpus fictif, patients d'un même corpus : aucune garantie hors de lui).
+- La couverture empirique est comparée au niveau visé avec un intervalle binomial ; un écart est un résultat, pas un défaut à corriger après coup.
+
+### 6.6 Étiquettes REP, ADAPT et EXPLORE
+
+Chaque fiche d'expérience (`experiments/<date>-<slug>.md`) porte **une** étiquette dans son en-tête, choisie avant le run :
+- **REP** : vérification d'un mécanisme **exact** de la recette d'une source citée (mêmes hyperparamètres, même objectif), réservée à ce cas. Le mot « reproduction » n'est employé pour rien d'autre.
+- **ADAPT** : transfert d'une méthode au clinique français ou à ce jeu (changement de données, de modèle, de langue).
+- **EXPLORE** : tout le reste, y compris toute comparaison hors de la famille confirmatoire ; aucun verdict, intervalle non ajusté.
+Une fiche sans étiquette n'est pas figée ; une étiquette ne se change pas après le run.
+
+### 6.7 Développement et confirmation
+
+- **Développement** : plis stratifiés, statut exploratoire (réglage, choix de l'élève, ADR-009). L'appariement se fait sur les prédictions hors pli. Aucun verdict n'en sort.
+- **Confirmation** : test scellé interne, **ouvert une seule fois**, par le seul script autorisé (RM-20, garde `tests/test_sealed_access.py`), après gel de la configuration de chaque recette (P1-20 pour la référence) et vérification de la règle de puissance. Un second accès est une violation de protocole : il est consigné, et le verdict correspondant devient exploratoire.
+- **Test officiel de PARHAF** : embargoé, hors périmètre ; il n'est jamais mélangé au test interne.
+
+### 6.8 Preuves, scorecards et relecture adversariale
+
+- Une note de scorecard suit le schéma de preuve de RM-12 (`scorecards/TEMPLATE.md`) : exigence, artefact et empreinte, commande de reproduction, attendu et observé, degré d'indépendance de la confirmation, date, défaut résiduel.
+- **Relecture adversariale en contexte neuf avant le gel** : un relecteur sans l'historique de la conversation reçoit ce fichier, ADR-004, ADR-007, ADR-009 et le plan V6 (sections 0 à 6 et 8), et cherche : une valeur ouverte oubliée, une règle ambiguë (deux lectures possibles), une décision qui dépend d'un résultat, un verdict impossible à produire. Chaque constat est classé **bloquant** (corrigé avant gel), **accepté** (raison écrite) ou **rejeté** (raison écrite). Le relecteur est un sous-agent du dépôt (`code-reviewer` ou `general-purpose`) ; une revue par Codex ou Gemini n'a lieu qu'avec l'accord de Cyril à chaque fois, car elle envoie du contenu hors machine.
+
+### 6.9 Règles de gel
+
+1. Le gel exige : plus aucune marque `[À FIXER]` ; relecture du point 6.8 faite et classée ; `make check` vert.
+2. Empreinte SHA-256 de l'état entier du fichier consignée **avant tout run de P1** dans `experiments/INDEX.md` **et** dans une page wiki datée.
+3. Une section gelée ne se modifie plus. Un changement devient une nouvelle version, qui cite l'ancienne, dit pourquoi, **ne dépend d'aucun résultat vu** ou le déclare explicitement, et reçoit sa propre empreinte.
+4. Un changement de métrique primaire, de δ, de K ou de famille confirmatoire après le premier run comparatif exige une nouvelle ADR motivée ; les verdicts déjà rendus restent publiés avec l'ancienne règle.

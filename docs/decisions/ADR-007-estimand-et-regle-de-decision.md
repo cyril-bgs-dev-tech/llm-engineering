@@ -1,7 +1,7 @@
 # ADR-007 : estimand, rééchantillonnage et règle de décision des comparaisons (micro-tâche RM-11)
 
 ## Status
-**Proposée, non figée**, brouillon du 02/10/2026. Elle remplace la « règle des deux écarts-types » du plan V6. Trois valeurs restent à Cyril (question Q5 de `tasks/QUESTIONS_POUR_CYRIL.md`) : le seuil « pratiquement utile » δ, le nombre de graines K et le budget B. Aucune comparaison ne se lance avant leur fixation et le gel de `PROTOCOLE.md` (P0-46).
+**Proposée, non figée**, brouillon du 02/10/2026. Elle remplace la « règle des deux écarts-types » du plan V6. Valeurs fixées par Cyril le 02/10/2026 : seuil « pratiquement utile » **δ = 2,0 points** de macro-F1, graines **K = 5**, budget **B = 90 h** de GPU. **Reste ouvert** : la ratification de l'estimand et de la règle de décision eux-mêmes (RM-11 non coché) et N (Q11). Aucune comparaison ne se lance avant le gel de `PROTOCOLE.md` (P0-46).
 
 ## Date
 2026-10-02
@@ -56,7 +56,7 @@ La variabilité entre graines est incluse dans l'intervalle (étape 2) ; le crit
 - **δ dérivé des données** : écarté, ce serait fixer le critère après avoir vu l'incertitude.
 
 ## Consequences
-- Bloque, tant que Cyril n'a pas fixé δ, K et B : P0-46 (gel de `PROTOCOLE.md`), G-P0, et tout run comparatif.
+- Bloque, tant que l'estimand n'est pas ratifié et que N n'est pas fixé : P0-46 (gel de `PROTOCOLE.md`), G-P0, et tout run comparatif.
 - Ajoute à RM-15 la règle de puissance du point 5.
 - Un seuil δ très bas rendra presque toute comparaison « non résolue » sur 633 patients : c'est une information sur le corpus, à publier comme telle.
 - Le plan statistique reste lisible pour un lecteur non statisticien : trois mots de verdict, un intervalle, une règle écrite avant les chiffres.
