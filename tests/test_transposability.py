@@ -85,5 +85,5 @@ def test_adding_a_task_of_the_same_family_changes_no_core_file_and_its_cost_is_m
     after = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in core}
     assert before == after and record["status"] == "ok"
     cost = {"files": 2, "lines": len(yaml_text.splitlines()) + 6, "seconds_to_first_run": round(elapsed, 2)}
-    (ROOT / "results/measures/task_addition_cost.json").write_text(json.dumps(cost, indent=1) + "\n", encoding="utf-8")
+    (tmp_path / "task_addition_cost.json").write_text(json.dumps(cost, indent=1) + "\n", encoding="utf-8")
     assert cost["files"] <= 2
