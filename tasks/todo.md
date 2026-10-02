@@ -152,16 +152,16 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] P0-03 (décision) : Fixer fournisseur et plafond de location, règle de revue croisée externe, limite de la relecture d'étiquettes (décisions 7 à 9)
   - Preuve de fin : ADR-003 ; « non décidé » accepté si daté
   - Skills : interview-me ; dépendances : P0-02
-- [ ] P0-06 (spike) : Pour chaque candidat (Qwen3.5 4B et 9B, Qwen3.8-27B, Gemma 4 E4B et 31B, MedGemma 4B), vérifier la classe de chargement réellement utilisable (les cartes officielles de Qwen3.8-27B et de Gemma 4 31B recommandent `AutoModelForMultimodalLM` et ne mentionnent aucune classification), que `pad_token` est défini, qu'un passage avant et arrière tient ; élèves d'abord, gros professeur chargé une seule fois (compatibilité puis 10 pas de P0-08)
+- [x] P0-06 (spike) : Pour chaque candidat (Qwen3.5 4B et 9B, Qwen3.8-27B, Gemma 4 E4B et 31B, MedGemma 4B), vérifier la classe de chargement réellement utilisable (les cartes officielles de Qwen3.8-27B et de Gemma 4 31B recommandent `AutoModelForMultimodalLM` et ne mentionnent aucune classification), que `pad_token` est défini, qu'un passage avant et arrière tient ; élèves d'abord, gros professeur chargé une seule fois (compatibilité puis 10 pas de P0-08)
   - Preuve de fin : Tableau de compatibilité par modèle (classe de chargement, pad, tête, erreurs) dans le wiki ; repli « verbaliseur » consigné pour tout modèle sans tête de classification utilisable
   - Skills : lora-classifier-recipe, vram-preflight ; dépendances : P0-05, P0-01
-- [ ] RM-13 (décision) : Présélectionner l'élève du premier cycle (deux à trois candidats, règle écrite avant lecture des résultats) à partir du spike de compatibilité
+- [x] RM-13 (décision) : Présélectionner l'élève du premier cycle (deux à trois candidats, règle écrite avant lecture des résultats) à partir du spike de compatibilité
   - Preuve de fin : ADR-élève daté avant tout run comparatif
   - Skills : experiment-preregistration ; dépendances : P0-06
-- [ ] P0-08 (spike) : Banc de 10 pas du plus gros professeur candidat en QLoRA 4 bits, 1 024 tokens, gradient checkpointing, batch effectif 64 par accumulation
+- [x] P0-08 (spike) : Banc de 10 pas du plus gros professeur candidat en QLoRA 4 bits, 1 024 tokens, gradient checkpointing, batch effectif 64 par accumulation
   - Preuve de fin : Pic de mémoire réservée (cible sous 30 Go) et temps par pas au registre ; sinon plan B écrit (professeur plus petit ou déclencheur de location)
   - Skills : vram-preflight ; dépendances : P0-06, RM-05
-- [ ] P0-45 (doc) : Budget de calcul par vague (heures GPU), arrêt anticipé, règle de repli
+- [x] P0-45 (doc) : Budget de calcul par vague (heures GPU), arrêt anticipé, règle de repli
   - Preuve de fin : Tableau dans `PROTOCOLE.md`
   - Skills : experiment-preregistration ; dépendances : P0-08
 

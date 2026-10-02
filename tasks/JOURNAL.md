@@ -2,6 +2,22 @@
 
 Format : le plus récent en haut. Une entrée par tâche ou par événement, avec la preuve. Voir `CONTRAT_DE_TRAVAIL.md` § 2 et § 10.
 
+## 02/10/2026 : Qwen3.8-27B mesuré (P0-06 et P0-08), Gemma-4-31B en préparation
+
+**Qwen3.8-27B, QLoRA NF4, un seul chargement** (runs `p0-06-qwen3-8-27b-compat` et `p0-08-qwen3-8-27b-qlora-bench`) :
+- Voie A : `Qwen3_5ForSequenceClassification` (prédiction juste). Chargement 301 s ; VRAM après chargement 14,3 Gio ; RAM de l'hôte au pic 49,8 Gio.
+- Compat, 10 micro-pas de 4 × 1 024 tokens : 7,5 s par micro-pas (546 tokens/s), pic alloué 21,94 Gio.
+- **Banc P0-08, 10 pas d'optimiseur, batch effectif 64 : 112 s par pas (585 tokens/s), pic alloué 22,45 Gio, réservé 23,54 Gio, sous les 30 Gio visés.** Pertes finies.
+- 1 × 4 096 tokens (longueur du protocole) : 11,4 s, pic 21,97 Gio.
+- Les quatre prédictions étaient justes. Les poids ont été supprimés ensuite (51,8 Gio, retéléchargeables en 7 min) pour respecter la règle d'un seul professeur de plus de 50 Gio à la fois.
+- **À noter pour P0-45 et RM-16 (non encore une durée annoncée)** : le débit mesuré est de l'ordre de 550 à 600 tokens/s pour ce professeur. Le budget d'un passage sur un pli dépendra de la longueur moyenne d'un patient en tokens (mesure P0-21) ; le calcul est à faire dans P0-45 avec les deux mesures, et sera mis au registre.
+- Hypothèse non prouvée sur le crash de WSL : le run de Gemma-4-E4B sans checkpointing a saturé la VRAM (32 Go sur 32 Go) pendant des minutes au moment du crash. Le plafond dur de 30 Gio l'empêche désormais ; la corrélation n'est pas une preuve.
+
+**Gemma-4-31B, prédictions écrites avant le run** (le plus gros professeur candidat, 58 Gio, base de P0-08) :
+- Voie B (pas de classe de classification pour `Gemma4Config`, comme le E4B) : probabilité 0,8.
+- Pic de VRAM du banc à 1 024 tokens sous 30 Gio : 0,5 (modèle plus gros, vocabulaire de 262 144, tête dernière-couche en plus). Si ce n'est pas le cas, plan B de P0-08 : professeur plus petit ou déclencheur de location, à présenter à Cyril.
+- 1 × 4 096 tokens sous 30 Gio : 0,4.
+
 ## 02/10/2026 : push GitHub privé et CI (demande explicite de Cyril)
 
 - **Contexte retrouvé** (un niveau au-dessus du projet, sur autorisation de Cyril, GitHub seulement) : compte `cyril-bgs-dev-tech` ; convention existante vitrine publique + dépôt de code privé (`multi-agent-lab` et `multi-agent-lab-code`).
