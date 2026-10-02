@@ -1,0 +1,59 @@
+{
+  "created_at": "2026-10-02T11:59:18Z",
+  "kind": "measure",
+  "metrics": {
+    "hypotheses": [
+      "le débit mesuré à 1 024 tokens vaut en moyenne sur les patients réels (borne optimiste)",
+      "le débit à 4 096 tokens, plus bas, borne le cas pessimiste (professeurs seulement)",
+      "aucun surcoût de remplissage ni de chargement de données",
+      "un seul passage (époque) ; le nombre d'époques n'est pas encore réglé (P1-16)"
+    ],
+    "mean_tokens_per_patient": {
+      "gemma": 1272,
+      "qwen": 1309
+    },
+    "per_model": {
+      "Gemma-4-31B QLoRA (prof.)": {
+        "heures_pli_epoque_optimiste": 1.58,
+        "heures_pli_epoque_pessimiste": 2.4,
+        "tok_s_1024": 641,
+        "tok_s_4096": 423,
+        "tokens_par_pli_epoque": 3648154
+      },
+      "Gemma-4-E4B bf16 (élève)": {
+        "heures_pli_epoque_optimiste": 0.35,
+        "heures_pli_epoque_pessimiste": null,
+        "tok_s_1024": 2922,
+        "tok_s_4096": null,
+        "tokens_par_pli_epoque": 3648154
+      },
+      "Qwen3.5-4B bf16 (élève)": {
+        "heures_pli_epoque_optimiste": 0.46,
+        "heures_pli_epoque_pessimiste": null,
+        "tok_s_1024": 2284,
+        "tok_s_4096": null,
+        "tokens_par_pli_epoque": 3754747
+      },
+      "Qwen3.5-9B bf16 (élève)": {
+        "heures_pli_epoque_optimiste": 0.63,
+        "heures_pli_epoque_pessimiste": null,
+        "tok_s_1024": 1660,
+        "tok_s_4096": null,
+        "tokens_par_pli_epoque": 3754747
+      },
+      "Qwen3.8-27B QLoRA (prof.)": {
+        "heures_pli_epoque_optimiste": 1.78,
+        "heures_pli_epoque_pessimiste": 2.9,
+        "tok_s_1024": 585,
+        "tok_s_4096": 360,
+        "tokens_par_pli_epoque": 3754747
+      }
+    },
+    "train_patients_per_fold": 2868
+  },
+  "run_id": "20261002-115918-p0-45-budget-hypotheses",
+  "schema": "mini-1",
+  "slug": "p0-45-budget-hypotheses",
+  "status": "ok",
+  "summary": "Hypothèses de durée d'un passage sur un pli, calculées à partir du débit mesuré en P0-08 et des longueurs P0-21 ; à recaler par RM-16"
+}
