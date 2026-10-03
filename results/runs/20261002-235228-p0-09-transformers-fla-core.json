@@ -1,0 +1,61 @@
+{
+  "created_at": "2026-10-02T23:52:28Z",
+  "kind": "measure",
+  "metrics": {
+    "batch_size": 8,
+    "batched_passes": [
+      {
+        "requests_per_s": 1.2,
+        "tokens_per_s": 1617.0
+      },
+      {
+        "requests_per_s": 11.42,
+        "tokens_per_s": 15447.0
+      },
+      {
+        "requests_per_s": 11.27,
+        "tokens_per_s": 15242.0
+      }
+    ],
+    "batched_vs_sequential": {
+      "argmax_agreement": 0.9900000095367432,
+      "max_abs_logit_diff": 0.09765625
+    },
+    "lengths_max": 3635,
+    "lengths_mean": 1352.4,
+    "model": "Qwen/Qwen3.5-4B",
+    "n_requests": 100,
+    "runtime": "transformers",
+    "sequential_passes": [
+      {
+        "mean_ms": 171.0,
+        "p50_ms": 74.8,
+        "p95_ms": 178.0,
+        "tokens_per_s": 7907.0
+      },
+      {
+        "mean_ms": 86.5,
+        "p50_ms": 72.1,
+        "p95_ms": 174.5,
+        "tokens_per_s": 15632.0
+      },
+      {
+        "mean_ms": 85.7,
+        "p50_ms": 71.7,
+        "p95_ms": 171.4,
+        "tokens_per_s": 15789.0
+      }
+    ],
+    "versions": {
+      "torch": "2.11.0+cu128",
+      "transformers": "5.18.0"
+    },
+    "vram_peak_gib": 12.84,
+    "vram_peak_reserved_gib": 17.88
+  },
+  "run_id": "20261002-235228-p0-09-transformers-fla-core",
+  "schema": "mini-1",
+  "slug": "p0-09-transformers-fla-core",
+  "status": "ok",
+  "summary": "P0-09 : même banc que p0-09-transformers-baseline avec flash-linear-attention 0.5.2 et fla-core 0.5.2 (PYTHONPATH, .venv intacte) : médiane 72 ms contre 117, p95 172 à 178 ms contre 288 à 296, 15,6 k tokens/s contre 9,6 k après la première passe ; la première passe (7,9 k tokens/s, lot de 1,2 requête/s) paie la compilation Triton ; accord des prédictions 100 % et écart maximal des logits 0,109 (bruit bf16 de référence 0,125) ; pic 12,84 Gio contre 15,45 ; causal_conv1d reste en repli ; tentative 1 invalide (fla-core absent) archivée hors registre"
+}

@@ -1,0 +1,61 @@
+{
+  "created_at": "2026-10-02T23:36:41Z",
+  "kind": "measure",
+  "metrics": {
+    "batch_size": 8,
+    "batched_passes": [
+      {
+        "requests_per_s": 7.78,
+        "tokens_per_s": 10524.0
+      },
+      {
+        "requests_per_s": 8.57,
+        "tokens_per_s": 11596.0
+      },
+      {
+        "requests_per_s": 8.65,
+        "tokens_per_s": 11697.0
+      }
+    ],
+    "batched_vs_sequential": {
+      "argmax_agreement": 1.0,
+      "max_abs_logit_diff": 0.125
+    },
+    "lengths_max": 3635,
+    "lengths_mean": 1352.4,
+    "model": "Qwen/Qwen3.5-4B",
+    "n_requests": 100,
+    "runtime": "transformers",
+    "sequential_passes": [
+      {
+        "mean_ms": 143.5,
+        "p50_ms": 118.9,
+        "p95_ms": 295.3,
+        "tokens_per_s": 9422.0
+      },
+      {
+        "mean_ms": 140.3,
+        "p50_ms": 116.7,
+        "p95_ms": 296.1,
+        "tokens_per_s": 9641.0
+      },
+      {
+        "mean_ms": 139.5,
+        "p50_ms": 117.1,
+        "p95_ms": 288.0,
+        "tokens_per_s": 9692.0
+      }
+    ],
+    "versions": {
+      "torch": "2.11.0+cu128",
+      "transformers": "5.18.0"
+    },
+    "vram_peak_gib": 15.45,
+    "vram_peak_reserved_gib": 29.81
+  },
+  "run_id": "20261002-233641-p0-09-transformers-baseline",
+  "schema": "mini-1",
+  "slug": "p0-09-transformers-baseline",
+  "status": "ok",
+  "summary": "P0-09 : latence et débit de service, Transformers 5.18 / torch 2.11, Qwen3.5-4B bf16 à tête neuve, 100 requêtes synthétiques (graine 0), 3 passes : médiane 117 ms et p95 288 à 296 ms en séquentiel, 9,4 à 9,7 k tokens/s ; lot de 8 : 10,5 à 11,7 k tokens/s ; pic 15,45 Gio ; accord des prédictions lot contre séquentiel 100 % ; implémentations de repli PyTorch pour causal_conv1d et chunk_gated_delta_rule (bibliothèques absentes) : ligne de base, pas un plafond"
+}
