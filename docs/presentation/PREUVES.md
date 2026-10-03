@@ -27,11 +27,11 @@ Statuts : **prouvé** (renvoie à un run, un fichier ou une commande), **estimat
 | Rigueur statistique et protocole | 7 | 8 | 9 | protocole gelé et haché, test scellé, bootstrap apparié, puissance simulée ; mais une graine au développement, premier cycle non confirmatoire |
 | Données et anti-fuite | 6 | 8 | 10 | contrôles de fuite et raccourci d'auteur mesuré ; mais corpus fictif, pas de données réelles |
 | Fiabilité de l'incertitude | 4 | 7 | 9 | **révisée de 1 à 4 le 03/10** : calibration, conforme (LAC, APS, par classe, Wilson) et sélectif implémentés, validés sur données synthétiques (14 tests) et mesurés sur le TF-IDF avec test de décalage (run `q5-uncertainty-tfidf-chapter`) ; reste : LLM, politique d'abstention chiffrée, hors distribution, test scellé (Q5 de G-P0 = 0 avant) |
-| Analyse d'erreurs et robustesse | 3 | 7 | 9 | analyse par classe, spécialité et longueur du TF-IDF seulement ; pas de perturbation (Q4 de G-P0 = 0 puis partiel) |
+| Analyse d'erreurs et robustesse | 4 | 7 | 9 | **révisée de 3 à 4 le 03/10** : confusions, composition expliquant le creux de longueur, perturbations (−5,6 points sans accents), hors spécialité (0,52) et sous-groupes, tous sur TF-IDF ; la robustesse des LLM n'est pas mesurée |
 | Reproductibilité et ingénierie | 7 | 8 | 9 | environnement verrouillé, typage strict, 245 tests, registre ; reconstruction à froid non testée |
 | Efficience et déploiement | 3 | 8 | 10 | mesures de VRAM et de débit ; pas de latence p95, pas de service testé en charge (Q8, Q9 de G-P0 = 1) |
-| Sûreté, conformité, honnêteté | 7 | 7 | 9 | aucune donnée réelle, résultats négatifs publiés, claim-gate ; pas de revue indépendante ni de carte de modèle |
+| Sûreté, conformité, honnêteté | 8 | 7 | 9 | **révisée de 7 à 8 le 03/10** : carte de modèle provisoire, gabarit de rapport, deux audits indépendants consignés (GLM v2, v3), journal des accès au test scellé ; pas encore de revue humaine externe |
 
-Moyennes : projet 40 / 8 = 5,0 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4. Ces trois colonnes sont des jugements ; seule la colonne « projet » s'appuie sur des preuves du dépôt, et même elle reste une note d'auto-évaluation sans confirmation indépendante (aucune note 3 à G-P0).
+Moyennes : projet 42 / 8 = 5,3 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4. Ces trois colonnes sont des jugements ; seule la colonne « projet » s'appuie sur des preuves du dépôt, et même elle reste une note d'auto-évaluation sans confirmation indépendante (aucune note 3 à G-P0).
 
 | 14 | Qwen3.5-9B 0,565 ; Gemma-4-E4B 0,456 (1e-4) et 0,142 (1e-5) ; écarts −13,2 et +10,9 points | runs `20261003-163427-p1-11-qwen3-5-9b-lr1e-4`, `20261003-152759-p1-11-gemma-4-e4b-lr1e-4`, `20261003-174127-p1-11-gemma-4-e4b-lr1e-5` et comparaisons appariées du pli 0 | prouvé (pli 0 seulement, criblage inachevé) |

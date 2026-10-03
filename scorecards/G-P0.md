@@ -154,12 +154,12 @@ q: Q11
 note: 1
 requirement: "Wiki à jour avec citations vérifiées, décisions tracées, guide de transposition testé à blanc"
 artifact: knowledge/wiki/pages/protocole-gele-2026-10-03.md
-artifact_sha256: "aa48074eb6631b4a2153dc9d315758170f72555044c3395ee38b8da9cf6be0c2"
+artifact_sha256: "cf44156084ce1ddc6bffb3763e1e5049af0f1fd58edfed80a348bc015dd846b9"
 command: ".venv/bin/python scripts/check_wiki.py && .venv/bin/python scripts/check_wiki_quotes.py"
 expected: "wiki propre, citations retrouvées"
 observed: "wiki propre, citations retrouvées dans les lignes citées, aucune page orpheline, dix ADR"
 date: "2026-10-03"
-residual_defect: "Guide `docs/TRANSPOSER_AU_CHU.md` absent ; sources A2 et A3 non ingérées ; une page non hachée par nature"
+residual_defect: "Guide `docs/TRANSPOSER_AU_CHU.md` absent ; sources A2 et A3 non ingérées ; une page non hachée par nature ; empreinte re-ancrée le 03/10/2026 (aa48074e vers cf441560) parce que la page a été complétée légitimement par deux ingestions de sources (8dbaf9c, ec59dae) depuis la scorecard, sans changer une règle du protocole"
 justification: "1 : wiki et ADR en bon état, mais le guide de transposition n'existe pas"
 ```
 
