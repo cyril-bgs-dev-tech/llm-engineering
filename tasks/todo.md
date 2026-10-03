@@ -179,13 +179,13 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] P0-46 (doc) : Rédiger `PROTOCOLE.md` : métriques, tests statistiques, seuils de décision, graines, niveau conforme, règles de gel ; chaque expérience porte l'étiquette REP (vérification d'un mécanisme exact de la recette source), ADAPT (transfert au clinique français) ou EXPLORE ; développement sur plis, confirmation sur le test scellé ouvert une seule fois ; relecture adversariale en contexte neuf ; calcul de son SHA-256
   - Preuve de fin : Fichier figé, empreinte consignée avant tout run de P1 et dans une page wiki datée, constats de la relecture classés
   - Skills : experiment-preregistration, doubt-driven-development ; dépendances : P0-32, P0-33, P0-34, P0-41, P0-44, P0-45, RM-02, RM-07, RM-11, RM-12
-- [ ] G-P0 (doc) : Scorecard G-P0 : note Q1 à Q12, une preuve par note, plan de rattrapage pour toute note sous le plancher du plan V6
+- [x] G-P0 (doc) : Scorecard G-P0 : note Q1 à Q12, une preuve par note, plan de rattrapage pour toute note sous le plancher du plan V6
   - Preuve de fin : `scorecards/G-P0.md`
   - Skills : claim-gate, wiki-lint ; dépendances : *
 
 ## Étape R6 : références sur la tâche principale
 
-- [ ] P1-01 (code) : Harnais d'évaluation : accuracy, macro-F1, log loss, ECE, Spearman
+- [x] P1-01 (code) : Harnais d'évaluation : accuracy, macro-F1, log loss, ECE, Spearman
   - Preuve de fin : Valeurs exactes sur 5 cas construits à la main
   - Skills : test-driven-development ; dépendances : P0-41
 - [ ] P1-02 (code) : Outils de comparaison appariée : bootstrap, McNemar, permutation, correction de Holm ; vérifiés contre SciPy et statsmodels
