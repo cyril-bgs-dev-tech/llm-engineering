@@ -1,0 +1,53 @@
+{
+ "auteur_dans_le_texte": 1,
+ "relecteur_dans_le_texte": 2,
+ "n_patients": 3586,
+ "n_auteurs": 104,
+ "auteurs_par_chapitre": {
+  "AUTRE": 12,
+  "I": 25,
+  "II": 56,
+  "III": 23,
+  "IV": 25,
+  "IX": 46,
+  "V": 13,
+  "VI": 24,
+  "X": 37,
+  "XI": 23,
+  "XII": 18,
+  "XIII": 21,
+  "XIV": 30,
+  "XIX": 28,
+  "XV": 9,
+  "XVIII": 51,
+  "XXI": 23,
+  "XXII": 11
+ },
+ "part_du_premier_auteur_par_chapitre": {
+  "AUTRE": 0.143,
+  "I": 0.155,
+  "II": 0.084,
+  "III": 0.376,
+  "IV": 0.085,
+  "IX": 0.138,
+  "V": 0.241,
+  "VI": 0.231,
+  "X": 0.094,
+  "XI": 0.167,
+  "XII": 0.133,
+  "XIII": 0.421,
+  "XIV": 0.136,
+  "XIX": 0.331,
+  "XV": 0.493,
+  "XVIII": 0.077,
+  "XXI": 0.119,
+  "XXII": 0.296
+ },
+ "stylometrie": {
+  "auteurs_retenus": 66,
+  "patients": 3234,
+  "exactitude_5_plis": 0.9168,
+  "classe_majoritaire": 0.038,
+  "hasard_uniforme": 0.0152
+ }
+}
