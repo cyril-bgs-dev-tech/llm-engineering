@@ -47,3 +47,4 @@ Réversibles par une ligne de Cyril. Les exclusions de N23 restent : test scell�
 | Adoption de flash-linear-attention | Oui, après la fin du lot P1-11 (pas pendant), avec contrôle de la prise en charge sm_120, test, et mesure avant/après de débit et de perte | Gain de débit probable sur les hybrides ; ne jamais changer l'environnement en cours de lot |
 | Push des commits | Non | Seul Cyril le demande (règle ferme) |
 | Cahier GLM | Fait : réponse reçue et triée (`docs/AUDIT_GLM_v3_TRIAGE.md`) | |
+| RM-17 (porte go/no-go) | **Décision déléguée, provisoire** : la distillation se poursuit comme question scientifique jusqu'à la porte réelle, qui reste après P1-19, P1-20 et la règle de puissance ; aucun run de professeur (P2-01) avant ce verdict | Le LoRA (4B, 0,587) domine l'encodeur (0,448) mais pas le TF-IDF (0,697 au même pli) ; décider plus tôt serait décider sans la largeur d'intervalle que la porte exige. Un professeur ne s'entraîne qu'après RM-17 |
