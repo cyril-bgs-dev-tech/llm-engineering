@@ -61,3 +61,5 @@ Deux runs restent (Qwen 9B 1e-5, Qwen 4B 1e-4, relancés après un plantage du t
 | Gemma-4-E4B, 1e-4 | 0,456 | 0,673 | 0,689 | IV, XII, XXII |
 
 Les chapitres à F1 nulle du 9B n'ont que 6 (XII), 8 (XXI) et 5 (XXII) patients au pli 0 : le zéro vaut quelques patients, pas une certitude. Les cinq patients du XXII sont tous classés en X. L'écart de macro-F1 avec le TF-IDF (13 points) est bien plus grand que celui de la F1 pondérée (4 points) : le déficit vient des petits chapitres, ce qui est la lecture de l'audit (levier : perte pondérée, sous réserve de Q19). Périmètre : un pli, une graine pour les LLM, TF-IDF 0,697 au même pli (0,684 sur cinq plis). Aucun verdict : criblage inachevé.
+
+Composition des plis (audit GLM, C3-A8) : les plis par patient comptent 717 à 718 patients, les plis groupés par auteur 663 à 763. Chapitres rares par pli, par patient puis par auteur : XXII 5 à 6 contre 3 à 9, XII 6 contre 5 à 7, XXI 8 à 9 contre 7 à 10, IV 9 à 10 contre 6 à 12. Les plis groupés sont donc plus déséquilibrés sur les petits chapitres, ce qui peut compter dans l'écart de RM-14 : un facteur de plus, la lecture reste non tranchée.

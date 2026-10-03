@@ -34,7 +34,7 @@ Source : `audit_GLM_5_3_v3.md` (80 actions, 10 par composante, déposé le 03/10
 - A6 gabarit « non résolu », A8 bayésien EXPLORE, A9 scorecard G-P0, A10 alerte 80 % de B : **planifié** (CPU).
 
 ### C3 Données
-- A1 RM-14 sans identifiants d'auteur, A4 spécialité contre auteur, A8 plis groupés contre stratifiés : **planifié** (CPU, développement seulement).
+- A8 composition des plis : **fait** (RESULTATS.md). A1 RM-14 sans identifiants d'auteur et A4 spécialité contre auteur : **planifié** (CPU, développement seulement).
 - A2, A6 agrégats auteurs × chapitres, patients tronqués : **planifié** (agrégats sans identifiant).
 - A3, A5, A7, A9, A10 : **planifié** (A10 : étiqueter les trois lectures de RM-14 comme non tranchées, à faire dans RESULTATS et wiki).
 
