@@ -191,7 +191,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] P1-02 (code) : Outils de comparaison appariée : bootstrap, McNemar, permutation, correction de Holm ; vérifiés contre SciPy et statsmodels
   - Preuve de fin : Fausse alerte au plus 5 % sur données sans effet ; détection d'un effet injecté ; accord avec les bibliothèques
   - Skills : paired-comparison ; dépendances : P1-01
-- [ ] P1-03 (mesure) : Bornes : classe majoritaire et tirage aléatoire sur les trois tâches
+- [x] P1-03 (mesure) : Bornes : classe majoritaire et tirage aléatoire sur les trois tâches
   - Preuve de fin : Lignes au registre
   - Skills : experiment-preregistration ; dépendances : P1-01
 - [ ] P1-04 (mesure) : TF-IDF et régression logistique sur `parhaf_doctype`, réglage de C et des n-grammes sur validation
