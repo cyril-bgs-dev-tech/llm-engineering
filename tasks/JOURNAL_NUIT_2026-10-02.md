@@ -80,3 +80,6 @@ En cherchant où sont les modèles, j'ai listé `~/.cache/huggingface/hub` (noms
 
 ### 2026-10-03T12:30Z : réserve R-c, mutation de `paired.py`
 Sept mutations manuelles (décalage de McNemar, Holm sans accumulation et mauvais facteur, permutation stricte, faux négatifs ignorés dans la F1 du bootstrap, verdict à égalité, intervalle rétréci) : **sept tuées** par `tests/test_paired.py`, fichier restauré (diff vide). Pas de survivant à corriger.
+
+### 2026-10-03T12:45Z : pré-vols GPU des trois candidats (ADR-009)
+LoRA r = 16, 4 096 tokens, micro-lot 1, 3 pas de 8 exemples (les plus longs d'abord), gradient checkpointing : Qwen3.5-4B pic réservé 12,1 Gio ; Qwen3.5-9B 21,1 Gio ; Gemma-4-E4B (voie B) 20,4 Gio. **Tous sous 28 Gio.** Durées (50 s, 75 s, 62 s) non retenues : mesurées avec une charge CPU de 70 à 80 sur 32 threads (runs TF-IDF en parallèle) ; à refaire processeur libre avant la fiche P1-11. Le Qwen 4B a tourné avec l'ancienne troncature (marge de 3 tokens de moins), les deux autres avec la nouvelle : écart négligeable pour la mémoire. fla (`PYTHONPATH=artifacts/fla_pkgs`) utilisé : décision d'adoption toujours à Cyril, choix de nuit réversible.
