@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+from sklearn.model_selection import StratifiedKFold
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -43,11 +44,16 @@ def main() -> int:
     fold_map = dict(zip(ids_all, fold_arr, strict=True))
     folds = np.array([fold_map[i] for i in ids])
     n_cls = len(labels)
-    out: dict[str, Any] = {"n": len(ids), "classes": n_cls}
+    if len(set(folds.tolist())) < 2:  # probabilités d'un seul pli (LLM du pli 0) : validation croisée en deux moitiés stratifiées de ce pli
+        folds = np.zeros(len(ids), dtype=int)
+        for half, (_, te_idx) in enumerate(StratifiedKFold(2, shuffle=True, random_state=1000).split(probs, y)):
+            folds[te_idx] = half
+    ks = sorted(set(folds.tolist()))
+    out: dict[str, Any] = {"n": len(ids), "classes": n_cls, "folds": ks}
     # --- calibration croisée : température ajustée hors du pli évalué ---
     q = np.zeros_like(probs)
     temps = []
-    for k in range(5):
+    for k in ks:
         cal, te = folds != k, folds == k
         t = calibration.fit_temperature(probs[cal], y[cal])
         temps.append(round(t, 3))
@@ -64,7 +70,7 @@ def main() -> int:
         for method in ("lac", "aps"):
             marg_sets: list[set[int]] = [set() for _ in ids]
             cls_sets: list[set[int]] = [set() for _ in ids]
-            for k in range(5):
+            for k in ks:
                 cal, te = np.flatnonzero(folds != k), np.flatnonzero(folds == k)
                 qh = conformal.fit(probs[cal], y[cal], alpha, method)
                 qc = conformal.fit_by_class(probs[cal], y[cal], alpha, method, n_cls)
