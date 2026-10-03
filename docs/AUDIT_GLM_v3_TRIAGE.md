@@ -57,7 +57,7 @@ Source : `audit_GLM_5_3_v3.md` (80 actions, 10 par composante, déposé le 03/10
 
 ## C5 Erreurs et robustesse
 - A1 sauvegarde d'adaptateurs : **fait et vérifié** (196 Mo, 9B 1e-5).
-- A2 matrice par blocs CIM-10 : **planifié** (la table des blocs n'est pas dans les données du dépôt).
+- A2 lecture hiérarchique : **fait** (familles du projet, `glm_v3_families.json` ; les blocs fins du ClaML n’ajoutent pas d’information sans prédiction au niveau du bloc).
 - A3 destination des erreurs : **fait**.
 - A4 perturbations TF-IDF : **fait** ; A5 sur le 9B : **planifié** (adaptateur du rejeu).
 - A6, A7 lecture d'erreurs et creux de longueur : **fait** (agrégats, effet de composition).

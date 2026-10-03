@@ -1,0 +1,57 @@
+{
+ "familles": {
+  "infectieux, tumeurs, sang": [
+   "I",
+   "II",
+   "III"
+  ],
+  "endocrinien et mental": [
+   "IV",
+   "V"
+  ],
+  "nerveux": [
+   "VI"
+  ],
+  "circulatoire et respiratoire": [
+   "IX",
+   "X"
+  ],
+  "digestif": [
+   "XI"
+  ],
+  "peau, muscle, urinaire": [
+   "XII",
+   "XIII",
+   "XIV"
+  ],
+  "grossesse": [
+   "XV"
+  ],
+  "symptômes, lésions, facteurs": [
+   "XVIII",
+   "XIX",
+   "XXI",
+   "XXII"
+  ],
+  "autre": [
+   "AUTRE"
+  ]
+ },
+ "resultats": {
+  "tfidf": {
+   "erreurs": 126,
+   "dans_la_meme_famille": 6,
+   "part_meme_famille": 0.048
+  },
+  "qwen3.5-9b-1e-4": {
+   "erreurs": 152,
+   "dans_la_meme_famille": 6,
+   "part_meme_famille": 0.039
+  },
+  "gemma-4-e4b-1e-4": {
+   "erreurs": 223,
+   "dans_la_meme_famille": 23,
+   "part_meme_famille": 0.103
+  }
+ }
+}
