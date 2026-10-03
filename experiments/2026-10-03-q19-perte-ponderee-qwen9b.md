@@ -1,0 +1,10 @@
+# Fiche préenregistrée : perte pondérée par classe sur le Qwen3.5-9B (exploration Q19, décision déléguée le 03/10/2026)
+
+- **question** : une perte d'entropie croisée pondérée par classe (poids en 1/√n, normalisés à une moyenne de 1 sur les exemples d'entraînement) améliore-t-elle la macro-F1 du Qwen3.5-9B sur le pli 0, notamment sur les chapitres rares (XII, XXI, XXII, à F1 nulle dans la référence) ?
+- **référence** : run `20261003-163427-p1-11-qwen3-5-9b-lr1e-4` (macro-F1 0,565, exactitude 0,788, log loss 0,723), prédictions `results/predictions/p1-11-qwen3-5-9b-lr1e-4.json`.
+- **variante** : seul changement : `--class-weights inv-sqrt` (code `lora_train.inverse_sqrt_class_weights`, testé à la main). Tout le reste identique : modèle, LoRA r = 16 alpha 32, 4 096 tokens, lot effectif 32, micro-lot 1, 2 époques, taux 1e-4, graine 1000, pli 0.
+- **jeux et découpage** : développement, pli 0 ; test scellé jamais lu ; partitions `data/splits/parhaf_cim10_chapter.sha256`.
+- **métrique principale** : macro-F1 (17 chapitres, `AUTRE` exclue) du pli 0. **Secondaires** : F1 par chapitre, F1 pondérée, exactitude, log loss, log loss équilibrée, ECE, durée, pic de mémoire.
+- **critère de décision** : différence appariée de macro-F1 (bootstrap hiérarchique apparié, `scripts/pair_preds.py`, IC 95 %). « Amélioration suggérée » si Δ ≥ +2,0 points et borne basse > 0 ; « dégradation suggérée » si borne haute < 0 ; sinon « non résolu ». **Statut EXPLORE : aucun verdict de gain, n'entre ni dans le choix de l'élève (P1-12) ni dans la famille confirmatoire (H1 à H3), qui ne change pas.** Une recette pondérée ne deviendrait référence que par une nouvelle version du protocole et une ADR.
+- **budget** : un run d'environ 3 700 s (durée mesurée du 9B à 1e-4), `--limit-seconds 5500`, lancé après la fin du lot P1-11, probabilités et adaptateur conservés.
+- **prédiction** : Δ macro-F1 compris entre +1 et +8 points (probabilité 0,6) ; Δ > 0 (probabilité 0,68) ; au moins un des trois chapitres XII, XXI, XXII quitte une F1 nulle (probabilité 0,6) ; l'exactitude baisse (probabilité 0,6).

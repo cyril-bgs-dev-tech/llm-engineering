@@ -106,3 +106,29 @@ def test_sans_limite_la_boucle_va_au_bout():
     cfg = LlamaConfig(vocab_size=32, hidden_size=16, intermediate_size=32, num_hidden_layers=1, num_attention_heads=2, num_labels=2, pad_token_id=0)
     res = lora_train.train(LlamaForSequenceClassification(cfg), [[1, 2, 3]] * 8, [0, 1] * 4, pad_id=0, device="cpu", effective_batch=4, micro_batch=4, epochs=1, base_lr=1e-3, warmup_steps=1, seed=0)
     assert len(res.loss_history) == 2
+
+
+def test_perte_ponderee_par_classe_reproduit_le_calcul_a_la_main_meme_en_micro_lot_de_un():
+    import torch
+
+    class Toy(torch.nn.Module):
+        def __init__(self) -> None:
+            super().__init__()
+            self.w = torch.nn.Parameter(torch.zeros(1, 2))
+
+        def forward(self, input_ids, attention_mask):
+            del attention_mask
+            return type("Out", (), {"logits": self.w.expand(input_ids.shape[0], 2)})()
+
+    ids = [[1], [2], [3], [4]]
+    labels = [0, 0, 0, 1]
+    weights = torch.tensor([0.5, 2.0])
+    res = lora_train.train(Toy(), ids, labels, pad_id=0, device="cpu", effective_batch=4, micro_batch=1, epochs=1, base_lr=0.0, warmup_steps=1, seed=0, class_weights=weights)
+    expected = math.log(2) * (0.5 * 3 + 2.0 * 1) / 4  # logits nuls : entropie croisée ln 2 par exemple
+    assert res.loss_history[0] == pytest.approx(expected)
+
+
+def test_poids_en_inverse_racine_des_effectifs_ont_une_moyenne_de_un_sur_les_exemples():
+    w = lora_train.inverse_sqrt_class_weights([0, 0, 0, 0, 1, 1, 2], 3)
+    assert float(np.mean([float(w[c]) for c in [0, 0, 0, 0, 1, 1, 2]])) == pytest.approx(1.0)
+    assert float(w[2]) > float(w[1]) > float(w[0])

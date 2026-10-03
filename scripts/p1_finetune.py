@@ -105,6 +105,7 @@ def main() -> int:
     ap.add_argument("--max-steps", type=int, default=0)
     ap.add_argument("--order", choices=["longest", "random"], default="longest", help="pré-vol : exemples les plus longs d'abord (pire cas mémoire) ou tirage au hasard (débit moyen)")
     ap.add_argument("--limit-seconds", type=float, default=0.0, help="arrêt anticipé : limite de durée projetée (1,5 fois l'estimation de la fiche) ; 0 = aucune")
+    ap.add_argument("--class-weights", choices=["none", "inv-sqrt"], default="none", help="perte pondérée par classe en 1/√n (exploration Q19, fiche à part) ; none = référence")
     ap.add_argument("--fiche", default="")
     ap.add_argument("--slug", required=True)
     ap.add_argument("--register", action="store_true")
@@ -136,7 +137,8 @@ def main() -> int:
     record: dict[str, Any] = {"kind": "preflight" if a.max_steps else "train", "slug": a.slug, "params": cfg}
     try:
         res = lora_train.train(model, x_tr, [int(idx[i]) for i in tr], pad_id, "cuda", a.effective_batch, a.micro_batch, a.epochs if not a.max_steps else 1,
-                               a.lr, a.warmup, a.seed, projected_limit_seconds=a.limit_seconds or None)
+                               a.lr, a.warmup, a.seed, projected_limit_seconds=a.limit_seconds or None,
+                               class_weights=lora_train.inverse_sqrt_class_weights([int(idx[i]) for i in tr], len(labels)) if a.class_weights == "inv-sqrt" else None)
     except lora_train.TrainingAborted as exc:
         record.update({"status": "aborted", "summary": f"{a.slug} : arrêt anticipé, durée projetée {exc.projected_seconds:.0f} s", "loss_history": exc.loss_history, "error": str(exc)})
         print(json.dumps({k: record[k] for k in ("slug", "summary")}, ensure_ascii=False))

@@ -91,9 +91,18 @@ def _pad(rows: Sequence[Sequence[int]], pad_id: int, device: str | torch.device)
     return ids.to(device), mask.to(device)
 
 
+def inverse_sqrt_class_weights(labels: Sequence[int], n_classes: int) -> torch.Tensor:
+    """Poids en 1/√n par classe (classes absentes : poids 1), normalisés pour une moyenne de 1 sur les exemples d'entraînement."""
+    counts = np.bincount(np.asarray(list(labels), dtype=np.int64), minlength=n_classes).astype(float)
+    raw = np.where(counts > 0, 1.0 / np.sqrt(np.maximum(counts, 1.0)), 1.0)
+    scale = float((raw[np.asarray(list(labels), dtype=np.int64)]).mean())
+    return torch.tensor(raw / scale, dtype=torch.float32)
+
+
 def train(
     model: Any, input_ids: Sequence[Sequence[int]], labels: Sequence[int], pad_id: int, device: str | torch.device, effective_batch: int, micro_batch: int,
     epochs: int, base_lr: float, warmup_steps: int, seed: int, weight_decay: float = 0.0, projected_limit_seconds: float | None = None,
+    class_weights: torch.Tensor | None = None,
 ) -> TrainResult:
     """Boucle d'entraînement : AdamW sur les paramètres entraînables, cosinus, accumulation, perte moyenne par lot effectif, arrêt sur perte non finie."""
     params = [p for p in model.parameters() if p.requires_grad]
@@ -116,7 +125,11 @@ def train(
             for idx, weight in micro_batches:
                 ids, mask = _pad([input_ids[i] for i in idx], pad_id, device)
                 logits = model(input_ids=ids, attention_mask=mask).logits.float()
-                loss = torch.nn.functional.cross_entropy(logits, y[idx].to(device)) * weight
+                target = y[idx].to(device)
+                if class_weights is None:
+                    loss = torch.nn.functional.cross_entropy(logits, target) * weight
+                else:  # pondération explicite : la moyenne pondérée native de torch annulerait le poids en micro-lot de 1
+                    loss = (torch.nn.functional.cross_entropy(logits, target, reduction="none") * class_weights.to(device)[target]).mean() * weight
                 torch.autograd.backward(loss)
                 loss_value += float(loss.detach())
             res.loss_history.append(loss_value)
