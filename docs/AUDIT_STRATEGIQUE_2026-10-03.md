@@ -302,3 +302,7 @@ Ce document est destiné à sortir du dépôt (envoi à GLM sur décision de Cyr
 | « Deux graines d'une même recette seraient plus corrélées que deux recettes » | aucune | **reformulé** en hypothèse non vérifiée |
 | « La règle d'absence de gain dessert la neutralité du projet » | aucune simulation | **reformulé** en interprétation |
 | Aucune macro-F1 de modèle n'existe | `results/runs/` ne contient aucun run de classification de qualité | prouvé |
+
+## Retour de GLM et corrections (03/10/2026)
+
+La réponse de GLM à la première version du cahier (`audit_GLM_5_3_v2.md`) corrige ce document sur trois points, vérifiés par recalcul : (1) **le design hors pli coûte beaucoup plus que « moyen »** : 100 entraînements de validation croisée au lieu de 20 sur le développement entier, soit 70 à 126 h au lieu de 17,5 à 31,5 h pour le poste confirmatoire (100 x 2 x 0,35 = 70 h pour l'E4B) ; l'idée I3 de la couche 3 est à relire avec ce coût ; (2) « cinq scénarios sur huit sous 4 points » devient **4 à 5 sur 8** selon le bruit Monte-Carlo (réplique convergée de GLM : 4/8) ; (3) le mypy du crochet est le goulot (56 s de temps mur pour 2 s de temps utilisateur sur cette machine, entrée-sortie de `/mnt/d`). La probabilité de verdict résolu pour un vrai gain égal à δ est de 1,7 % à toute largeur. Détail et classement : `tasks/JOURNAL_NUIT_2026-10-02.md`.
