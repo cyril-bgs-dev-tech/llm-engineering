@@ -103,3 +103,8 @@ Trois des six runs de P1-11 (Gemma-4-E4B 1e-5, Qwen3.5-9B 1e-5, Qwen3.5-4B 1e-4)
 
 ### 2026-10-03T14:45Z : retour de GLM, ce qui restait à appliquer
 Cyril a demandé si le retour de GLM avait été pris en compte. Bilan honnête : lu, rejoué et classé dès 00:21Z (entrées plus haut), G1 (réplique confirmée), G2 (percentile gardé, limite dite), G3 (coût ×4 du design hors pli reporté dans l'audit et Q12), G6 (ligne « gain = δ » 1,7 % en erratum). G4 (mypy) mesuré, non appliqué. **G5 (plafond de dépense conditionné écrit dans la fiche de P1-12) n'était pas encore appliqué** : fait maintenant, `experiments/2026-10-03-p1-12-choix-eleve-et-plafond.md`, avec les débits mesurés de P1-11 à la place du facteur d'incertitude hypothétique. Aussi codé : `src/llmft/choose.py` (règle d'ADR-009, 5 tests).
+
+### 2026-10-03T15:35Z : P1-11, premiers résultats (2 runs sur 6)
+- Qwen3.5-4B, 1e-5 : macro-F1 **0,193** (pli 0), exactitude 0,439, 2 515 s, pic 12,9 Gio.
+- Gemma-4-E4B, 1e-4 : macro-F1 **0,4558**, exactitude 0,689, log loss 1,066, log loss équilibrée 2,128, **4 226 s (estimation 3 754 s, +12 %)**, pic 24,8 Gio.
+- Les deux sont **sous le TF-IDF du même pli (0,6971)** ; la comparaison entre candidats reste impossible tant que les deux taux de chaque candidat manquent. Qwen 9B 1e-4 en cours depuis 15:28 ; seconde passe (Gemma 1e-5, 9B 1e-5, 4B 1e-4) ensuite, fin attendue vers 21 h UTC.
