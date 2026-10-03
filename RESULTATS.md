@@ -27,6 +27,11 @@ Taux d'apprentissage de l'encodeur (pli 0) : 1e-5 0,0665 ; 2e-5 0,2793 ; 5e-5 0,
 
 Pic de mémoire réservé, LoRA r = 16, 4 096 tokens, micro-lot 1 : Qwen3.5-4B 11,5 Gio, Qwen3.5-9B 19,7 Gio, Gemma-4-E4B 19,8 Gio ; débit moyen 0,54, 0,87 et 0,65 s par exemple (runs `debit-*`, `preflight-*`).
 
-## En cours
+## Criblage des élèves LLM, pli 0 (P1-11, 2 runs sur 6 terminés, comparaison entre candidats impossible tant que les deux taux manquent)
 
-P1-11 (criblage des trois élèves, six runs sur le pli 0) : aucun résultat à ce jour.
+| Run | macro-F1 | Remarque | run_id |
+|---|---|---|---|
+| Qwen3.5-4B, LoRA, 1e-5 | 0,193 | taux le plus bas, sous-entraîné ; exactitude 0,439 | `20261003-141041-p1-11-qwen3-5-4b-lr1e-5` |
+| Gemma-4-E4B, LoRA, 1e-4 | 0,4558 | exactitude 0,689 ; **24,1 points sous le TF-IDF** du pli 0 [−29,6 ; −17,5] ; **non distinct du CamemBERT-bio** (+0,73 point [−3,19 ; +4,40]) | `20261003-152759-p1-11-gemma-4-e4b-lr1e-4`, `…-minus-tfidf-fold0`, `…-minus-camembert-fold0` |
+
+Quatre runs restent (Qwen 9B 1e-4 en cours, puis Gemma 1e-5, Qwen 9B 1e-5, Qwen 4B 1e-4 après un plantage du tokenizer corrigé).
