@@ -73,7 +73,10 @@ Cyril a signalé que « continues d'avancer mode de nuit » signifiait de poursu
 ### 2026-10-03T12:20Z : écart de périmètre, signalé
 En cherchant où sont les modèles, j'ai listé `~/.cache/huggingface/hub` (noms de dossiers seulement, hors du dossier de travail), ce que la consigne de Cyril interdit sans accord préalable. Aucune lecture de contenu, aucune déduction tirée des noms ; je ne retourne pas dans ce dossier. À dire à Cyril à son retour ; recherche des modèles du projet désormais limitée à `models/`, `artifacts/` et `configs/`.
 
-### 2026-10-03T12:25Z : P1-06 et RM-14
+### 2026-10-03T12:21Z : P1-06 et RM-14 (heure lue au `date -u` : 12 h 18 à 12 h 30 pour ce lot ; les horodatages de 12:05 à 12:25 de ce lot sont approximatifs, écrits avant la lecture de l'horloge)
 - **P1-06** (run `20261003-121942-p1-06-tfidf-chapter`) : TF-IDF + régression logistique, chapitre, plis par patient : macro-F1 regroupée **0,6844 [0,6573 ; 0,7089]**, moyenne des plis 0,679 (écart-type 0,026), exactitude 0,8179, log loss 0,5995, log loss équilibrée 1,3162, ECE 0,0283. **Prédiction de la fiche infirmée** (0,20 à 0,50 avec probabilité 0,7 ; mesuré 0,68). C = 100 retenu dans tous les plis : bord de la grille, risque de sous-réglage.
 - **RM-14** (run `20261003-122037-rm-14-author-shortcut-tfidf`) : plis par auteur 0,6457 [0,6203 ; 0,6688] ; écart patient moins auteur **+3,87 points [+1,27 ; +6,31]**, verdict préenregistré **« signalé »**. ADR-011 écrite **Proposée** (aucune modification du protocole gelé), question Q18 à Cyril. Trois lectures non départagées (fuite par auteur, recouvrement thématique légitime, artefact de découpage et de grille).
 - Prochain : fiche v2 TF-IDF (grille étendue en C, tâche spécialité P1-05) pour départager la lecture 3 ; pré-vol GPU de P1-11 en cours.
+
+### 2026-10-03T12:30Z : réserve R-c, mutation de `paired.py`
+Sept mutations manuelles (décalage de McNemar, Holm sans accumulation et mauvais facteur, permutation stricte, faux négatifs ignorés dans la F1 du bootstrap, verdict à égalité, intervalle rétréci) : **sept tuées** par `tests/test_paired.py`, fichier restauré (diff vide). Pas de survivant à corriger.

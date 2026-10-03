@@ -21,38 +21,51 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import p1_04_06_tfidf  # chargement des étiquettes de développement, même fonction que les références TF-IDF
-from llmft import evaluation, failures, lora_train
+from llmft import evaluation, failures, last_token, lora_train
 from llmft.mini_registry import register_run
 
 
 def build_inputs(tok: Any, texts: list[str], max_len: int) -> list[list[int]]:
-    """Tokens avec jetons spéciaux du modèle ; au-delà de `max_len` : tête et fin avec le marqueur `[...]`."""
+    """Tokens avec jetons spéciaux du modèle ; au-delà de `max_len` tokens de texte : `max_len`/2 de tête et de fin avec le marqueur `[...]` (la séquence dépasse donc `max_len` du marqueur et des jetons spéciaux ; pour un encodeur à 512 positions, passer 508)."""
     marker = tok.encode("[...]", add_special_tokens=False)
     prefix, suffix = lora_train.special_affixes(tok.encode)
     out = []
     for t in texts:
         ids = tok.encode(t, add_special_tokens=False)
-        ids = lora_train.truncate_head_tail(ids, max_len - len(prefix) - len(suffix) - len(marker), marker)
+        ids = lora_train.truncate_head_tail(ids, max_len, marker)  # max_len/2 tokens de tête et de fin, comme PROTOCOLE.md section 1
         out.append([*prefix, *ids, *suffix])
     return out
 
 
-def load_model(name: str, mode: str, n_labels: int, pad_id: int, rank: int, alpha: int) -> Any:
+def load_model(name: str, mode: str, n_labels: int, pad_id: int, rank: int, alpha: int) -> tuple[Any, str]:
+    """Voie A : classe de classification de transformers ; voie B (Gemma 4) : modèle causal et tête sur le dernier token. Renvoie (modèle, voie)."""
     import torch
-    from transformers import AutoModelForSequenceClassification
+    from transformers import AutoConfig, AutoModelForCausalLM, AutoModelForSequenceClassification
 
     dtype = torch.bfloat16 if mode == "lora" else torch.float32
-    model = AutoModelForSequenceClassification.from_pretrained(name, num_labels=n_labels, torch_dtype=dtype)
+    try:
+        model = AutoModelForSequenceClassification.from_pretrained(name, num_labels=n_labels, torch_dtype=dtype)
+        route = "A"
+    except ValueError:  # « Unrecognized configuration class » : pas de classe de classification pour cette architecture
+        base = AutoModelForCausalLM.from_pretrained(name, torch_dtype=dtype)
+        cfg = AutoConfig.from_pretrained(name)
+        hidden = getattr(cfg, "hidden_size", None) or cfg.text_config.hidden_size
+        base.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+        base.enable_input_require_grads()
+        from peft import LoraConfig, get_peft_model
+
+        base = get_peft_model(base, LoraConfig(task_type="CAUSAL_LM", r=rank, lora_alpha=alpha, lora_dropout=0.05, target_modules="all-linear"))
+        return last_token.LastTokenClassifier(base, hidden, n_labels), "B"
     model.config.pad_token_id = pad_id
     if hasattr(model.config, "text_config"):
         model.config.text_config.pad_token_id = pad_id
     if mode == "lora":
         from peft import LoraConfig, get_peft_model
 
-        model.gradient_checkpointing_enable()
+        model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
         model.enable_input_require_grads()
         model = get_peft_model(model, LoraConfig(task_type="SEQ_CLS", r=rank, lora_alpha=alpha, lora_dropout=0.05, target_modules="all-linear"))
-    return model
+    return model, route
 
 
 def predict(model: Any, ids: list[list[int]], pad_id: int, device: str, micro_batch: int, n_labels: int) -> np.ndarray:
@@ -108,9 +121,10 @@ def main() -> int:
         x_tr = [x_tr[i] for i in order]
         tr = tr[order]
     torch.manual_seed(a.seed)
-    model = load_model(a.model, a.mode, len(labels), pad_id, a.rank, a.alpha).to("cuda")
+    model, route = load_model(a.model, a.mode, len(labels), pad_id, a.rank, a.alpha)
+    model = model.to("cuda")
     cfg: dict[str, Any] = {k: v for k, v in vars(a).items() if k not in ("register",)}
-    cfg.update({"labels": labels, "n_train": len(tr), "n_eval": len(te), "fiche_sha256": fiche_sha, "train_token_length_max": max(len(x) for x in x_tr)})
+    cfg.update({"route": route, "labels": labels, "n_train": len(tr), "n_eval": len(te), "fiche_sha256": fiche_sha, "train_token_length_max": max(len(x) for x in x_tr)})
     record: dict[str, Any] = {"kind": "preflight" if a.max_steps else "train", "slug": a.slug, "params": cfg}
     try:
         res = lora_train.train(model, x_tr, [int(idx[i]) for i in tr], pad_id, "cuda", a.effective_batch, a.micro_batch, a.epochs if not a.max_steps else 1,
