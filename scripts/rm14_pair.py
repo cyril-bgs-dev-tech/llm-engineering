@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """RM-14 : verdict apparié entre les plis par patient (P1-06) et les plis par auteur, selon `experiments/2026-10-03-rm-14-raccourci-tfidf.md`.
 
-Lit les deux fichiers de prédictions hors pli (jamais le test scellé), aligne les patients par identifiant. Usage : rm14_pair.py [--register]"""
+Lit les deux fichiers de prédictions hors pli (jamais le test scellé), aligne les patients par identifiant. Usage : rm14_pair.py [--suffix -v2] [--register]  (suffixe des fichiers de prédictions, ex. grille v2)"""
 import json
 import sys
 from pathlib import Path
@@ -28,8 +28,9 @@ def decide(lo: float, hi: float, point: float) -> str:
 
 
 def main() -> int:
-    pat = json.loads((PRED / "p1-06-tfidf-chapter.json").read_text(encoding="utf-8"))
-    aut = json.loads((PRED / "p1-06-tfidf-chapter-author-folds.json").read_text(encoding="utf-8"))
+    suf = sys.argv[sys.argv.index("--suffix") + 1] if "--suffix" in sys.argv else ""
+    pat = json.loads((PRED / f"p1-06-tfidf-chapter{suf}.json").read_text(encoding="utf-8"))
+    aut = json.loads((PRED / f"p1-06-tfidf-chapter-author-folds{suf}.json").read_text(encoding="utf-8"))
     common = sorted(set(pat["ids"]) & set(aut["ids"]))
     pa = dict(zip(pat["ids"], pat["pred"], strict=True))
     pb = dict(zip(aut["ids"], aut["pred"], strict=True))
@@ -45,7 +46,7 @@ def main() -> int:
     out = {"n_common": len(common), "n_patient_folds": len(pat["ids"]), "n_author_folds": len(aut["ids"]),
            "delta_macro_f1_patient_minus_author": [round(res.estimate, 4), round(res.lo, 4), round(res.hi, 4)], "verdict": decide(res.lo, res.hi, res.estimate), "threshold": THRESHOLD}
     print(json.dumps(out, ensure_ascii=False, indent=1))
-    record = {"kind": "measure", "slug": "rm-14-author-shortcut-tfidf", "status": "ok",
+    record = {"kind": "measure", "slug": f"rm-14-author-shortcut-tfidf{suf}", "status": "ok",
               "summary": "RM-14 : écart de macro-F1 entre plis par patient et plis par auteur pour le TF-IDF sur le chapitre, bootstrap apparié ; fiche experiments/2026-10-03-rm-14-raccourci-tfidf.md",
               "params": {"seed": SEED, "n_boot": N_BOOT, "level": LEVEL}, "metrics": out}
     if "--register" in sys.argv:

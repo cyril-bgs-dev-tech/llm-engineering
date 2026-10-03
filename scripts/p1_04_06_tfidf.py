@@ -2,7 +2,7 @@
 """P1-04 (doctype) et P1-06 (chapitre) : TF-IDF + régression logistique hors pli, selon la fiche `experiments/2026-10-03-p1-04-06-tfidf.md`.
 
 Développement seulement (clé `folds`) : le test scellé n'est jamais lu. Pli externe k : validation = pli (k+1) mod 5, réglage sur la grille de
-`llmft.tfidf`, ré-entraînement sur les quatre plis, évaluation sur k. Usage : p1_04_06_tfidf.py {doctype|chapter} [--folds author] [--register]
+`llmft.tfidf`, ré-entraînement sur les quatre plis, évaluation sur k. Usage : p1_04_06_tfidf.py {doctype|chapter|specialty} [--folds author] [--grid v2] [--register]
 `--folds author` (RM-14) : plis de contrôle groupés par auteur (clé `control_folds_by_author`) au lieu des plis par patient. Les prédictions hors pli
 (identifiant, classe prédite) sont écrites dans `results/predictions/<slug>.json`, leur SHA-256 va au registre."""
 import hashlib
@@ -33,12 +33,14 @@ def patient_text(docs: dict) -> str:
 def load(task: str, fold_key: str = "folds") -> tuple[list[str], list[str], np.ndarray, str | None, list[str]]:
     parts = loader.load_partitions(PART, SHA)
     fold_of = {pid: k for k, ids in enumerate(parts[fold_key]) for pid in ids}
-    df = pd.read_parquet(PARQUET, columns=["id", "suggested_scenario", "documents"])
+    df = pd.read_parquet(PARQUET, columns=["id", "specialty", "suggested_scenario", "documents"])
     df = df[df["id"].isin(fold_of)].copy()
     df["fold"] = df["id"].map(fold_of)
     if task == "doctype":
         rows = [(str(x), str(t).lower(), r["fold"]) for r in df.to_dict("records") for t, x in zip(r["documents"]["type"], r["documents"]["text"], strict=True)]
         return [r[0] for r in rows], [r[1] for r in rows], np.array([r[2] for r in rows]), None, [str(i) for i in range(len(rows))]
+    if task == "specialty":
+        return [patient_text(d) for d in df["documents"]], df["specialty"].str.lower().tolist(), df["fold"].to_numpy(), None, df["id"].astype(str).tolist()
     hierarchy = cim10.load_claml(CLAML)
     resolved = df["suggested_scenario"].map(lambda s: hierarchy.lookup(s["primary_diagnosis"]["code"][0]))
     df = df[resolved.notna()].copy()
@@ -50,6 +52,7 @@ def main() -> int:
     task = sys.argv[1]
     fold_key = "control_folds_by_author" if "--folds" in sys.argv and sys.argv[sys.argv.index("--folds") + 1] == "author" else "folds"
     texts, y, folds, excluded, ids = load(task, fold_key)
+    grid = tfidf.GRID_V2 if "--grid" in sys.argv and sys.argv[sys.argv.index("--grid") + 1] == "v2" else tfidf.GRID
     labels = sorted(set(y))
     scored = [lab for lab in labels if lab != excluded]
     idx = np.array([labels.index(v) for v in y])
@@ -59,7 +62,7 @@ def main() -> int:
     for k in range(5):
         tr = np.where(folds != k)[0]
         te = np.where(folds == k)[0]
-        cfg = tfidf.select_config([texts[i] for i in tr], [y[i] for i in tr], folds[tr], (k + 1) % 5, labels, scored)
+        cfg = tfidf.select_config([texts[i] for i in tr], [y[i] for i in tr], folds[tr], (k + 1) % 5, labels, scored, grid)
         chosen.append({"fold": k, "C": cfg[0], "ngram": list(cfg[1])})
         oof[te] = tfidf.fit_predict_proba([texts[i] for i in tr], [y[i] for i in tr], [texts[i] for i in te], labels, cfg[0], cfg[1])
         rep = evaluation.chapter_report(idx[te], oof[te], labels, excluded=(excluded,) if excluded else ())
@@ -85,7 +88,7 @@ def main() -> int:
         "ece": round(pooled["ece"], 4), "seconds": round(time.time() - t0),
     }
     print(json.dumps(result, ensure_ascii=False, indent=1))
-    slug = f"p1-{'04' if task == 'doctype' else '06'}-tfidf-{task}" + ("-author-folds" if fold_key != "folds" else "")
+    slug = f"p1-{ {'doctype': '04', 'chapter': '06', 'specialty': '05'}[task] }-tfidf-{task}" + ("-author-folds" if fold_key != "folds" else "") + ("-v2" if grid is tfidf.GRID_V2 else "")
     payload = json.dumps({"ids": ids, "pred": [labels[int(p)] for p in pred], "fold_key": fold_key}, ensure_ascii=False)
     result["predictions_sha256"] = hashlib.sha256(payload.encode("utf-8")).hexdigest()
     if "--register" in sys.argv:
@@ -94,7 +97,7 @@ def main() -> int:
         pred_path.write_text(payload, encoding="utf-8")
     record = {"kind": "measure", "slug": slug, "status": "ok",
               "summary": f"TF-IDF et régression logistique hors pli sur {task} (développement seulement, 5 plis {fold_key}, réglage C et n-grammes sur le pli suivant) ; fiche experiments/2026-10-03-p1-04-06-tfidf.md",
-              "params": {"seed": SEED, "n_boot": N_BOOT, "grid": [[c, list(n)] for c, n in tfidf.GRID], "partition_sha256_file": str(SHA.relative_to(ROOT))},
+              "params": {"seed": SEED, "n_boot": N_BOOT, "grid": [[c, list(n)] for c, n in grid], "partition_sha256_file": str(SHA.relative_to(ROOT))},
               "metrics": result}
     if "--register" in sys.argv:
         print(register_run(ROOT / "results/runs", record))

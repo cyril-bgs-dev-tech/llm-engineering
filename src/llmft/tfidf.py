@@ -15,6 +15,8 @@ _Logistic: Any = cast(Any, LogisticRegression)
 
 GRID: list[tuple[float, tuple[int, int]]] = [(c, ng) for c in (0.1, 1.0, 10.0, 100.0) for ng in ((1, 1), (1, 2))]
 
+GRID_V2: list[tuple[float, tuple[int, int]]] = [(c, ng) for c in (1.0, 10.0, 100.0, 1000.0, 10000.0) for ng in ((1, 1), (1, 2))]  # fiche v2 : C au bord haut de la grille v1
+
 
 def fit_predict_proba(
     train_texts: Sequence[str], train_y: Sequence[str], test_texts: Sequence[str], labels: Sequence[str], c: float, ngram: tuple[int, int]
@@ -33,14 +35,15 @@ def fit_predict_proba(
 
 
 def select_config(
-    texts: Sequence[str], y: Sequence[str], folds: np.ndarray, val_fold: int, labels: Sequence[str], scored: Sequence[str]
+    texts: Sequence[str], y: Sequence[str], folds: np.ndarray, val_fold: int, labels: Sequence[str], scored: Sequence[str],
+    grid: Sequence[tuple[float, tuple[int, int]]] | None = None,
 ) -> tuple[float, tuple[int, int]]:
     """Meilleure macro-F1 sur `val_fold`, entraînement sur les autres plis fournis ; égalité exacte : C le plus bas, puis unigrammes."""
     tr = [i for i in range(len(y)) if folds[i] != val_fold]
     va = [i for i in range(len(y)) if folds[i] == val_fold]
     best: tuple[float, tuple[int, int]] | None = None
     best_score = -1.0
-    for c, ng in GRID:
+    for c, ng in (GRID if grid is None else grid):
         p = fit_predict_proba([texts[i] for i in tr], [y[i] for i in tr], [texts[i] for i in va], labels, c, ng)
         pred = [labels[int(k)] for k in p.argmax(1)]
         score = metrics.macro_f1([y[i] for i in va], pred, scored)

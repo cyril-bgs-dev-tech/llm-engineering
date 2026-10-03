@@ -1,0 +1,13 @@
+# Fiche préenregistrée v2 : TF-IDF avec grille de C étendue, spécialité (P1-05), reprise de RM-14
+
+Cite et complète `experiments/2026-10-03-p1-04-06-tfidf.md` sans la modifier.
+
+- **pourquoi une v2** : dans les 10 plis de P1-06 (plis par patient et plis par auteur), la configuration retenue a **C = 100, le bord haut de la grille v1**, et le pli 4 du doctype aussi ; la référence TF-IDF est donc possiblement sous-réglée, ce qui flatterait les modèles appris et pourrait fausser l'écart de RM-14 (lecture 3 d'ADR-011). Les chiffres v1 restent publiés tels quels ; la v2 les complète.
+- **question** : (a) quelle macro-F1 la référence TF-IDF atteint-elle quand C n'est plus borné par le haut ? (b) l'écart de RM-14 (+3,87 points, « signalé ») persiste-t-il ? (c) niveau sur la tâche `parhaf_specialty` (P1-05).
+- **référence** : runs `p1-06-tfidf-chapter` (`20261003-121942`), `p1-06-tfidf-chapter-author-folds` (`20261003-121959`), verdict `20261003-122037-rm-14-author-shortcut-tfidf`, bornes `p1-03-bounds`.
+- **variante** : seule la grille change : C ∈ {1 ; 10 ; 100 ; 1 000 ; 10 000} × n-grammes ∈ {(1,1), (1,2)} (10 configurations ; 0,1 retiré, jamais retenu). Tout le reste (modèle, plis, règle de réglage sur le pli suivant, égalité exacte au C le plus bas puis aux unigrammes, bootstrap, graine 20261003) est celui de la fiche v1. **Cette grille est définitive : aucune v3.**
+- **jeux et découpage** : développement seulement ; test scellé jamais lu ; partitions `data/splits/parhaf_cim10_chapter.sha256`.
+- **métrique principale** : macro-F1 regroupée des prédictions hors pli et IC 95 % (chapitre : 17 classes, `AUTRE` exclue ; spécialité : toutes les classes). **Secondaires** : exactitude, log loss, log loss équilibrée, ECE, configuration retenue par pli.
+- **critère de décision** : (a) la v2 « améliore » la v1 si son macro-F1 regroupé dépasse celui de la v1 et que l'écart apparié (même bootstrap) a une borne basse > 0 ; sinon « pas d'amélioration », la v1 fait référence. (b) règle de RM-14 inchangée : « signalé » si Δ ≥ 0,03 et borne basse > 0 ; « non signalé » si la borne haute < 0,03 ; sinon « non résolu ». **La référence retenue pour les comparaisons avec les modèles appris est la meilleure des deux grilles, choisie sur cette règle écrite ici.** (c) niveau seul, pas de verdict.
+- **budget** : CPU seulement, au plus 2 h ; aucun GPU ; trois runs (chapitre par patient, chapitre par auteur, spécialité).
+- **prédiction** : (a) macro-F1 v2 supérieure ou égale à v1 (probabilité 0,75), gain inférieur à 2 points (probabilité 0,7) ; (b) écart de RM-14 encore « signalé » (probabilité 0,55) ; (c) macro-F1 spécialité au-dessus de 0,80 (probabilité 0,6).

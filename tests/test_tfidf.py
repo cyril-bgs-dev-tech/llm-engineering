@@ -36,3 +36,13 @@ def test_selection_ignore_le_pli_externe_absent_des_donnees_fournies():
 
 def test_grille_fixee_a_huit_configurations():
     assert len(tfidf.GRID) == 8
+
+
+def test_grille_v2_etend_c_vers_le_haut_sans_toucher_a_la_grille_v1():
+    assert len(tfidf.GRID) == 8 and max(c for c, _ in tfidf.GRID) == 100.0
+    assert max(c for c, _ in tfidf.GRID_V2) == 10000.0 and len(tfidf.GRID_V2) == 10
+
+
+def test_selection_accepte_une_grille_explicite():
+    folds = np.array([i % 3 for i in range(len(Y))])
+    assert tfidf.select_config(TEXTS, Y, folds, val_fold=1, labels=LABELS, scored=LABELS, grid=[(10.0, (1, 1))]) == (10.0, (1, 1))
