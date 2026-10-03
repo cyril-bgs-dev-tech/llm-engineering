@@ -112,10 +112,11 @@ Fiabilité de l'incertitude de CamemBERT-bio à 6 époques (audit GLM C4-A1/A2/A
 | Taux | macro-F1 | exactitude | durée | run_id |
 |---|---|---|---|---|
 | 1e-5 | 0,193 | 0,439 | 2 515 s | `20261003-141041-p1-11-qwen3-5-4b-lr1e-5` |
+| 2e-5 | 0,306 | 0,561 | 2 515 s | `p1-13-qwen3-5-4b-lr2e-5` |
 | 5e-5 | 0,4733 | 0,724 | 2 509 s | `20261003-204018-p1-13-qwen3-5-4b-lr5e-5` |
 | 1e-4 | **0,5867** | 0,789 | 3 024 s | `20261003-194530-p1-11-qwen3-5-4b-lr1e-4` |
 
-5e-5 contre 1e-4 : −11,3 points [−15,6 ; −6,8] (`p1-13-4b-5e-5-minus-1e-4-fold0`) : **1e-4 est meilleur, résolu**. La macro-F1 croît de façon monotone avec le taux sur toute la grille testée, comme pour CamemBERT-bio : le meilleur taux est au **bord supérieur** de la grille gelée, signalé comme l'exige le protocole (6.5), et la grille ne s'étend jamais. Avec 2 époques, la recette est probablement encore sous-entraînée (même signe que l'encodeur, où quatre puis six époques ont aidé de 7,7 puis 10,4 points) ; 2e-5 suit.
+5e-5 contre 1e-4 : −11,3 points [−15,6 ; −6,8] (`p1-13-4b-5e-5-minus-1e-4-fold0`) : **1e-4 est meilleur, résolu**. La macro-F1 croît de façon monotone avec le taux sur toute la grille testée, comme pour CamemBERT-bio : le meilleur taux est au **bord supérieur** de la grille gelée, signalé comme l'exige le protocole (6.5), et la grille ne s'étend jamais. Avec 2 époques, la recette est probablement encore sous-entraînée (même signe que l'encodeur, où quatre puis six époques ont aidé de 7,7 puis 10,4 points). Grille complète du 4B : 1e-5 0,193 ; 2e-5 0,306 ; 5e-5 0,473 ; 1e-4 0,587, strictement croissante.
 
 ## Exploration Q19 : perte pondérée 1/√n sur le Qwen3.5-4B (fiche `2026-10-03-q19-perte-ponderee-qwen4b`, EXPLORE, pli 0, taux 1e-4, une graine)
 
