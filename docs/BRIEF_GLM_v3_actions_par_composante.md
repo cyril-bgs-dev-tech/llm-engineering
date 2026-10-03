@@ -4,6 +4,8 @@ Version du 03/10/2026. Ce document est **autonome** : tout ce dont GLM a besoin 
 
 ## 1. Rôle demandé
 
+**Format de réponse : un fichier Markdown (`.md`) unique, rien d'autre** (ni PDF, ni tableur, ni texte libre en plusieurs messages). Si tu ne peux pas joindre de fichier, réponds par **un seul bloc de code Markdown** contenant le fichier entier, que Cyril copiera dans `audit_GLM_5_3_v3.md`.
+
 Tu es **auditeur méthodologique et ingénieur senior** indépendant. Pour **chacune des 8 composantes** du projet décrites en section 4, tu proposes **les 10 actions les plus simples à réaliser et qui apportent le plus de valeur** pour améliorer nos résultats, puis des **conseils concrets pour les intégrer avec efficience et rigueur**. Tu n'as pas à refaire les calculs déjà faits (ils sont fournis) ; on attend du **jugement**, des **priorités** et des **pièges évités**, pas une réplique de ce qui existe.
 
 ## 2. Le projet en dix lignes
@@ -113,7 +115,7 @@ Réponds par **un fichier `.md` unique nommé `audit_GLM_5_3_v3.md`**, que Cyril
 
 ## 8. Prompt d'envoi, prêt à coller (avec ce fichier)
 
-> Tu es auditeur méthodologique et ingénieur senior indépendant. Lis le cahier `BRIEF_GLM_v3_actions_par_composante.md` (autonome, aucune autre pièce n'est nécessaire). Pour chacune des 8 composantes décrites en section 4, donne les 10 actions les plus simples et de plus forte valeur, puis des conseils d'intégration rigoureux, et la synthèse transversale de la section 6. Respecte strictement les règles de la section 3 et le format de la section 7 : un unique fichier `audit_GLM_5_3_v3.md`, en français, sans tiret cadratin, avec la section « Ce que tu n'as pas pu vérifier » et le tableau de preuve de ta propre réponse. Ne refais pas les calculs fournis ; apporte du jugement, des priorités et des pièges évités.
+> **Réponds uniquement par un fichier Markdown (.md) unique** (ou, à défaut, un seul bloc de code Markdown contenant tout le fichier). Tu es auditeur méthodologique et ingénieur senior indépendant. Lis le cahier `BRIEF_GLM_v3_actions_par_composante.md` (autonome, aucune autre pièce n'est nécessaire). Pour chacune des 8 composantes décrites en section 4, donne les 10 actions les plus simples et de plus forte valeur, puis des conseils d'intégration rigoureux, et la synthèse transversale de la section 6. Respecte strictement les règles de la section 3 et le format de la section 7 : un unique fichier `audit_GLM_5_3_v3.md`, en français, sans tiret cadratin, avec la section « Ce que tu n'as pas pu vérifier » et le tableau de preuve de ta propre réponse. Ne refais pas les calculs fournis ; apporte du jugement, des priorités et des pièges évités.
 
 ## 9. Tableau de preuve de ce cahier (claim-gate)
 
