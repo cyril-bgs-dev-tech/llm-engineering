@@ -30,3 +30,16 @@ Mesure méthodologique sur textes fictifs. Hors usage : tout usage clinique ou s
 - Chapitres rares (XII, XXI, XXII : 5 à 8 patients au pli 0) : F1 nulle pour le 9B, non vérifiable individuellement.
 - Non mesuré : latence p50/p95, quantification, robustesse aux perturbations, calibration des LLM.
 - Licences : voir `docs/LICENCES.md`.
+
+## Items TRIPOD-LLM renseignés (audit GLM, C8-A2)
+
+| Item | Réponse du projet au 03/10/2026 | Source |
+|---|---|---|
+| 5a, 5c, 5e Données | PARHAF, 4 254 patients ; 4 220 avec code CIM-10 résolu ; 1 code invalide exclu ; 4 219 patients de travail ; classes très déséquilibrées (II : 1 153 contre XXII : 31 sur le développement et le test confondus) ; texte non modifié (aucun prétraitement) ; dates fictives | `results/measures/splits_summary.json` |
+| 6a à 6e Modèle | Noms et versions dans le registre (`run_id`) ; LoRA r = 16, alpha 32, dropout 0,05, bf16, lot effectif 32, 4 096 tokens, 2 époques, cosinus ; graines `1000 + k` ; sortie = probabilités sur 18 sorties, argmax | registre, `PROTOCOLE.md` 6.4 |
+| 7a à 7e Métriques | Macro-F1 sur 17 chapitres (`AUTRE` exclue), définie avant les runs ; log loss, ECE, couverture conforme en secondaires | `PROTOCOLE.md` 6.1, 6.2 |
+| 12 Calcul | RTX 5090 32 Go ; durées par run ci-dessus ; budget B = 90 h, 4,1 h enregistrées à ce jour (`scripts/budget_alert.py`) | registre, protocole section 5 |
+| 13 Éthique | Non applicable : corpus fictif, aucune donnée de patient réel ; à formuler ainsi, sans supposer | règles du projet |
+| 14c à 14f Accès | Protocole préenregistré et haché (`experiments/INDEX.md`, 9 instantanés) ; code en dépôt privé (ADR-008) ; données PARHAF soumises à ses conditions | ADR-008 |
+| 16a à 16d Flux | 4 254 → 4 220 → 4 219 ; test scellé 633 ; 5 plis de développement de 717 à 718 ; plis groupés par auteur de 663 à 763 ; 104 auteurs | `splits_summary.json` |
+| 19b, 19d Limites, usage | Voir « Limites connues » et « Usages prévus » ci-dessus ; supervision humaine requise pour tout usage, aucun usage clinique | cette carte |
