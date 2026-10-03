@@ -23,7 +23,7 @@ Statuts : **prouvé** (renvoie à un run, un fichier ou une commande), **estimat
 
 | Composante | Projet | Open source | Absolu | Raison de la note du projet |
 |---|---|---|---|---|
-| Performance du modèle | 3 | 8 | 9 | TF-IDF 0,68 ; encodeur 0,45 sous-entraîné ; aucun LLM concluant à ce jour (P1-11 en cours) |
+| Performance du modèle | 3 | 8 | 9 | TF-IDF 0,68 ; encodeur 0,45 sous-entraîné ; Qwen3.5-9B 0,565 sur le pli 0, sous le TF-IDF ; aucun LLM ne le bat à ce jour (P1-11, 4 runs sur 6) |
 | Rigueur statistique et protocole | 7 | 8 | 9 | protocole gelé et haché, test scellé, bootstrap apparié, puissance simulée ; mais une graine au développement, premier cycle non confirmatoire |
 | Données et anti-fuite | 6 | 8 | 10 | contrôles de fuite et raccourci d'auteur mesuré ; mais corpus fictif, pas de données réelles |
 | Fiabilité de l'incertitude | 4 | 7 | 9 | **révisée de 1 à 4 le 03/10** : calibration, conforme (LAC, APS, par classe, Wilson) et sélectif implémentés, validés sur données synthétiques (14 tests) et mesurés sur le TF-IDF avec test de décalage (run `q5-uncertainty-tfidf-chapter`) ; reste : LLM, politique d'abstention chiffrée, hors distribution, test scellé (Q5 de G-P0 = 0 avant) |
@@ -33,3 +33,5 @@ Statuts : **prouvé** (renvoie à un run, un fichier ou une commande), **estimat
 | Sûreté, conformité, honnêteté | 7 | 7 | 9 | aucune donnée réelle, résultats négatifs publiés, claim-gate ; pas de revue indépendante ni de carte de modèle |
 
 Moyennes : projet 40 / 8 = 5,0 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4. Ces trois colonnes sont des jugements ; seule la colonne « projet » s'appuie sur des preuves du dépôt, et même elle reste une note d'auto-évaluation sans confirmation indépendante (aucune note 3 à G-P0).
+
+| 14 | Qwen3.5-9B 0,565 ; Gemma-4-E4B 0,456 (1e-4) et 0,142 (1e-5) ; écarts −13,2 et +10,9 points | runs `20261003-163427-p1-11-qwen3-5-9b-lr1e-4`, `20261003-152759-p1-11-gemma-4-e4b-lr1e-4`, `20261003-174127-p1-11-gemma-4-e4b-lr1e-5` et comparaisons appariées du pli 0 | prouvé (pli 0 seulement, criblage inachevé) |
