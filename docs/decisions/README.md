@@ -14,3 +14,4 @@ Une décision structurante, un fichier `ADR-NNN-titre.md`, jamais supprimé : un
 | ADR-008 | Dépôt GitHub privé, intégration continue, vitrine à décider ; remplace la plateforme d'ADR-002 | P5-06 (avancée) | Acceptée sur demande de Cyril |
 | ADR-009 | Présélection de l'élève du premier cycle : trois candidats, deux taux chacun, règle de choix écrite avant les résultats | RM-13 | Acceptée (ratifiée le 03/10/2026) |
 | ADR-010 | Écarts du protocole au plan V6 et au backlog (relecture adversariale) | P0-46 | Acceptée le 03/10/2026 |
+| ADR-011 | Écart plis par patient contre plis par auteur sur la référence TF-IDF : +3,87 points, « signalé » par la règle préenregistrée | RM-14 | Proposée, non ratifiée (Q18) |

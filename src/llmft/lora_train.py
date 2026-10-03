@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import math
 import time
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -46,6 +46,16 @@ def truncate_head_tail(ids: Sequence[int], max_len: int, marker: Sequence[int]) 
         return list(ids)
     half = max_len // 2
     return [*ids[:half], *marker, *ids[len(ids) - half :]]
+
+
+def special_affixes(encode: Callable[..., list[int]]) -> tuple[list[int], list[int]]:
+    """Jetons spéciaux ajoutés avant et après le texte par un tokenizer, déduits d'un texte sonde (aucune méthode propre à un tokenizer requise)."""
+    plain = encode("a", add_special_tokens=False)
+    full = encode("a", add_special_tokens=True)
+    for i in range(len(full) - len(plain) + 1):
+        if full[i : i + len(plain)] == plain:
+            return full[:i], full[i + len(plain) :]
+    raise ValueError("texte sonde introuvable parmi les jetons : tokenizer inattendu")
 
 
 def total_steps(n: int, effective_batch: int, epochs: int) -> int:

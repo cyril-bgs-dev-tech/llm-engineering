@@ -74,3 +74,15 @@ def test_perte_non_finie_arrete_la_boucle_et_garde_l_historique():
     with pytest.raises(lora_train.TrainingDiverged) as err:
         lora_train.train(model, [[1, 2, 3]] * 8, [0, 1] * 4, pad_id=0, device="cpu", effective_batch=4, micro_batch=4, epochs=2, base_lr=1e-3, warmup_steps=1, seed=0)
     assert len(err.value.loss_history) >= 1 and not math.isfinite(err.value.loss_history[-1])
+
+
+def test_special_affixes_retrouve_prefixe_et_suffixe_d_un_tokenizer_quelconque():
+    def encode_bert(text, add_special_tokens):  # [CLS]=101 texte [SEP]=102
+        body = [ord(c) for c in text]
+        return [101, *body, 102] if add_special_tokens else body
+
+    def encode_qwen(text, add_special_tokens):  # aucun jeton spécial
+        return [ord(c) for c in text]
+
+    assert lora_train.special_affixes(encode_bert) == ([101], [102])
+    assert lora_train.special_affixes(encode_qwen) == ([], [])

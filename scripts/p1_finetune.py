@@ -1,0 +1,156 @@
+#!/usr/bin/env python3
+"""Affinage d'un classifieur de chapitre CIM-10 sur le pli de développement k (P1-07 encodeur, P1-11 / P1-13 LoRA), selon une fiche préenregistrée.
+
+Entraînement sur les quatre autres plis (clé `folds`), évaluation sur le pli k : le test scellé n'est jamais lu. Entrée : documents du patient concaténés
+avec balise de type, troncature tête et fin au niveau des tokens (PROTOCOLE.md section 1).
+Usage : p1_finetune.py MODELE --mode {lora|full} --lr LR [--fold 0] [--epochs 2] [--max-len 4096] [--rank 16] [--alpha 32] [--effective-batch 32]
+        [--micro-batch 4] [--seed 1000] [--max-steps N] [--fiche CHEMIN] [--slug NOM] [--register]
+`--max-steps N` : pré-vol (vram-preflight) : N pas d'optimiseur, pas d'évaluation, enregistré comme `preflight` seulement avec --register.
+Lancer avec HF_HOME=$PWD/artifacts/hf_cache."""
+import argparse
+import hashlib
+import json
+import sys
+import time
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import p1_04_06_tfidf  # chargement des étiquettes de développement, même fonction que les références TF-IDF
+from llmft import evaluation, failures, lora_train
+from llmft.mini_registry import register_run
+
+
+def build_inputs(tok: Any, texts: list[str], max_len: int) -> list[list[int]]:
+    """Tokens avec jetons spéciaux du modèle ; au-delà de `max_len` : tête et fin avec le marqueur `[...]`."""
+    marker = tok.encode("[...]", add_special_tokens=False)
+    prefix, suffix = lora_train.special_affixes(tok.encode)
+    out = []
+    for t in texts:
+        ids = tok.encode(t, add_special_tokens=False)
+        ids = lora_train.truncate_head_tail(ids, max_len - len(prefix) - len(suffix) - len(marker), marker)
+        out.append([*prefix, *ids, *suffix])
+    return out
+
+
+def load_model(name: str, mode: str, n_labels: int, pad_id: int, rank: int, alpha: int) -> Any:
+    import torch
+    from transformers import AutoModelForSequenceClassification
+
+    dtype = torch.bfloat16 if mode == "lora" else torch.float32
+    model = AutoModelForSequenceClassification.from_pretrained(name, num_labels=n_labels, torch_dtype=dtype)
+    model.config.pad_token_id = pad_id
+    if hasattr(model.config, "text_config"):
+        model.config.text_config.pad_token_id = pad_id
+    if mode == "lora":
+        from peft import LoraConfig, get_peft_model
+
+        model.gradient_checkpointing_enable()
+        model.enable_input_require_grads()
+        model = get_peft_model(model, LoraConfig(task_type="SEQ_CLS", r=rank, lora_alpha=alpha, lora_dropout=0.05, target_modules="all-linear"))
+    return model
+
+
+def predict(model: Any, ids: list[list[int]], pad_id: int, device: str, micro_batch: int, n_labels: int) -> np.ndarray:
+    import torch
+
+    model.eval()
+    order = np.argsort([len(x) for x in ids])
+    probs = np.zeros((len(ids), n_labels))
+    with torch.no_grad():
+        for s in range(0, len(ids), micro_batch):
+            idx = order[s : s + micro_batch]
+            x, m = lora_train._pad([ids[i] for i in idx], pad_id, device)
+            probs[idx] = torch.softmax(model(input_ids=x, attention_mask=m).logits.float(), dim=-1).cpu().numpy()
+    return probs
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("model")
+    ap.add_argument("--mode", choices=["lora", "full"], required=True)
+    ap.add_argument("--lr", type=float, required=True)
+    ap.add_argument("--fold", type=int, default=0)
+    ap.add_argument("--epochs", type=int, default=2)
+    ap.add_argument("--max-len", type=int, default=4096)
+    ap.add_argument("--rank", type=int, default=16)
+    ap.add_argument("--alpha", type=int, default=32)
+    ap.add_argument("--effective-batch", type=int, default=32)
+    ap.add_argument("--micro-batch", type=int, default=4)
+    ap.add_argument("--warmup", type=int, default=20)
+    ap.add_argument("--seed", type=int, default=1000)
+    ap.add_argument("--max-steps", type=int, default=0)
+    ap.add_argument("--fiche", default="")
+    ap.add_argument("--slug", required=True)
+    ap.add_argument("--register", action="store_true")
+    a = ap.parse_args()
+
+    import torch
+    from transformers import AutoTokenizer
+
+    fiche_sha = hashlib.sha256((ROOT / a.fiche).read_bytes()).hexdigest() if a.fiche else None
+    texts, y, folds, excluded, ids = p1_04_06_tfidf.load("chapter")
+    labels = sorted(set(y))
+    idx = np.array([labels.index(v) for v in y])
+    tr, te = np.where(folds != a.fold)[0], np.where(folds == a.fold)[0]
+    tok = AutoTokenizer.from_pretrained(a.model)
+    pad_id = tok.pad_token_id if tok.pad_token_id is not None else tok.eos_token_id
+    t_tok = time.time()
+    x_tr = build_inputs(tok, [texts[i] for i in tr], a.max_len)
+    x_te = build_inputs(tok, [texts[i] for i in te], a.max_len) if not a.max_steps else []
+    tok_seconds = time.time() - t_tok
+    if a.max_steps:  # pré-vol : le plus long exemple d'abord, le pire cas mémoire
+        order = np.argsort([-len(x) for x in x_tr])[: a.max_steps * a.effective_batch]
+        x_tr = [x_tr[i] for i in order]
+        tr = tr[order]
+    torch.manual_seed(a.seed)
+    model = load_model(a.model, a.mode, len(labels), pad_id, a.rank, a.alpha).to("cuda")
+    cfg: dict[str, Any] = {k: v for k, v in vars(a).items() if k not in ("register",)}
+    cfg.update({"labels": labels, "n_train": len(tr), "n_eval": len(te), "fiche_sha256": fiche_sha, "train_token_length_max": max(len(x) for x in x_tr)})
+    record: dict[str, Any] = {"kind": "preflight" if a.max_steps else "train", "slug": a.slug, "params": cfg}
+    try:
+        res = lora_train.train(model, x_tr, [int(idx[i]) for i in tr], pad_id, "cuda", a.effective_batch, a.micro_batch, a.epochs if not a.max_steps else 1,
+                               a.lr, a.warmup, a.seed)
+    except lora_train.TrainingDiverged as exc:
+        record.update({"summary": f"{a.slug} : perte non finie au pas {len(exc.loss_history)}", "loss_history": exc.loss_history, "error": str(exc)})
+        print(json.dumps({k: record[k] for k in ("slug", "summary")}))
+        if a.register:
+            print(failures.register_failed(ROOT / "results/runs", record))
+        return 2
+    except torch.cuda.OutOfMemoryError as exc:
+        record.update({"summary": f"{a.slug} : mémoire insuffisante", "loss_history": [], "error": str(exc)[:300]})
+        print(json.dumps({k: record[k] for k in ("slug", "summary")}))
+        if a.register:
+            print(failures.register_failed(ROOT / "results/runs", record))
+        return 3
+    metrics: dict[str, Any] = {"steps": len(res.loss_history), "seconds_train": round(res.seconds, 1), "seconds_tokenize": round(tok_seconds, 1),
+                               "peak_alloc_gib": round(res.peak_alloc_gib or 0, 2), "peak_reserved_gib": round(res.peak_reserved_gib or 0, 2),
+                               "loss_first": res.loss_history[0], "loss_last": res.loss_history[-1]}
+    if a.max_steps:
+        summary = f"pré-vol {a.slug} : {len(res.loss_history)} pas, pic réservé {metrics['peak_reserved_gib']} Gio, {metrics['seconds_train']} s"
+    else:
+        probs = predict(model, x_te, pad_id, "cuda", a.micro_batch, len(labels))
+        rep = evaluation.chapter_report(idx[te], probs, labels, excluded=(excluded,) if excluded else ())
+        nll = -np.log(np.clip(probs[np.arange(len(te)), idx[te]], 1e-12, 1))
+        bal = float(np.mean([nll[idx[te] == c].mean() for c in range(len(labels)) if (idx[te] == c).any()]))
+        pred_payload = json.dumps({"ids": [ids[i] for i in te], "pred": [labels[int(k)] for k in probs.argmax(1)], "fold": a.fold}, ensure_ascii=False)
+        metrics.update({"macro_f1": round(rep["macro_f1"], 4), "accuracy": round(rep["accuracy"], 4), "log_loss": round(rep["log_loss"], 4),
+                        "class_balanced_log_loss": round(bal, 4), "ece": round(rep["ece"], 4), "predictions_sha256": hashlib.sha256(pred_payload.encode()).hexdigest()})
+        summary = f"{a.slug} : macro-F1 {metrics['macro_f1']} sur le pli {a.fold} (17 chapitres), {metrics['seconds_train']} s d'entraînement"
+        if a.register:
+            out = ROOT / "results/predictions" / f"{a.slug}.json"
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(pred_payload, encoding="utf-8")
+    record.update({"status": "ok", "summary": summary, "loss_history": res.loss_history, "metrics": metrics})
+    print(json.dumps({"summary": summary, "metrics": metrics}, ensure_ascii=False, indent=1))
+    if a.register:
+        print(register_run(ROOT / "results/runs", record))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
