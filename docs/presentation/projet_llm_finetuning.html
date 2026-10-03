@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Affiner et distiller des LLM sur des textes cliniques français</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* === TOKENS === */
+:root{
+  --ink:#10202f; --ink-2:#34475a; --muted:#6b7b8a;
+  --paper:#f7f3ea; --card:#ffffff; --line:#d9d2c3;
+  --teal:#0e7c7b; --teal-2:#0b5f5e; --amber:#d99a1c; --red:#b8402f; --sky:#2f6da3;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'IBM Plex Sans','Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'IBM Plex Mono',Consolas,'SFMono-Regular',monospace;
+}
+/* === BASE === */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0b1722;overflow:hidden}
+body{font-family:var(--sans);color:var(--ink)}
+.viewport{position:fixed;inset:0;display:grid;place-items:center}
+.stage{width:1920px;height:1080px;position:relative;transform-origin:center center;flex:none}
+.slide{position:absolute;inset:0;background:var(--paper);padding:96px 128px 88px;display:flex;flex-direction:column;
+  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s}
+.slide.active{opacity:1;visibility:visible}
+.slide::before{content:"";position:absolute;left:0;top:0;bottom:0;width:14px;background:var(--teal)}
+.kicker{font:500 24px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--teal-2);margin-bottom:22px}
+h1{font:700 92px/1.04 var(--serif);letter-spacing:-.01em}
+h2{font:700 56px/1.12 var(--serif);max-width:1560px;letter-spacing:-.005em}
+.lead{font-size:34px;line-height:1.45;color:var(--ink-2);max-width:1400px;margin-top:28px}
+.foot{position:absolute;left:128px;right:128px;bottom:34px;display:flex;justify-content:space-between;
+  font:500 20px var(--mono);color:var(--muted)}
+.body{flex:1;display:flex;gap:56px;margin-top:44px;min-height:0}
+.col{flex:1;min-width:0}
+ul.clean{list-style:none;display:flex;flex-direction:column;gap:20px}
+ul.clean li{font-size:32px;line-height:1.35;padding-left:38px;position:relative;color:var(--ink)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.5em;width:16px;height:16px;border-radius:4px;background:var(--teal)}
+ul.clean li b{font-weight:600}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:30px 36px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;width:100%}
+.stat .n{font:700 84px/1 var(--serif);color:var(--teal-2)}
+.stat .t{font-size:26px;line-height:1.3;color:var(--ink-2);margin-top:12px}
+.note{font-size:24px;line-height:1.4;color:var(--muted);margin-top:20px}
+.tag{display:inline-block;font:500 22px var(--mono);padding:6px 14px;border-radius:999px;border:2px solid var(--line);color:var(--ink-2);background:#fff}
+.tag.red{border-color:var(--red);color:var(--red)} .tag.amber{border-color:var(--amber);color:#8a5d00} .tag.teal{border-color:var(--teal);color:var(--teal-2)}
+/* === BARS === */
+.bars{display:flex;flex-direction:column;gap:22px;width:100%}
+.bar-row{display:grid;grid-template-columns:560px 1fr 150px;align-items:center;gap:22px}
+.bar-row .lab{font-size:27px;line-height:1.2;color:var(--ink)}
+.bar-row .lab small{display:block;font-size:20px;color:var(--muted);margin-top:4px}
+.track{position:relative;height:40px;background:#ebe5d6;border-radius:10px;overflow:hidden}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:10px;background:var(--teal)}
+.fill.amber{background:var(--amber)} .fill.red{background:var(--red)} .fill.grey{background:#9aa7b2} .fill.sky{background:var(--sky)}
+.ci{position:absolute;top:50%;height:6px;margin-top:-3px;background:var(--ink);opacity:.85}
+.ci::before,.ci::after{content:"";position:absolute;top:-8px;width:4px;height:22px;background:var(--ink)}
+.ci::before{left:0}.ci::after{right:0}
+.val{font:600 30px var(--mono);text-align:right}
+/* === SCORE TABLE === */
+.score{width:100%;border-collapse:separate;border-spacing:0 6px}
+.score th{font:500 20px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 12px 6px}
+.score td{background:#fff;padding:5px 12px;font-size:23px;border-top:2px solid var(--line);border-bottom:2px solid var(--line)}
+.score td:first-child{border-left:2px solid var(--line);border-radius:12px 0 0 12px;font-weight:500;width:520px}
+.score td:last-child{border-right:2px solid var(--line);border-radius:0 12px 12px 0}
+.mini{display:flex;align-items:center;gap:12px}
+.mini .tr{flex:1;height:20px;background:#ebe5d6;border-radius:6px;position:relative;overflow:hidden}
+.mini .tr i{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
+.mini span{font:600 22px var(--mono);width:44px;text-align:right}
+.c-p i{background:var(--teal)} .c-o i{background:var(--sky)} .c-a i{background:var(--ink)}
+.avg td{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600;font-size:28px}
+.avg .mini .tr{background:#2c4156}.avg .c-p i{background:#4fd1c5}.avg .c-o i{background:#7fb4e6}.avg .c-a i{background:#f2efe6}
+/* === TITLE === */
+.slide.title{background:var(--ink);color:#fff;justify-content:center}
+.slide.title::before{background:var(--amber);width:22px}
+.slide.title .kicker{color:#7fd6d0}
+.slide.title .lead{color:#c8d3dd}
+.slide.title .foot{color:#8aa0b3}
+/* === UI === */
+.progress{position:fixed;left:0;top:0;height:5px;background:var(--amber);width:0;z-index:5;transition:width .3s}
+.hint{position:fixed;right:18px;bottom:12px;font:500 13px var(--mono);color:#8aa0b3;z-index:5;opacity:.8}
+@media (prefers-reduced-motion:reduce){.slide{transition:none}.progress{transition:none}}
+@media print{
+  @page{size:1920px 1080px;margin:0}
+  html,body{overflow:visible;background:#fff;height:auto}
+  .viewport{position:static;display:block}
+  .stage{transform:none!important;width:1920px;height:auto}
+  .slide{position:relative;inset:auto;width:1920px;height:1080px;opacity:1;visibility:visible;page-break-after:always;break-after:page}
+  .progress,.hint{display:none}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="viewport"><div class="stage" id="stage">
+
+<!-- === 1. TITRE === -->
+<section class="slide title active" data-title="Titre">
+  <div class="kicker">Projet LLM_finetuning · état au 3 octobre 2026</div>
+  <h1>Affiner et distiller des LLM<br>sur des textes cliniques français</h1>
+  <p class="lead">Mesurer ce que chaque technique apporte vraiment, avec un protocole gelé avant la première mesure, sur une seule carte graphique.</p>
+  <div class="foot"><span>Données fictives (PARHAF) · aucune donnée de patient réel</span><span>1 / 12</span></div>
+</section>
+
+<!-- === 2. QUESTION === -->
+<section class="slide" data-title="Question">
+  <div class="kicker">La question</div>
+  <h2>Quelle technique d'adaptation donne un gain réel, et de combien de points ?</h2>
+  <div class="body">
+    <div class="col">
+      <ul class="clean">
+        <li><b>Référence</b> : un LLM affiné par LoRA, réglé sur son taux d'apprentissage</li>
+        <li><b>H1</b> : distillation d'un gros professeur vers un petit élève</li>
+        <li><b>H2</b> : pré-entraînement sur une tâche voisine</li>
+        <li><b>H3</b> : les deux ensemble</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="kicker" style="margin-bottom:14px">Contraintes tenues</div>
+        <ul class="clean">
+          <li>Une RTX 5090 (32 Go), pas de location</li>
+          <li>Textes cliniques fictifs, publics et synthétiques</li>
+          <li>Chaque chiffre renvoie à un run du registre</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Cible : exercer la méthode d'un projet de science des données hospitalière</span><span>2 / 12</span></div>
+</section>
+
+<!-- === 3. TERRAIN === -->
+<section class="slide" data-title="Terrain">
+  <div class="kicker">Le terrain</div>
+  <h2>4 254 comptes rendus fictifs, 17 chapitres CIM-10 à prédire</h2>
+  <div class="body" style="flex-direction:column;justify-content:center">
+    <div class="stats">
+      <div class="card stat"><div class="n">4 219</div><div class="t">patients de travail, 5 plis stratifiés de 717 à 718</div></div>
+      <div class="card stat"><div class="n">633</div><div class="t">patients de test scellé, ouvert une seule fois, en deux temps</div></div>
+      <div class="card stat"><div class="n">17</div><div class="t">chapitres évalués ; 4 chapitres rares fusionnés dans « AUTRE », exclu de la moyenne</div></div>
+    </div>
+    <p class="note" style="font-size:28px">Le plus petit chapitre évalué compte 31 patients au développement et seulement 4 au test (chapitre XXII) : les intervalles du test seront larges, et le projet le dit d'avance.</p>
+  </div>
+  <div class="foot"><span>Sources : splits_summary.json, ADR-005, ADR-006</span><span>3 / 12</span></div>
+</section>
+
+<!-- === 4. PROTOCOLE === -->
+<section class="slide" data-title="Protocole">
+  <div class="kicker">Le protocole</div>
+  <h2>Les règles sont gelées et hachées avant toute mesure</h2>
+  <div class="body">
+    <div class="col">
+      <ul class="clean">
+        <li><b>Métrique</b> : macro-F1 sur 17 chapitres</li>
+        <li><b>Seuil utile</b> δ = 2,0 points, 5 graines, budget 90 h de GPU</li>
+        <li><b>Réglage</b> : 4 taux d'apprentissage, grille jamais étendue</li>
+        <li><b>Verdict en trois valeurs</b> : gain confirmé, absence de gain utile, non résolu</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="card">
+        <ul class="clean">
+          <li>9 instantanés signés par SHA-256, contrôlés à chaque vérification</li>
+          <li>3 relectures adversariales avant le gel</li>
+          <li>Test scellé : un garde de code, un marqueur, une seule ouverture</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Source : PROTOCOLE.md (gel du 03/10/2026), ADR-007</span><span>4 / 12</span></div>
+</section>
+
+<!-- === 5. PUISSANCE === -->
+<section class="slide" data-title="Puissance">
+  <div class="kicker">Honnêteté sur la puissance</div>
+  <h2>À δ = 2 points, le premier cycle ne tranchera presque jamais</h2>
+  <div class="body" style="flex-direction:column;justify-content:center">
+    <div class="bars">
+      <div class="bar-row"><div class="lab">Vrai gain de 2 points (= δ)<small>probabilité d'un verdict résolu</small></div><div class="track"><div class="fill red" style="width:1.7%"></div></div><div class="val">1,7 %</div></div>
+      <div class="bar-row"><div class="lab">Vrai gain de 3 points<small>probabilité de « gain confirmé »</small></div><div class="track"><div class="fill amber" style="width:11.6%"></div></div><div class="val">11,6 %</div></div>
+      <div class="bar-row"><div class="lab">Vrai gain de 4 points<small>probabilité de « gain confirmé »</small></div><div class="track"><div class="fill amber" style="width:50%"></div></div><div class="val">50 %</div></div>
+      <div class="bar-row"><div class="lab">Vrai gain de 5 points<small>probabilité de « gain confirmé »</small></div><div class="track"><div class="fill" style="width:88.4%"></div></div><div class="val">88 %</div></div>
+    </div>
+    <p class="note" style="font-size:27px">Intervalle de 4 points de large (limite de la règle de puissance), approximation normale, vérifiée indépendamment. Conséquence assumée : le premier cycle est classé <b>EXPLORE</b>, δ ne change pas, aucun gain n'est annoncé sans verdict.</p>
+  </div>
+  <div class="foot"><span>Sources : power-curves-audit, audit_GLM_5_3_v2 (G6), erratum 6.3</span><span>5 / 12</span></div>
+</section>
+
+<!-- === 6. REFERENCES === -->
+<section class="slide" data-title="Références">
+  <div class="kicker">Références mesurées</div>
+  <h2>Un TF-IDF solide à 0,68 : c'est lui que les LLM doivent battre</h2>
+  <div class="body" style="flex-direction:column;justify-content:center">
+    <div class="bars">
+      <div class="bar-row"><div class="lab">Classe majoritaire<small>borne sans modèle</small></div><div class="track"><div class="fill grey" style="width:2.5%"></div></div><div class="val">0,025</div></div>
+      <div class="bar-row"><div class="lab">Tirage selon la prévalence<small>borne sans modèle</small></div><div class="track"><div class="fill grey" style="width:5.8%"></div></div><div class="val">0,058</div></div>
+      <div class="bar-row"><div class="lab">CamemBERT-bio affiné<small>pli 0, 2 époques, bord de la grille de taux</small></div><div class="track"><div class="fill amber" style="width:44.8%"></div></div><div class="val">0,448</div></div>
+      <div class="bar-row"><div class="lab">TF-IDF + régression logistique<small>5 plis ; IC 95 % [0,657 ; 0,709]</small></div><div class="track"><div class="fill" style="width:68.4%"></div><div class="ci" style="left:65.7%;width:5.2%"></div></div><div class="val">0,684</div></div>
+    </div>
+    <p class="note" style="font-size:27px">L'encodeur est 24,9 points sous le TF-IDF sur le pli 0 : un résultat négatif publié tel quel, sous-entraîné (la perte baissait encore). Le criblage des trois élèves LLM (Qwen3.5-4B, Qwen3.5-9B, Gemma-4-E4B) est <b>en cours</b> : aucun résultat concluant à cette date.</p>
+  </div>
+  <div class="foot"><span>Runs : p1-03-bounds, p1-06-tfidf-chapter, p1-07-camembert-bio-lr1e-4</span><span>6 / 12</span></div>
+</section>
+
+<!-- === 7. RM-14 === -->
+<section class="slide" data-title="Découpage">
+  <div class="kicker">Un résultat inattendu</div>
+  <h2>Le score dépend du découpage : 3,9 points de plus avec des plis par patient</h2>
+  <div class="body">
+    <div class="col" style="flex:1.25">
+      <div class="bars">
+        <div class="bar-row" style="grid-template-columns:330px 1fr 130px"><div class="lab">Plis par patient<small>IC [0,657 ; 0,709]</small></div><div class="track"><div class="fill" style="width:68.4%"></div><div class="ci" style="left:65.7%;width:5.2%"></div></div><div class="val">0,684</div></div>
+        <div class="bar-row" style="grid-template-columns:330px 1fr 130px"><div class="lab">Plis par auteur<small>IC [0,620 ; 0,669]</small></div><div class="track"><div class="fill sky" style="width:64.6%"></div><div class="ci" style="left:62%;width:4.9%"></div></div><div class="val">0,646</div></div>
+      </div>
+      <p class="note" style="font-size:27px;margin-top:34px">Écart <b>+3,87 points, IC 95 % [+1,27 ; +6,31]</b>, « signalé » par la règle écrite avant le run ; avec une grille de réglage plus large : +3,42 [+1,17 ; +5,78].</p>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="kicker" style="margin-bottom:14px">Trois lectures, non tranchées</div>
+        <ul class="clean" style="gap:14px">
+          <li style="font-size:28px">Fuite par auteur (style, gabarit)</li>
+          <li style="font-size:28px">Recouvrement thématique légitime</li>
+          <li style="font-size:28px">Artefact de découpage ou de réglage</li>
+        </ul>
+        <p class="note" style="font-size:23px">Le protocole gelé n'est pas modifié : les deux chiffres sont rapportés ; la décision revient au responsable du projet (ADR-011, question Q18).</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Runs : rm-14-author-shortcut-tfidf et sa version v2</span><span>7 / 12</span></div>
+</section>
+
+<!-- === 8. INGENIERIE === -->
+<section class="slide" data-title="Ingénierie">
+  <div class="kicker">Ingénierie</div>
+  <h2>Chaque étape est testée, tracée et rejouable</h2>
+  <div class="body" style="flex-direction:column;justify-content:center">
+    <div class="stats" style="grid-template-columns:repeat(4,1fr)">
+      <div class="card stat"><div class="n">245</div><div class="t">tests automatiques, typage strict, analyse statique</div></div>
+      <div class="card stat"><div class="n">58</div><div class="t">runs au registre, un fichier par run, jamais réécrit</div></div>
+      <div class="card stat"><div class="n">12</div><div class="t">décisions d'architecture tracées (ADR)</div></div>
+      <div class="card stat"><div class="n">7/7</div><div class="t">mutations du code statistique détectées par les tests</div></div>
+    </div>
+    <ul class="clean" style="margin-top:44px;gap:14px">
+      <li style="font-size:29px">Garde anti-affaiblissement des règles de qualité, détection de secrets à chaque commit</li>
+      <li style="font-size:29px">Wiki de 15 pages avec citations vérifiées ligne par ligne contre les sources</li>
+      <li style="font-size:29px">Porte « claim-gate » : une affirmation sort du dépôt avec sa preuve, ou ne sort pas</li>
+    </ul>
+  </div>
+  <div class="foot"><span>Sources : make check, journal de nuit (réserve R-c), docs/decisions</span><span>8 / 12</span></div>
+</section>
+
+<!-- === 9. MATERIEL === -->
+<section class="slide" data-title="Matériel">
+  <div class="kicker">Matériel et coûts</div>
+  <h2>Une carte de 32 Go suffit pour le criblage des élèves</h2>
+  <div class="body" style="flex-direction:column;justify-content:center">
+    <div class="bars">
+      <div class="bar-row"><div class="lab">Qwen3.5-4B, LoRA, 4 096 tokens<small>0,54 s par exemple, mesuré</small></div><div class="track"><div class="fill" style="width:36%"></div></div><div class="val">11,5 Gio</div></div>
+      <div class="bar-row"><div class="lab">Gemma-4-E4B, LoRA, 4 096 tokens<small>0,65 s par exemple, mesuré</small></div><div class="track"><div class="fill" style="width:62%"></div></div><div class="val">19,8 Gio</div></div>
+      <div class="bar-row"><div class="lab">Qwen3.5-9B, LoRA, 4 096 tokens<small>0,87 s par exemple, mesuré</small></div><div class="track"><div class="fill" style="width:61.6%"></div></div><div class="val">19,7 Gio</div></div>
+      <div class="bar-row"><div class="lab">Gemma-4-31B, QLoRA 4 bits (professeur)<small>pic réservé, banc P0-08</small></div><div class="track"><div class="fill amber" style="width:82.5%"></div></div><div class="val">26,4 Gio</div></div>
+    </div>
+    <p class="note" style="font-size:27px">Plafond de sécurité 28 Gio. Le criblage des six runs est projeté à environ 6,6 h de GPU sur un budget de 90 h ; le budget total reste le risque principal du premier cycle, avec des seuils d'action écrits d'avance (72 h et 90 h).</p>
+  </div>
+  <div class="foot"><span>Runs : debit-*, preflight-*, p0-06-*, p0-08-*</span><span>9 / 12</span></div>
+</section>
+
+<!-- === 10. AUTONOMIE === -->
+<section class="slide" data-title="Autonomie">
+  <div class="kicker">Méthode de travail</div>
+  <h2>Travailler en autonomie sans sacrifier la rigueur : un contrat écrit</h2>
+  <div class="body">
+    <div class="col">
+      <ul class="clean">
+        <li>23 règles de nuit : périmètre disque, pas de push, jamais le test scellé</li>
+        <li>Chaque décision et chaque erreur sont datées dans un journal</li>
+        <li>Les décisions qui reviennent à l'humain sont rangées en questions numérotées</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="kicker" style="margin-bottom:14px">Erreurs vues et corrigées</div>
+        <ul class="clean" style="gap:12px">
+          <li style="font-size:27px">Plantage du tokenizer sur 3 runs de 6 : cause lue au journal du noyau, correctif, seconde passe</li>
+          <li style="font-size:27px">Code de sortie affiché à tort à zéro dans un script</li>
+          <li style="font-size:27px">Un listage hors du dossier de travail, signalé</li>
+          <li style="font-size:27px">Une prédiction de la fiche (macro-F1 du TF-IDF) fausse, consignée</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Sources : tasks/CONTRAT_NUIT.md, tasks/JOURNAL_NUIT_2026-10-02.md</span><span>10 / 12</span></div>
+</section>
+
+<!-- === 11. ROUTE === -->
+<section class="slide" data-title="Feuille de route">
+  <div class="kicker">La suite</div>
+  <h2>Ce qui reste à faire, et ce qui reste à décider</h2>
+  <div class="body">
+    <div class="col">
+      <div class="kicker" style="margin-bottom:14px">À exécuter</div>
+      <ul class="clean" style="gap:14px">
+        <li style="font-size:29px">Criblage des élèves, choix de l'élève par règle écrite d'avance</li>
+        <li style="font-size:29px">Réglage du taux, variance sur 5 graines, référence gelée</li>
+        <li style="font-size:29px">Distillation et tâche voisine, puis calibration</li>
+        <li style="font-size:29px">Ouverture unique du test scellé</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="kicker" style="margin-bottom:14px">À trancher par l'humain</div>
+        <ul class="clean" style="gap:14px">
+          <li style="font-size:28px">Raccourci d'auteur : garder le gel ou passer en plis par auteur</li>
+          <li style="font-size:28px">Métrique : log loss équilibrée en critère secondaire ou primaire</li>
+          <li style="font-size:28px">Poursuivre la distillation si aucun LLM ne bat le TF-IDF</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Sources : roadmap_unifié.md, tasks/QUESTIONS_POUR_CYRIL.md</span><span>11 / 12</span></div>
+</section>
+
+<!-- === 12. NOTES === -->
+<section class="slide" data-title="Notes">
+  <div class="kicker">Bilan chiffré</div>
+  <h2 style="font-size:50px">Note moyenne : 4,6 / 10, contre 7,6 et 9,4 pour les SOTA</h2>
+  <div style="margin-top:18px">
+    <table class="score">
+      <thead><tr><th>Composante</th><th>Ce projet</th><th>SOTA open source</th><th>SOTA absolu</th></tr></thead>
+      <tbody>
+        <tr><td>Performance du modèle</td><td><div class="mini c-p"><div class="tr"><i style="width:30%"></i></div><span>3</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
+        <tr><td>Rigueur statistique et protocole</td><td><div class="mini c-p"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
+        <tr><td>Données et anti-fuite</td><td><div class="mini c-p"><div class="tr"><i style="width:60%"></i></div><span>6</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:100%"></i></div><span>10</span></div></td></tr>
+        <tr><td>Fiabilité de l'incertitude</td><td><div class="mini c-p"><div class="tr"><i style="width:10%"></i></div><span>1</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
+        <tr><td>Analyse d'erreurs et robustesse</td><td><div class="mini c-p"><div class="tr"><i style="width:30%"></i></div><span>3</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
+        <tr><td>Reproductibilité et ingénierie</td><td><div class="mini c-p"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
+        <tr><td>Efficience et déploiement</td><td><div class="mini c-p"><div class="tr"><i style="width:30%"></i></div><span>3</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:100%"></i></div><span>10</span></div></td></tr>
+        <tr><td>Sûreté, conformité, honnêteté</td><td><div class="mini c-p"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
+        <tr class="avg"><td>Moyenne des 8 composantes</td><td><div class="mini c-p"><div class="tr"><i style="width:46%"></i></div><span>4,6</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:76%"></i></div><span>7,6</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:94%"></i></div><span>9,4</span></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="font-size:20px;margin-top:6px;line-height:1.35"><b>Estimation, non mesurée.</b> Notes sur 10 à plus ou moins 1 point, jugement structuré de l'assistant à contre-expertiser. « SOTA » = meilleur niveau connu par composante : projets ouverts de même nature, puis tous projets y compris fermés ou cliniques réglementés. Colonne « ce projet » appuyée sur la scorecard G-P0 et les mesures du 03/10 (preuves dans docs/presentation/PREUVES.md). La performance sera réévaluée après le criblage des LLM.</p>
+  <div class="foot" style="bottom:20px"><span>Projet : état au 03/10/2026</span><span>12 / 12</span></div>
+</section>
+
+</div></div>
+<div class="hint">← → ou espace · F plein écran · impression = PDF</div>
+<script>
+/* === NAVIGATION === */
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide')), stage=document.getElementById('stage'), bar=document.getElementById('progress'), i=0;
+  function fit(){var s=Math.min(window.innerWidth/1920,window.innerHeight/1080);stage.style.transform='scale('+s+')';}
+  function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach(function(s,k){s.classList.toggle('active',k===i);});
+    bar.style.width=((i+1)/slides.length*100)+'%';try{history.replaceState(null,'','#'+(i+1));}catch(e){}}
+  window.addEventListener('resize',fit);fit();
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();show(i+1);}
+    else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>-1){e.preventDefault();show(i-1);}
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+    else if(e.key==='f'||e.key==='F'){if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+  });
+  var x0=null;document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',function(e){if(x0===null)return;var d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)show(i+(d<0?1:-1));x0=null;});
+  document.addEventListener('click',function(e){show(i+(e.clientX>window.innerWidth/2?1:-1));});
+  var h=parseInt((location.hash||'').slice(1),10);show(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>
