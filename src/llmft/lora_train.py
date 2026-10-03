@@ -24,6 +24,15 @@ class TrainingDiverged(RuntimeError):
         self.loss_history = loss_history
 
 
+class TrainingAborted(RuntimeError):
+    """Arrêt anticipé (PROTOCOLE.md section 5) : après 10 % des pas, la durée projetée dépasse la limite fixée par la fiche."""
+
+    def __init__(self, loss_history: list[float], projected_seconds: float) -> None:
+        super().__init__(f"durée projetée {projected_seconds:.0f} s au-delà de la limite après {len(loss_history)} pas")
+        self.loss_history = loss_history
+        self.projected_seconds = projected_seconds
+
+
 @dataclass
 class TrainResult:
     loss_history: list[float] = field(default_factory=list)
@@ -84,7 +93,7 @@ def _pad(rows: Sequence[Sequence[int]], pad_id: int, device: str | torch.device)
 
 def train(
     model: Any, input_ids: Sequence[Sequence[int]], labels: Sequence[int], pad_id: int, device: str | torch.device, effective_batch: int, micro_batch: int,
-    epochs: int, base_lr: float, warmup_steps: int, seed: int, weight_decay: float = 0.0,
+    epochs: int, base_lr: float, warmup_steps: int, seed: int, weight_decay: float = 0.0, projected_limit_seconds: float | None = None,
 ) -> TrainResult:
     """Boucle d'entraînement : AdamW sur les paramètres entraînables, cosinus, accumulation, perte moyenne par lot effectif, arrêt sur perte non finie."""
     params = [p for p in model.parameters() if p.requires_grad]
@@ -117,6 +126,10 @@ def train(
             opt.step()
             opt.zero_grad(set_to_none=True)
             step += 1
+            if projected_limit_seconds is not None and step >= max(2, math.ceil(0.1 * n_total)):
+                projected = (time.time() - t0) / step * n_total
+                if projected > projected_limit_seconds:
+                    raise TrainingAborted(res.loss_history, projected)
     if is_cuda:
         torch.cuda.synchronize()
         res.peak_alloc_gib = torch.cuda.max_memory_allocated() / 2**30

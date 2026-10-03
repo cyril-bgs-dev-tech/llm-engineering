@@ -86,3 +86,23 @@ def test_special_affixes_retrouve_prefixe_et_suffixe_d_un_tokenizer_quelconque()
 
     assert lora_train.special_affixes(encode_bert) == ([101], [102])
     assert lora_train.special_affixes(encode_qwen) == ([], [])
+
+
+def test_arret_anticipe_si_la_duree_projetee_depasse_la_limite_apres_dix_pour_cent_des_pas():
+    from transformers import LlamaConfig, LlamaForSequenceClassification
+
+    cfg = LlamaConfig(vocab_size=32, hidden_size=16, intermediate_size=32, num_hidden_layers=1, num_attention_heads=2, num_labels=2, pad_token_id=0)
+    model = LlamaForSequenceClassification(cfg)
+    with pytest.raises(lora_train.TrainingAborted) as err:
+        lora_train.train(model, [[1, 2, 3]] * 40, [0, 1] * 20, pad_id=0, device="cpu", effective_batch=4, micro_batch=4, epochs=2, base_lr=1e-3, warmup_steps=1, seed=0,
+                         projected_limit_seconds=1e-9)
+    assert err.value.projected_seconds > 1e-9
+    assert 2 <= len(err.value.loss_history) < lora_train.total_steps(40, 4, 2)  # pas avant 10 % (2 pas sur 20), pas jusqu'au bout
+
+
+def test_sans_limite_la_boucle_va_au_bout():
+    from transformers import LlamaConfig, LlamaForSequenceClassification
+
+    cfg = LlamaConfig(vocab_size=32, hidden_size=16, intermediate_size=32, num_hidden_layers=1, num_attention_heads=2, num_labels=2, pad_token_id=0)
+    res = lora_train.train(LlamaForSequenceClassification(cfg), [[1, 2, 3]] * 8, [0, 1] * 4, pad_id=0, device="cpu", effective_batch=4, micro_batch=4, epochs=1, base_lr=1e-3, warmup_steps=1, seed=0)
+    assert len(res.loss_history) == 2
