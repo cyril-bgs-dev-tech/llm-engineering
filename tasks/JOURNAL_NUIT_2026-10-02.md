@@ -64,3 +64,8 @@ Cyril a signalé que « continues d'avancer mode de nuit » signifiait de poursu
 - `sealed.py` à deux temps (`sealed_inputs` temps A sans étiquette ni marqueur ; `sealed_labels_and_score` temps B avec répétition générale, marqueur avant lecture, écriture atomique, `ConsumedWithoutResultError`), tests écrits d'abord (6 rouges puis verts) ; `MARKER_PATH` fixé ; **non appliqué** : empreinte du marqueur à consigner à sa création, `ALLOWED` et nom du script d'évaluation à arrêter avant le script RM-20.
 - Wiki R-k : page `sliding-window-beats-linear-attention` (texte intégral lu, citations vérifiées), note de pertinence faible ; overview et page de compatibilité liées.
 - P1-06 (chapitre) en cours en arrière-plan.
+
+### 2026-10-03T12:05Z
+- P1-19, partie code : `src/llmft/failures.py` (classement divergence ou panne par le code à partir de l'historique de perte, `may_retry`, `register_failed`) ; 5 tests écrits d'abord, dont les cas piégés (perte non finie puis mémoire, mémoire seule, relance de la même graine). Tâche P1-19 laissée ouverte : les cinq graines GPU restent à faire.
+- Fiche RM-14 figée (`e0a4d46`) ; `scripts/rm14_pair.py` + `decide` testée ; P1-06 et RM-14 (plis par auteur) lancés en parallèle en CPU. Une première instance de P1-06 a été arrêtée volontairement avant la fin pour ajouter l'écriture des prédictions hors pli (empreinte au registre), sans résultat conservé.
+- Q16 (log loss équilibrée en secondaire dans les fiches) et Q17 (ablation fenêtre glissante : non) ajoutées à `QUESTIONS_POUR_CYRIL.md`.
