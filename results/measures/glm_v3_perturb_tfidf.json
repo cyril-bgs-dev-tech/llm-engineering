@@ -1,0 +1,27 @@
+{
+ "config": {
+  "C": 100.0,
+  "fold": 0,
+  "ngram": [
+   1,
+   1
+  ]
+ },
+ "n": 717,
+ "propre": {
+  "macro_f1": 0.6971,
+  "accuracy": 0.8243
+ },
+ "accents": {
+  "macro_f1": 0.6411,
+  "accuracy": 0.7922
+ },
+ "typos": {
+  "macro_f1": 0.69,
+  "accuracy": 0.8201
+ },
+ "casse": {
+  "macro_f1": 0.6971,
+  "accuracy": 0.8243
+ }
+}
