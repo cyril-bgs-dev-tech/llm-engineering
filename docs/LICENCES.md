@@ -40,3 +40,14 @@ Règle du projet : un dépôt sans licence (tous droits réservés) se lit et se
 | Lizhecheng02/Kaggle-Multilingual_Chatbot_Arena | **aucune licence** | lecture de la recette 5e place | **lecture seule, réimplémentation** |
 
 Non vérifiés à ce jour : Hydra, Optuna, DVC, distilabel, xgrammar, llguidance, outlines, client Elasticsearch (aucun n'est installé ni requis avant leur étape).
+
+## Modèles utilisés (audit GLM v3, C8-A9 ; lus dans l'API publique de Hugging Face le 03/10/2026)
+
+| Modèle | Licence | Usage | Compatibilité |
+|---|---|---|---|
+| Qwen/Qwen3.5-4B, Qwen/Qwen3.5-9B | Apache-2.0 | élèves LoRA | libre |
+| google/gemma-4-E4B-it, google/gemma-4-31B-it | Apache-2.0 | élève et professeur | libre |
+| almanach/camembert-bio-base | MIT | encodeur de référence | libre |
+| google/medgemma-4b-it | non lue (accès conditionné ; Q6 : conditions non acceptées) | non utilisé | exclu du chemin court |
+
+Les licences se relisent à chaque nouveau modèle ajouté au chemin court.

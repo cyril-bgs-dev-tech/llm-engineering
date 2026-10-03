@@ -63,3 +63,6 @@ Pages créées : incidents-et-audits-externes. Source : journal de nuit, audit G
 
 ## [2026-10-03] ingest | État par composante
 Pages créées : etat-par-composante. Source : RESULTATS.md, triage GLM v3.
+
+## [2026-10-03] ingest | Contrats des modules
+Pages créées : contrats-des-modules-du-chemin-court.
