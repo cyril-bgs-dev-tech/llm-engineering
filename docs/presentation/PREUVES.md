@@ -23,7 +23,7 @@ Statuts : **prouvé** (renvoie à un run, un fichier ou une commande), **estimat
 
 | Composante | Projet | Open source | Absolu | Raison de la note du projet |
 |---|---|---|---|---|
-| Performance du modèle | 3 | 8 | 9 | TF-IDF 0,68 ; encodeur 0,45 sous-entraîné ; Qwen3.5-9B 0,565 sur le pli 0, sous le TF-IDF ; aucun LLM ne le bat à ce jour (P1-11, 5 runs sur 6) |
+| Performance du modèle | 3 | 8 | 9 | TF-IDF 0,68 ; encodeur 0,45 sous-entraîné ; Qwen3.5-4B 0,587 et Qwen3.5-9B 0,565 sur le pli 0, sous le TF-IDF ; aucun LLM ne le bat à ce jour (P1-11 terminé, élève Qwen3.5-4B) |
 | Rigueur statistique et protocole | 7 | 8 | 9 | protocole gelé et haché, test scellé, bootstrap apparié, puissance simulée ; mais une graine au développement, premier cycle non confirmatoire |
 | Données et anti-fuite | 6 | 8 | 10 | contrôles de fuite et raccourci d'auteur mesuré ; mais corpus fictif, pas de données réelles |
 | Fiabilité de l'incertitude | 4 | 7 | 9 | **révisée de 1 à 4 le 03/10** : calibration, conforme (LAC, APS, par classe, Wilson) et sélectif implémentés, validés sur données synthétiques (14 tests) et mesurés sur le TF-IDF avec test de décalage (run `q5-uncertainty-tfidf-chapter`) ; reste : LLM, politique d'abstention chiffrée, hors distribution, test scellé (Q5 de G-P0 = 0 avant) |
@@ -35,3 +35,5 @@ Statuts : **prouvé** (renvoie à un run, un fichier ou une commande), **estimat
 Moyennes : projet 42 / 8 = 5,3 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4. Ces trois colonnes sont des jugements ; seule la colonne « projet » s'appuie sur des preuves du dépôt, et même elle reste une note d'auto-évaluation sans confirmation indépendante (aucune note 3 à G-P0).
 
 | 14 | Qwen3.5-9B 0,565 ; Gemma-4-E4B 0,456 (1e-4) et 0,142 (1e-5) ; écarts −13,2 et +10,9 points | runs `20261003-163427-p1-11-qwen3-5-9b-lr1e-4`, `20261003-152759-p1-11-gemma-4-e4b-lr1e-4`, `20261003-174127-p1-11-gemma-4-e4b-lr1e-5` et comparaisons appariées du pli 0 | prouvé (pli 0 seulement, criblage inachevé) |
+
+| 15 | Qwen3.5-4B 0,5867 (1e-4), 11,1 points sous le TF-IDF ; écart avec le 9B non résolu ; élève retenu | runs `20261003-194530-p1-11-qwen3-5-4b-lr1e-4`, `…-qwen4b-1e-4-minus-tfidf-fold0`, `…-qwen4b-minus-qwen9b-1e-4-fold0` ; ADR-014 | prouvé (pli 0, une graine) |
