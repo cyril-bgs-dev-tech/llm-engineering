@@ -63,3 +63,15 @@ def test_failure_after_opening_keeps_the_marker_and_forbids_a_second_opening(tmp
     assert marker.exists() and not out.exists()
     with pytest.raises(sealed.AlreadyOpenedError):
         sealed.sealed_labels_and_score(SPLIT, FRAME, "label", {"P2": "b", "P4": "c"}, lambda y, p: {}, marker=marker, reason="encore", out_path=out)
+
+
+def test_access_journal_records_operations_without_content(tmp_path):
+    journal = tmp_path / "j.log"
+    sealed.sealed_inputs(SPLIT, FRAME, text_col="text", journal=journal)
+    sealed.sealed_labels_and_score(SPLIT, FRAME, "label", {"P2": "b", "P4": "c"}, lambda y, p: {"n": len(y)}, marker=tmp_path / "m", reason="répétition",
+                                   out_path=tmp_path / "r.json", rehearsal=True, journal=journal)
+    sealed.sealed_labels_and_score(SPLIT, FRAME, "label", {"P2": "b", "P4": "c"}, lambda y, p: {"n": len(y)}, marker=tmp_path / "m", reason="ouverture",
+                                   out_path=tmp_path / "r.json", journal=journal)
+    lines = [json.loads(x) for x in journal.read_text(encoding="utf-8").splitlines()]
+    assert [x["operation"] for x in lines] == ["inputs", "rehearsal", "open"]
+    assert all(set(x) == {"at", "operation", "n_ids"} for x in lines)
