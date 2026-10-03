@@ -41,11 +41,12 @@ Pic de mémoire réservé, LoRA r = 16, 4 096 tokens, micro-lot 1 : Qwen3.5-4B 1
 
 Limites : un seul modèle (TF-IDF), pas le test scellé, pas de politique d'abstention chiffrée, probabilités des LLM non conservées pour les runs déjà faits (N24).
 
-## Criblage des élèves LLM, pli 0 (P1-11, 2 runs sur 6 terminés, comparaison entre candidats impossible tant que les deux taux manquent)
+## Criblage des élèves LLM, pli 0 (P1-11, 3 runs sur 6 terminés, comparaison entre candidats impossible tant que les deux taux manquent)
 
 | Run | macro-F1 | Remarque | run_id |
 |---|---|---|---|
 | Qwen3.5-4B, LoRA, 1e-5 | 0,193 | taux le plus bas, sous-entraîné ; exactitude 0,439 | `20261003-141041-p1-11-qwen3-5-4b-lr1e-5` |
 | Gemma-4-E4B, LoRA, 1e-4 | 0,4558 | exactitude 0,689 ; **24,1 points sous le TF-IDF** du pli 0 [−29,6 ; −17,5] ; **non distinct du CamemBERT-bio** (+0,73 point [−3,19 ; +4,40]) | `20261003-152759-p1-11-gemma-4-e4b-lr1e-4`, `…-minus-tfidf-fold0`, `…-minus-camembert-fold0` |
+| Qwen3.5-9B, LoRA, 1e-4 | **0,565** | exactitude 0,788, log loss 0,723, 3 623 s, pic 21,6 Gio ; **13,2 points sous le TF-IDF** [−18,4 ; −7,0] ; **10,9 points au-dessus du Gemma-4-E4B au même taux** [+6,4 ; +15,3] | `20261003-163427-p1-11-qwen3-5-9b-lr1e-4`, `…-minus-tfidf-fold0`, `…-minus-gemma-1e-4-fold0` |
 
-Quatre runs restent (Qwen 9B 1e-4 en cours, puis Gemma 1e-5, Qwen 9B 1e-5, Qwen 4B 1e-4 après un plantage du tokenizer corrigé).
+Trois runs restent (Gemma 1e-5, Qwen 9B 1e-5, Qwen 4B 1e-4, relancés après un plantage du tokenizer corrigé). Aucun LLM ne dépasse encore le TF-IDF ; les comparaisons entre candidats restent provisoires tant que les deux taux de chacun manquent.

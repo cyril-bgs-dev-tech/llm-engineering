@@ -114,3 +114,6 @@ Cyril a relevé que les fichiers de prédiction ne conservaient pas les probabil
 
 ### 2026-10-03T16:40Z : Q5 mesurée sur le TF-IDF (run `q5-uncertainty-tfidf-chapter`)
 TF-IDF rejoué avec probabilités (résultats identiques à la v1 : 0,6844 et 0,6457, **déterminisme confirmé**). ECE 0,029, déjà calibré (température 0,95, la recalibration n'apporte rien). Conforme à 90 % : LAC marginal 0,901 mais une classe jamais couverte ; LAC par classe 0,904 (minimum par classe 0,893) avec des ensembles de 2,57 classes ; APS trop large (taille 8 à 12). Sélectif : exactitude 0,931 à 70 % de couverture (0,818 à 100 %). **Décalage patient vers auteur : couverture 0,887 (marginal) et 0,880 (par classe), sous les 0,90 visés.** Présentation : note d'incertitude révisée de 1 à 4, moyenne 5,0 (justification dans `docs/presentation/PREUVES.md`).
+
+### 2026-10-03T16:40Z : P1-11, Qwen3.5-9B à 1e-4 (3 runs sur 6)
+macro-F1 **0,565** (pli 0), exactitude 0,788, log loss 0,723, **3 623 s (estimation 4 973 s, −27 %)**, pic 21,6 Gio. Écart au TF-IDF **−13,2 points [−18,4 ; −7,0]** ; au-dessus du Gemma-4-E4B à 1e-4 de **+10,9 points [+6,4 ; +15,3]**. Aucun LLM ne bat encore le TF-IDF. Première passe terminée à 16:34:28Z ; seconde passe en cours (Gemma 1e-5 depuis 16:34:37Z, puis 9B 1e-5, 4B 1e-4), fin attendue vers 19 h 50 UTC, avec probabilités conservées.
