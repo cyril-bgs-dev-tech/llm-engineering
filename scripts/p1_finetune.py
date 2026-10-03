@@ -137,6 +137,8 @@ def main() -> int:
     model, route = load_model(a.model, a.mode, len(labels), pad_id, a.rank, a.alpha, a.quant)
     if a.quant == "none":
         model = model.to("cuda")
+    elif route == "B":  # le modèle quantifié est déjà sur le GPU (device_map) ; la tête linéaire, créée ensuite, est sur le processeur
+        model.head.to("cuda")
     cfg: dict[str, Any] = {k: v for k, v in vars(a).items() if k not in ("register",)}
     cfg.update({"route": route, "labels": labels, "n_train": len(tr), "n_eval": len(te), "fiche_sha256": fiche_sha, "train_token_length_max": max(len(x) for x in x_tr)})
     record: dict[str, Any] = {"kind": "preflight" if a.max_steps else "train", "slug": a.slug, "params": cfg}
