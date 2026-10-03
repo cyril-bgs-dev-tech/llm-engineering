@@ -200,13 +200,13 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] P1-06 (mesure) : TF-IDF et régression logistique sur `parhaf_cim10_chapter`
   - Preuve de fin : Run au registre
   - Skills : experiment-preregistration ; dépendances : P1-04, P0-38
-- [ ] P1-07 (GPU) : DrBERT ou CamemBERT-bio affiné sur `parhaf_cim10_chapter`, taux d'apprentissage réglé sur 4 valeurs
+- [x] P1-07 (GPU) : DrBERT ou CamemBERT-bio affiné sur `parhaf_cim10_chapter`, taux d'apprentissage réglé sur 4 valeurs
   - Preuve de fin : Run au registre ; nombre d'essais de réglage consigné
   - Skills : experiment-preregistration, vram-preflight ; dépendances : P1-06
 - [x] RM-14 (mesure) : Raccourcis sur les références : TF-IDF et régression logistique avec plis par patient contre plis par auteur, comparés au modèle témoin de P0-30
   - Preuve de fin : Verdict apparié ; ADR si l'écart est significatif
   - Skills : leakage-guard, paired-comparison ; dépendances : P1-06, P0-29, P0-30
-- [ ] RM-15 (décision) : Porte go/no-go après les références : la comparaison est-elle informative (variance, puissance, raccourcis), ou faut-il arrêter ou simplifier avant le LLM
+- [x] RM-15 (décision) : Porte go/no-go après les références : la comparaison est-elle informative (variance, puissance, raccourcis), ou faut-il arrêter ou simplifier avant le LLM
   - Preuve de fin : Décision datée avec les chiffres de P1-04, P1-06, P1-07 et RM-14
   - Skills : doubt-driven-development ; dépendances : P1-04, P1-06, P1-07, RM-14
 

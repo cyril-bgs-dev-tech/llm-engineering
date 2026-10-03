@@ -89,3 +89,8 @@ LoRA r = 16, 4 096 tokens, micro-lot 1, 3 pas de 8 exemples (les plus longs d'ab
 - Chapitre par auteur, grille v2 : 0,6547 [0,6298 ; 0,6767] ; **RM-14 v2 : écart +3,42 points [+1,17 ; +5,78], « signalé »** (run `20261003-125739-rm-14-author-shortcut-tfidf-v2`) : la lecture 3 d'ADR-011 (grille bornée) ne suffit pas à expliquer l'écart.
 - P1-05 spécialité, grille v2 : macro-F1 regroupée **0,9868 [0,9817 ; 0,9912]** (tâche presque triviale).
 - Prédictions de la fiche v2 : (a) v2 ≥ v1 et gain < 2 points : vrai ; (b) écart encore signalé : vrai ; (c) spécialité > 0,80 : vrai.
+
+### 2026-10-03T13:27Z : P1-07 fait, RM-15 tranchée (ADR-012), P1-11 lancé
+- **P1-07** (fiche `2026-10-03-p1-07-encodeur-camembert-bio.md`) : CamemBERT-bio, pli 0, 2 époques, macro-F1 : 1e-5 **0,0665**, 2e-5 **0,2793**, 5e-5 **0,4267**, 1e-4 **0,4484** (meilleur, bord de la grille : risque de sous-réglage, perte encore en baisse). Écart au TF-IDF (pli 0) **−24,9 points [−30,3 ; −17,9]**, « B meilleur » (`p1-07-camembert-minus-tfidf-fold0`). Prédictions de la fiche : plage 0,40 à 0,70 vraie, sous le TF-IDF vraie, taux 5e-5 ou 1e-4 vraie. 43 s d'entraînement par taux.
+- **ADR-012** : RM-15, GO conditionnel au criblage (décision de nuit provisoire, réversible).
+- **P1-11 lancé** à 13:24:58Z en processus détaché (`scratchpad/chain.sh` puis `scripts/run_p1_11.sh`), six runs séquentiels ; journal des runs dans `scratchpad/p1_11/p1_11.log`. Premier : Qwen3.5-4B à 1e-5.
