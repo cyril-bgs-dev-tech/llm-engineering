@@ -95,6 +95,7 @@ def main() -> int:
         pred_path = ROOT / "results/predictions" / f"{slug}.json"
         pred_path.parent.mkdir(parents=True, exist_ok=True)
         pred_path.write_text(payload, encoding="utf-8")
+        np.savez_compressed(pred_path.with_suffix(".probs.npz"), ids=np.array(ids), probs=oof.astype(np.float32), labels=np.array(labels))  # pour calibration et prédiction conforme
     record = {"kind": "measure", "slug": slug, "status": "ok",
               "summary": f"TF-IDF et régression logistique hors pli sur {task} (développement seulement, 5 plis {fold_key}, réglage C et n-grammes sur le pli suivant) ; fiche experiments/2026-10-03-p1-04-06-tfidf.md",
               "params": {"seed": SEED, "n_boot": N_BOOT, "grid": [[c, list(n)] for c, n in grid], "partition_sha256_file": str(SHA.relative_to(ROOT))},

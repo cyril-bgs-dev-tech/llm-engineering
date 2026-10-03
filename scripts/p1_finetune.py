@@ -173,6 +173,7 @@ def main() -> int:
             out = ROOT / "results/predictions" / f"{a.slug}.json"
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(pred_payload, encoding="utf-8")
+            np.savez_compressed(out.with_suffix(".probs.npz"), ids=np.array([ids[i] for i in te]), probs=probs.astype(np.float32), labels=np.array(labels))  # pour calibration et prédiction conforme
     record.update({"status": "ok", "summary": summary, "loss_history": res.loss_history, "metrics": metrics})
     print(json.dumps({"summary": summary, "metrics": metrics}, ensure_ascii=False, indent=1))
     if a.register:
