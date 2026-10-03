@@ -1,0 +1,38 @@
+import numpy as np
+
+from llmft import tfidf
+
+LABELS = ["a", "b", "c"]
+TEXTS = ["alpha tumeur biopsie", "alpha tumeur kyste", "beta fracture femur", "beta fracture tibia", "gamma asthme toux", "gamma asthme dyspnee"] * 4
+Y = ["a", "a", "b", "b", "c", "c"] * 4
+
+
+def test_probas_alignees_sur_labels_et_somme_un():
+    p = tfidf.fit_predict_proba(TEXTS, Y, ["alpha tumeur"], LABELS, c=10.0, ngram=(1, 1))
+    assert p.shape == (1, 3)
+    assert abs(p.sum() - 1) < 1e-9
+    assert LABELS[int(p.argmax())] == "a"
+
+
+def test_classe_absente_de_l_entrainement_garde_sa_colonne_a_zero():
+    keep = [i for i, y in enumerate(Y) if y != "c"]
+    p = tfidf.fit_predict_proba([TEXTS[i] for i in keep], [Y[i] for i in keep], ["gamma asthme"], LABELS, c=10.0, ngram=(1, 1))
+    assert p.shape == (1, 3) and p[0, 2] == 0.0 and abs(p.sum() - 1) < 1e-9
+
+
+def test_selection_egalite_exacte_va_au_c_le_plus_bas_puis_aux_unigrammes(monkeypatch):
+    monkeypatch.setattr(tfidf, "GRID", [(1.0, (1, 1)), (10.0, (1, 1)), (10.0, (1, 2))])
+    folds = np.array([i % 3 for i in range(len(Y))])
+    # corpus parfaitement séparable : les trois configurations atteignent 1,0
+    assert tfidf.select_config(TEXTS, Y, folds, val_fold=1, labels=LABELS, scored=LABELS) == (1.0, (1, 1))
+
+
+def test_selection_ignore_le_pli_externe_absent_des_donnees_fournies():
+    folds = np.array([i % 3 for i in range(len(Y))])
+    keep = [i for i in range(len(Y)) if folds[i] != 2]  # le pli 2 joue l'externe : jamais transmis
+    cfg = tfidf.select_config([TEXTS[i] for i in keep], [Y[i] for i in keep], folds[keep], val_fold=1, labels=LABELS, scored=LABELS)
+    assert cfg in tfidf.GRID
+
+
+def test_grille_fixee_a_huit_configurations():
+    assert len(tfidf.GRID) == 8

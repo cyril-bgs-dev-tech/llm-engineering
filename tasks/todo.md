@@ -194,7 +194,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] P1-03 (mesure) : Bornes : classe majoritaire et tirage aléatoire sur les trois tâches
   - Preuve de fin : Lignes au registre
   - Skills : experiment-preregistration ; dépendances : P1-01
-- [ ] P1-04 (mesure) : TF-IDF et régression logistique sur `parhaf_doctype`, réglage de C et des n-grammes sur validation
+- [x] P1-04 (mesure) : TF-IDF et régression logistique sur `parhaf_doctype`, réglage de C et des n-grammes sur validation
   - Preuve de fin : Run au registre avec intervalle de confiance
   - Skills : experiment-preregistration ; dépendances : P1-03
 - [ ] P1-06 (mesure) : TF-IDF et régression logistique sur `parhaf_cim10_chapter`

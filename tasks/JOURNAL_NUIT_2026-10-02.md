@@ -56,3 +56,11 @@ Arrêt seulement si tous les éléments (file et réserve) sont faits ou verroui
 
 ### 2026-10-03T11:45Z : reprise, correction de lecture
 Cyril a signalé que « continues d'avancer mode de nuit » signifiait de poursuivre, non de clore à la fin de la fenêtre estimée (la durée de 12 h était indicative). Le résumé de 11 h 36 est donc prématuré ; le travail reprend sur la file et la réserve. Métrique unifiée livrée : `docs/METRIQUE_UNIFIEE_2026-10-03.md`, run `20261003-113946-metric-widths-candidates` (log loss par chapitre : rapport bruit/effet 4 à 43 % plus petit que la macro-F1 en simulation calibrée, borne optimiste). Protocole gelé inchangé, Q15 ouverte.
+
+### 2026-10-03T11:58Z : lot de reprise
+- Règles N21 (tour sans relance), N22 (écouter, se taire, travailler), N23 (inactivité : avancer, stocker, trancher) ajoutées à `CONTRAT_NUIT.md` ; mémoire à jour.
+- Fiche `experiments/2026-10-03-p1-04-06-tfidf.md` figée (SHA-256 `59fd6b0c…` dans `experiments/INDEX.md`, commit `0d81308`) avant tout run.
+- **P1-04 fait** : TF-IDF + régression logistique sur `parhaf_doctype`, run `20261003-115659-p1-04-tfidf-doctype` : macro-F1 regroupée 0,9914 [IC 95 % 0,9849 ; 0,9968], moyenne des plis 0,9911 (écart-type 0,0092), exactitude 0,9969, log loss 0,0192. Prédiction de la fiche (au-dessus de 0,85) confirmée. Tâche quasi triviale (balises de type dans le texte), à ne pas lire comme une performance clinique. Pli 4 : C = 100, bord de la grille, risque de sous-réglage signalé.
+- `sealed.py` à deux temps (`sealed_inputs` temps A sans étiquette ni marqueur ; `sealed_labels_and_score` temps B avec répétition générale, marqueur avant lecture, écriture atomique, `ConsumedWithoutResultError`), tests écrits d'abord (6 rouges puis verts) ; `MARKER_PATH` fixé ; **non appliqué** : empreinte du marqueur à consigner à sa création, `ALLOWED` et nom du script d'évaluation à arrêter avant le script RM-20.
+- Wiki R-k : page `sliding-window-beats-linear-attention` (texte intégral lu, citations vérifiées), note de pertinence faible ; overview et page de compatibilité liées.
+- P1-06 (chapitre) en cours en arrière-plan.

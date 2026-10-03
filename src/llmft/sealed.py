@@ -3,9 +3,14 @@ from __future__ import annotations
 
 import json
 import os
+from collections.abc import Callable, Mapping, Sequence
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+
+import pandas as pd
+
+MARKER_PATH = Path("data/splits/sealed_opened.marker")  # chemin fixé par PROTOCOLE.md 6.8
 
 
 class AlreadyOpenedError(RuntimeError):
@@ -28,3 +33,50 @@ def open_sealed_test(split: dict[str, Any], marker: Path | str, reason: str) -> 
         raise AlreadyOpenedError(f"test scellé déjà ouvert, voir {path}") from exc
     ids: list[str] = list(split["test"])
     return ids
+
+
+class ConsumedWithoutResultError(RuntimeError):
+    """Le temps B a échoué après l'écriture du marqueur : le test est consommé sans résultat, aucune seconde ouverture."""
+
+
+def _test_rows(split: dict[str, Any], frame: pd.DataFrame) -> pd.DataFrame:
+    ids: list[str] = list(split["test"])
+    missing = sorted(set(ids) - set(frame["id"]))
+    if missing:
+        raise ValueError(f"identifiants du test absents des données : {', '.join(missing)}")
+    return pd.DataFrame(frame.set_index("id").loc[ids].reset_index())
+
+
+def sealed_inputs(split: dict[str, Any], frame: pd.DataFrame, text_col: str) -> pd.DataFrame:
+    """Temps A : identifiants et textes du test, AUCUNE colonne d'étiquette, aucun marqueur."""
+    rows = _test_rows(split, frame)
+    return pd.DataFrame(rows[["id", text_col]].rename(columns={text_col: "text"}))
+
+
+def sealed_labels_and_score(
+    split: dict[str, Any], frame: pd.DataFrame, label_col: str, predictions: Mapping[str, Any],
+    compute: Callable[[Sequence[Any], Sequence[Any]], dict[str, Any]], marker: Path | str, reason: str, out_path: Path | str, rehearsal: bool = False,
+) -> dict[str, Any]:
+    """Temps B : vérifie la couverture des prédictions, écrit le marqueur, lit les étiquettes, calcule, écrit le résultat par remplacement atomique.
+
+    `rehearsal=True` (répétition générale) : mêmes calculs en mémoire sur les données données, ni marqueur ni fichier. Une panne après l'écriture du marqueur
+    le conserve (le test est consommé sans résultat)."""
+    ids: list[str] = list(split["test"])
+    if set(predictions) != set(ids):
+        raise ValueError("les prédictions ne couvrent pas exactement les identifiants du test")
+    if not reason.strip():
+        raise ValueError("reason obligatoire : dire pourquoi le test scellé est ouvert")
+    if rehearsal:
+        rows = _test_rows(split, frame)
+        return compute(rows[label_col].tolist(), [predictions[i] for i in ids])
+    open_sealed_test(split, marker, reason)
+    try:
+        rows = _test_rows(split, frame)
+        result = compute(rows[label_col].tolist(), [predictions[i] for i in ids])
+        target = Path(out_path)
+        tmp = target.with_suffix(target.suffix + ".tmp")
+        tmp.write_text(json.dumps(result, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        os.replace(tmp, target)
+    except Exception as exc:
+        raise ConsumedWithoutResultError(f"test scellé consommé sans résultat : {exc}") from exc
+    return result

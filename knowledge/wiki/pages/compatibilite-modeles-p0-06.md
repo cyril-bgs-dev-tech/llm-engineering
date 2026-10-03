@@ -5,7 +5,7 @@ summary: Quelle classe de chargement fonctionne pour chaque modèle candidat, m�
 tags: [compatibilite, classification, qlora, spike, p0-06, p0-08]
 sources: [spike-p0-06-qwen3-5-4b, spike-p0-06-qwen3-5-9b, spike-p0-06-gemma-4-e4b, spike-p0-06-qwen3-8-27b, spike-p0-06-gemma-4-31b]
 created: 2026-10-02
-updated: 2026-10-02
+updated: 2026-10-03
 ---
 
 # Compatibilité de classification des modèles candidats (P0-06 et P0-08)
@@ -41,6 +41,7 @@ Mesures faites le 02/10/2026 sur la RTX 5090 (WSL2, torch 2.11.0+cu128, transfor
 - **Non testés** : MedGemma (exclu tant que Cyril n'a pas accepté ses conditions, ADR-001) et Mistral Small 3.2 24B (autorisé, hors liste de P0-06).
 - **Incident de méthode** : un premier run de Gemma-4-E4B a saturé la VRAM (32 Go) pendant des minutes parce que, en voie B, l'activation du gradient checkpointing était sautée sans bruit ; le script l'active désormais sur le modèle de base, consigne son état, et impose un plafond dur de 30 Gio. La part du calcul réduit des logits (`logits_to_keep=1`), appliqué en même temps, n'est pas isolée.
 - Les mesures valent pour ces versions de bibliothèques et ce jour (`vram-preflight`).
+- Les Qwen3.5 sont des hybrides à attention linéaire à porte ; l'étude [[sliding-window-beats-linear-attention](pages/sliding-window-beats-linear-attention.md)] écarte explicitement les hybrides, ses conclusions ne s'y appliquent donc pas telles quelles.
 - Le temps, les machines et la mémoire mesurés ici alimentent l'item de rapport « calcul requis » de [[tripod-llm-reporting-guideline](pages/tripod-llm-reporting-guideline.md)].
 
 [^1]: raw/spike-p0-06-qwen3-5-4b.json L6-L12,L26-L29 [synthesis] — classe de chargement, pad, mémoire après chargement, temps par pas, pics alloué et réservé

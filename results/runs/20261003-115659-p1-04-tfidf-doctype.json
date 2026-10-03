@@ -1,0 +1,133 @@
+{
+  "created_at": "2026-10-03T11:56:59Z",
+  "kind": "measure",
+  "metrics": {
+    "accuracy": 0.9969,
+    "chosen_config_by_fold": [
+      {
+        "C": 100.0,
+        "fold": 0,
+        "ngram": [
+          1,
+          1
+        ]
+      },
+      {
+        "C": 100.0,
+        "fold": 1,
+        "ngram": [
+          1,
+          2
+        ]
+      },
+      {
+        "C": 10.0,
+        "fold": 2,
+        "ngram": [
+          1,
+          1
+        ]
+      },
+      {
+        "C": 10.0,
+        "fold": 3,
+        "ngram": [
+          1,
+          2
+        ]
+      },
+      {
+        "C": 100.0,
+        "fold": 4,
+        "ngram": [
+          1,
+          1
+        ]
+      }
+    ],
+    "class_balanced_log_loss": 0.0633,
+    "classes": 7,
+    "ece": 0.01,
+    "log_loss": 0.0192,
+    "macro_f1_folds_mean_sd": [
+      0.9911,
+      0.0092
+    ],
+    "macro_f1_pooled": [
+      0.9914,
+      0.9849,
+      0.9968
+    ],
+    "n": 5242,
+    "scored_classes": 7,
+    "seconds": 512
+  },
+  "params": {
+    "grid": [
+      [
+        0.1,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        0.1,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        1.0,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        1.0,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        10.0,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        10.0,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        100.0,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        100.0,
+        [
+          1,
+          2
+        ]
+      ]
+    ],
+    "n_boot": 2000,
+    "partition_sha256_file": "data/splits/parhaf_cim10_chapter.sha256",
+    "seed": 20261003
+  },
+  "run_id": "20261003-115659-p1-04-tfidf-doctype",
+  "schema": "mini-1",
+  "slug": "p1-04-tfidf-doctype",
+  "status": "ok",
+  "summary": "TF-IDF et régression logistique hors pli sur doctype (développement seulement, 5 plis, réglage C et n-grammes sur le pli suivant) ; fiche experiments/2026-10-03-p1-04-06-tfidf.md"
+}

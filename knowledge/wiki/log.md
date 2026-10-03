@@ -41,3 +41,7 @@ Pages créées : tripod-llm-reporting-guideline. Pages mises à jour : overview,
 ## [2026-10-03] create | protocole-gele-2026-10-03
 Reason: témoin daté du gel de PROTOCOLE.md (P0-46) : neuf instantanés et leurs empreintes SHA-256.
 Source: experiments/INDEX.md, experiments/frozen/
+
+## [2026-10-03] ingest | Sliding-window beats linear attention
+Pages créées : sliding-window-beats-linear-attention. Pages mises à jour : index.
+Source : raw/arxiv-2608.28444.txt (PDF arXiv 2608.28444 extrait par pypdf). Relevance faible pour le projet (hybrides natifs écartés par les auteurs).
