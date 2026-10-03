@@ -15,7 +15,7 @@ Statuts : **prouvé** (renvoie à un run, un fichier ou une commande), **estimat
 | 8 | 245 tests, 58 runs, 12 ADR, 7/7 mutations tuées, wiki de 15 pages | `pytest --collect-only`, `ls results/runs`, `ls docs/decisions`, journal de nuit 12:30Z, `make check_wiki` | prouvé (comptes au 03/10/2026) |
 | 9 | 11,5 / 19,8 / 19,7 / 26,4 Gio ; 0,54 / 0,65 / 0,87 s par exemple ; 6,6 h projetées | runs `debit-qwen3-5-4b-lora-4096`, `debit-gemma-4-e4b-lora-4096`, `debit-qwen3-5-9b-lora-4096`, `p0-08` (page wiki compatibilité) ; fiche P1-11 | prouvé ; 6,6 h = hypothèse non annoncée comme durée |
 | 10 | 23 règles de nuit, journal, erreurs corrigées | `tasks/CONTRAT_NUIT.md`, `tasks/JOURNAL_NUIT_2026-10-02.md` | prouvé |
-| 12 | **Notes de 0 à 10 : projet 4,6 ; SOTA open source 7,6 ; SOTA absolu 9,4** | Colonne projet : scorecard `scorecards/G-P0.md` (notes 0 à 3) et mesures du 03/10 ; colonnes SOTA : **aucune mesure** | **estimation** |
+| 12 | **Notes de 0 à 10 : projet 5,0 ; SOTA open source 7,6 ; SOTA absolu 9,4** | Colonne projet : scorecard `scorecards/G-P0.md` (notes 0 à 3) et mesures du 03/10 ; colonnes SOTA : **aucune mesure** | **estimation** |
 
 ## Grille d'estimation de la diapositive 12 (jugement, à contre-expertiser, plus ou moins 1 point)
 
@@ -26,10 +26,10 @@ Statuts : **prouvé** (renvoie à un run, un fichier ou une commande), **estimat
 | Performance du modèle | 3 | 8 | 9 | TF-IDF 0,68 ; encodeur 0,45 sous-entraîné ; aucun LLM concluant à ce jour (P1-11 en cours) |
 | Rigueur statistique et protocole | 7 | 8 | 9 | protocole gelé et haché, test scellé, bootstrap apparié, puissance simulée ; mais une graine au développement, premier cycle non confirmatoire |
 | Données et anti-fuite | 6 | 8 | 10 | contrôles de fuite et raccourci d'auteur mesuré ; mais corpus fictif, pas de données réelles |
-| Fiabilité de l'incertitude | 1 | 7 | 9 | calibration et prédiction conforme non encore faites (Q5 de G-P0 = 0) |
+| Fiabilité de l'incertitude | 4 | 7 | 9 | **révisée de 1 à 4 le 03/10** : calibration, conforme (LAC, APS, par classe, Wilson) et sélectif implémentés, validés sur données synthétiques (14 tests) et mesurés sur le TF-IDF avec test de décalage (run `q5-uncertainty-tfidf-chapter`) ; reste : LLM, politique d'abstention chiffrée, hors distribution, test scellé (Q5 de G-P0 = 0 avant) |
 | Analyse d'erreurs et robustesse | 3 | 7 | 9 | analyse par classe, spécialité et longueur du TF-IDF seulement ; pas de perturbation (Q4 de G-P0 = 0 puis partiel) |
 | Reproductibilité et ingénierie | 7 | 8 | 9 | environnement verrouillé, typage strict, 245 tests, registre ; reconstruction à froid non testée |
 | Efficience et déploiement | 3 | 8 | 10 | mesures de VRAM et de débit ; pas de latence p95, pas de service testé en charge (Q8, Q9 de G-P0 = 1) |
 | Sûreté, conformité, honnêteté | 7 | 7 | 9 | aucune donnée réelle, résultats négatifs publiés, claim-gate ; pas de revue indépendante ni de carte de modèle |
 
-Moyennes : projet 37 / 8 = 4,6 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4. Ces trois colonnes sont des jugements ; seule la colonne « projet » s'appuie sur des preuves du dépôt, et même elle reste une note d'auto-évaluation sans confirmation indépendante (aucune note 3 à G-P0).
+Moyennes : projet 40 / 8 = 5,0 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4. Ces trois colonnes sont des jugements ; seule la colonne « projet » s'appuie sur des preuves du dépôt, et même elle reste une note d'auto-évaluation sans confirmation indépendante (aucune note 3 à G-P0).

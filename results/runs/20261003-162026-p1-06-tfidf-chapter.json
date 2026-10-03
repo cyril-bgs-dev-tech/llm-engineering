@@ -1,0 +1,134 @@
+{
+  "created_at": "2026-10-03T16:20:26Z",
+  "kind": "measure",
+  "metrics": {
+    "accuracy": 0.8179,
+    "chosen_config_by_fold": [
+      {
+        "C": 100.0,
+        "fold": 0,
+        "ngram": [
+          1,
+          1
+        ]
+      },
+      {
+        "C": 100.0,
+        "fold": 1,
+        "ngram": [
+          1,
+          1
+        ]
+      },
+      {
+        "C": 100.0,
+        "fold": 2,
+        "ngram": [
+          1,
+          1
+        ]
+      },
+      {
+        "C": 100.0,
+        "fold": 3,
+        "ngram": [
+          1,
+          1
+        ]
+      },
+      {
+        "C": 10.0,
+        "fold": 4,
+        "ngram": [
+          1,
+          1
+        ]
+      }
+    ],
+    "class_balanced_log_loss": 1.3162,
+    "classes": 18,
+    "ece": 0.0283,
+    "log_loss": 0.5995,
+    "macro_f1_folds_mean_sd": [
+      0.679,
+      0.026
+    ],
+    "macro_f1_pooled": [
+      0.6844,
+      0.6573,
+      0.7089
+    ],
+    "n": 3586,
+    "predictions_sha256": "0ec10bfb486d451b67930669f4bed8ab049e58a22a1dc7ca6d426188f15a944a",
+    "scored_classes": 17,
+    "seconds": 704
+  },
+  "params": {
+    "grid": [
+      [
+        0.1,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        0.1,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        1.0,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        1.0,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        10.0,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        10.0,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        100.0,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        100.0,
+        [
+          1,
+          2
+        ]
+      ]
+    ],
+    "n_boot": 2000,
+    "partition_sha256_file": "data/splits/parhaf_cim10_chapter.sha256",
+    "seed": 20261003
+  },
+  "run_id": "20261003-162026-p1-06-tfidf-chapter",
+  "schema": "mini-1",
+  "slug": "p1-06-tfidf-chapter",
+  "status": "ok",
+  "summary": "TF-IDF et régression logistique hors pli sur chapter (développement seulement, 5 plis folds, réglage C et n-grammes sur le pli suivant) ; fiche experiments/2026-10-03-p1-04-06-tfidf.md"
+}
