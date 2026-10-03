@@ -335,7 +335,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 
 ## Étape R12 : compléments de références et de réglage (chemin complet)
 
-- [ ] P1-05 (mesure) : TF-IDF et régression logistique sur `parhaf_specialty`
+- [x] P1-05 (mesure) : TF-IDF et régression logistique sur `parhaf_specialty`
   - Preuve de fin : Run au registre
   - Skills : experiment-preregistration ; dépendances : P1-04
 - [ ] P1-08 (GPU) : doctomodernbert-fr (contexte long) sur la même tâche

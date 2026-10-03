@@ -5,7 +5,8 @@ Entraînement sur les quatre autres plis (clé `folds`), évaluation sur le pli 
 avec balise de type, troncature tête et fin au niveau des tokens (PROTOCOLE.md section 1).
 Usage : p1_finetune.py MODELE --mode {lora|full} --lr LR [--fold 0] [--epochs 2] [--max-len 4096] [--rank 16] [--alpha 32] [--effective-batch 32]
         [--micro-batch 4] [--seed 1000] [--max-steps N] [--fiche CHEMIN] [--slug NOM] [--register]
-`--max-steps N` : pré-vol (vram-preflight) : N pas d'optimiseur, pas d'évaluation, enregistré comme `preflight` seulement avec --register.
+`--max-steps N` : pré-vol (vram-preflight) : N pas d'optimiseur, pas d'évaluation, enregistré comme `preflight` seulement avec --register ;
+`--order random` mesure le débit moyen (RM-16) au lieu du pire cas.
 Lancer avec HF_HOME=$PWD/artifacts/hf_cache."""
 import argparse
 import hashlib
@@ -97,6 +98,7 @@ def main() -> int:
     ap.add_argument("--warmup", type=int, default=20)
     ap.add_argument("--seed", type=int, default=1000)
     ap.add_argument("--max-steps", type=int, default=0)
+    ap.add_argument("--order", choices=["longest", "random"], default="longest", help="pré-vol : exemples les plus longs d'abord (pire cas mémoire) ou tirage au hasard (débit moyen)")
     ap.add_argument("--fiche", default="")
     ap.add_argument("--slug", required=True)
     ap.add_argument("--register", action="store_true")
@@ -117,7 +119,7 @@ def main() -> int:
     x_te = build_inputs(tok, [texts[i] for i in te], a.max_len) if not a.max_steps else []
     tok_seconds = time.time() - t_tok
     if a.max_steps:  # pré-vol : le plus long exemple d'abord, le pire cas mémoire
-        order = np.argsort([-len(x) for x in x_tr])[: a.max_steps * a.effective_batch]
+        order = (np.argsort([-len(x) for x in x_tr]) if a.order == "longest" else np.random.default_rng(a.seed).permutation(len(x_tr)))[: a.max_steps * a.effective_batch]
         x_tr = [x_tr[i] for i in order]
         tr = tr[order]
     torch.manual_seed(a.seed)

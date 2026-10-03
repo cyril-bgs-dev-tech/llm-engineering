@@ -83,3 +83,9 @@ Sept mutations manuelles (décalage de McNemar, Holm sans accumulation et mauvai
 
 ### 2026-10-03T12:45Z : pré-vols GPU des trois candidats (ADR-009)
 LoRA r = 16, 4 096 tokens, micro-lot 1, 3 pas de 8 exemples (les plus longs d'abord), gradient checkpointing : Qwen3.5-4B pic réservé 12,1 Gio ; Qwen3.5-9B 21,1 Gio ; Gemma-4-E4B (voie B) 20,4 Gio. **Tous sous 28 Gio.** Durées (50 s, 75 s, 62 s) non retenues : mesurées avec une charge CPU de 70 à 80 sur 32 threads (runs TF-IDF en parallèle) ; à refaire processeur libre avant la fiche P1-11. Le Qwen 4B a tourné avec l'ancienne troncature (marge de 3 tokens de moins), les deux autres avec la nouvelle : écart négligeable pour la mémoire. fla (`PYTHONPATH=artifacts/fla_pkgs`) utilisé : décision d'adoption toujours à Cyril, choix de nuit réversible.
+
+### 2026-10-03T13:00Z : TF-IDF v2 (fiche `2026-10-03-tfidf-v2-grille-etendue.md`), résultats
+- Chapitre par patient, grille v2 : macro-F1 regroupée **0,6889 [0,6629 ; 0,7130]** (v1 0,6844) ; différence appariée v2 moins v1 **+0,45 point [−1,21 ; +2,11], non résolu** (run `20261003-125802-tfidf-v2-minus-v1-chapter`) ⇒ règle de la fiche : pas d'amélioration, **la v1 fait référence** ; C retenu 1 000 à 10 000, encore au bord haut.
+- Chapitre par auteur, grille v2 : 0,6547 [0,6298 ; 0,6767] ; **RM-14 v2 : écart +3,42 points [+1,17 ; +5,78], « signalé »** (run `20261003-125739-rm-14-author-shortcut-tfidf-v2`) : la lecture 3 d'ADR-011 (grille bornée) ne suffit pas à expliquer l'écart.
+- P1-05 spécialité, grille v2 : macro-F1 regroupée **0,9868 [0,9817 ; 0,9912]** (tâche presque triviale).
+- Prédictions de la fiche v2 : (a) v2 ≥ v1 et gain < 2 points : vrai ; (b) écart encore signalé : vrai ; (c) spécialité > 0,80 : vrai.

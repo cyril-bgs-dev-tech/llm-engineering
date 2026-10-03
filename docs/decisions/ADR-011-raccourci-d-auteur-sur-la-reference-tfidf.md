@@ -28,5 +28,6 @@ Résultat (runs `p1-06-tfidf-chapter` `20261003-121942` et `p1-06-tfidf-chapter-
 
 ## Consequences
 - Q18 posée à Cyril ; le gel et son contrôle (`check_frozen.py`) restent verts.
-- À mesurer ensuite (sans test scellé) : même comparaison avec la grille TF-IDF étendue (lecture 3), puis avec le premier encodeur ou la LoRA de référence (l'écart persiste-t-il pour un modèle appris ?).
+- **Mesuré le 03/10 (grille v2, fiche `2026-10-03-tfidf-v2-grille-etendue.md`)** : écart +3,42 points [+1,17 ; +5,78], toujours « signalé » ; la lecture 3 (grille bornée) n'explique donc pas l'écart à elle seule. Restent les lectures 1 et 2 (fuite par auteur ou recouvrement thématique).
+- À mesurer ensuite (sans test scellé) : avec le premier encodeur ou la LoRA de référence (l'écart persiste-t-il pour un modèle appris ?).
 - Aucune affirmation publique sur « un raccourci d'auteur » tant que les lectures 1 et 2 ne sont pas départagées (`claim-gate`).

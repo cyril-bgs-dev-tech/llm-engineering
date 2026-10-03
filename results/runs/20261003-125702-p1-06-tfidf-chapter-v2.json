@@ -1,0 +1,148 @@
+{
+  "created_at": "2026-10-03T12:57:02Z",
+  "kind": "measure",
+  "metrics": {
+    "accuracy": 0.8134,
+    "chosen_config_by_fold": [
+      {
+        "C": 10000.0,
+        "fold": 0,
+        "ngram": [
+          1,
+          1
+        ]
+      },
+      {
+        "C": 1000.0,
+        "fold": 1,
+        "ngram": [
+          1,
+          1
+        ]
+      },
+      {
+        "C": 1000.0,
+        "fold": 2,
+        "ngram": [
+          1,
+          1
+        ]
+      },
+      {
+        "C": 10000.0,
+        "fold": 3,
+        "ngram": [
+          1,
+          1
+        ]
+      },
+      {
+        "C": 10000.0,
+        "fold": 4,
+        "ngram": [
+          1,
+          1
+        ]
+      }
+    ],
+    "class_balanced_log_loss": 1.9802,
+    "classes": 18,
+    "ece": 0.1113,
+    "log_loss": 0.9351,
+    "macro_f1_folds_mean_sd": [
+      0.6833,
+      0.0256
+    ],
+    "macro_f1_pooled": [
+      0.6889,
+      0.6629,
+      0.713
+    ],
+    "n": 3586,
+    "predictions_sha256": "8645a1b16408ad671fab937ee602d6988f8acfa1b33c029107c6cc068bfeeb0c",
+    "scored_classes": 17,
+    "seconds": 1864
+  },
+  "params": {
+    "grid": [
+      [
+        1.0,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        1.0,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        10.0,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        10.0,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        100.0,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        100.0,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        1000.0,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        1000.0,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        10000.0,
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        10000.0,
+        [
+          1,
+          2
+        ]
+      ]
+    ],
+    "n_boot": 2000,
+    "partition_sha256_file": "data/splits/parhaf_cim10_chapter.sha256",
+    "seed": 20261003
+  },
+  "run_id": "20261003-125702-p1-06-tfidf-chapter-v2",
+  "schema": "mini-1",
+  "slug": "p1-06-tfidf-chapter-v2",
+  "status": "ok",
+  "summary": "TF-IDF et régression logistique hors pli sur chapter (développement seulement, 5 plis folds, réglage C et n-grammes sur le pli suivant) ; fiche experiments/2026-10-03-p1-04-06-tfidf.md"
+}
