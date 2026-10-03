@@ -11,10 +11,15 @@ Lancer avec HF_HOME=$PWD/artifacts/hf_cache."""
 import argparse
 import hashlib
 import json
+import os
 import sys
 import time
 from pathlib import Path
 from typing import Any
+
+# Le tokenizer Rust de HF a fait des erreurs de segmentation (signal 11) avec un parallélisme sur 32 threads (3 runs de P1-11 sur 6, 03/10/2026)
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+os.environ.setdefault("RAYON_NUM_THREADS", "2")
 
 import numpy as np
 
