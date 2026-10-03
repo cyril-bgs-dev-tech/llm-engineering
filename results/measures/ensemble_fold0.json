@@ -1,0 +1,21 @@
+{
+ "tfidf": 0.6971335092529313,
+ "camembert_ep6": 0.5526538597884616,
+ "qwen4b_rejeu": 0.5806910258747261,
+ "tfidf+camembert": 0.658739259101398,
+ "tfidf+4b": 0.6494679209449771,
+ "camembert+4b": 0.5962817688237207,
+ "les_trois": 0.6535359103034668,
+ "tfidf+camembert_minus_tfidf_ic95": [
+  -8.79,
+  0.67
+ ],
+ "les_trois_minus_tfidf_ic95": [
+  -9.27,
+  0.01
+ ],
+ "tfidf+4b_minus_tfidf_ic95": [
+  -9.41,
+  -0.78
+ ]
+}

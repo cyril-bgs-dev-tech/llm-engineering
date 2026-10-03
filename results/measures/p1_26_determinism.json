@@ -1,0 +1,8 @@
+{
+ "pas": 180,
+ "loss_identique": false,
+ "ecart_perte_max": 0.2101838449470108,
+ "predictions_identiques": false,
+ "predictions_differentes": 40,
+ "n": 717
+}
