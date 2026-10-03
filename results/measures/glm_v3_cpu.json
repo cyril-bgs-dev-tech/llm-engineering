@@ -1,0 +1,226 @@
+{
+ "effectifs_par_pli_et_classe": {
+  "0": {
+   "II": 196,
+   "IX": 58,
+   "XVIII": 44,
+   "AUTRE": 3,
+   "XIII": 32,
+   "XIX": 28,
+   "XII": 6,
+   "XI": 62,
+   "IV": 9,
+   "XXI": 8,
+   "XIV": 65,
+   "XV": 30,
+   "III": 36,
+   "I": 19,
+   "X": 83,
+   "XXII": 5,
+   "V": 11,
+   "VI": 22
+  },
+  "1": {
+   "II": 196,
+   "IX": 58,
+   "XVIII": 44,
+   "AUTRE": 3,
+   "XIII": 31,
+   "XIX": 28,
+   "XII": 6,
+   "VI": 22,
+   "XI": 62,
+   "XIV": 65,
+   "IV": 10,
+   "XXI": 8,
+   "XV": 30,
+   "III": 35,
+   "I": 20,
+   "X": 83,
+   "XXII": 6,
+   "V": 11
+  },
+  "2": {
+   "II": 196,
+   "IX": 58,
+   "XVIII": 44,
+   "XIII": 32,
+   "XIX": 29,
+   "AUTRE": 2,
+   "XI": 62,
+   "IV": 10,
+   "XII": 6,
+   "XXI": 9,
+   "XIV": 64,
+   "XV": 30,
+   "III": 36,
+   "X": 82,
+   "I": 19,
+   "XXII": 6,
+   "VI": 21,
+   "V": 11
+  },
+  "3": {
+   "II": 195,
+   "IX": 58,
+   "XVIII": 44,
+   "XIX": 29,
+   "VI": 21,
+   "XIII": 32,
+   "XII": 6,
+   "XI": 63,
+   "IV": 9,
+   "XXI": 9,
+   "XIV": 65,
+   "III": 35,
+   "X": 83,
+   "XXII": 5,
+   "I": 20,
+   "AUTRE": 3,
+   "V": 11,
+   "XV": 29
+  },
+  "4": {
+   "II": 196,
+   "XVIII": 45,
+   "IX": 58,
+   "AUTRE": 3,
+   "XIX": 28,
+   "XIII": 32,
+   "VI": 22,
+   "XI": 63,
+   "IV": 9,
+   "XII": 6,
+   "XXI": 8,
+   "XIV": 65,
+   "XV": 29,
+   "III": 36,
+   "I": 19,
+   "X": 83,
+   "XXII": 5,
+   "V": 10
+  }
+ },
+ "modeles": {
+  "tfidf": {
+   "n": 717,
+   "macro_f1": 0.6971,
+   "weighted_f1": 0.8127,
+   "micro_f1_accuracy": 0.8243,
+   "f1_nulle": [],
+   "destination_des_erreurs_f1_nulle": {},
+   "f1_par_classe": {
+    "I": 0.667,
+    "II": 0.941,
+    "III": 0.909,
+    "IV": 0.462,
+    "IX": 0.79,
+    "V": 0.526,
+    "VI": 0.381,
+    "X": 0.874,
+    "XI": 0.923,
+    "XII": 0.6,
+    "XIII": 0.923,
+    "XIV": 0.826,
+    "XIX": 0.836,
+    "XV": 0.968,
+    "XVIII": 0.254,
+    "XXI": 0.4,
+    "XXII": 0.571
+   }
+  },
+  "qwen3.5-9b-1e-4": {
+   "n": 717,
+   "macro_f1": 0.565,
+   "weighted_f1": 0.7748,
+   "micro_f1_accuracy": 0.788,
+   "f1_nulle": [
+    "XII",
+    "XXI",
+    "XXII"
+   ],
+   "destination_des_erreurs_f1_nulle": {
+    "XII": {
+     "XIX": 2,
+     "I": 2,
+     "XI": 1,
+     "V": 1
+    },
+    "XXI": {
+     "XIV": 2,
+     "XVIII": 2,
+     "X": 2,
+     "II": 1
+    },
+    "XXII": {
+     "X": 5
+    }
+   },
+   "f1_par_classe": {
+    "I": 0.529,
+    "II": 0.933,
+    "III": 0.85,
+    "IV": 0.364,
+    "IX": 0.756,
+    "V": 0.353,
+    "VI": 0.435,
+    "X": 0.883,
+    "XI": 0.887,
+    "XII": 0.0,
+    "XIII": 0.787,
+    "XIV": 0.788,
+    "XIX": 0.772,
+    "XV": 0.935,
+    "XVIII": 0.333,
+    "XXI": 0.0,
+    "XXII": 0.0
+   }
+  },
+  "gemma-4-e4b-1e-4": {
+   "n": 717,
+   "macro_f1": 0.4558,
+   "weighted_f1": 0.6731,
+   "micro_f1_accuracy": 0.689,
+   "f1_nulle": [
+    "IV",
+    "XII",
+    "XXII"
+   ],
+   "destination_des_erreurs_f1_nulle": {
+    "IV": {
+     "II": 4,
+     "XVIII": 3,
+     "IX": 1,
+     "X": 1
+    },
+    "XII": {
+     "XIV": 3,
+     "XI": 2,
+     "XIII": 1
+    },
+    "XXII": {
+     "X": 5
+    }
+   },
+   "f1_par_classe": {
+    "I": 0.091,
+    "II": 0.878,
+    "III": 0.74,
+    "IV": 0.0,
+    "IX": 0.625,
+    "V": 0.143,
+    "VI": 0.326,
+    "X": 0.785,
+    "XI": 0.806,
+    "XII": 0.0,
+    "XIII": 0.727,
+    "XIV": 0.641,
+    "XIX": 0.737,
+    "XV": 0.897,
+    "XVIII": 0.131,
+    "XXI": 0.222,
+    "XXII": 0.0
+   }
+  }
+ }
+}
