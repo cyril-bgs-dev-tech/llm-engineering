@@ -1,0 +1,278 @@
+{
+  "created_at": "2026-10-03T13:44:30Z",
+  "kind": "measure",
+  "metrics": {
+    "accuracy": 0.8179,
+    "by_length_tercile": {
+      "court": {
+        "accuracy": 0.872,
+        "n": 1197
+      },
+      "long": {
+        "accuracy": 0.811,
+        "n": 1192
+      },
+      "moyen": {
+        "accuracy": 0.77,
+        "n": 1197
+      }
+    },
+    "by_specialty": {
+      "anatomopathologie": {
+        "accuracy": 1.0,
+        "n": 329
+      },
+      "cancero adulte": {
+        "accuracy": 0.998,
+        "n": 435
+      },
+      "cardiologie": {
+        "accuracy": 0.819,
+        "n": 83
+      },
+      "chir ortho et traumato": {
+        "accuracy": 0.87,
+        "n": 208
+      },
+      "chir.cardio-vasc.": {
+        "accuracy": 1.0,
+        "n": 35
+      },
+      "chirurgie viscerale": {
+        "accuracy": 0.957,
+        "n": 255
+      },
+      "gynecologie": {
+        "accuracy": 0.824,
+        "n": 182
+      },
+      "hematologie clinique": {
+        "accuracy": 0.931,
+        "n": 131
+      },
+      "hepato-gastro-entero": {
+        "accuracy": 0.694,
+        "n": 144
+      },
+      "maladies infectieuses": {
+        "accuracy": 0.768,
+        "n": 241
+      },
+      "medecine geriatrique": {
+        "accuracy": 0.549,
+        "n": 133
+      },
+      "medecine inter-specialites": {
+        "accuracy": 0.578,
+        "n": 64
+      },
+      "medecine interne": {
+        "accuracy": 0.654,
+        "n": 185
+      },
+      "medecine pediatrique": {
+        "accuracy": 0.549,
+        "n": 71
+      },
+      "nephrologie": {
+        "accuracy": 0.655,
+        "n": 87
+      },
+      "neurologie": {
+        "accuracy": 0.585,
+        "n": 217
+      },
+      "obstetrique": {
+        "accuracy": 0.953,
+        "n": 149
+      },
+      "pneumologie": {
+        "accuracy": 0.757,
+        "n": 448
+      },
+      "reanimation": {
+        "accuracy": 0.769,
+        "n": 39
+      },
+      "urologie": {
+        "accuracy": 0.8,
+        "n": 150
+      }
+    },
+    "n": 3586,
+    "per_class": {
+      "AUTRE": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 14
+      },
+      "I": {
+        "f1": 0.64,
+        "precision": 0.621,
+        "recall": 0.66,
+        "support": 97
+      },
+      "II": {
+        "f1": 0.926,
+        "precision": 0.928,
+        "recall": 0.924,
+        "support": 979
+      },
+      "III": {
+        "f1": 0.896,
+        "precision": 0.876,
+        "recall": 0.916,
+        "support": 178
+      },
+      "IV": {
+        "f1": 0.485,
+        "precision": 0.842,
+        "recall": 0.34,
+        "support": 47
+      },
+      "IX": {
+        "f1": 0.819,
+        "precision": 0.77,
+        "recall": 0.876,
+        "support": 290
+      },
+      "V": {
+        "f1": 0.5,
+        "precision": 0.543,
+        "recall": 0.463,
+        "support": 54
+      },
+      "VI": {
+        "f1": 0.517,
+        "precision": 0.546,
+        "recall": 0.491,
+        "support": 108
+      },
+      "X": {
+        "f1": 0.868,
+        "precision": 0.792,
+        "recall": 0.959,
+        "support": 414
+      },
+      "XI": {
+        "f1": 0.905,
+        "precision": 0.877,
+        "recall": 0.936,
+        "support": 312
+      },
+      "XII": {
+        "f1": 0.558,
+        "precision": 0.923,
+        "recall": 0.4,
+        "support": 30
+      },
+      "XIII": {
+        "f1": 0.838,
+        "precision": 0.815,
+        "recall": 0.862,
+        "support": 159
+      },
+      "XIV": {
+        "f1": 0.831,
+        "precision": 0.775,
+        "recall": 0.895,
+        "support": 324
+      },
+      "XIX": {
+        "f1": 0.803,
+        "precision": 0.833,
+        "recall": 0.775,
+        "support": 142
+      },
+      "XV": {
+        "f1": 0.963,
+        "precision": 0.948,
+        "recall": 0.98,
+        "support": 148
+      },
+      "XVIII": {
+        "f1": 0.299,
+        "precision": 0.386,
+        "recall": 0.244,
+        "support": 221
+      },
+      "XXI": {
+        "f1": 0.286,
+        "precision": 1.0,
+        "recall": 0.167,
+        "support": 42
+      },
+      "XXII": {
+        "f1": 0.5,
+        "precision": 1.0,
+        "recall": 0.333,
+        "support": 27
+      }
+    },
+    "tercile_word_bounds": [
+      453,
+      690
+    ],
+    "top_confusions": [
+      {
+        "n": 32,
+        "predit": "X",
+        "vrai": "XVIII"
+      },
+      {
+        "n": 28,
+        "predit": "IX",
+        "vrai": "XVIII"
+      },
+      {
+        "n": 27,
+        "predit": "XIV",
+        "vrai": "II"
+      },
+      {
+        "n": 25,
+        "predit": "VI",
+        "vrai": "XVIII"
+      },
+      {
+        "n": 22,
+        "predit": "XIV",
+        "vrai": "XVIII"
+      },
+      {
+        "n": 21,
+        "predit": "XVIII",
+        "vrai": "VI"
+      },
+      {
+        "n": 19,
+        "predit": "II",
+        "vrai": "XIV"
+      },
+      {
+        "n": 19,
+        "predit": "II",
+        "vrai": "XVIII"
+      },
+      {
+        "n": 17,
+        "predit": "XI",
+        "vrai": "II"
+      },
+      {
+        "n": 15,
+        "predit": "X",
+        "vrai": "XXII"
+      }
+    ]
+  },
+  "params": {
+    "pred": "p1-06-tfidf-chapter.json"
+  },
+  "run_id": "20261003-134430-p1-23-errors-tfidf-chapter",
+  "schema": "mini-1",
+  "slug": "p1-23-errors-tfidf-chapter",
+  "status": "ok",
+  "summary": "Analyse d'erreurs (chapitre) de p1-06-tfidf-chapter.json sur 3586 patients : par classe, confusions, spécialité, longueur"
+}
