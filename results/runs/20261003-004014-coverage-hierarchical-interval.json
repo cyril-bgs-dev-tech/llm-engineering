@@ -1,0 +1,60 @@
+{
+  "created_at": "2026-10-03T00:40:14Z",
+  "kind": "measure",
+  "metrics": {
+    "rows": [
+      {
+        "calibrated_acc_b": 0.7,
+        "coverage": 0.997,
+        "mean_width_points": 9.09,
+        "target_gap_points": 0.0,
+        "true_gap_points": 0.12,
+        "verdict_frequencies": {
+          "absence de gain utile": 0.017,
+          "gain confirmé": 0.0,
+          "non résolu": 0.983
+        }
+      },
+      {
+        "calibrated_acc_b": 0.684,
+        "coverage": 1.0,
+        "mean_width_points": 9.24,
+        "target_gap_points": 2.0,
+        "true_gap_points": 2.04,
+        "verdict_frequencies": {
+          "absence de gain utile": 0.0,
+          "gain confirmé": 0.0,
+          "non résolu": 1.0
+        }
+      },
+      {
+        "calibrated_acc_b": 0.6693,
+        "coverage": 1.0,
+        "mean_width_points": 9.45,
+        "target_gap_points": 4.0,
+        "true_gap_points": 3.95,
+        "verdict_frequencies": {
+          "absence de gain utile": 0.0,
+          "gain confirmé": 0.023,
+          "non résolu": 0.977
+        }
+      }
+    ]
+  },
+  "params": {
+    "acc_a": 0.7,
+    "delta": 2.0,
+    "level": 0.9833333333333333,
+    "n_boot": 2000,
+    "n_sets": 300,
+    "rho": 0.5,
+    "seed": 7,
+    "seeds_per_recipe": 5,
+    "test_size": 629
+  },
+  "run_id": "20261003-004014-coverage-hierarchical-interval",
+  "schema": "mini-1",
+  "slug": "coverage-hierarchical-interval",
+  "status": "ok",
+  "summary": "Caractéristiques opératoires simulées de l'intervalle hiérarchique (llmft.paired) à 98,33 % sur les effectifs réels du test : couverture, largeur et fréquences des trois verdicts pour une vraie différence de 0, 2 et 4 points ; corrélations inventées, ordre de grandeur"
+}

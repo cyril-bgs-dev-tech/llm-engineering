@@ -188,7 +188,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] P1-01 (code) : Harnais d'évaluation : accuracy, macro-F1, log loss, ECE, Spearman
   - Preuve de fin : Valeurs exactes sur 5 cas construits à la main
   - Skills : test-driven-development ; dépendances : P0-41
-- [ ] P1-02 (code) : Outils de comparaison appariée : bootstrap, McNemar, permutation, correction de Holm ; vérifiés contre SciPy et statsmodels
+- [x] P1-02 (code) : Outils de comparaison appariée : bootstrap, McNemar, permutation, correction de Holm ; vérifiés contre SciPy et statsmodels
   - Preuve de fin : Fausse alerte au plus 5 % sur données sans effet ; détection d'un effet injecté ; accord avec les bibliothèques
   - Skills : paired-comparison ; dépendances : P1-01
 - [ ] P1-03 (mesure) : Bornes : classe majoritaire et tirage aléatoire sur les trois tâches
