@@ -1,0 +1,147 @@
+{
+ "sous_groupes": {
+  "specialite": {
+   "anatomopathologie": {
+    "n": 70,
+    "tfidf": 1.0,
+    "qwen3.5-9b-1e-4": 1.0
+   },
+   "cancero adulte": {
+    "n": 83,
+    "tfidf": 1.0,
+    "qwen3.5-9b-1e-4": 1.0
+   },
+   "cardiologie": {
+    "n": 17,
+    "tfidf": 0.765,
+    "qwen3.5-9b-1e-4": 0.765
+   },
+   "chir ortho et traumato": {
+    "n": 48,
+    "tfidf": 0.917,
+    "qwen3.5-9b-1e-4": 0.854
+   },
+   "chir.cardio-vasc.": {
+    "n": 3,
+    "tfidf": 1.0,
+    "qwen3.5-9b-1e-4": 1.0
+   },
+   "chirurgie viscerale": {
+    "n": 55,
+    "tfidf": 0.982,
+    "qwen3.5-9b-1e-4": 0.927
+   },
+   "gynecologie": {
+    "n": 31,
+    "tfidf": 0.871,
+    "qwen3.5-9b-1e-4": 0.645
+   },
+   "hematologie clinique": {
+    "n": 31,
+    "tfidf": 0.871,
+    "qwen3.5-9b-1e-4": 0.839
+   },
+   "hepato-gastro-entero": {
+    "n": 29,
+    "tfidf": 0.69,
+    "qwen3.5-9b-1e-4": 0.621
+   },
+   "maladies infectieuses": {
+    "n": 44,
+    "tfidf": 0.795,
+    "qwen3.5-9b-1e-4": 0.682
+   },
+   "medecine geriatrique": {
+    "n": 19,
+    "tfidf": 0.684,
+    "qwen3.5-9b-1e-4": 0.579
+   },
+   "medecine inter-specialites": {
+    "n": 12,
+    "tfidf": 0.667,
+    "qwen3.5-9b-1e-4": 0.583
+   },
+   "medecine interne": {
+    "n": 36,
+    "tfidf": 0.639,
+    "qwen3.5-9b-1e-4": 0.583
+   },
+   "medecine pediatrique": {
+    "n": 14,
+    "tfidf": 0.5,
+    "qwen3.5-9b-1e-4": 0.357
+   },
+   "nephrologie": {
+    "n": 17,
+    "tfidf": 0.647,
+    "qwen3.5-9b-1e-4": 0.588
+   },
+   "neurologie": {
+    "n": 43,
+    "tfidf": 0.419,
+    "qwen3.5-9b-1e-4": 0.512
+   },
+   "obstetrique": {
+    "n": 30,
+    "tfidf": 0.967,
+    "qwen3.5-9b-1e-4": 0.967
+   },
+   "pneumologie": {
+    "n": 97,
+    "tfidf": 0.773,
+    "qwen3.5-9b-1e-4": 0.794
+   },
+   "reanimation": {
+    "n": 7,
+    "tfidf": 0.714,
+    "qwen3.5-9b-1e-4": 0.429
+   },
+   "urologie": {
+    "n": 31,
+    "tfidf": 0.839,
+    "qwen3.5-9b-1e-4": 0.806
+   }
+  },
+  "longueur": {
+   "court": {
+    "n": 239,
+    "tfidf": 0.87,
+    "qwen3.5-9b-1e-4": 0.862
+   },
+   "long": {
+    "n": 239,
+    "tfidf": 0.837,
+    "qwen3.5-9b-1e-4": 0.812
+   },
+   "moyen": {
+    "n": 239,
+    "tfidf": 0.766,
+    "qwen3.5-9b-1e-4": 0.69
+   }
+  },
+  "volume_auteur": {
+   "beaucoup": {
+    "n": 234,
+    "tfidf": 0.829,
+    "qwen3.5-9b-1e-4": 0.825
+   },
+   "moyen": {
+    "n": 244,
+    "tfidf": 0.811,
+    "qwen3.5-9b-1e-4": 0.783
+   },
+   "peu": {
+    "n": 239,
+    "tfidf": 0.833,
+    "qwen3.5-9b-1e-4": 0.757
+   }
+  }
+ },
+ "bayes_exploratoire": {
+  "ecart_moyen_points": -12.72,
+  "p_ecart_superieur_a_0": 0.0002,
+  "p_ecart_superieur_a_delta": 0.0,
+  "p_ecart_dans_moins_delta": 0.0002,
+  "p_9b_inferieur_de_plus_de_delta": 0.9998
+ }
+}
