@@ -2,8 +2,13 @@
 
 Demande de Cyril, 2026-10-02T23:28Z : « et continues d'avancer cette nuit moi je vais me coucher donc tu dois définir un contrat de travail suffisant pour avancer sans moi en faisant les choix les plus adaptés et intelligent pour évoluer pendant une douzaine d'heures ». Contrat appliqué : `tasks/CONTRAT_NUIT.md`. HEAD au départ : 314fc71 (trois commits du lot en attente encore en cours à l'ouverture). Fenêtre visée : 2026-10-02T23:28Z → environ 11 h 30 UTC le 2026-10-03 (12 h). Heures lues par `date -u` (N7).
 
-## Résumé pour Cyril (rempli à la fin, EN TÊTE)
-(à remplir)
+## Résumé pour Cyril (rempli à 11 h 36 UTC le 2026-10-03, fenêtre écoulée)
+- **Fait et commité (local, rien poussé)** : protocole gelé P0-46 et G-P0 franchie ; P1-01 (harnais d'évaluation), P1-02 (comparaison appariée + couverture simulée de l'intervalle hiérarchique), P1-03 (bornes sans modèle : macro-F1 chapitre au plancher ≈ 0,06). HEAD `74fc3f0`. Détails : entrées horodatées ci-dessous.
+- **Constat majeur** : à δ = 2,0 le premier cycle ne tranchera presque jamais (gain confirmé simulé 2,3 % à 2δ) ; décision C1 : EXPLORE, δ inchangé. Voir `project-risque-puissance-delta` et `experiments/ERRATA-PROTOCOLE.md`.
+- **Non fait, faute de temps** : unification mathématique de la métrique (`scripts/spikes/metric_widths.py` écrit, non lancé, non commité ; Q15 reste ouverte), P1-04/P1-06 (TF-IDF), RM-14, P1-19 code, `sealed.py` à deux temps, P0-09 vLLM, ingestions wiki R-j/R-k (dont sliding-window). Aucun run GPU comparatif lancé : aucune fiche préenregistrée n'existait.
+- **Erreurs de ma part** : brief GLM défaillant, skills chargés tard, test écrit après le code pour `frozen.py`, esquisse de puissance v1 à effectifs proportionnels (refaite). Corrigées, tracées.
+- **Ressources** : GPU 1 497 MiB occupés par un processus étranger (laissé en place) ; B consommé inchangé (~1,5 %).
+- **À décider par toi** : Q15, Q10, Q1, Q3, Q4, Q6, Q7, Q8 ; push des commits locaux ; adoption fla ; suppression des poids Gemma-4-31B (58 Go).
 
 ## Délégations en vigueur (réponses de Cyril, 2026-10-02T23:28Z)
 - **Commits** : « Commits locaux, pas de push (Recommandé) » : lots thématiques, chemins nommés, après un `make check` vert ; **aucun push, aucun tag, aucune création de dépôt**.
