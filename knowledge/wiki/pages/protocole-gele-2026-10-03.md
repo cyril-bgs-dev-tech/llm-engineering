@@ -41,6 +41,8 @@ Le 03/10/2026, après trois relectures adversariales en contexte neuf (54 consta
 - Le gel n'est pas un horodatage Git : le dépôt peut recevoir un tag sur demande de Cyril.
 - Plusieurs règles gelées n'ont pas encore leur code (classement des échecs par le registre, `sealed.py` à deux temps, répétition générale du temps B) : elles sont portées par les tâches P1-19 et RM-20.
 
+- Repère externe sur la macro-F1 (moyenne arithmétique des F1 par classe, classes absentes du test, plis stratifiés) : [[automated-medical-coding-mimic-replicability](pages/automated-medical-coding-mimic-replicability.md)] ; intervalles asymptotiques du MCC multiclasse apparié (grands échantillons) : [[mcc-multiclass-statistical-inference](pages/mcc-multiclass-statistical-inference.md)].
+
 [^1]: experiments/INDEX.md [synthesis] — lignes du 2026-10-03 : un instantané par fichier, empreinte et date
 [^2]: experiments/frozen [synthesis] — neuf fichiers copiés au gel
 [^3]: experiments/frozen/PROTOCOLE-2026-10-03.md §6.10 [synthesis] — règles de gel 1 à 5

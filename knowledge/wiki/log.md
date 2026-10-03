@@ -45,3 +45,11 @@ Source: experiments/INDEX.md, experiments/frozen/
 ## [2026-10-03] ingest | Sliding-window beats linear attention
 Pages créées : sliding-window-beats-linear-attention. Pages mises à jour : index.
 Source : raw/arxiv-2608.28444.txt (PDF arXiv 2608.28444 extrait par pypdf). Relevance faible pour le projet (hybrides natifs écartés par les auteurs).
+
+## [2026-10-03] ingest | Automated Medical Coding on MIMIC-III and MIMIC-IV (Edin et al.)
+Pages créées : automated-medical-coding-mimic-replicability. Pages mises à jour : overview, index.
+Source : raw/arxiv-2304.10909.txt (PDF arXiv 2304.10909 extrait par pypdf).
+
+## [2026-10-03] ingest | Statistical Inference of the MCC for Multiclass Classification (Tamura et al.)
+Pages créées : mcc-multiclass-statistical-inference. Pages mises à jour : overview, protocole-gele-2026-10-03, index.
+Source : raw/arxiv-2503.06450.txt (PDF arXiv 2503.06450 extrait par pypdf).
