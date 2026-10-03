@@ -116,3 +116,12 @@ Fiabilité de l'incertitude de CamemBERT-bio à 6 époques (audit GLM C4-A1/A2/A
 | 1e-4 | **0,5867** | 0,789 | 3 024 s | `20261003-194530-p1-11-qwen3-5-4b-lr1e-4` |
 
 5e-5 contre 1e-4 : −11,3 points [−15,6 ; −6,8] (`p1-13-4b-5e-5-minus-1e-4-fold0`) : **1e-4 est meilleur, résolu**. La macro-F1 croît de façon monotone avec le taux sur toute la grille testée, comme pour CamemBERT-bio : le meilleur taux est au **bord supérieur** de la grille gelée, signalé comme l'exige le protocole (6.5), et la grille ne s'étend jamais. Avec 2 époques, la recette est probablement encore sous-entraînée (même signe que l'encodeur, où quatre puis six époques ont aidé de 7,7 puis 10,4 points) ; 2e-5 suit.
+
+## Exploration Q19 : perte pondérée 1/√n sur le Qwen3.5-4B (fiche `2026-10-03-q19-perte-ponderee-qwen4b`, EXPLORE, pli 0, taux 1e-4, une graine)
+
+| Run | macro-F1 | exactitude | log loss | ECE | durée | run_id |
+|---|---|---|---|---|---|---|
+| Référence (perte non pondérée) | 0,5867 | 0,789 | n/a ici | n/a ici | 3 024 s | `20261003-194530-p1-11-qwen3-5-4b-lr1e-4` |
+| Perte pondérée 1/√n | 0,5637 | 0,756 | 0,773 | 0,025 | 2 508 s | `20261003-213020-q19-qwen3-5-4b-lr1e-4-perte-ponderee` |
+
+Écart pondérée moins référence : **−2,3 points, IC 95 % [−5,3 ; +1,5] : non résolu** (`q19-weighted-minus-unweighted-4b-fold0`). Aucune amélioration suggérée : la prédiction de la fiche (Δ > 0, probabilité 0,65) est fausse. Par chapitre : XXI sort d'une F1 nulle (0 → 0,17), XXII reste à 0, XII baisse (0,29 → 0,13), I baisse (0,57 → 0,36), V et VI montent (0,32 → 0,42 ; 0,44 → 0,49) ; l'exactitude baisse de 3,3 points et l'ECE est basse (0,025). La pondération déplace des erreurs entre petits chapitres sans améliorer la moyenne. Elle ne justifie pas de changer la référence ; l'hypothèse « l'entropie croisée non pondérée explique le déficit » n'est **pas soutenue** à cette longueur d'entraînement (2 époques, 5 à 8 patients par petit chapitre au pli 0) : le déficit semble plutôt venir de la rareté des données et du sous-entraînement. Reste non testé : perte équilibrée au niveau des logits, correction a posteriori par la prévalence.
