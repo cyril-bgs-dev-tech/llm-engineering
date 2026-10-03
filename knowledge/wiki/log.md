@@ -53,3 +53,7 @@ Source : raw/arxiv-2304.10909.txt (PDF arXiv 2304.10909 extrait par pypdf).
 ## [2026-10-03] ingest | Statistical Inference of the MCC for Multiclass Classification (Tamura et al.)
 Pages créées : mcc-multiclass-statistical-inference. Pages mises à jour : overview, protocole-gele-2026-10-03, index.
 Source : raw/arxiv-2503.06450.txt (PDF arXiv 2503.06450 extrait par pypdf).
+
+## [2026-10-03] ingest | Hierarchical Scoring for ML Classifier Error Impact Evaluation (Lanus et al.)
+Pages créées : hierarchical-scoring-classifier-error-impact. Pages mises à jour : overview, protocole-gele-2026-10-03, index.
+Source : raw/arxiv-2508.04489.txt (PDF arXiv 2508.04489 extrait par pypdf).
