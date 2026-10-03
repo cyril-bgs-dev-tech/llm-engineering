@@ -1,0 +1,122 @@
+{
+ "anatomopathologie": {
+  "n": 329,
+  "accuracy": 1.0,
+  "macro_f1_classes_presentes": 1.0,
+  "chapitres": 1
+ },
+ "cancero adulte": {
+  "n": 435,
+  "accuracy": 0.8736,
+  "macro_f1_classes_presentes": 0.9325,
+  "chapitres": 1
+ },
+ "cardiologie": {
+  "n": 83,
+  "accuracy": 0.7349,
+  "macro_f1_classes_presentes": 0.4922,
+  "chapitres": 2
+ },
+ "chir ortho et traumato": {
+  "n": 208,
+  "accuracy": 0.3558,
+  "macro_f1_classes_presentes": 0.222,
+  "chapitres": 5
+ },
+ "chir.cardio-vasc.": {
+  "n": 35,
+  "accuracy": 1.0,
+  "macro_f1_classes_presentes": 1.0,
+  "chapitres": 1
+ },
+ "chirurgie viscerale": {
+  "n": 255,
+  "accuracy": 0.1608,
+  "macro_f1_classes_presentes": 0.0817,
+  "chapitres": 6
+ },
+ "gynecologie": {
+  "n": 182,
+  "accuracy": 0.3407,
+  "macro_f1_classes_presentes": 0.2279,
+  "chapitres": 6
+ },
+ "hematologie clinique": {
+  "n": 131,
+  "accuracy": 0.3206,
+  "macro_f1_classes_presentes": 0.3936,
+  "chapitres": 4
+ },
+ "hepato-gastro-entero": {
+  "n": 144,
+  "accuracy": 0.2708,
+  "macro_f1_classes_presentes": 0.2595,
+  "chapitres": 5
+ },
+ "maladies infectieuses": {
+  "n": 241,
+  "accuracy": 0.4149,
+  "macro_f1_classes_presentes": 0.1735,
+  "chapitres": 11
+ },
+ "medecine geriatrique": {
+  "n": 133,
+  "accuracy": 0.4586,
+  "macro_f1_classes_presentes": 0.3882,
+  "chapitres": 16
+ },
+ "medecine inter-specialites": {
+  "n": 64,
+  "accuracy": 0.5469,
+  "macro_f1_classes_presentes": 0.3555,
+  "chapitres": 12
+ },
+ "medecine interne": {
+  "n": 185,
+  "accuracy": 0.3514,
+  "macro_f1_classes_presentes": 0.2201,
+  "chapitres": 16
+ },
+ "medecine pediatrique": {
+  "n": 71,
+  "accuracy": 0.507,
+  "macro_f1_classes_presentes": 0.3087,
+  "chapitres": 13
+ },
+ "nephrologie": {
+  "n": 87,
+  "accuracy": 0.1494,
+  "macro_f1_classes_presentes": 0.141,
+  "chapitres": 8
+ },
+ "neurologie": {
+  "n": 217,
+  "accuracy": 0.3963,
+  "macro_f1_classes_presentes": 0.4741,
+  "chapitres": 6
+ },
+ "obstetrique": {
+  "n": 149,
+  "accuracy": 0.0134,
+  "macro_f1_classes_presentes": 0.0093,
+  "chapitres": 3
+ },
+ "pneumologie": {
+  "n": 448,
+  "accuracy": 0.6228,
+  "macro_f1_classes_presentes": 0.292,
+  "chapitres": 10
+ },
+ "reanimation": {
+  "n": 39,
+  "accuracy": 0.6923,
+  "macro_f1_classes_presentes": 0.5368,
+  "chapitres": 7
+ },
+ "urologie": {
+  "n": 150,
+  "accuracy": 0.7,
+  "macro_f1_classes_presentes": 0.2709,
+  "chapitres": 5
+ }
+}
