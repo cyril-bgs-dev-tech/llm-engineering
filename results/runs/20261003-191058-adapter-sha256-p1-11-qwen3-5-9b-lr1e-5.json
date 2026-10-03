@@ -1,0 +1,16 @@
+{
+  "created_at": "2026-10-03T19:10:58Z",
+  "kind": "measure",
+  "metrics": {
+    "adapter_sha256": "4372fef0f23fbd124d32697cf4b17cfbc4acd94bfc61f31cf61709172abe29dd"
+  },
+  "params": {
+    "adapter_dir": "artifacts/adapters/p1-11-qwen3-5-9b-lr1e-5",
+    "run_id": "20261003-185103-p1-11-qwen3-5-9b-lr1e-5"
+  },
+  "run_id": "20261003-191058-adapter-sha256-p1-11-qwen3-5-9b-lr1e-5",
+  "schema": "mini-1",
+  "slug": "adapter-sha256-p1-11-qwen3-5-9b-lr1e-5",
+  "status": "ok",
+  "summary": "Empreinte de l'adaptateur sauvegardé du run 20261003-185103-p1-11-qwen3-5-9b-lr1e-5 (écrit avant l'ajout du champ au script)"
+}

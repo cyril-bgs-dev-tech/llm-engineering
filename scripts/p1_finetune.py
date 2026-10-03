@@ -28,6 +28,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import p1_04_06_tfidf  # chargement des étiquettes de développement, même fonction que les références TF-IDF
 from llmft import evaluation, failures, last_token, lora_train
+from llmft.fingerprint import dir_sha256
 from llmft.mini_registry import register_run
 
 
@@ -186,6 +187,7 @@ def main() -> int:
                 model.base.save_pretrained(adapter_dir)
                 torch.save(model.head.state_dict(), adapter_dir / "head.pt")
             metrics["adapter_dir"] = str(adapter_dir.relative_to(ROOT))
+            metrics["adapter_sha256"] = dir_sha256(adapter_dir)
         except (OSError, RuntimeError, ValueError, AttributeError) as exc:
             metrics["adapter_save_error"] = f"{type(exc).__name__}: {str(exc)[:200]}"
     record.update({"status": "ok", "summary": summary, "loss_history": res.loss_history, "metrics": metrics})
