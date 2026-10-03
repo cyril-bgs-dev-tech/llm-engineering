@@ -174,6 +174,18 @@ def main() -> int:
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(pred_payload, encoding="utf-8")
             np.savez_compressed(out.with_suffix(".probs.npz"), ids=np.array([ids[i] for i in te]), probs=probs.astype(np.float32), labels=np.array(labels))  # pour calibration et prédiction conforme
+    if a.register and a.mode == "lora" and not a.max_steps:  # point de sauvegarde pour robustesse, hors-distribution et service (Q4, Q9)
+        try:  # un échec de sauvegarde ne doit jamais faire perdre le résultat du run
+            adapter_dir = ROOT / "artifacts/adapters" / a.slug
+            adapter_dir.mkdir(parents=True, exist_ok=True)
+            if route == "A":
+                model.save_pretrained(adapter_dir)
+            else:
+                model.base.save_pretrained(adapter_dir)
+                torch.save(model.head.state_dict(), adapter_dir / "head.pt")
+            metrics["adapter_dir"] = str(adapter_dir.relative_to(ROOT))
+        except (OSError, RuntimeError, ValueError, AttributeError) as exc:
+            metrics["adapter_save_error"] = f"{type(exc).__name__}: {str(exc)[:200]}"
     record.update({"status": "ok", "summary": summary, "loss_history": res.loss_history, "metrics": metrics})
     print(json.dumps({"summary": summary, "metrics": metrics}, ensure_ascii=False, indent=1))
     if a.register:

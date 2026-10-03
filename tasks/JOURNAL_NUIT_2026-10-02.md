@@ -123,3 +123,6 @@ Cyril demande pourquoi performance, analyse d'erreurs et efficience/déploiement
 
 ### 2026-10-03T17:10Z : cahier d'audit pour GLM (v3)
 `docs/BRIEF_GLM_v3_actions_par_composante.md` : 8 composantes = les 8 critères de la dernière page de la présentation (correspondance avec Q1 à Q12 incluse), 10 actions par composante (tableau à colonnes imposées), conseils d'intégration, synthèse transversale (top 10 séquencé, trois leviers sur la macro-F1, avis sur Q15, Q18, Q19, trois erreurs), format de réponse `audit_GLM_5_3_v3.md`, prompt d'envoi, tableau de preuve. Autonome ; **non envoyé** (envoi hors machine à décision de Cyril).
+
+### 2026-10-03T17:05Z : sauvegarde de l'adaptateur
+`p1_finetune.py` écrit désormais l'adaptateur LoRA (voie A) ou l'adaptateur et la tête (voie B) dans `artifacts/adapters/<slug>` pour tout run LoRA enregistré, avec un `try` : un échec de sauvegarde est consigné (`adapter_save_error`) sans perdre le résultat. **Code non exercé sur GPU à cette heure** (le GPU est occupé par la seconde passe de P1-11) : s'applique aux runs 9B 1e-5 et 4B 1e-4, pas à Gemma 1e-5 (déjà lancé). À vérifier au premier run concerné.
