@@ -46,3 +46,16 @@ def test_grille_v2_etend_c_vers_le_haut_sans_toucher_a_la_grille_v1():
 def test_selection_accepte_une_grille_explicite():
     folds = np.array([i % 3 for i in range(len(Y))])
     assert tfidf.select_config(TEXTS, Y, folds, val_fold=1, labels=LABELS, scored=LABELS, grid=[(10.0, (1, 1))]) == (10.0, (1, 1))
+
+
+def test_poids_de_classe_equilibres_augmentent_la_probabilite_de_la_classe_rare():
+    texts = ["alpha tumeur"] * 30 + ["beta fracture"] * 3 + ["alpha beta mixte"] * 3
+    y = ["a"] * 30 + ["b"] * 3 + ["b"] * 3
+    plain = tfidf.fit_predict_proba(texts, y, ["alpha beta mixte"], ["a", "b"], c=1.0, ngram=(1, 1))
+    balanced = tfidf.fit_predict_proba(texts, y, ["alpha beta mixte"], ["a", "b"], c=1.0, ngram=(1, 1), class_weight="balanced")
+    assert balanced[0, 1] > plain[0, 1]
+
+
+def test_analyseur_de_caracteres_donne_des_probabilites_valides():
+    p = tfidf.fit_predict_proba(TEXTS, Y, ["alphq tumeur"], LABELS, c=10.0, ngram=(3, 5), analyzer="char_wb")
+    assert p.shape == (1, 3) and abs(p.sum() - 1) < 1e-9

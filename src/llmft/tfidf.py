@@ -19,12 +19,13 @@ GRID_V2: list[tuple[float, tuple[int, int]]] = [(c, ng) for c in (1.0, 10.0, 100
 
 
 def fit_predict_proba(
-    train_texts: Sequence[str], train_y: Sequence[str], test_texts: Sequence[str], labels: Sequence[str], c: float, ngram: tuple[int, int]
+    train_texts: Sequence[str], train_y: Sequence[str], test_texts: Sequence[str], labels: Sequence[str], c: float, ngram: tuple[int, int],
+    class_weight: str | None = None, analyzer: str = "word",
 ) -> np.ndarray:
     """Probabilités alignées sur `labels` ; une classe absente de l'entraînement garde une colonne à zéro."""
-    vec = _Vectorizer(sublinear_tf=True, min_df=1 if len(train_texts) < 50 else 2, max_features=200000, ngram_range=ngram)
+    vec = _Vectorizer(sublinear_tf=True, min_df=1 if len(train_texts) < 50 else 2, max_features=200000, ngram_range=ngram, analyzer=analyzer)
     x_train = vec.fit_transform(train_texts)
-    model = _Logistic(C=c, max_iter=1000)
+    model = _Logistic(C=c, max_iter=1000, class_weight=class_weight)
     model.fit(x_train, list(train_y))
     raw = model.predict_proba(vec.transform(test_texts))
     out = np.zeros((raw.shape[0], len(labels)))
@@ -36,7 +37,7 @@ def fit_predict_proba(
 
 def select_config(
     texts: Sequence[str], y: Sequence[str], folds: np.ndarray, val_fold: int, labels: Sequence[str], scored: Sequence[str],
-    grid: Sequence[tuple[float, tuple[int, int]]] | None = None,
+    grid: Sequence[tuple[float, tuple[int, int]]] | None = None, class_weight: str | None = None, analyzer: str = "word",
 ) -> tuple[float, tuple[int, int]]:
     """Meilleure macro-F1 sur `val_fold`, entraînement sur les autres plis fournis ; égalité exacte : C le plus bas, puis unigrammes."""
     tr = [i for i in range(len(y)) if folds[i] != val_fold]
@@ -44,7 +45,7 @@ def select_config(
     best: tuple[float, tuple[int, int]] | None = None
     best_score = -1.0
     for c, ng in (GRID if grid is None else grid):
-        p = fit_predict_proba([texts[i] for i in tr], [y[i] for i in tr], [texts[i] for i in va], labels, c, ng)
+        p = fit_predict_proba([texts[i] for i in tr], [y[i] for i in tr], [texts[i] for i in va], labels, c, ng, class_weight, analyzer)
         pred = [labels[int(k)] for k in p.argmax(1)]
         score = metrics.macro_f1([y[i] for i in va], pred, scored)
         if score > best_score + 1e-12:
