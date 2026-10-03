@@ -23,7 +23,7 @@ Statuts : **prouvé** (renvoie à un run, un fichier ou une commande), **estimat
 
 | Composante | Projet | Open source | Absolu | Raison de la note du projet |
 |---|---|---|---|---|
-| Performance du modèle | 3 | 8 | 9 | TF-IDF 0,68 ; encodeur 0,45 sous-entraîné ; Qwen3.5-9B 0,565 sur le pli 0, sous le TF-IDF ; aucun LLM ne le bat à ce jour (P1-11, 4 runs sur 6) |
+| Performance du modèle | 3 | 8 | 9 | TF-IDF 0,68 ; encodeur 0,45 sous-entraîné ; Qwen3.5-9B 0,565 sur le pli 0, sous le TF-IDF ; aucun LLM ne le bat à ce jour (P1-11, 5 runs sur 6) |
 | Rigueur statistique et protocole | 7 | 8 | 9 | protocole gelé et haché, test scellé, bootstrap apparié, puissance simulée ; mais une graine au développement, premier cycle non confirmatoire |
 | Données et anti-fuite | 6 | 8 | 10 | contrôles de fuite et raccourci d'auteur mesuré ; mais corpus fictif, pas de données réelles |
 | Fiabilité de l'incertitude | 4 | 7 | 9 | **révisée de 1 à 4 le 03/10** : calibration, conforme (LAC, APS, par classe, Wilson) et sélectif implémentés, validés sur données synthétiques (14 tests) et mesurés sur le TF-IDF avec test de décalage (run `q5-uncertainty-tfidf-chapter`) ; reste : LLM, politique d'abstention chiffrée, hors distribution, test scellé (Q5 de G-P0 = 0 avant) |
