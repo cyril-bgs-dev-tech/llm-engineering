@@ -36,7 +36,7 @@ Source : `audit_GLM_5_3_v3.md` (80 actions, 10 par composante, déposé le 03/10
 ### C3 Données
 - A8 composition des plis : **fait** (RESULTATS.md). A1 RM-14 sans identifiants d'auteur et A4 spécialité contre auteur : **planifié** (CPU, développement seulement).
 - A2, A6 agrégats auteurs × chapitres, patients tronqués : **planifié** (agrégats sans identifiant).
-- A3, A5, A7, A9, A10 : **planifié** (A10 : étiqueter les trois lectures de RM-14 comme non tranchées, à faire dans RESULTATS et wiki).
+- A3 sensibilité du seuil : **fait**. A5, A7, A9, A10 : **planifié** (A10 : étiqueter les trois lectures de RM-14 comme non tranchées, à faire dans RESULTATS et wiki).
 
 ### C4 Incertitude
 - A1 à A5, A9 sur le 9B : **bloqué** par les `.probs.npz` du 9B 1e-5 (en cours) ; `q5_uncertainty.py` est prêt.
