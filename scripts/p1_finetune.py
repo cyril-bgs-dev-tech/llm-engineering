@@ -30,6 +30,7 @@ import p1_04_06_tfidf  # chargement des étiquettes de développement, même fon
 from llmft import evaluation, failures, last_token, lora_train
 from llmft.fingerprint import dir_sha256
 from llmft.mini_registry import register_run
+from llmft.quant import load_kwargs
 
 
 def build_inputs(tok: Any, texts: list[str], max_len: int) -> list[list[int]]:
@@ -44,17 +45,18 @@ def build_inputs(tok: Any, texts: list[str], max_len: int) -> list[list[int]]:
     return out
 
 
-def load_model(name: str, mode: str, n_labels: int, pad_id: int, rank: int, alpha: int) -> tuple[Any, str]:
+def load_model(name: str, mode: str, n_labels: int, pad_id: int, rank: int, alpha: int, quant: str = "none") -> tuple[Any, str]:
     """Voie A : classe de classification de transformers ; voie B (Gemma 4) : modèle causal et tête sur le dernier token. Renvoie (modèle, voie)."""
     import torch
     from transformers import AutoConfig, AutoModelForCausalLM, AutoModelForSequenceClassification
 
     dtype = torch.bfloat16 if mode == "lora" else torch.float32
+    extra = load_kwargs(quant)
     try:
-        model = AutoModelForSequenceClassification.from_pretrained(name, num_labels=n_labels, torch_dtype=dtype)
+        model = AutoModelForSequenceClassification.from_pretrained(name, num_labels=n_labels, torch_dtype=dtype, **extra)
         route = "A"
     except ValueError:  # « Unrecognized configuration class » : pas de classe de classification pour cette architecture
-        base = AutoModelForCausalLM.from_pretrained(name, torch_dtype=dtype)
+        base = AutoModelForCausalLM.from_pretrained(name, torch_dtype=dtype, **extra)
         cfg = AutoConfig.from_pretrained(name)
         hidden = getattr(cfg, "hidden_size", None) or cfg.text_config.hidden_size
         base.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
@@ -107,6 +109,7 @@ def main() -> int:
     ap.add_argument("--order", choices=["longest", "random"], default="longest", help="pré-vol : exemples les plus longs d'abord (pire cas mémoire) ou tirage au hasard (débit moyen)")
     ap.add_argument("--limit-seconds", type=float, default=0.0, help="arrêt anticipé : limite de durée projetée (1,5 fois l'estimation de la fiche) ; 0 = aucune")
     ap.add_argument("--class-weights", choices=["none", "inv-sqrt"], default="none", help="perte pondérée par classe en 1/√n (exploration Q19, fiche à part) ; none = référence")
+    ap.add_argument("--quant", choices=["none", "nf4"], default="none", help="QLoRA : chargement 4 bits NF4 pour les modèles de 24 à 31 milliards de paramètres")
     ap.add_argument("--fiche", default="")
     ap.add_argument("--slug", required=True)
     ap.add_argument("--register", action="store_true")
@@ -131,8 +134,9 @@ def main() -> int:
         x_tr = [x_tr[i] for i in order]
         tr = tr[order]
     torch.manual_seed(a.seed)
-    model, route = load_model(a.model, a.mode, len(labels), pad_id, a.rank, a.alpha)
-    model = model.to("cuda")
+    model, route = load_model(a.model, a.mode, len(labels), pad_id, a.rank, a.alpha, a.quant)
+    if a.quant == "none":
+        model = model.to("cuda")
     cfg: dict[str, Any] = {k: v for k, v in vars(a).items() if k not in ("register",)}
     cfg.update({"route": route, "labels": labels, "n_train": len(tr), "n_eval": len(te), "fiche_sha256": fiche_sha, "train_token_length_max": max(len(x) for x in x_tr)})
     record: dict[str, Any] = {"kind": "preflight" if a.max_steps else "train", "slug": a.slug, "params": cfg}
