@@ -19,7 +19,7 @@ Source : `audit_GLM_5_3_v3.md` (80 actions, 10 par composante, déposé le 03/10
 - A4 analyse par chapitre : **fait** (P1-23 ; `RESULTATS.md`, `glm_v3_cpu.json`).
 - A5 perte pondérée : **en file**, sur le 9B à 1e-4 (code testé, fiche hachée).
 - A6 diagnostic CamemBERT : **fait** (perte encore en baisse, performance monotone avec le taux, runs de 43 s).
-- A7 CamemBERT 4 et 6 époques : **en file**, EXPLORE, écart borné par fiche.
+- A7 CamemBERT 4 et 6 époques : **fait** (0,5255 puis 0,5527 contre 0,4484 ; sous-entraînement confirmé ; non distinct du 4B à 6 époques).
 - A8 ablation de troncature : **écarté** (9 patients tronqués sur 3 586, aucun dans les chapitres rares).
 - A9 rang LoRA : **planifié** après RM-17.
 - A10 ensemble TF-IDF × LLM : **planifié** (probabilités du candidat issues du rejeu P1-26).

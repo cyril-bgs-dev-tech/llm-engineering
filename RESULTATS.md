@@ -94,3 +94,13 @@ Sous-groupes au pli 0 (audit GLM, C8-A3 ; `results/measures/glm_v3_subgroups_bay
 Lecture complémentaire EXPLORE de l'écart (audit GLM, C2-A8 ; bootstrap stratifié du pli 0, 5 000 répliques, graine 20261002) : écart moyen 9B moins TF-IDF −12,7 points ; probabilité d'un écart positif 0,0002 ; probabilité que le 9B soit inférieur de plus de δ = 2 points 0,9998. Ce n'est pas un verdict (criblage, un pli, une graine) et elle ne remplace pas l'intervalle apparié de la fiche ; elle dit seulement que l'écart actuel du 9B à 1e-4 contre le TF-IDF n'est pas du bruit d'échantillonnage du pli.
 
 Erreurs par familles de chapitres (audit GLM, C5-A2 ; `results/measures/glm_v3_families.json`, pli 0, neuf familles du projet, regroupement non normatif) : seulement 4,8 % des erreurs du TF-IDF (6 sur 126), 3,9 % de celles du Qwen3.5-9B (6 sur 152) et 10,3 % de celles du Gemma-4-E4B (23 sur 223) restent dans la même famille. Les erreurs traversent donc les familles : elles reflètent surtout des cas où un second diagnostic (symptômes, lésions, autre organe) rivalise avec le diagnostic principal, pas des confusions entre chapitres voisins. Un score hiérarchique à pénalité par distance (Lanus et al.) n'adoucirait donc presque aucune erreur, sous cette définition des familles.
+
+## Diagnostic d'époques de CamemBERT-bio (audit GLM C1-A6/A7, fiche `2026-10-03-camembert-epoques-diagnostic`, EXPLORE, pli 0, taux 1e-4, une graine)
+
+| Époques | macro-F1 | exactitude | durée | run_id |
+|---|---|---|---|---|
+| 2 (référence gelée) | 0,4484 | 0,770 | 43 s | `p1-07-camembert-bio-lr1e-4` |
+| 4 | 0,5255 | 0,803 | 86 s | `camembert-epoques-lr1e-4-ep4` |
+| 6 | **0,5527** | 0,809 | 128 s | `camembert-epoques-lr1e-4-ep6` |
+
+Critère de la fiche (gain de plus de 2,0 points sur 2 époques) : **sous-entraînement confirmé** (+7,7 puis +10,4 points). À 6 époques, CamemBERT-bio est 14,4 points sous le TF-IDF [−19,9 ; −7,4] (`camembert-ep6-minus-tfidf-fold0`) et **non distinct du Qwen3.5-4B** (−3,4 points [−8,2 ; +2,1], `camembert-ep6-minus-qwen4b-fold0`). Conséquences : (1) le déficit de l'encodeur à 2 époques était en bonne partie du sous-entraînement, le chiffre 0,448 sous-estime l'encodeur ; (2) à effort bien moindre (128 s contre 3 024 s), un encodeur plus longuement entraîné n'est pas résolu plus bas que l'élève LoRA : l'argument de la porte RM-17 (« la LoRA est-elle dominée par l'encodeur ? ») reste ouvert. Ces runs sortent des 2 époques gelées pour les recettes confirmatoires : ils sont EXPLORE, sans verdict, la valeur de 2 époques de la référence encodeur du protocole n'est pas modifiée. Prédictions de la fiche : macro-F1 à 4 époques entre 0,50 et 0,62 (réalisé) ; écart au TF-IDF supérieur à 8 points à 6 époques (réalisé).

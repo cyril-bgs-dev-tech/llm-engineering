@@ -1,0 +1,24 @@
+{
+  "created_at": "2026-10-03T20:17:40Z",
+  "kind": "measure",
+  "metrics": {
+    "a": "camembert-epoques-lr1e-4-ep6.json",
+    "b": "p1-06-tfidf-chapter.json",
+    "delta_macro_f1_a_minus_b": [
+      -0.1445,
+      -0.1993,
+      -0.0735
+    ],
+    "n_common": 717,
+    "verdict": "B meilleur"
+  },
+  "params": {
+    "n_boot": 2000,
+    "seed": 20261003
+  },
+  "run_id": "20261003-201740-camembert-ep6-minus-tfidf-fold0",
+  "schema": "mini-1",
+  "slug": "camembert-ep6-minus-tfidf-fold0",
+  "status": "ok",
+  "summary": "Différence appariée de macro-F1 camembert-epoques-lr1e-4-ep6.json moins p1-06-tfidf-chapter.json sur 717 patients communs, IC 95 % bootstrap stratifié"
+}
