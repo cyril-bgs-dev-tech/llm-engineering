@@ -60,3 +60,6 @@ Source : raw/arxiv-2508.04489.txt (PDF arXiv 2508.04489 extrait par pypdf).
 
 ## [2026-10-03] ingest | Incidents et audits externes
 Pages créées : incidents-et-audits-externes. Source : journal de nuit, audit GLM v3.
+
+## [2026-10-03] ingest | État par composante
+Pages créées : etat-par-composante. Source : RESULTATS.md, triage GLM v3.
