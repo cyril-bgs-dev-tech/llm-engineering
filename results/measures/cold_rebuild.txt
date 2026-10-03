@@ -1,0 +1,7 @@
+données brutes présentes dans le clone : 0 (attendu 0)
+sync code=0 6 s
+test code=0 14 s
+smoke code=0 3 s
+total 26 s
+261 passed, 6 skipped, 2 deselected in 11.93s
+date 2026-10-03T18:44:43Z, commit 2bcb929

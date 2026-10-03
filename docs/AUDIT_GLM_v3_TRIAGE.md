@@ -52,7 +52,7 @@ Source : `audit_GLM_5_3_v3.md` (80 actions, 10 par composante, déposé le 03/10
 - A6, A7, A9, A10 : **planifié**.
 
 ### C6 Reproductibilité
-- A1 reconstruction à froid, A2 déterminisme GPU (P1-26), A9 `make test-gpu` : **planifié** (A1 et A9 dès que le GPU est libre pour A9).
+- A1 reconstruction à froid : **fait** (26 s, cache chaud). A2 déterminisme GPU (P1-26) et A9 `make test-gpu` : **planifié** après libération du GPU.
 - A3 cache mypy rapide : **mesuré, neutre (33 s contre 40 s), non adopté**.
 - A4 empreinte d'adaptateur au registre : **planifié** (suite de la sauvegarde).
 - A5, A6, A7, A8, A10 : **planifié** (wiki, release de test, incident tokenizer, pip-audit).
