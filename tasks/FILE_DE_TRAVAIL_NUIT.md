@@ -39,6 +39,8 @@ Terminés cette nuit : criblage, grille du 4B, encodeur (recette, fenêtres, sat
 
 **Post-traitement automatique** : `post_plis_3_et_4.sh` (fait) ; `post_lora_plis.sh` (détaché, journal `post_lora.log`, TERMINE25) : à chaque pli du LoRA, q5_uncertainty et comparaisons contre TF-IDF et encodeur ; à la fin, fichier regroupé `cinq-plis-llm-mur`, `pooled_compare.py` contre TF-IDF, encodeur et ensemble, q5, conforme par famille et abstention à cinq plis. Il ne reste qu'à lire les sorties et consigner dans RESULTATS.
 
+**Cascade (RM-40)** : fiche hachée `2026-10-04-cascade-cinq-plis` ; quand `post_lora_plis.sh` a écrit TERMINE25 : `cascade_cv.py cinq-plis-ensemble-encodeur5.probs.npz cinq-plis-llm-mur.probs.npz cascade-cinq-plis-encodeur-lora --register`, puis la variante TF-IDF (`tfidf-variant-char-balanced.probs.npz`, slug `cascade-cinq-plis-tfidf-lora`) ; refaire le modèle de latence avec la mesure de l'encodeur sur GPU.
+
 **À consigner quand chaque lot finit** : pli du LoRA terminé (q5_uncertainty, compare_probs contre TF-IDF et encodeur, RESULTATS) ; zéro-shot (compare_probs contre le LoRA du pli 0) ; services (tableau de coût par 1 000 patients, carte de modèle) ; distillation (pooled_interval contre l'encodeur non distillé, verdict en trois valeurs).
 
 **Sans GPU, faisable à tout moment** : cascade à seuil choisi sur un pli et rapportée sur les autres, dès que le LoRA a cinq plis (RM-40) ; conforme par famille et abstention du LoRA aux cinq plis ; ensemble LoRA + encodeur + TF-IDF aux cinq plis ; mise à jour de la carte de modèle, du rapport, du protocole v2, de la présentation, de la mémoire ; relectures (`code-reviewer`, `test-engineer`) du code ajouté ce jour (distill, zeroshot, servicecost, lot.sh, scripts de banc).

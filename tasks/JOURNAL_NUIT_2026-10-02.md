@@ -307,3 +307,6 @@ Brief GLM v5 mis à jour (cinq plis, règle v2, conforme par famille, abstention
 
 ### 17:51Z : reprise par surveilleur
 Vérifié avant le lot : Qwen3.5-4B et 9B se chargent en Qwen3_5ForCausalLM sans clé manquante (4B vérifié à vide), le gabarit désactive la réflexion, les lettres A à R sont des jetons uniques ; garde ajoutée dans zero_shot.py (refus si poids manquants ; lot pas encore démarré). Fumée CPU reprise.
+
+### 17:55Z : reprise par surveilleur
+RM-40 : llmft.cascade (choose_threshold, cascade_probs ; 2 tests), scripts/cascade_cv.py (seuil choisi hors pli, tolérance 1 point, essai de plomberie sur deux plis non enregistré), fiche hachée cascade-cinq-plis. Point d'honnêteté consigné : la cascade encodeur vers LoRA économise des appels GPU mais pas de la latence (5 x 191 ms CPU contre 117 ms GPU). À lancer après TERMINE25.
