@@ -7,6 +7,11 @@ Statut : **proposée** le 04/10/2026 (audit GLM v4, décision déléguée Q20 et
 - Le TF-IDF bien réglé (caractères 3 à 5, poids équilibrés) atteint 0,7202 sur cinq plis (+3,65 points résolu contre la référence v1) et 0,7184 au pli 0 : **équivalent à l'encodeur mûr** à 20 Mo et 2 ms (encodeur : 443 Mo, 190 ms en CPU).
 - À graine égale deux runs GPU diffèrent (rejeu : 0,7714 → 0,7362) ; écart-type entre graines 2,6 points ; **la règle de puissance échoue** (largeur 12,2 points contre 4,0 sur les cinq graines de l'encodeur).
 
+## Mise à jour du 04/10/2026 (fin de matinée) : résultats de recette mûre sur deux à trois plis
+- **Qwen3.5-4B LoRA 10 époques** : 0,7795 (pli 0) et 0,7415 (pli 1), une graine ; +6,4 et +5,3 points contre le meilleur TF-IDF (résolu aux deux plis) ; équivalent à l'encodeur moyenné (+4,9 puis −1,1) pour un coût d'entraînement environ dix fois supérieur ; meilleure sélectivité (0,96 d'exactitude à 70 % de couverture). Robuste aux trois perturbations testées.
+- **Encodeur moyenné sur 5 graines** : +1,5, +6,4, +1,2 sur trois plis ; **ensemble encodeur + TF-IDF : +4,5, +6,2, +4,3 résolu aux trois plis**.
+- **Conséquences pour le second cycle** : (i) l'ensemble encodeur + TF-IDF est la référence bon marché à battre (20 minutes de GPU et 13 minutes de CPU par pli) ; (ii) le LoRA mûr n'est justifié que par la sélectivité ou par une confirmation de gain sur d'autres graines (seconde graine en cours) ; (iii) toute comparaison de technique (distillation, synthétique, pré-entraînement) se fait contre cette référence, sur trois plis et cinq graines pour les familles bon marché.
+
 ## Décision proposée
 1. **Recettes mûres pour toutes les familles**, avec la même clause d'égalité de budget : même nombre de runs de réglage, mêmes heures de calcul, même critère et même pli de sélection ; les dimensions de la grille diffèrent par famille et sont préenregistrées avant les runs de la famille (TF-IDF : C, n-grammes, poids, analyseur ; encodeur : époques de 4 à 20, taux 5e-5 à 1e-4 ; LoRA : époques de 4 à 10, taux jusqu'à 2e-4).
 2. **Plateforme d'expérience bon marché** : les comparaisons sur la contribution des techniques (distillation, pré-entraînement voisin) se font d'abord sur l'encodeur (3,5 à 5 minutes par run) avec **cinq graines et cinq plis** ; le LLM LoRA est un bras de comparaison, pas la plateforme.

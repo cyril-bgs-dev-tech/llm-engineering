@@ -226,3 +226,6 @@ Chemin --synthetic exercé de bout en bout (1 époque d'encodeur, faux fichier d
 
 ### 11:32Z : reprise par surveilleur
 Pli 2 de l'encodeur : moyenné 0,7613 (+1,2 non résolu), ensemble encodeur + TF-IDF 0,7923 (+4,3 [+1,2 ; +7,5] résolu). Sur trois plis, l'ensemble bat le meilleur TF-IDF de 4,3 à 6,2 points, résolu à chaque pli : système bon marché le plus constant.
+
+### 11:35Z : reprise par surveilleur
+Cadence remise à 20 minutes pendant le LoRA graine 1001 (cron 84013523). ADR-015 mise à jour avec les résultats de recette mûre (trois plis).
