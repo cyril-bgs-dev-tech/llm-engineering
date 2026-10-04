@@ -171,3 +171,6 @@ Ensemble encodeur (5 graines) + TF-IDF : 0,7626 au pli 0, +4,5 points résolu co
 
 ### 03:31Z : reprise par surveilleur
 Pli 1 : encodeur (5 graines moyennées) 0,7532, ensemble avec TF-IDF 0,7512, TF-IDF 0,6886 ; critère de la fiche satisfait mais l'apport propre de l'ensemble sur l'encodeur n'est pas confirmé (pli 0 : +3,0 ; pli 1 : −0,2). Premier lancement du 4B v2 mort en 70 s sans sortie (code de sortie masqué par $(date) : même bug que le 03/10, corrigé) ; relancé avec essais consignés.
+
+### 03:37Z : reprise par surveilleur
+Rapport préliminaire du premier cycle écrit (docs/RAPPORT_PREMIER_CYCLE.md, gabarit et tableau de preuve) ; Brier des prédictions : 0,231 sur 34. 4B à 10 époques en cours (fin vers 07h45Z), travail léger seulement.
