@@ -59,3 +59,12 @@ def test_poids_de_classe_equilibres_augmentent_la_probabilite_de_la_classe_rare(
 def test_analyseur_de_caracteres_donne_des_probabilites_valides():
     p = tfidf.fit_predict_proba(TEXTS, Y, ["alphq tumeur"], LABELS, c=10.0, ngram=(3, 5), analyzer="char_wb")
     assert p.shape == (1, 3) and abs(p.sum() - 1) < 1e-9
+
+
+def test_poids_d_exemples_deplacent_la_prediction_vers_les_exemples_lourds():
+    texts = ["alpha beta"] * 10 + ["alpha gamma"] * 10
+    y = ["a"] * 10 + ["b"] * 10
+    heavy_b = [1.0] * 10 + [5.0] * 10
+    plain = tfidf.fit_predict_proba(texts, y, ["alpha"], ["a", "b"], c=1.0, ngram=(1, 1))
+    weighted = tfidf.fit_predict_proba(texts, y, ["alpha"], ["a", "b"], c=1.0, ngram=(1, 1), sample_weight=heavy_b)
+    assert weighted[0, 1] > plain[0, 1]

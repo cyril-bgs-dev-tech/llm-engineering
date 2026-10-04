@@ -20,12 +20,13 @@ GRID_V2: list[tuple[float, tuple[int, int]]] = [(c, ng) for c in (1.0, 10.0, 100
 
 def fit_model(
     train_texts: Sequence[str], train_y: Sequence[str], c: float, ngram: tuple[int, int], class_weight: str | None = None, analyzer: str = "word",
+    sample_weight: Sequence[float] | None = None,
 ) -> tuple[Any, Any]:
     """Vectoriseur et modèle ajustés (réutilisés par le service d'inférence)."""
     vec = _Vectorizer(sublinear_tf=True, min_df=1 if len(train_texts) < 50 else 2, max_features=200000, ngram_range=ngram, analyzer=analyzer)
     x_train = vec.fit_transform(train_texts)
     model = _Logistic(C=c, max_iter=1000, class_weight=class_weight)
-    model.fit(x_train, list(train_y))
+    model.fit(x_train, list(train_y), sample_weight=None if sample_weight is None else np.asarray(sample_weight, dtype=float))
     return vec, model
 
 
@@ -41,10 +42,10 @@ def predict_aligned(vec: Any, model: Any, texts: Sequence[str], labels: Sequence
 
 def fit_predict_proba(
     train_texts: Sequence[str], train_y: Sequence[str], test_texts: Sequence[str], labels: Sequence[str], c: float, ngram: tuple[int, int],
-    class_weight: str | None = None, analyzer: str = "word",
+    class_weight: str | None = None, analyzer: str = "word", sample_weight: Sequence[float] | None = None,
 ) -> np.ndarray:
     """Probabilités alignées sur `labels` ; une classe absente de l'entraînement garde une colonne à zéro."""
-    vec, model = fit_model(train_texts, train_y, c, ngram, class_weight, analyzer)
+    vec, model = fit_model(train_texts, train_y, c, ngram, class_weight, analyzer, sample_weight)
     return predict_aligned(vec, model, test_texts, labels)
 
 
