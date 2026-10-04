@@ -1,0 +1,40 @@
+{
+ "modele": "camembert-deploy-ep10-lr1e-4",
+ "threads": 3,
+ "n_latence": 100,
+ "fp32": {
+  "macro_f1": 0.7362,
+  "accuracy": 0.8298,
+  "latence_ms_p50": 255.6,
+  "latence_ms_p95": 281.0,
+  "taille_approx_mo": 443
+ },
+ "int8_dynamique": {
+  "macro_f1": 0.337,
+  "accuracy": 0.5258,
+  "latence_ms_p50": 163.2,
+  "latence_ms_p95": 185.0,
+  "taille_approx_mo": 25
+ },
+ "int8_sans_tete": {
+  "macro_f1": 0.3418,
+  "accuracy": 0.5286,
+  "latence_ms_p50": 158.0,
+  "latence_ms_p95": 183.8,
+  "taille_approx_mo": 26
+ },
+ "int8_ffn_seulement": {
+  "macro_f1": 0.3527,
+  "accuracy": 0.5425,
+  "latence_ms_p50": 190.0,
+  "latence_ms_p95": 223.5,
+  "taille_approx_mo": 54
+ },
+ "int8_attention_seulement": {
+  "macro_f1": 0.723,
+  "accuracy": 0.8243,
+  "latence_ms_p50": 227.8,
+  "latence_ms_p95": 261.6,
+  "taille_approx_mo": 82
+ }
+}

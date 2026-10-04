@@ -438,7 +438,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P4-06 | Vérification croisée des implémentations conformes | Contrôle d'implémentation, pas validation des hypothèses |
 | P4-07 | Robustesse : perturbations et spécialité exclue | |
 | P4-09 | Front de Pareto | |
-| RM-38 | Encodeur quantifié correctement (statique, sélectif, ONNX) | L'INT8 dynamique naïf a effondré le modèle (0,336) |
+| RM-38 | Encodeur quantifié correctement (statique, sélectif, ONNX) | Fait en partie le 04/10/2026 : INT8 dynamique sélectif, l'effondrement vient du feed-forward ; attention seule −1,3 point, +11 % de vitesse, non retenue ; reste la quantification statique |
 | RM-39 | Robustesse des modèles appris : perturbations, ablations de contenu, leave-one-author-out | Le TF-IDF à caractères est déjà insensible |
 | RM-40 | Cascade par seuil de confiance (TF-IDF, encodeur, LoRA) : calcul alloué selon la difficulté du cas | Aperçu hors ligne : 50 à 80 % des cas sans le LoRA, sans perte de macro-F1 ; seuil à valider sur plis distincts |
 

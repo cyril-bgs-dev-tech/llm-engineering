@@ -274,3 +274,6 @@ Journaux de lot archivés dans results/logs/lots (scripts/archive_logs.sh, .giti
 
 ### 16:53Z : reprise par surveilleur
 RM-38 : quantize_eval_encoder.py --selective (INT8 sans tête, FFN seulement, attention seulement) lancé en arrière-plan (3 threads, nice 15, 100 latences) ; résultat à consigner à la fin (sortie : scratchpad/tasks/bj3jvxp46.output).
+
+### 16:59Z : reprise par surveilleur
+RM-38 consigné : INT8 sélectif de l'encodeur ; effondrement dû au feed-forward (0,35), attention seule 0,723 (−1,3, +11 % vitesse) ; dynamique non retenue ; reste statique/GPU.

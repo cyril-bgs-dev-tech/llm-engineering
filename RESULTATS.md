@@ -481,3 +481,17 @@ La couverture marginale de 0,90 cache des familles à 0,65 ; l'étalonnage par f
 | 50 % | 0,979 | 0,970 | 0,963 |
 
 En renvoyant 30 % des patients à un humain, l'ensemble classe correctement 94,8 % du reste (contre 92,5 % pour le TF-IDF seul, intervalles disjoints) : exactitude **conditionnelle à la confiance, non à la correction de l'étiquette** (l'étiquette vient du scénario, pas d'un codage humain). L'encodeur seul égale l'ensemble à 70 % de couverture (0,950 contre 0,948) : l'apport de l'ensemble se concentre sur les cas faciles à moyens.
+
+## Quantification INT8 sélective de l'encodeur (RM-38, run `quantization-selective-camembert-deploy-ep10-lr1e-4`, pli 0, graine 1000, EXPLORE)
+
+Quantification dynamique PyTorch par groupes de couches ; 3 threads sur processeur **en concurrence avec l'entraînement du LoRA** (latences gonflées : fp32 à 256 ms au lieu de 191 ms mesurés seul, comparaisons valables entre lignes de ce tableau seulement) ; 100 latences.
+
+| Variante | macro-F1 | exactitude | latence p50 / p95 (ms) |
+|---|---|---|---|
+| fp32 (référence) | 0,7362 | 0,8298 | 255,6 / 281,0 |
+| INT8 toutes les couches | 0,337 | 0,526 | 163,2 / 185,0 |
+| INT8 sans la tête | 0,342 | 0,529 | 158,0 / 183,8 |
+| INT8 réseau feed-forward seulement | 0,353 | 0,543 | 190,0 / 223,5 |
+| **INT8 attention seulement** | **0,723** (−1,3) | 0,824 | 227,8 / 261,6 (−11 %) |
+
+**L'effondrement vient des couches du réseau feed-forward, pas de la tête** (la tête quantifiée seule ne change rien). L'INT8 de l'attention seule garde presque toute la qualité (−1,3 point, au-delà du seuil de 1 point fixé dans RM-38) pour un gain de latence de 11 % : **verdict, la quantification dynamique INT8 n'est pas retenue pour cet encodeur** ; les pistes restantes sont la quantification statique avec étalonnage des activations (les sorties du feed-forward ont vraisemblablement des valeurs extrêmes) ou le service sur GPU, où l'encodeur coûte environ 5 minutes d'entraînement et quelques millisecondes par patient. Hypothèse sur les valeurs extrêmes non vérifiée.
