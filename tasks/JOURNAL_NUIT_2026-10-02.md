@@ -298,3 +298,6 @@ Mémoire : feedback-pas-de-modif-pendant-un-lot (cible mouvante). LoRA pli 2 en 
 
 ### 17:38Z : reprise par surveilleur
 Erreur d'horaire corrigée : le pli 2 du LoRA (début 16:01Z, 12 500 s) finit vers 19:30Z, pas 17:35Z ; plis 3 et 4 vers 23:00Z et 02:30Z. File de travail corrigée. Aucun résultat à consigner avant 19:30Z ; travail CPU léger d'ici là.
+
+### 17:39Z : reprise par surveilleur
+ADR-015 (proposée) complétée avec les résultats à cinq plis et la chaîne préenregistrée ; δ = 2,0 conservé dans la proposition ; acceptation toujours à Cyril.
