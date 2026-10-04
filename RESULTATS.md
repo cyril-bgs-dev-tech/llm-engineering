@@ -291,3 +291,22 @@ Arrêt anticipé par la règle écrite d'avance après 90 pas (une époque, 43 m
 | **Ensemble 50/50 encodeur (5 graines) + TF-IDF** | **0,7512** | **+6,2 [+1,4 ; +11,2]**, p Holm 0,052 sur les sept comparaisons du tableau |
 
 **Critère de la fiche satisfait** (borne basse de l'IC 95 % de « ensemble moins TF-IDF » supérieure à 0 au pli 1). **Mais l'apport propre de l'ensemble n'est pas confirmé** : au pli 1 le TF-IDF n'ajoute rien à l'encodeur moyenné sur cinq graines (0,7512 contre 0,7532), alors qu'au pli 0 l'ensemble gagnait 3 points sur l'encodeur moyenné (0,7626 contre 0,7331). Synthèse sur les deux plis : l'encodeur mûr (moyenne de cinq graines) bat le meilleur TF-IDF de +1,5 (pli 0, non résolu) et +6,4 (pli 1) points, soit environ +4 points en moyenne ; l'ensemble encodeur + TF-IDF le bat de +4,5 et +6,2, soit environ +5,4 points ; le gain de l'ensemble sur l'encodeur moyenné est +3,0 puis −0,2. **Conclusion mesurée** : le meilleur système bon marché est une moyenne de graines d'encodeurs mûrs, à compléter éventuellement par le TF-IDF ; l'avantage de l'encodeur sur le TF-IDF est positif aux deux plis mais plus faible et plus variable qu'annoncé la nuit. Prédictions de la fiche : l'ensemble dépasse le TF-IDF (0,8) : vrai ; IC entièrement positif (0,5) : vrai ; écart plus petit qu'au pli 0 (0,65) : faux (plus grand) ; l'ensemble dépasse l'encodeur seul (0,75) : faux contre la moyenne de 5 graines (−0,2).
+
+## Qwen3.5-4B LoRA à 10 époques (fiche `2026-10-04-llm-recette-mure-qwen4b-v2`, EXPLORE, pli 0, graine 1000, taux 1e-4, 4 096 tokens, GPU libre ; run `20261004-070113-llm-mur2-qwen3-5-4b-ep10-lr1e-4`)
+
+**macro-F1 0,7795**, exactitude 0,858, log loss 0,817, ECE brute 0,108, 12 467 s d'entraînement (3,5 h, pic 12,9 Gio) ; probabilités et adaptateur conservés (`adapter_sha256` au registre). **Aucun chapitre à F1 nulle** (XXII 1,00, IV 0,75, V 0,75, XXI 0,46, XII 0,55). Pour mémoire : même modèle à 2 époques 0,587 ; **le passage de 2 à 10 époques vaut +19,3 points [+14,0 ; +25,0]** (`llm-mur2-minus-4b-2ep-fold0`).
+
+| Comparaison appariée (pli 0, 717 patients) | écart | IC 95 % | p Holm |
+|---|---|---|---|
+| LoRA 10 époques moins TF-IDF v1 (0,6971) | +8,2 points | [+3,6 ; +14,3] | résolu (`llm-mur2-minus-tfidf-fold0`) |
+| moins TF-IDF caractères et poids (0,7184) | +6,4 | [+2,0 ; +11,4] | 0,005 |
+| moins encodeur moyenné sur 5 graines (0,7331) | +4,9 | [−0,35 ; +10,5] | 0,15, non résolu |
+| Ensemble 50/50 LoRA + encodeur (0,7926) moins encodeur moyenné | +6,1 | [+1,2 ; +11,4] | 0,06 |
+| Ensemble 50/50 LoRA + encodeur (0,7926) moins TF-IDF caractères et poids | +7,6 | [+3,5 ; +12,0] | 0,001 |
+| Ensemble des trois (0,7937) moins TF-IDF caractères et poids | +7,7 | [+4,2 ; +11,7] | 0,000 |
+
+**À recette mûre le LLM LoRA est le meilleur modèle unique mesuré du pli 0 (une graine), au-dessus du meilleur TF-IDF de façon résolue et non distinct de l'encodeur moyenné sur cinq graines.** La phrase « les LLM perdent contre le TF-IDF » est définitivement réfutée pour la recette gelée à 2 époques : le déficit de 11 points était du sous-entraînement. Précautions : une seule graine (l'écart-type entre graines de l'encodeur est de 2,6 points, un tirage favorable de 5 points est possible, comme pour l'encodeur 0,7714), un pli, un coût de 3,5 h contre 4 minutes pour l'encodeur. L'ensemble LoRA + encodeur monte à 0,7926 (+6,1 sur l'encodeur moyenné, Holm 0,06).
+
+**Incertitude du LoRA mûr** (`q5-uncertainty-llm-mur2-fold0`, étalonnage croisé en deux moitiés du pli) : ECE 0,110 brute et **0,028 après température** (la meilleure des modèles mesurés), log loss 0,817 → 0,478 ; conforme LAC 90 % : couverture 0,909 avec **1,15 classe par ensemble**, par classe 0,923 (minimum 0,864) ; exactitude **0,905 à 90 %, 0,937 à 80 %, 0,960 à 70 % de couverture** (encodeur 0,946, TF-IDF 0,931–0,940), AURC 0,037 (encodeur 0,049). Pour la politique d'abstention, le LoRA mûr est le meilleur des modèles mesurés (30 % de renvois à l'humain : 0,960 d'exactitude sur les cas traités), mêmes réserves de périmètre.
+
+Prédictions de la fiche : macro-F1 entre 0,65 et 0,80 (0,6) : réalisé (0,7795, juste sous la borne haute) ; égal ou supérieur à l'encodeur à 10 époques (0,35) : réalisé (IC contenant 0) ; supérieur au TF-IDF du pli 0 avec IC entièrement positif (0,45) : réalisé ; au moins un des chapitres XII, XXI, XXII quitte zéro (0,85) : réalisé ; l'arrêt anticipé ne se déclenche pas sur GPU libre (0,8) : réalisé.

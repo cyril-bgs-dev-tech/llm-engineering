@@ -208,3 +208,6 @@ Résumé de nuit remis à jour en tête du journal (état de 04h20Z). 4B en cour
 
 ### 04:33Z : reprise par surveilleur
 Cadence du surveilleur ralentie à 20 minutes pendant le run GPU long (id c90fbd46 ; repasse à 5 minutes après le 4B). Choix : éviter des tours vides.
+
+### 07:16Z : reprise par surveilleur
+**4B à 10 époques terminé** : macro-F1 0,7795 (+19,3 points sur 2 époques ; +6,4 [+2,0 ; +11,4] sur le meilleur TF-IDF ; +4,9 [−0,35 ; +10,5] sur l'encodeur moyenné, non résolu) ; aucun chapitre à F1 nulle ; ensemble LoRA + encodeur 0,7926 ; ECE 0,028 après température, 0,960 d'exactitude à 70 % de couverture. Une graine, un pli : confirmation à prévoir (pli 1 ou graines, 3,5 h chacune). Surveilleur remis à 5 minutes.
