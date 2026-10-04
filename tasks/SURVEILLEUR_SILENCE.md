@@ -15,6 +15,7 @@ Pendant un run GPU long où le seul travail utile est l'attente (Qwen3.5-4B à 1
 2. Vérifier les lots en cours : processus `scripts/p1_finetune.py`, `nvidia-smi`, journaux de lot dans le répertoire de session (`scratchpad/p1_11/*.log`) ; consigner les runs terminés (`RESULTATS.md`), puis les comparaisons appariées.
 3. Si un lot est en cours et que rien n'est à consigner : prendre le premier élément **faisable sans GPU** de `FILE_DE_TRAVAIL_NUIT.md`.
 4. Choisir à chaque embranchement l'option la plus qualitative et la plus professionnelle (règle N23) : tracer le choix et son motif au journal ; ne jamais toucher aux exclusions (test scellé, protocole gelé sans ADR, push, location, API payante, lecture hors dossier, envoi externe).
+4b. Archiver les journaux de lot dans le dépôt : `bash scripts/archive_logs.sh <scratchpad>/p1_11` (audit GLM v4, G-c3).
 5. Écrire une ligne « reprise par surveilleur à HH:MMZ : ... » au journal, commiter, puis armer un `ScheduleWakeup`.
 6. Ne jamais rendre la main avec une file vide (N21) : la file est inépuisable par construction.
 

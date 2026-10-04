@@ -1,0 +1,18 @@
+2026-10-03T19:48:50Z DEJA camembert-epoques-lr1e-4-ep4
+2026-10-03T19:48:50Z DEBUT camembert-epoques-lr1e-4-ep6 essai=1
+2026-10-03T19:52:35Z FIN camembert-epoques-lr1e-4-ep6 code=0
+2026-10-03T19:52:35Z DEBUT p1-26-rejeu-qwen3-5-4b-lr1e-4 essai=1
+2026-10-03T19:53:45Z FIN p1-26-rejeu-qwen3-5-4b-lr1e-4 code=139
+2026-10-03T19:53:45Z DEBUT p1-26-rejeu-qwen3-5-4b-lr1e-4 essai=2
+2026-10-03T19:54:47Z FIN p1-26-rejeu-qwen3-5-4b-lr1e-4 code=1
+2026-10-03T19:54:47Z DEBUT p1-13-qwen3-5-4b-lr5e-5 essai=1
+2026-10-03T20:40:20Z FIN p1-13-qwen3-5-4b-lr5e-5 code=0
+2026-10-03T20:40:20Z DEBUT p1-13-qwen3-5-4b-lr2e-5 essai=1
+2026-10-03T20:41:25Z FIN p1-13-qwen3-5-4b-lr2e-5 code=139
+2026-10-03T20:41:25Z DEBUT p1-13-qwen3-5-4b-lr2e-5 essai=2
+2026-10-03T20:42:40Z FIN p1-13-qwen3-5-4b-lr2e-5 code=1
+2026-10-03T20:42:40Z DEBUT q19-qwen3-5-4b-lr1e-4-perte-ponderee essai=1
+2026-10-03T20:44:22Z FIN q19-qwen3-5-4b-lr1e-4-perte-ponderee code=139
+2026-10-03T20:44:22Z DEBUT q19-qwen3-5-4b-lr1e-4-perte-ponderee essai=2
+2026-10-03T21:30:21Z FIN q19-qwen3-5-4b-lr1e-4-perte-ponderee code=0
+2026-10-03T21:30:21Z TERMINE4

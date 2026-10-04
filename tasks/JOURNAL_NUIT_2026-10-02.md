@@ -268,3 +268,6 @@ Table d'abstention à cinq plis (abstention_table.py --all --register) : ensembl
 
 ### 16:35Z : reprise par surveilleur
 Carte de modèle v3 mise à jour (cinq plis, incertitude, limites) ; page wiki etat-par-composante réécrite à l'état du 04/10 (index régénéré). LoRA pli 2 en cours.
+
+### 16:40Z : reprise par surveilleur
+Journaux de lot archivés dans results/logs/lots (scripts/archive_logs.sh, .gitignore ajusté, audit v4 G-c3) ; étape ajoutée à la procédure du surveilleur. LoRA pli 2 en cours.

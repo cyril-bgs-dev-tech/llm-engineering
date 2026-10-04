@@ -17,6 +17,7 @@ __pycache__/
 # Sorties de runs lourdes (les fiches JSON de results/ restent versionnées)
 results/preds/
 logs/
+!results/logs/
 # Secrets et jetons
 .env
 .env.*
