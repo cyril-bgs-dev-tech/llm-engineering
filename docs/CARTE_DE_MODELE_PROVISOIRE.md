@@ -1,4 +1,4 @@
-# Carte de modèle provisoire (03/10/2026)
+# Carte de modèle provisoire (mise à jour le 04/10/2026)
 
 Statut : **EXPLORE, développement seulement**. Le test scellé n'a jamais été ouvert ; aucun verdict confirmatoire n'existe. Tâche : chapitre CIM-10 du diagnostic principal, PARHAF (cas fictifs en français, 4 254 patients, 17 chapitres comparés, `AUTRE` exclue de la moyenne). Aucune donnée de patient réel. Sources des chiffres : `RESULTATS.md`.
 
@@ -17,6 +17,22 @@ Le TF-IDF a un intervalle sur cinq plis, les autres un seul pli : ne pas les com
 
 ## Front de Pareto qualité contre coût (pli 0)
 Aucun modèle LLM ne domine le TF-IDF (meilleure macro-F1 et coût CPU de quelques minutes). Parmi les élèves LLM, le Qwen3.5-9B domine le Gemma-4-E4B (meilleure macro-F1, durée d'entraînement plus courte, pic plus bas). Le criblage est inachevé (deux taux sur quatre par élève) : ce front est provisoire.
+
+## Mise à jour du 04/10/2026 (remplace les conclusions de la version du 03/10 là où elles divergent)
+
+| Modèle | macro-F1 | Périmètre | Coût d'inférence (mesuré) | `run_id` |
+|---|---|---|---|---|
+| TF-IDF caractères 3 à 5, poids équilibrés (**service déployable**) | 0,7202 [IC bootstrap ±1,3] | 5 plis par patient | 20,4 Mo, p50 1,9 ms, p95 4,0 ms, 568 patients/s, CPU | `tfidf-variant-char-balanced`, `bench-serving-tfidf-charbal-v1` |
+| CamemBERT-bio, 10 époques, 5 graines | 0,7293 ± 0,0256 (0,708 à 0,771) | pli 0 | 443 Mo, p50 191 ms, CPU 8 threads ; INT8 dynamique naïve : effondrement (0,336) | `camembert-recette-lr1e-4-ep10`, `camembert-graine-ep10-s1` à `s4`, `quantization-camembert-deploy-ep10-lr1e-4` |
+| Qwen3.5-4B LoRA, 2 époques | 0,587 | pli 0, une graine | p50 117 ms, p95 290 ms, GPU, 15,5 Gio (P0-09) | `20261003-194530-p1-11-qwen3-5-4b-lr1e-4` |
+| Qwen3.5-4B LoRA, 10 époques | en cours | pli 0 | | `llm-mur-qwen3-5-4b-ep10-lr1e-4` |
+| TF-IDF référence v1 | 0,6844 [0,657 ; 0,709] | 5 plis | quelques minutes de CPU | `20261003-121942-p1-06-tfidf-chapter` |
+
+**Conclusions révisées** : la recette gelée à 2 époques sous-estime fortement les modèles appris ; à recette mûre l'encodeur et le meilleur TF-IDF sont équivalents (0,73 contre 0,72) ; le TF-IDF est 100 fois plus rapide et 20 fois plus léger. Aucune comparaison n'est résolue en faveur d'un modèle appris. La variance d'une mesure est dominée par cinq chapitres de 27 à 63 patients (85 % de la variance de la macro-F1) ; la règle de puissance échoue (largeur 12,2 points contre 4,0 pour l'encodeur) : toute comparaison de ce cycle est EXPLORE.
+
+**Incertitude** (pli 0) : encodeur 10 époques ECE 0,106 brute et 0,050 après température, exactitude 0,946 à 70 % de couverture ; TF-IDF 0,931 ; Qwen3.5-4B 0,892. Étalonner par plis d'auteurs donne 0,900 de couverture sous décalage d'auteur (0,887 sinon). Politique d'abstention (renvoi de 30 % des patients) : exactitude des cas traités autour de 0,93 pour les familles bien réglées, indistinguables entre elles ; mesurée en développement seulement.
+
+**Limites ajoutées** : non-déterminisme GPU (à graine égale, 0,7714 puis 0,7362) ; écart patient contre auteur de 3,9 points (le leave-one-author-out et la comparaison sur partitions répétées sont en cours) ; signature d'auteur identifiable à 0,917 ; hors spécialité 0,522 ; sans accents −5,6 points pour le TF-IDF.
 
 ## Usages prévus et hors usage
 Mesure méthodologique sur textes fictifs. Hors usage : tout usage clinique ou sur patients réels, toute généralisation à d'autres corpus, tout classement final des techniques avant le verdict confirmatoire.
