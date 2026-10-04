@@ -112,6 +112,7 @@ def main() -> int:
     ap.add_argument("--class-weights", choices=["none", "inv-sqrt"], default="none", help="perte pondérée par classe en 1/√n (exploration Q19, fiche à part) ; none = référence")
     ap.add_argument("--quant", choices=["none", "nf4"], default="none", help="QLoRA : chargement 4 bits NF4 pour les modèles de 24 à 31 milliards de paramètres")
     ap.add_argument("--windows", action="store_true", help="encodeur par fenêtres de 510 tokens sur tout le dossier (mode full, voie A) ; passer --max-len 4096")
+    ap.add_argument("--save-model", action="store_true", help="mode full : sauvegarde les poids et le tokenizer dans artifacts/models/<slug> (candidat de déploiement)")
     ap.add_argument("--fiche", default="")
     ap.add_argument("--slug", required=True)
     ap.add_argument("--register", action="store_true")
@@ -203,6 +204,16 @@ def main() -> int:
             metrics["adapter_sha256"] = dir_sha256(adapter_dir)
         except (OSError, RuntimeError, ValueError, AttributeError) as exc:
             metrics["adapter_save_error"] = f"{type(exc).__name__}: {str(exc)[:200]}"
+    if a.register and a.save_model and a.mode == "full" and not a.windows and not a.max_steps:
+        try:
+            model_dir = ROOT / "artifacts/models" / a.slug
+            model_dir.mkdir(parents=True, exist_ok=True)
+            model.save_pretrained(model_dir)
+            tok.save_pretrained(model_dir)
+            metrics["model_dir"] = str(model_dir.relative_to(ROOT))
+            metrics["model_sha256"] = dir_sha256(model_dir)
+        except (OSError, RuntimeError, ValueError, AttributeError) as exc:
+            metrics["model_save_error"] = f"{type(exc).__name__}: {str(exc)[:200]}"
     record.update({"status": "ok", "summary": summary, "loss_history": res.loss_history, "metrics": metrics})
     print(json.dumps({"summary": summary, "metrics": metrics}, ensure_ascii=False, indent=1))
     if a.register:
