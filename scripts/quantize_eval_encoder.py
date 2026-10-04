@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Efficience de l'encodeur déployable : macro-F1 du pli 0 et latence par patient en CPU, flottant 32 bits contre quantification dynamique INT8 (PyTorch, sans dépendance de plus).
 
-Usage : quantize_eval_encoder.py SLUG_DU_MODELE_SAUVEGARDE [--threads 8] [--n 200] [--register]   (modèle sous artifacts/models/<slug>, développement seulement)"""
+Usage : quantize_eval_encoder.py SLUG_DU_MODELE_SAUVEGARDE [--threads 8] [--n 200] [--selective] [--register]
+`--selective` (RM-38) : compare aussi INT8 sans la tête de classification, INT8 des seules couches du réseau feed-forward, et INT8 des seules couches d'attention   (modèle sous artifacts/models/<slug>, développement seulement)"""
 import json
 import sys
 import time
+from collections.abc import Callable
 from pathlib import Path
 
 import numpy as np
@@ -39,7 +41,21 @@ def main() -> int:
     pad = tok.pad_token_id
     results = {}
     base = AutoModelForSequenceClassification.from_pretrained(model_dir, torch_dtype=torch.float32).eval()
-    variants = {"fp32": base, "int8_dynamique": torch.quantization.quantize_dynamic(AutoModelForSequenceClassification.from_pretrained(model_dir, torch_dtype=torch.float32).eval(), {torch.nn.Linear}, dtype=torch.qint8)}
+    def fresh() -> torch.nn.Module:
+        return AutoModelForSequenceClassification.from_pretrained(model_dir, torch_dtype=torch.float32).eval()
+
+    def quantized(keep: Callable[[str], bool]) -> torch.nn.Module:
+        m = fresh()
+        names = {n for n, mod in m.named_modules() if isinstance(mod, torch.nn.Linear) and keep(n)}
+        return torch.quantization.quantize_dynamic(m, names, dtype=torch.qint8)
+
+    variants = {"fp32": base, "int8_dynamique": quantized(lambda n: True)}
+    if "--selective" in sys.argv:
+        variants.update({
+            "int8_sans_tete": quantized(lambda n: not n.startswith("classifier")),
+            "int8_ffn_seulement": quantized(lambda n: ".intermediate." in n or (".output.dense" in n and ".attention." not in n)),
+            "int8_attention_seulement": quantized(lambda n: ".attention." in n),
+        })
     for name, model in variants.items():
         probs = p1_finetune.predict(model, x, pad, "cpu", 16, len(labels))
         rep = evaluation.chapter_report(idx[te], probs, labels, excluded=(excluded,))
@@ -54,9 +70,9 @@ def main() -> int:
         results[name] = {"macro_f1": round(rep["macro_f1"], 4), "accuracy": round(rep["accuracy"], 4), "latence_ms_p50": round(float(np.percentile(lat, 50)), 1), "latence_ms_p95": round(float(np.percentile(lat, 95)), 1), "taille_approx_mo": round(size_mb)}
         print(name, results[name], flush=True)
     out = {"modele": slug, "threads": torch.get_num_threads(), "n_latence": n_lat, **results}
-    (ROOT / "results/measures" / f"quantization_{slug}.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
+    (ROOT / "results/measures" / (f"quantization_selective_{slug}.json" if "--selective" in sys.argv else f"quantization_{slug}.json")).write_text(json.dumps(out, indent=1), encoding="utf-8")
     if "--register" in sys.argv:
-        print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": f"quantization-{slug}", "status": "ok", "summary": f"Encodeur {slug} : fp32 contre INT8 dynamique en CPU", "params": {"threads": out["threads"]}, "metrics": out}))
+        print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": f"quantization-selective-{slug}" if "--selective" in sys.argv else f"quantization-{slug}", "status": "ok", "summary": f"Encodeur {slug} : fp32 contre INT8 dynamique en CPU", "params": {"threads": out["threads"]}, "metrics": out}))
     return 0
 
 

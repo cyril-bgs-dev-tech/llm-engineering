@@ -271,3 +271,6 @@ Carte de modèle v3 mise à jour (cinq plis, incertitude, limites) ; page wiki e
 
 ### 16:40Z : reprise par surveilleur
 Journaux de lot archivés dans results/logs/lots (scripts/archive_logs.sh, .gitignore ajusté, audit v4 G-c3) ; étape ajoutée à la procédure du surveilleur. LoRA pli 2 en cours.
+
+### 16:53Z : reprise par surveilleur
+RM-38 : quantize_eval_encoder.py --selective (INT8 sans tête, FFN seulement, attention seulement) lancé en arrière-plan (3 threads, nice 15, 100 latences) ; résultat à consigner à la fin (sortie : scratchpad/tasks/bj3jvxp46.output).
