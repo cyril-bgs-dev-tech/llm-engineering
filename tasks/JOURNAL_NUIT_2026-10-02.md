@@ -205,3 +205,6 @@ Synthétique ciblé : invite, filtre, lignée testés (3 tests), script gen_synt
 
 ### 04:23Z : reprise par surveilleur
 Résumé de nuit remis à jour en tête du journal (état de 04h20Z). 4B en cours.
+
+### 04:33Z : reprise par surveilleur
+Cadence du surveilleur ralentie à 20 minutes pendant le run GPU long (id c90fbd46 ; repasse à 5 minutes après le 4B). Choix : éviter des tours vides.
