@@ -301,3 +301,6 @@ Erreur d'horaire corrigée : le pli 2 du LoRA (début 16:01Z, 12 500 s) finit ve
 
 ### 17:39Z : reprise par surveilleur
 ADR-015 (proposée) complétée avec les résultats à cinq plis et la chaîne préenregistrée ; δ = 2,0 conservé dans la proposition ; acceptation toujours à Cyril.
+
+### 17:40Z : reprise par surveilleur
+Brief GLM v5 mis à jour (cinq plis, règle v2, conforme par famille, abstention, cascade, INT8 sélectif, chaîne préenregistrée) ; toujours non envoyé (décision de Cyril).
