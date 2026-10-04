@@ -203,7 +203,7 @@ ul.clean li b{font-weight:600}
       <div class="bar-row"><div class="lab">Qwen3.5-9B, LoRA<small>pli 0, taux 1e-4</small></div><div class="track"><div class="fill amber" style="width:56.5%"></div></div><div class="val">0,565</div></div>
       <div class="bar-row"><div class="lab">TF-IDF + régression logistique<small>5 plis ; IC 95 % [0,657 ; 0,709]</small></div><div class="track"><div class="fill" style="width:68.4%"></div><div class="ci" style="left:65.7%;width:5.2%"></div></div><div class="val">0,684</div></div>
     </div>
-    <p class="note" style="font-size:24px">Recette gelée à 2 époques : tous les modèles appris sous-estimés (encodeur 0,448, Qwen3.5-4B 0,587). À recette mûre, <b>l'encodeur (0,73) et le meilleur TF-IDF (0,72) sont équivalents</b> ; le LoRA à 10 époques est en cours de mesure. Le premier tirage de l'encodeur (0,771) était favorable : cinq graines avant toute conclusion.</p>
+    <p class="note" style="font-size:24px">Recette gelée à 2 époques : tous les modèles appris sous-estimés (encodeur 0,448, Qwen3.5-4B 0,587). À recette mûre, l'encodeur moyenné sur cinq graines bat le meilleur TF-IDF de +1,5 point au pli 0 (non résolu) et de +6,4 points au pli 1 ; l'ensemble avec le TF-IDF ajoute +3,0 puis −0,2 point : non confirmé. Le premier tirage de l'encodeur (0,771) était favorable : cinq graines avant toute conclusion. LoRA à 10 époques en cours.</p>
   </div>
   <div class="foot"><span>Runs : p1-03-bounds, p1-06-tfidf-chapter, p1-07-camembert-bio-lr1e-4, p1-11-*</span><span>6 / 12</span></div>
 </section>
