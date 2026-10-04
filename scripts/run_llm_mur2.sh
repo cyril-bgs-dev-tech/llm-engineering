@@ -6,8 +6,13 @@ export HF_HOME="$PWD/artifacts/hf_cache" HF_HUB_OFFLINE=1 PYTHONPATH=artifacts/f
 LOGDIR="${LOGDIR:?LOGDIR requis}"
 until grep -q TERMINE14 "$LOGDIR/pli1.log" 2>/dev/null; do sleep 15; done
 slug="llm-mur2-qwen3-5-4b-ep10-lr1e-4"
-echo "$(date -u +%FT%TZ) DEBUT $slug" >> "$LOGDIR/llm_mur2.log"
-timeout 28800 .venv/bin/python scripts/p1_finetune.py Qwen/Qwen3.5-4B --mode lora --lr 1e-4 --epochs 10 --max-len 4096 --micro-batch 1 --effective-batch 32 --limit-seconds 22700 \
-  --fiche experiments/2026-10-04-llm-recette-mure-qwen4b-v2.md --slug "$slug" --register > "$LOGDIR/$slug.out" 2>&1
-echo "$(date -u +%FT%TZ) FIN $slug code=$?" >> "$LOGDIR/llm_mur2.log"
+for a in 1 2 3 4; do  # panne du tokenizer Rust : essais consignés (N25) ; un arrêt anticipé enregistré n'est pas relancé
+  if ls results/runs | grep -q -- "-$slug.json"; then break; fi
+  echo "$(date -u +%FT%TZ) DEBUT $slug essai=$a" >> "$LOGDIR/llm_mur2.log"
+  timeout 28800 .venv/bin/python scripts/p1_finetune.py Qwen/Qwen3.5-4B --mode lora --lr 1e-4 --epochs 10 --max-len 4096 --micro-batch 1 --effective-batch 32 --limit-seconds 22700 \
+    --fiche experiments/2026-10-04-llm-recette-mure-qwen4b-v2.md --slug "$slug" --register > "$LOGDIR/$slug.out" 2>&1
+  code=$?
+  echo "$(date -u +%FT%TZ) FIN $slug essai=$a code=$code" >> "$LOGDIR/llm_mur2.log"
+  [ "$code" -eq 0 ] && break
+done
 echo "$(date -u +%FT%TZ) TERMINE15" >> "$LOGDIR/llm_mur2.log"
