@@ -165,3 +165,6 @@ LOAO terminé : 0,6185 ; signature d'auteur pure environ 2 points (écart des pl
 
 ### 03:03Z : reprise par surveilleur
 Ensemble encodeur (5 graines) + TF-IDF : 0,7626 au pli 0, +4,5 points résolu contre le meilleur TF-IDF ; confirmation au pli 1 lancée (fiche hachée, poids 0,5 fixé avant, cinq encodeurs en parallèle du 4B). Choix : confirmer avant d'annoncer.
+
+### 03:06Z : reprise par surveilleur
+4B à 10 époques interrompu par la règle d'arrêt (contention GPU et CPU : 28,6 s par pas contre 16,8). Fiche v2 hachée, relance en exclusivité après les encodeurs du pli 1 (un seul essai). Je ne lance plus de calcul CPU lourd pendant le 4B.
