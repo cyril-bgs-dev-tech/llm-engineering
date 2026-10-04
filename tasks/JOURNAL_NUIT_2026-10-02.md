@@ -262,3 +262,6 @@ RM-34 et RM-30 préparés : src/llmft/servicecost.py (latences, énergie, coût 
 
 ### 16:26Z : reprise par surveilleur
 RM-33 sur cinq plis : fichiers poolés cinq-plis-ensemble-* (build_fold_ensemble.py --pool) ; conforme par famille : ensemble min famille 0,655 (marginal) vers 0,892 (famille) avec ensembles de 1,89 classes contre 2,69 pour le TF-IDF à couverture minimale égale. LoRA pli 2 en cours.
+
+### 16:31Z : reprise par surveilleur
+Table d'abstention à cinq plis (abstention_table.py --all --register) : ensemble 0,948 à 70 % de couverture contre 0,925 pour le TF-IDF. LoRA pli 2 en cours (GPU 94 %).

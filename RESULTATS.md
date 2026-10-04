@@ -469,3 +469,15 @@ Un modèle bon marché répond quand sa probabilité maximale dépasse τ ; sino
 | TF-IDF caractères équilibré | 0,900 / 1,30 / 0,646 | 0,900 / 2,69 / 0,897 |
 
 La couverture marginale de 0,90 cache des familles à 0,65 ; l'étalonnage par famille ramène le minimum à 0,89 pour l'ensemble au prix d'ensembles plus grands (1,14 vers 1,89 classes). **À couverture minimale égale (0,89 à 0,90), les ensembles de l'ensemble sont 30 % plus petits que ceux du TF-IDF seul (1,89 contre 2,69)** : l'ensemble améliore l'incertitude utile, pas seulement la macro-F1. Réserve : l'étalonnage par plis n'est pas un test indépendant (EXPLORE) ; la couverture de la classe AUTRE (0/18 sur le développement) reste hors de portée de toute méthode sans exemple.
+
+## Table d'abstention sur cinq plis (run `abstention-cinq-plis`, 3 586 patients hors pli, confiance = probabilité maximale, Wilson 95 %)
+
+| Couverture (part traitée automatiquement) | Ensemble encodeur + TF-IDF | Encodeur moyenné | TF-IDF caractères équilibré |
+|---|---|---|---|
+| 100 % | 0,858 [0,846 ; 0,869] | 0,846 | 0,822 [0,809 ; 0,834] |
+| 90 % | 0,896 | 0,886 | 0,864 |
+| 80 % | 0,925 | 0,919 | 0,896 |
+| 70 % | **0,948** [0,938 ; 0,956] | 0,950 | 0,925 [0,914 ; 0,935] |
+| 50 % | 0,979 | 0,970 | 0,963 |
+
+En renvoyant 30 % des patients à un humain, l'ensemble classe correctement 94,8 % du reste (contre 92,5 % pour le TF-IDF seul, intervalles disjoints) : exactitude **conditionnelle à la confiance, non à la correction de l'étiquette** (l'étiquette vient du scénario, pas d'un codage humain). L'encodeur seul égale l'ensemble à 70 % de couverture (0,950 contre 0,948) : l'apport de l'ensemble se concentre sur les cas faciles à moyens.
