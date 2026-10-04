@@ -220,3 +220,6 @@ Cadence du surveilleur remise à 20 minutes pendant le LoRA du pli 1 (id 57e19d8
 
 ### 11:04Z : reprise par surveilleur
 Robustesse du LoRA mûr consignée (insensible : accents −0,5, fautes +1,6, casse −1,3 ; le TF-IDF perd 5,6 sans accents). Prochain lot : essai du chemin --synthetic sur 1 époque d'encodeur avec un faux fichier de test.
+
+### 11:07Z : reprise par surveilleur
+Chemin --synthetic exercé de bout en bout (1 époque d'encodeur, faux fichier de 3 textes supprimé ensuite) : fonctionne. GPU libre : lot lancé (fiche hachée) : cinq encodeurs au pli 2 (25 minutes) puis LoRA mûr graine 1001 au pli 0 (3,5 h, variance du LoRA), fin vers 15h10Z. La génération synthétique reste après ce lot (valeur attendue plus faible).
