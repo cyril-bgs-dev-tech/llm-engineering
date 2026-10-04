@@ -32,7 +32,7 @@ Aucun modèle LLM ne domine le TF-IDF (meilleure macro-F1 et coût CPU de quelqu
 
 **Incertitude** (pli 0) : encodeur 10 époques ECE 0,106 brute et 0,050 après température, exactitude 0,946 à 70 % de couverture ; TF-IDF 0,931 ; Qwen3.5-4B 0,892. Étalonner par plis d'auteurs donne 0,900 de couverture sous décalage d'auteur (0,887 sinon). Politique d'abstention (renvoi de 30 % des patients) : exactitude des cas traités autour de 0,93 pour les familles bien réglées, indistinguables entre elles ; mesurée en développement seulement.
 
-**Limites ajoutées** : non-déterminisme GPU (à graine égale, 0,7714 puis 0,7362) ; écart patient contre auteur de 3,9 points (le leave-one-author-out et la comparaison sur partitions répétées sont en cours) ; signature d'auteur identifiable à 0,917 ; hors spécialité 0,522 ; sans accents −5,6 points pour le TF-IDF.
+**Limites ajoutées** : non-déterminisme GPU (à graine égale, 0,7714 puis 0,7362) ; écart patient contre auteur de 3,9 points (le leave-one-author-out et la comparaison sur partitions répétées sont en cours) ; signature d'auteur identifiable à 0,917 ; hors spécialité 0,522 ; sans accents −5,6 points pour le TF-IDF à mots (le TF-IDF à caractères y est insensible).
 
 ## Usages prévus et hors usage
 Mesure méthodologique sur textes fictifs. Hors usage : tout usage clinique ou sur patients réels, toute généralisation à d'autres corpus, tout classement final des techniques avant le verdict confirmatoire.

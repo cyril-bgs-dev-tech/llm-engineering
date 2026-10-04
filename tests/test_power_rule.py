@@ -55,3 +55,22 @@ def test_threshold_is_two_delta() -> None:
 def test_identical_seeds_give_zero_width() -> None:
     truth, preds = _pool(np.random.default_rng(3))
     assert pair_widths(truth, [preds[0], preds[0], preds[0]], COUNTS, scored=[0, 1, 2], n_boot=50, seed=SEED) == [0.0, 0.0, 0.0]
+
+
+def test_pooled_width_of_two_identical_systems_is_zero_and_shrinks_with_sample_size() -> None:
+    from llmft.power_rule import pooled_width
+
+    rng = np.random.default_rng(1)
+    for n_per_class in (30, 300):
+        truth = np.repeat([0, 1, 2], n_per_class)
+        a = truth.copy()
+        a[rng.random(len(a)) < 0.2] = 0
+        assert pooled_width(truth, a, a, scored=[0, 1, 2], n_boot=200) == 0.0
+    small, large = np.repeat([0, 1, 2], 30), np.repeat([0, 1, 2], 300)
+    def noisy(t):
+        p = t.copy()
+        p[rng.random(len(p)) < 0.2] = 0
+        return p
+    w_small = pooled_width(small, noisy(small), noisy(small), scored=[0, 1, 2], n_boot=300)
+    w_large = pooled_width(large, noisy(large), noisy(large), scored=[0, 1, 2], n_boot=300)
+    assert w_large < w_small

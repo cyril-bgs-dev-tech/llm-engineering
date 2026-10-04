@@ -51,3 +51,18 @@ def mean_width(
         return None
     widths = pair_widths(truth, preds, test_counts, scored, n_boot)
     return float(np.mean(widths))
+
+
+def pooled_width(
+    truth: NDArray[np.int_], pred_a: NDArray[np.int_], pred_b: NDArray[np.int_], scored: Sequence[int], n_boot: int = N_BOOT, seed: int = SEED, level: float = LEVEL
+) -> float:
+    """Protocole v2 (brouillon) : largeur (en points) de l'IC de la différence de macro-F1 entre **deux systèmes** sur un jeu de prédictions hors pli regroupées ;
+    bootstrap de patients stratifié par classe aux effectifs du jeu lui-même, même tirage pour les deux systèmes, percentile."""
+    rng = np.random.default_rng(seed)
+    by_class = [np.flatnonzero(truth == c) for c in np.unique(truth)]
+    idx = np.concatenate([ix[rng.integers(0, len(ix), size=(n_boot, len(ix)))] for ix in by_class], axis=1)
+    t = truth[idx]
+    diff = _macro_f1(t, pred_a[idx], scored) - _macro_f1(t, pred_b[idx], scored)
+    alpha = (1.0 - level) / 2.0
+    lo, hi = np.percentile(diff, [100 * alpha, 100 * (1 - alpha)])
+    return float(100.0 * (hi - lo))

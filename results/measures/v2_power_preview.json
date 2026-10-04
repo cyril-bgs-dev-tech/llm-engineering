@@ -1,0 +1,12 @@
+{
+ "plis": [
+  0,
+  1,
+  2
+ ],
+ "n": 2152,
+ "largeur_ensemble_moins_tfidf_95": 4.29,
+ "largeur_ensemble_moins_tfidf_98_33": 5.24,
+ "largeur_encodeur_moins_tfidf_95": 6.32,
+ "seuil": 4.0
+}
