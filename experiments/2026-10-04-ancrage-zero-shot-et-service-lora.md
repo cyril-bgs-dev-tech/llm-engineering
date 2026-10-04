@@ -1,0 +1,12 @@
+# Fiche préenregistrée : ancrage externe en zéro-shot et mesure de service du LoRA fusionné (RM-30 et RM-34, EXPLORE)
+
+Écrite avant les runs. Suite du lot RM-28 (LoRA mûr aux plis 2, 3 et 4), exécutée GPU libre après lui.
+
+- **question** : (a) que vaut, sans aucun affinage, un LLM ouvert local de la même famille que l'élève (Qwen3.5-4B) et un plus gros (Qwen3.5-9B) sur le chapitre CIM-10 du pli 0, à invite construite depuis le contrat de tâche ? (b) quel est le coût de service du LoRA mûr fusionné en bf16 (latence p50 et p95 par patient, débit en lot, mémoire de pointe, énergie par 1 000 patients) ?
+- **références** : (a) LoRA mûr du pli 0 (`llm-mur2-qwen3-5-4b-ep10-lr1e-4`, 0,7795), encodeur moyenné (0,7331), meilleur TF-IDF (0,7184) ; (b) latence unique mesurée du 4B (117 ms), encodeur sur processeur (191 ms), TF-IDF (1,9 ms).
+- **variante** : (a) zéro-shot par lettres (`scripts/zero_shot.py`, invite de `llmft.zeroshot.build_prompt`, 18 classes, document tronqué tête et fin à 3 500 tokens, gabarit de conversation du modèle sans réflexion, probabilités lues sur les lettres), aucun exemple, aucune étiquette dans l'invite ; (b) `scripts/bench_lora_serving.py` : adaptateur `llm-mur2-qwen3-5-4b-ep10-lr1e-4` fusionné, bf16, 200 patients du pli 0, lot de 8, puissance du GPU échantillonnée chaque seconde ; prix du kWh pris comme paramètre de lecture (0,25 euro), jamais comme mesure.
+- **jeux et découpage** : développement, pli 0 (717 patients) ; test scellé jamais lu.
+- **métrique principale** : (a) macro-F1 sur 17 chapitres (AUTRE exclu) ; secondaires : exactitude, log loss ; (b) p50, p95, patients par seconde, Gio de pointe, Wh pour 1 000 patients.
+- **critère de décision** : (a) rapporté tel quel avec la différence appariée au LoRA mûr (`scripts/compare_probs.py`, IC 95 %) ; la lecture est : « l'affinage apporte +X points sur le zéro-shot » ; (b) rapporté tel quel, sans seuil.
+- **budget** : (a) environ 40 minutes par modèle, `timeout` de 3 600 s ; (b) environ 10 minutes ; GPU libre, aucun calcul concurrent.
+- **prédiction** : (a) macro-F1 zéro-shot du 4B entre 0,15 et 0,45 (probabilité 0,7), du 9B entre 0,25 et 0,55 (probabilité 0,7) ; le 9B dépasse le 4B (probabilité 0,85) ; aucun des deux n'atteint le meilleur TF-IDF (probabilité 0,9) ; (b) latence p50 du LoRA fusionné entre 60 et 200 ms (probabilité 0,7), débit en lot au moins 2 fois celui du lot de 1 (probabilité 0,7).
