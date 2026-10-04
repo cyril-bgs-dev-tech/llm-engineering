@@ -74,3 +74,17 @@ def test_pooled_width_of_two_identical_systems_is_zero_and_shrinks_with_sample_s
     w_small = pooled_width(small, noisy(small), noisy(small), scored=[0, 1, 2], n_boot=300)
     w_large = pooled_width(large, noisy(large), noisy(large), scored=[0, 1, 2], n_boot=300)
     assert w_large < w_small
+
+
+def test_pooled_interval_width_matches_pooled_width_and_contains_the_observed_difference() -> None:
+    import numpy as np
+
+    from llmft.power_rule import pooled_interval, pooled_width
+
+    rng = np.random.default_rng(0)
+    truth = rng.integers(0, 3, size=300)
+    a = np.where(rng.random(300) < 0.8, truth, rng.integers(0, 3, size=300))
+    b = np.where(rng.random(300) < 0.6, truth, rng.integers(0, 3, size=300))
+    d, lo, hi = pooled_interval(truth, a, b, [0, 1, 2], n_boot=400)
+    assert lo < d < hi and d > 0
+    assert abs((hi - lo) - pooled_width(truth, a, b, [0, 1, 2], n_boot=400)) < 1e-9

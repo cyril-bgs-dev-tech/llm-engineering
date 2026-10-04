@@ -250,3 +250,6 @@ Pli 3 de l'encodeur complet, pli 4 en cours (s2 à s4). Ensembles : module llmft
 
 ### 15:56Z : reprise par surveilleur
 Pli 4 de l'encodeur : 3 runs sur 5, fin vers 16h01Z. scripts/post_plis_3_et_4.sh lancé en détaché (attend TERMINE19, puis ensembles des plis 3 et 4, compare_probs contre TF-IDF, v2_power_preview --register ; CPU, un thread, nice 15 ; journal post_plis34.out). Le LoRA des plis 2 à 4 démarre à la même heure.
+
+### 16:06Z : reprise par surveilleur
+Plis 3 et 4 terminés (10 encodeurs). Ensemble moins TF-IDF : +6,71 [+3,61 ; +10,42] (pli 3), +4,69 [+1,85 ; +7,68] (pli 4) ; cinq plis regroupés +5,20 [+3,69 ; +6,78]. REGLE v2 PASSE : largeur 3,09 (95 %), 3,78 (98,33 %) ; encodeur seul 4,55 (ne passe pas). pooled_interval ajouté (testé), v2_power_preview sort les écarts. Consigné : RESULTATS, protocole v2, rapport, brief v5, présentation, PREUVES. LoRA plis 2 à 4 démarré à 16:01Z (pli 2 d'abord, fin vers 19:35Z).

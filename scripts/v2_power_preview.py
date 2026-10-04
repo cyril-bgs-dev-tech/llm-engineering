@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import p1_04_06_tfidf
 from llmft.mini_registry import register_run
-from llmft.power_rule import pooled_width
+from llmft.power_rule import pooled_interval, pooled_width
 
 P = ROOT / "results/predictions"
 FOLDS = {0: ("ensemble-encodeur5", None), 1: ("pli1-ensemble-encodeur5", None), 2: ("pli2-ensemble-encodeur5", None), 3: ("pli3-ensemble-encodeur5", None), 4: ("pli4-ensemble-encodeur5", None)}
@@ -47,6 +47,9 @@ def main() -> int:
     out = {"plis": used, "n": len(all_ids), "largeur_ensemble_moins_tfidf_95": round(pooled_width(truth, ens.argmax(1), tf.argmax(1), scored, level=0.95), 2),
            "largeur_ensemble_moins_tfidf_98_33": round(pooled_width(truth, ens.argmax(1), tf.argmax(1), scored), 2),
            "largeur_encodeur_moins_tfidf_95": round(pooled_width(truth, enc.argmax(1), tf.argmax(1), scored, level=0.95), 2), "seuil": 4.0}
+    d_e, lo_e, hi_e = pooled_interval(truth, ens.argmax(1), tf.argmax(1), scored, level=0.95)
+    d_c, lo_c, hi_c = pooled_interval(truth, enc.argmax(1), tf.argmax(1), scored, level=0.95)
+    out.update({"ensemble_moins_tfidf_points": round(d_e, 2), "ic95_ensemble_moins_tfidf": [round(lo_e, 2), round(hi_e, 2)], "encodeur_moins_tfidf_points": round(d_c, 2), "ic95_encodeur_moins_tfidf": [round(lo_c, 2), round(hi_c, 2)]})
     print(json.dumps(out))
     (ROOT / "results/measures/v2_power_preview.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
     if "--register" in sys.argv:

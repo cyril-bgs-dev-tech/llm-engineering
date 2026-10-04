@@ -21,7 +21,7 @@
 ## 3. Règle de puissance v2
 Statistique : largeur de l'IC à 98,33 % (ou 95 % si une seule comparaison primaire) de la **différence appariée de macro-F1 entre les deux systèmes comparés** (pas entre graines), par bootstrap de patients stratifié par classe sur les 3 586 prédictions hors pli, R = 10 000, graine 20261002, moyenne des prédictions des graines avant la différence. Seuil : 4,0 points. Si elle échoue, les comparaisons restent EXPLORE sans changer δ (même repli que v1). Calcul : `scripts/rm17_power_rule.py` à étendre (mode « deux systèmes ») dès que les plis 3 et 4 de l'encodeur sont entraînés.
 
-**Aperçu mesuré (04/10)** : sur trois plis (2 152 prédictions), largeur de « ensemble encodeur + TF-IDF moins TF-IDF » : 4,29 points à 95 %, 5,24 à 98,33 % ; extrapolation à cinq plis : environ 3,3 et 4,1. La règle v2 passerait avec une question primaire unique à 95 %.
+**Aperçu mesuré (04/10)** : sur trois plis (2 152 prédictions), largeur de « ensemble encodeur + TF-IDF moins TF-IDF » : 4,29 points à 95 %, 5,24 à 98,33 % ; **mesuré à cinq plis (3 586 prédictions, run `v2-power-preview-5-plis`) : 3,09 points à 95 %, 3,78 à 98,33 % : la règle v2 passe** (seuil 4,0), à 95 % comme à 98,33 % ; différence agrégée ensemble moins TF-IDF +5,20 [+3,69 ; +6,78] ; encodeur moyenné seul moins TF-IDF : largeur 4,55, la règle ne passe pas pour cette paire. δ = 2,0 est donc conservé.
 
 ## 4. Ouverture du test scellé (inchangée)
 Une seule fois, en deux temps (`sealed.py`), journal des accès, temps A pour toutes les recettes gelées et le candidat final, temps B avec marqueur avant lecture des étiquettes, écriture atomique, répétition générale préalable. Aucun réglage sur le test.

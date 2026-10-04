@@ -29,7 +29,7 @@ But : mesurer ce que chaque technique d'adaptation apporte à un classifieur de 
 1. Recettes mûres pour toutes les familles, même clause d'égalité de budget de réglage (même nombre de runs, mêmes heures, même critère et même pli ; grilles propres à chaque famille, préenregistrées avant les runs de la famille : TF-IDF C, n-grammes, poids, analyseur ; encodeur époques 4 à 20, taux 5e-5 à 1e-4 ; LoRA époques 4 à 10, taux jusqu'à 2e-4).
 2. Plateforme d'expérience bon marché : l'encodeur (3,5 à 5 minutes par run) avec cinq graines et cinq plis ; le LLM LoRA comme bras de comparaison.
 3. Évaluation par plis (largeur simulée 3,8 à 6,7) pour toute comparaison présentée comme résolue ; plis par patient et par auteur côte à côte ; leave-one-author-out pour « nouveaux auteurs ».
-4. Conserver test scellé unique, macro-F1, δ = 2,0 (à réviser si la largeur à cinq plis reste au-dessus de 4 points), verdict en trois valeurs, fiches hachées.
+4. Conserver test scellé unique, macro-F1, δ = 2,0 (largeur à cinq plis mesurée : 3,09 à 95 % et 3,78 à 98,33 % pour ensemble contre TF-IDF, sous 4 points : δ conservé), verdict en trois valeurs, fiches hachées.
 5. Professeur de distillation conditionné à un pilote sur l'encodeur et à la règle de puissance du second cycle.
 6. Petites classes : partitions de contrôle à classes réparties, métriques moins sensibles à la discrétisation (log loss équilibrée) ; données synthétiques ciblées sur les cinq plus petits chapitres, à lignée vérifiée, contre simple duplication (fiche écrite, non exécutée).
 

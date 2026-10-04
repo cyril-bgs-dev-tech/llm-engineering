@@ -53,10 +53,10 @@ def mean_width(
     return float(np.mean(widths))
 
 
-def pooled_width(
+def pooled_interval(
     truth: NDArray[np.int_], pred_a: NDArray[np.int_], pred_b: NDArray[np.int_], scored: Sequence[int], n_boot: int = N_BOOT, seed: int = SEED, level: float = LEVEL
-) -> float:
-    """Protocole v2 (brouillon) : largeur (en points) de l'IC de la différence de macro-F1 entre **deux systèmes** sur un jeu de prédictions hors pli regroupées ;
+) -> tuple[float, float, float]:
+    """Protocole v2 (brouillon) : (différence observée, borne basse, borne haute) en points de macro-F1 entre **deux systèmes** sur un jeu de prédictions hors pli regroupées ;
     bootstrap de patients stratifié par classe aux effectifs du jeu lui-même, même tirage pour les deux systèmes, percentile."""
     rng = np.random.default_rng(seed)
     by_class = [np.flatnonzero(truth == c) for c in np.unique(truth)]
@@ -65,4 +65,13 @@ def pooled_width(
     diff = _macro_f1(t, pred_a[idx], scored) - _macro_f1(t, pred_b[idx], scored)
     alpha = (1.0 - level) / 2.0
     lo, hi = np.percentile(diff, [100 * alpha, 100 * (1 - alpha)])
-    return float(100.0 * (hi - lo))
+    observed = _macro_f1(truth[None, :], pred_a[None, :], scored)[0] - _macro_f1(truth[None, :], pred_b[None, :], scored)[0]
+    return float(100.0 * observed), float(100.0 * lo), float(100.0 * hi)
+
+
+def pooled_width(
+    truth: NDArray[np.int_], pred_a: NDArray[np.int_], pred_b: NDArray[np.int_], scored: Sequence[int], n_boot: int = N_BOOT, seed: int = SEED, level: float = LEVEL
+) -> float:
+    """Largeur (en points) de l'IC de `pooled_interval`."""
+    _, lo, hi = pooled_interval(truth, pred_a, pred_b, scored, n_boot, seed, level)
+    return float(hi - lo)
