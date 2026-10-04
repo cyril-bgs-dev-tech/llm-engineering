@@ -214,3 +214,6 @@ Cadence du surveilleur ralentie à 20 minutes pendant le run GPU long (id c90fbd
 
 ### 07:23Z : reprise par surveilleur
 Cadence du surveilleur remise à 20 minutes pendant le LoRA du pli 1 (id 57e19d89). Script de robustesse du LoRA par inférence écrit (scripts/robustness_llm.py, non exécuté : GPU occupé ; à lancer après le pli 1). LoRA pli 1 en cours.
+
+### 10:52Z : reprise par surveilleur
+**LoRA pli 1 terminé** : macro-F1 0,7415 ; +5,3 [+0,75 ; +9,95] contre le TF-IDF (résolu), −1,1 [−6,0 ; +4,0] contre l'encodeur moyenné (non résolu) ; meilleure sélectivité (0,964 à 70 % de couverture). Sur deux plis : LoRA ≈ encodeur moyenné pour 10 fois le coût ; les deux battent le meilleur TF-IDF de 4 à 6 points. Surveilleur remis à 5 minutes. Lot suivant : robustesse du LoRA par inférence (lancée).
