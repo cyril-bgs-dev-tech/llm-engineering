@@ -283,3 +283,6 @@ RM-34 complété : scripts/bench_encoder_gpu.py (fp32 et bf16, latence, débit, 
 
 ### 17:03Z : reprise par surveilleur
 make_tables.py : section « systèmes hors pli à cinq plis » recalculée depuis les probabilités (TF-IDF 0,7202, encodeur moyenné 0,7528, ensemble 0,7721 regroupés) ; docs/TABLEAUX_GENERES.md régénéré. Journaux archivés. LoRA pli 2 en cours (une heure écoulée).
+
+### 17:07Z : reprise par surveilleur
+RM-32 préparé de bout en bout : fiche hachée experiments/2026-10-04-distillation-vers-encodeur.md (bras professeur LoRA et bras ensemble, alpha_kd 0,5 et T 2 fixés non réglés, trois graines, cinq plis, 30 runs, réserve de second ordre déclarée) ; lot scripts/run_distillation_encodeur.sh lancé en détaché (attend TERMINE23). Chaîne GPU de nuit : LoRA plis 2-4 (en cours) puis service LoRA et zéro-shot, service encodeur, distillation (2,5 h).

@@ -307,7 +307,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P2-01 | Professeur 1 : réglage minimal du taux (QLoRA) | |
 | P3-01 | Perte de distillation et ses tests | Ne dépend plus des logits hors pli |
 | RM-19 | **Spike de distillation et décision go/no-go** | Règle préenregistrée |
-| RM-32 | Élève distillé de la LoRA mûr vers l'encodeur, professeur strictement hors pli | Thèse du projet : qualité du LoRA à coût d'encodeur |
+| RM-32 | Élève distillé de la LoRA mûr vers l'encodeur, professeur strictement hors pli | Thèse du projet : qualité du LoRA à coût d'encodeur ; fiche hachée et lot en attente (04/10/2026), 30 runs |
 
 ### Étape R9 : expérience confirmatoire de distillation
 
