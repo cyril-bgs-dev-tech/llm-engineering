@@ -15,6 +15,7 @@ import bench_lora_serving
 import p1_04_06_tfidf
 import p1_finetune
 from llmft import servicecost
+from llmft.energy import PowerSampler
 from llmft.mini_registry import register_run
 
 arg = bench_lora_serving.arg
@@ -38,13 +39,13 @@ def main() -> int:
         p1_finetune.predict(model, x[:4], tok.pad_token_id, "cuda", 1, len(labels))
         torch.cuda.reset_peak_memory_stats()
         single: list[float] = []
-        with bench_lora_serving.PowerSampler() as ps1:
+        with PowerSampler() as ps1:
             for xi in x:
                 s = time.perf_counter()
                 p1_finetune.predict(model, [xi], tok.pad_token_id, "cuda", 1, len(labels))
                 torch.cuda.synchronize()
                 single.append(1000 * (time.perf_counter() - s))
-        with bench_lora_serving.PowerSampler() as psb:
+        with PowerSampler() as psb:
             s = time.perf_counter()
             p1_finetune.predict(model, x, tok.pad_token_id, "cuda", batch, len(labels))
             torch.cuda.synchronize()

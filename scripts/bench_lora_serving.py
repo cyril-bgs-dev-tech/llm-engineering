@@ -5,12 +5,9 @@ Usage : bench_lora_serving.py MODELE_DE_BASE SLUG_ADAPTATEUR [--n 200] [--batch 
 Le prix du kWh est un paramètre de lecture du coût, jamais une valeur mesurée."""
 import json
 import os
-import subprocess
 import sys
-import threading
 import time
 from pathlib import Path
-from typing import Self
 
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 os.environ.setdefault("RAYON_NUM_THREADS", "2")
@@ -23,35 +20,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import p1_04_06_tfidf
 import p1_finetune
 from llmft import servicecost
+from llmft.energy import PowerSampler
 from llmft.mini_registry import register_run
 
 
 def arg(name: str, default: str) -> str:
     return sys.argv[sys.argv.index(name) + 1] if name in sys.argv else default
-
-
-class PowerSampler:
-    """Puissance du GPU 0 en watts, une fois par seconde, dans un fil."""
-
-    def __init__(self) -> None:
-        self.samples: list[float] = []
-        self._stop = threading.Event()
-        self._thread = threading.Thread(target=self._run, daemon=True)
-
-    def _run(self) -> None:
-        while not self._stop.is_set():
-            out = subprocess.run(["nvidia-smi", "--query-gpu=power.draw", "--format=csv,noheader,nounits", "-i", "0"], capture_output=True, text=True, check=False).stdout.strip()
-            if out:
-                self.samples.append(float(out.splitlines()[0]))
-            self._stop.wait(1.0)
-
-    def __enter__(self) -> Self:
-        self._thread.start()
-        return self
-
-    def __exit__(self, *exc: object) -> None:
-        self._stop.set()
-        self._thread.join()
 
 
 def main() -> int:

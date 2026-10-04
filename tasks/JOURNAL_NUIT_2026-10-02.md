@@ -334,3 +334,6 @@ Huit tâches ajoutées sans renuméroter : RM-41 débit d'entraînement (★, R7
 
 ### 19:05Z : RM-46 bras ensemble consigné
 TF-IDF souple 0,7271 contre 0,7202 dur : +0,69 [−1,03 ; +2,29], non résolu ; 4,5 points sous le professeur ; 15 % de l'écart transmis ; fiche tenue (2 prédictions sur 4 réalisées).
+
+### 19:13Z : reprise par surveilleur
+RM-42 amorcé : src/llmft/energy.py (PowerSampler injectable, énergie, coût pour 1 000 éléments ; 3 tests) ; les deux bancs de service l'utilisent désormais (modifiés avant leur démarrage dans la chaîne ; import vérifié). Branchement sur les scripts d'entraînement (champ energie_wh au registre) à faire après la fin du lot LoRA.
