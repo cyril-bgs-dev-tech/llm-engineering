@@ -1,0 +1,29 @@
+{
+  "created_at": "2026-10-04T19:04:19Z",
+  "kind": "train",
+  "metrics": {
+    "accuracy": 0.8268265476854434,
+    "alpha": 0.5,
+    "c_par_pli": {
+      "0": 100.0,
+      "1": 10.0,
+      "2": 1000.0,
+      "3": 100.0,
+      "4": 10.0
+    },
+    "log_loss": 0.5686751580699126,
+    "macro_f1": 0.7270934470607823,
+    "seconds": 285,
+    "seuil": 0.05
+  },
+  "params": {
+    "alpha": 0.5,
+    "teacher": "cinq-plis-ensemble-encodeur5-tfidf-charbal.probs.npz",
+    "threshold": 0.05
+  },
+  "run_id": "20261004-190419-tfidf-souple-ens",
+  "schema": "mini-1",
+  "slug": "tfidf-souple-ens",
+  "status": "ok",
+  "summary": "tfidf-souple-ens : macro-F1 0.7271 sur cinq plis (TF-IDF à étiquettes souples)"
+}

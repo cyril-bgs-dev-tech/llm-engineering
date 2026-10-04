@@ -414,7 +414,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P2-11 | Multi-étiquettes et paires de bout en bout | |
 | P2-12 | Pages wiki des professeurs et de la qualité des étiquettes | |
 | RM-45 | Encodeur élagué (six couches), avec et sans distillation | Latence divisée par deux visée |
-| RM-46 | Élève TF-IDF à étiquettes souples | Latence de 2 ms conservée |
+| RM-46 | Élève TF-IDF à étiquettes souples | Latence de 2 ms conservée ; bras ensemble fait le 04/10/2026 : +0,69 [−1,03 ; +2,29], non résolu, 15 % de l'écart au professeur ; bras LoRA à faire |
 | P3-03 | Balayage d'alpha et de T | |
 | P3-04 | Plusieurs professeurs : moyenne ou pondération | |
 | P3-05 | Direction de la KL | |

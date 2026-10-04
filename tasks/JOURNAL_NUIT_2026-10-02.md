@@ -331,3 +331,6 @@ Rien à consigner (LoRA pli 2 en cours, GPU 94 %, fin vers 19:30Z). Journaux arc
 
 ### 19:00Z : efficience et déploiement, intégration à la feuille de route (demande de Cyril)
 Huit tâches ajoutées sans renuméroter : RM-41 débit d'entraînement (★, R7), RM-42 énergie et coût par run (★, R7), RM-43 routage conforme de la cascade, RM-44 ONNX et INT8 statique, RM-45 encodeur élagué, RM-46 TF-IDF souple, RM-47 contexte et regroupement par longueur, RM-48 fiche de déploiement (★, R11) ; 107 ★ sur 183 ; check_microtasks et check_roadmap verts ; todo exporté. RM-46 déjà lancé sur CPU (fiche tfidf-souple hachée, professeur ensemble). P5-02, P5-03, P5-08 restent le service, la charge, vLLM et la dérive (pas de doublon).
+
+### 19:05Z : RM-46 bras ensemble consigné
+TF-IDF souple 0,7271 contre 0,7202 dur : +0,69 [−1,03 ; +2,29], non résolu ; 4,5 points sous le professeur ; 15 % de l'écart transmis ; fiche tenue (2 prédictions sur 4 réalisées).

@@ -1,141 +1,47 @@
 {
- "ensemble": {
+ "souple": {
   "1.0": {
    "n_traites": 3586,
-   "exactitude": 0.858,
+   "exactitude": 0.827,
    "wilson95": [
-    0.846,
-    0.869
+    0.814,
+    0.839
    ],
    "taux_de_renvoi": 0.0
   },
   "0.9": {
    "n_traites": 3227,
-   "exactitude": 0.896,
+   "exactitude": 0.87,
    "wilson95": [
-    0.885,
-    0.906
+    0.858,
+    0.881
    ],
    "taux_de_renvoi": 0.1
   },
   "0.8": {
    "n_traites": 2869,
-   "exactitude": 0.925,
+   "exactitude": 0.903,
    "wilson95": [
-    0.914,
-    0.934
+    0.891,
+    0.913
    ],
    "taux_de_renvoi": 0.2
   },
   "0.7": {
    "n_traites": 2510,
-   "exactitude": 0.948,
+   "exactitude": 0.934,
    "wilson95": [
-    0.938,
-    0.956
+    0.924,
+    0.943
    ],
    "taux_de_renvoi": 0.3
   },
   "0.5": {
    "n_traites": 1793,
-   "exactitude": 0.979,
+   "exactitude": 0.967,
    "wilson95": [
-    0.971,
-    0.985
-   ],
-   "taux_de_renvoi": 0.5
-  }
- },
- "encodeur": {
-  "1.0": {
-   "n_traites": 3586,
-   "exactitude": 0.846,
-   "wilson95": [
-    0.833,
-    0.857
-   ],
-   "taux_de_renvoi": 0.0
-  },
-  "0.9": {
-   "n_traites": 3227,
-   "exactitude": 0.886,
-   "wilson95": [
-    0.874,
-    0.896
-   ],
-   "taux_de_renvoi": 0.1
-  },
-  "0.8": {
-   "n_traites": 2869,
-   "exactitude": 0.919,
-   "wilson95": [
-    0.909,
-    0.929
-   ],
-   "taux_de_renvoi": 0.2
-  },
-  "0.7": {
-   "n_traites": 2510,
-   "exactitude": 0.95,
-   "wilson95": [
-    0.941,
-    0.958
-   ],
-   "taux_de_renvoi": 0.3
-  },
-  "0.5": {
-   "n_traites": 1793,
-   "exactitude": 0.97,
-   "wilson95": [
-    0.962,
-    0.977
-   ],
-   "taux_de_renvoi": 0.5
-  }
- },
- "tfidf": {
-  "1.0": {
-   "n_traites": 3586,
-   "exactitude": 0.822,
-   "wilson95": [
-    0.809,
-    0.834
-   ],
-   "taux_de_renvoi": 0.0
-  },
-  "0.9": {
-   "n_traites": 3227,
-   "exactitude": 0.864,
-   "wilson95": [
-    0.852,
-    0.875
-   ],
-   "taux_de_renvoi": 0.1
-  },
-  "0.8": {
-   "n_traites": 2869,
-   "exactitude": 0.896,
-   "wilson95": [
-    0.885,
-    0.907
-   ],
-   "taux_de_renvoi": 0.2
-  },
-  "0.7": {
-   "n_traites": 2510,
-   "exactitude": 0.925,
-   "wilson95": [
-    0.914,
-    0.935
-   ],
-   "taux_de_renvoi": 0.3
-  },
-  "0.5": {
-   "n_traites": 1793,
-   "exactitude": 0.963,
-   "wilson95": [
-    0.953,
-    0.971
+    0.957,
+    0.974
    ],
    "taux_de_renvoi": 0.5
   }

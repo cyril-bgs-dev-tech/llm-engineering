@@ -499,3 +499,15 @@ Quantification dynamique PyTorch par groupes de couches ; 3 threads sur processe
 ### Précision sur la cascade (04/10/2026, 17h55Z) : ce que l'économie mesure et ne mesure pas
 
 La cascade encodeur moyenné puis LoRA évite des **appels au LoRA** (GPU), non de la **latence** : l'ensemble de cinq encodeurs coûte 5 × 191 ms sur processeur (environ 955 ms par patient), plus que le LoRA seul à 117 ms sur GPU. Le gain de latence n'existe que pour (a) le premier étage TF-IDF (1,9 ms), au prix d'une perte de macro-F1 au pli 0 dans l'aperçu, ou (b) un premier étage encodeur servi sur GPU (mesure `bench_encoder_gpu.py` en file). L'économie en énergie et en occupation du GPU reste réelle si le GPU est le goulot. La fiche `2026-10-04-cascade-cinq-plis` déclare ce modèle de coût avant les runs ; l'évaluation à cinq plis avec seuil choisi hors pli (`scripts/cascade_cv.py`) attend les plis 2 à 4 du LoRA.
+
+## Élève TF-IDF à étiquettes souples, professeur ensemble, cinq plis (RM-46, fiche `2026-10-04-tfidf-souple`, EXPLORE ; runs `tfidf-souple-ens`, `tfidf-souple-moins-dur`, `professeur-ensemble-moins-tfidf-souple`)
+
+TF-IDF caractères (3 à 5, poids équilibrés), cible `0,5 × étiquette + 0,5 × professeur` (ensemble encodeur + TF-IDF, probabilités strictement hors pli), aucun réglage, C par pli repris de la référence dure ; 285 s de processeur sur un thread ; latence et taille du service inchangées.
+
+| Système (3 586 patients regroupés) | macro-F1 | exactitude | exactitude à 70 % de couverture |
+|---|---|---|---|
+| TF-IDF dur (référence) | 0,7202 | 0,822 | 0,925 |
+| **TF-IDF souple (professeur ensemble)** | **0,7271** | 0,827 | 0,934 |
+| Professeur : ensemble encodeur + TF-IDF | 0,7721 | 0,858 | 0,948 |
+
+Souple moins dur : **+0,69 point [−1,03 ; +2,29]** : **non résolu** (l'IC dépasse δ = 2,0 par le haut et inclut zéro) ; l'élève reste **4,5 points [+2,31 ; +6,72] sous son professeur**. Les prédictions de la fiche : gain entre 0,5 et 3 points (réalisée, +0,69), IC entièrement positif (non), gain ≥ 2,0 (non), reste à plus de 2 points sous le professeur (réalisée). **La distillation d'un professeur fort vers le TF-IDF ne transmet que 15 % de l'écart** (0,69 sur 5,2) : un modèle linéaire sur n-grammes de caractères n'a pas la capacité de reproduire la frontière de l'ensemble ; la compression utile est à chercher vers un élève de type encodeur (RM-32, RM-45). Le bras LoRA reste à lancer quand `cinq-plis-llm-mur` existera. Réserve de second ordre : voir la fiche de distillation vers l'encodeur.

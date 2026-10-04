@@ -1,0 +1,23 @@
+{
+  "created_at": "2026-10-04T19:04:42Z",
+  "kind": "measure",
+  "metrics": {
+    "difference_points": 0.69,
+    "ic95_points": [
+      -1.03,
+      2.29
+    ],
+    "largeur_95": 3.33,
+    "n": 3586,
+    "seuil_v2": 4.0
+  },
+  "params": {
+    "a": "tfidf-souple-ens.probs.npz",
+    "b": "tfidf-variant-char-balanced.probs.npz"
+  },
+  "run_id": "20261004-190442-tfidf-souple-moins-dur",
+  "schema": "mini-1",
+  "slug": "tfidf-souple-moins-dur",
+  "status": "ok",
+  "summary": "tfidf-souple-moins-dur : 0.69 points [-1.03 ; 2.29] sur 3586 patients regroupés"
+}
