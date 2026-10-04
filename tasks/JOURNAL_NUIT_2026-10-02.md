@@ -337,3 +337,6 @@ TF-IDF souple 0,7271 contre 0,7202 dur : +0,69 [−1,03 ; +2,29], non résolu ; 
 
 ### 19:13Z : reprise par surveilleur
 RM-42 amorcé : src/llmft/energy.py (PowerSampler injectable, énergie, coût pour 1 000 éléments ; 3 tests) ; les deux bancs de service l'utilisent désormais (modifiés avant leur démarrage dans la chaîne ; import vérifié). Branchement sur les scripts d'entraînement (champ energie_wh au registre) à faire après la fin du lot LoRA.
+
+### 19:39Z : reprise par surveilleur
+Pli 2 du LoRA dépasse l'estimation de 12 500 s (19:29Z) : en cours, GPU 62 %, 404 W ; attente (limite d'arrêt anticipé 18 800 s, soit 21:15Z).
