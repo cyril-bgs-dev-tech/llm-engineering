@@ -1,0 +1,60 @@
+# Cahier d'audit pour GLM, v5 : le second cycle (ADR-015) et les conclusions corrigées de la nuit du 03 au 04/10/2026
+
+Version du 04/10/2026. Document **autonome** : aucune pièce jointe n'est requise. Aucune donnée de patient réel ni texte clinique : seulement des effectifs, des mesures et des noms de fichiers. À envoyer à GLM **seulement sur décision de Cyril** (envoi hors machine) ; l'assistant ne l'envoie pas. Section 8 : prompt prêt à coller.
+
+## 1. Rôle et posture
+Tu es un chercheur principal adversarial (vingt ans de pratique en évaluation de modèles de langage et en statistique appliquée au texte clinique). Tu as déjà audité ce projet trois fois (v2, v3, v4) ; **tes conjectures ont été testées et plusieurs corrigées par la mesure** (section 3). Pour chaque point : steelman en deux lignes, attaque la plus forte, enjeu chiffré, correction la moins chère, ce qui te ferait changer d'avis. Étiquette chaque phrase factuelle `[FAIT]` (vient du cahier), `[INFÉRÉ]` ou `[CONJECTURE]`. Pas de flatterie, pas de conseil générique sans coût ni gain.
+
+## 2. Ce qui a changé depuis ton audit v4
+- **Époques** : ta conjecture « les recettes gelées à 2 époques sous-estiment les modèles » est confirmée au-delà de ce que tu chiffrais : CamemBERT-bio passe de 0,448 (2 époques) à 0,553 (6) puis à 0,73 environ (10 à 20 époques ; saturation ; cinq graines 0,7293 ± 0,0256 au pli 0, 0,7475 au pli 1).
+- **Premier tirage trompeur** : le premier run à 10 époques faisait 0,7714 ; le rejeu à graine égale 0,7362 ; la graine 1001 0,7079. L'assistant avait annoncé « l'encodeur bat le TF-IDF » sur ce seul tirage avant de lancer les graines.
+- **TF-IDF mûri** : caractères 3 à 5 et poids de classe équilibrés : 0,7202 sur cinq plis, +3,65 point [+1,94 ; +5,48] contre la référence v1 (0,6844) ; chacun des deux changements seul : non résolu.
+- **Encodeur contre meilleur TF-IDF** : moyenne des 5 graines contre TF-IDF caractères et poids : +1,5 point au pli 0 (non résolu), +6,4 [+0,8 ; +12,1] au pli 1. Ensemble 50/50 avec le TF-IDF : +3,0 puis −0,2 point par rapport à l'encodeur moyenné : non confirmé.
+- **Règle de puissance sur les graines de l'encodeur** : largeur moyenne d'IC 12,2 points contre 4,0 admis (10 paires, 10,4 à 14,1) : échec ; les simulations annonçaient 7,8 à 13,7.
+- **Ta conjecture de correction de priorité** (+2 à +8 points sur le 4B) : non soutenue (+0,65) ; mais +13,8 points pour l'encodeur à 6 époques (0,551 → 0,689) et +1,0 à 10 époques : le sous-apprentissage de la queue de distribution est le mécanisme du déficit des petits chapitres.
+- **Discrétisation** : les cinq plus petits chapitres (27 à 63 patients au développement) portent **85 % de la variance de la macro-F1** (écart-type bootstrap 1,3 point sur 3 586 prédictions).
+- **Écart patient contre auteur** : partitions répétées (classes réparties au mieux) : 5,06 points ; leave-one-author-out du TF-IDF : 0,6185 ; à configuration égale 2,2 à 2,4 points sous les plis par patient et 3 points au-dessus des plis de cinq groupes d'auteurs : signature d'auteur pure d'environ 2 points, le reste est un rétrécissement de l'entraînement.
+- **Déploiement mesuré** : TF-IDF caractères et poids : 20,4 Mo, p50 1,9 ms, p95 4,0 ms, 568 patients par seconde (CPU). Encodeur flottant : 443 Mo, p50 191 ms (CPU, 8 threads). **Quantification INT8 dynamique naïve : effondrement** (macro-F1 0,3356 contre 0,7362).
+- **Incertitude** : couverture conforme LAC 90 % du TF-IDF par famille de chapitres : 0,56 à 0,99 derrière une moyenne de 0,90 (les familles ambiguës sous-couvertes) ; encodeur 10 époques : ECE 0,106 puis 0,050 après température, exactitude 0,946 à 70 % de couverture ; étalonner par plis d'auteurs : 0,900 de couverture sous décalage (0,887 sinon).
+- **Échecs publiés** : perte pondérée (−2,3 [−5,3 ; +1,5]), hiérarchie CIM-10 comme supervision (−4,0 ou −1,05), encodeur par fenêtres sur tout le dossier (+0,3 puis −6,8), taux 2e-4 (0,649), test de taille 31B à 2 époques (arrêt anticipé, projeté 6 h), 4B à 10 époques (premier lancement arrêté par la règle d'arrêt sous contention GPU et CPU).
+- **En cours à l'écriture** : Qwen3.5-4B LoRA à 10 époques sur GPU libre (fin attendue environ 07 h 45 UTC). Résultat : **à compléter si disponible avant l'envoi** : macro-F1 du pli 0 et comparaison appariée avec l'encodeur moyenné.
+
+## 3. Le projet en dix lignes
+But : mesurer ce que chaque technique d'adaptation apporte à un classifieur de chapitre CIM-10 sur PARHAF (4 254 comptes rendus fictifs ; développement 3 586 ; test scellé 633 jamais lu ; 17 chapitres évalués ; 104 auteurs). Protocole gelé : macro-F1, δ = 2,0, K = 5, B = 90 h (9,95 h enregistrées), grille de 4 taux, 2 époques, bootstrap hiérarchique apparié, test scellé ouvert une seule fois en deux temps, verdict en trois valeurs. Premier cycle classé EXPLORE. Matériel : RTX 5090 32 Gio, 68 Gio de RAM. Équipe : un ingénieur et un assistant de code qui travaille de nuit sous contrat (règles N1 à N26, délégations tracées, surveilleur de silence).
+
+## 4. L'ADR-015 proposée (second cycle), à auditer
+1. Recettes mûres pour toutes les familles, même clause d'égalité de budget de réglage (même nombre de runs, mêmes heures, même critère et même pli ; grilles propres à chaque famille, préenregistrées avant les runs de la famille : TF-IDF C, n-grammes, poids, analyseur ; encodeur époques 4 à 20, taux 5e-5 à 1e-4 ; LoRA époques 4 à 10, taux jusqu'à 2e-4).
+2. Plateforme d'expérience bon marché : l'encodeur (3,5 à 5 minutes par run) avec cinq graines et cinq plis ; le LLM LoRA comme bras de comparaison.
+3. Évaluation par plis (largeur simulée 3,8 à 6,7) pour toute comparaison présentée comme résolue ; plis par patient et par auteur côte à côte ; leave-one-author-out pour « nouveaux auteurs ».
+4. Conserver test scellé unique, macro-F1, δ = 2,0 (à réviser si la largeur à cinq plis reste au-dessus de 4 points), verdict en trois valeurs, fiches hachées.
+5. Professeur de distillation conditionné à un pilote sur l'encodeur et à la règle de puissance du second cycle.
+6. Petites classes : partitions de contrôle à classes réparties, métriques moins sensibles à la discrétisation (log loss équilibrée) ; données synthétiques ciblées sur les cinq plus petits chapitres, à lignée vérifiée, contre simple duplication (fiche écrite, non exécutée).
+
+## 5. Questions
+(Q1) L'ADR-015 est-elle la bonne réponse ? Que supprimerais-tu, que changerais-tu ? Le second cycle sur l'encodeur est-il scientifiquement honnête pour un projet dont le but déclaré est de fine-tuner et distiller des LLM ?
+(Q2) Avec écart-type de 2,6 points entre graines, 85 % de la variance portée par cinq classes, et une largeur de 12,2 points sur un pli : quel design (nombre de plis, de graines, de répétitions, métrique, stratification) donne une largeur sous 4 points au moindre coût, et δ = 2,0 reste-t-il défendable ?
+(Q3) Quel système livrer : TF-IDF caractères et poids (20 Mo, 2 ms), moyenne de cinq encodeurs (2,2 Go, environ 1 s), ou un ensemble ? Quelle est la preuve minimale qui justifierait le surcoût de l'encodeur (+1,5 point au pli 0, +6,4 au pli 1) ?
+(Q4) La quantification INT8 dynamique effondre l'encodeur : quelle est la voie la moins chère vers un encodeur quantifié correct (statique avec étalonnage, quantification sélective, ONNX) et vaut-elle l'effort ?
+(Q5) Données synthétiques ciblées : ta probabilité de gain, les pièges (artefacts de style, fuite de lignée), le test le plus informatif.
+(Q6) Incertitude : la couverture marginale cache des familles à 0,56 ; quelle procédure d'étalonnage conditionnel (par classe, par famille, Mondrian, APS par bloc) recommandes-tu et quel rapport en faire ?
+(Q7) Process : le surveilleur de silence et le mode de nuit autonome ont produit des erreurs (conclusion sur un seul tirage, deux fois le même bug de code de sortie `$(date)`, un `find /` hors périmètre, relances qui masquent). Quels garde-fous manquent ? Que ferais-tu pour que l'assistant n'annonce plus un résultat avant les graines ?
+(Q8) Les douze affirmations ci-dessous : vrai, faux ou non établi, avec le test qui trancherait. (1) À recette mûre l'encodeur bat le meilleur TF-IDF. (2) L'ensemble encodeur et TF-IDF n'apporte rien sur l'encodeur moyenné. (3) La signature d'auteur pure vaut environ 2 points. (4) Le déficit des petits chapitres est un sous-apprentissage et non un manque de données. (5) La règle de puissance échouera aussi pour le LoRA. (6) Un LLM plus grand ne changera pas la conclusion (non testé à recette mûre). (7) La distillation reste défendable comme mesure. (8) Le plafond d'erreur de 8,2 % (tous les modèles se trompent) est de l'ambiguïté d'étiquette. (9) La perte pondérée est inutile à toute durée d'entraînement. (10) La correction de priorité remplace l'entraînement long. (11) Le TF-IDF à caractères est le meilleur rapport qualité par coût. (12) Le protocole gelé reste utile pour un second cycle à recettes mûres.
+
+## 6. Ce que tu dois produire (un seul fichier Markdown)
+**Un fichier `.md` unique** (`audit_GLM_v5.md`) ; si tu ne peux pas joindre de fichier, un seul bloc de code Markdown. Plan : (1) en-tête (date, modèle, ce que tu as lu et n'as pas pu vérifier) ; (2) verdict en 12 lignes maximum ; (3) réponses numérotées Q1 à Q8, avec pour chacune les trois corrections les plus rentables (effort, GPU, gain, risque, preuve de fin) et l'expérience décisive minimale ; (4) tableau de notes des huit composantes du projet (performance, rigueur, données, incertitude, erreurs et robustesse, reproductibilité, efficience et déploiement, honnêteté) avec niveau de preuve E0 à E4 ; (5) les trois erreurs que tu ferais à notre place et les trois choses que tu referais pareil ; (6) tableau de preuve : chaque chiffre renvoie à « cahier § x » ou est marqué *estimation* ou *conjecture*. Français, pas de tiret cadratin, paragraphes de six lignes au plus.
+
+## 7. Règles à respecter
+Le protocole gelé ne se modifie pas en silence (nouvelle version + ADR + décision de Cyril : dis si une action l'exige) ; le test scellé n'est jamais lu avant son ouverture unique ; aucune donnée de patient réel, pas de location de GPU, pas d'API payante ; toute affirmation chiffrée renvoie à une mesure ; « simple » = au plus une demi-journée et 3 h de GPU. Les décisions de promotion d'une recette en référence, de changement d'estimand, de poursuite de la distillation et d'envoi hors machine appartiennent à Cyril : avis chiffré, jamais de tranchement.
+
+## 8. Prompt prêt à coller
+> Tu es un chercheur principal en apprentissage automatique appliqué au texte clinique, adversarial et jamais complaisant, qui a déjà audité ce projet trois fois ; plusieurs de tes conjectures ont été corrigées par la mesure (voir la section 2 du cahier). Lis le cahier joint (`BRIEF_GLM_v5_audit_second_cycle.md`) en entier, puis réponds aux questions Q1 à Q8 avec la méthode : steelman, attaque, enjeu chiffré, correction la moins chère, ce qui te ferait changer d'avis. Étiquette chaque phrase factuelle `[FAIT]`, `[INFÉRÉ]` ou `[CONJECTURE]` ; relis ta réponse en cherchant tes propres erreurs avant de la rendre. Format : un seul fichier Markdown `audit_GLM_v5.md` suivant le plan de la section 6 ; règles de la section 7.
+
+## 9. Tableau de preuve de ce cahier
+| Groupe de chiffres | Source dans le dépôt (non fournie à GLM) | Statut |
+|---|---|---|
+| Encodeur : 0,448 / 0,553 / 0,73 ; graines ; pli 1 ; saturation ; fenêtres ; 2e-4 | `RESULTATS.md`, runs `camembert-*` | prouvé (EXPLORE) |
+| TF-IDF mûri, LOAO, partitions répétées, variance par classe | runs `tfidf-variant-*`, `tfidf-loao`, `split-discretization-check` | prouvé |
+| RM-17 sur l'encodeur 12,2 contre 4,0 | `rm-17-power-rule-encodeur-ep10` | prouvé |
+| Correction de priorité ; couverture par famille ; ECE ; abstention | `prior-correction-fold0`, `coverage-by-family-tfidf`, `q5-uncertainty-*`, `abstention_table.json` | prouvé (pli 0) |
+| Service TF-IDF, INT8 | `bench-serving-tfidf-charbal-v1`, `quantization-camembert-deploy-ep10-lr1e-4` | prouvé |
+| 4B à 10 époques | `llm-mur2-qwen3-5-4b-ep10-lr1e-4` | en cours |
