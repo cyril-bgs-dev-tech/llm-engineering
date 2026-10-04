@@ -295,3 +295,6 @@ Post-traitement du LoRA automatisé : scripts/post_lora_plis.sh lancé en détac
 
 ### 17:25Z : reprise par surveilleur
 Mémoire : feedback-pas-de-modif-pendant-un-lot (cible mouvante). LoRA pli 2 en cours (GPU 95 %), post_lora_plis.sh en attente.
+
+### 17:38Z : reprise par surveilleur
+Erreur d'horaire corrigée : le pli 2 du LoRA (début 16:01Z, 12 500 s) finit vers 19:30Z, pas 17:35Z ; plis 3 et 4 vers 23:00Z et 02:30Z. File de travail corrigée. Aucun résultat à consigner avant 19:30Z ; travail CPU léger d'ici là.
