@@ -1,0 +1,42 @@
+{
+ "17 chapitres": {
+  "tfidf": 0.7202,
+  "encodeur": 0.7528,
+  "ensemble": 0.7721,
+  "ensemble_moins_tfidf_points": [
+   5.2,
+   3.84,
+   7.23
+  ]
+ },
+ "sans XVIII": {
+  "tfidf": 0.744,
+  "encodeur": 0.7691,
+  "ensemble": 0.7917,
+  "ensemble_moins_tfidf_points": [
+   4.76,
+   3.49,
+   6.76
+  ]
+ },
+ "sans XVIII ni XXI": {
+  "tfidf": 0.7743,
+  "encodeur": 0.7932,
+  "ensemble": 0.8193,
+  "ensemble_moins_tfidf_points": [
+   4.5,
+   3.41,
+   6.36
+  ]
+ },
+ "f1_chapitres": {
+  "XVIII": {
+   "n": 221,
+   "f1_ensemble": 0.46
+  },
+  "XXI": {
+   "n": 42,
+   "f1_ensemble": 0.377
+  }
+ }
+}

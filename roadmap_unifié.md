@@ -346,7 +346,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 |---|---|---|
 | P2-02 | Professeur 1 en cinq plis, logits hors pli | Manifeste |
 | P2-03 | Contrôle strictement hors pli | |
-| P2-06 | Audit des étiquettes (cleanlab, relecture de 100 cas) | Aucune étiquette de test modifiée |
+| P2-06 | Audit des étiquettes (cleanlab, relecture de 100 cas) | Aucune étiquette de test modifiée ; pilote fait le 05/10/2026 sur 30 erreurs confiantes (ambiguïté de codage établie, contre-expertise par un codeur à prévoir) |
 | P2-07 | Pré-entraînement sur tâche voisine | Tête jetée et réapprise |
 | P2-08 | Gain de la tâche voisine, test apparié | |
 | G-P2 | Scorecard G-P2 | |

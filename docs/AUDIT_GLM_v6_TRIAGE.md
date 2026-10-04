@@ -25,7 +25,7 @@ Source : `audit_GLM_v6.md` (05/10/2026, 30 leviers classés, 12 conclusions atta
 |---|---|---|---|
 | 1 | Bootstrap par blocs d'auteurs | **fait** | run `glm-v6-blocs-auteurs` ; protocole v2 : règle par blocs, question primaire unique à 95 % (RM-29) |
 | 2 | Cascade validée hors pli | planifié | RM-40, fiche `cascade-cinq-plis`, `cascade_cv.py` |
-| 3 | Audit des 65 erreurs confiantes | planifié (suite immédiate) | P2-06, avant RM-50 |
+| 3 | Audit des 65 erreurs confiantes | **fait sur 30 cas** (E 27 %, R 67 %, M 7 % : ambiguïté de codage établie, bruit d'étiquette non établi) ; reste la contre-expertise par un codeur et le reste des 65 | P2-06, fiche `2026-10-05-audit-erreurs-confiantes`, run `sensibilite-xviii-xxi` |
 | 4 | Empilement appris par chapitre | **fait, réfuté** | run `glm-v6-empilement` |
 | 5 | Mondrian par défaut | fait à cinq plis ; à rejouer avec le LoRA | RM-33, post-traitement du LoRA |
 | 6 | Zéro-shot 4B et 9B | en file | RM-30 |

@@ -388,3 +388,6 @@ audit_GLM_v6.md lu en entier. Mesures le jour même (fiche hachée 2026-10-05-au
 
 ### 22:48Z : présentation mise à jour (demande de Cyril)
 Audit GLM v6 traité, règle de puissance rectifiée, mélange 50/50 quasi optimal, nouvelles erreurs vues et corrigées, chaîne de dominos et 190 micro-tâches, plafond atteignable 9,2 à 9,4 ; compteurs 352 tests, 190 runs, 42 fiches ; PREUVES lignes 34 et 35 ; notes inchangées (6,9).
+
+### 22:52Z : audit des erreurs confiantes (P2-06, pilote) et sensibilité XVIII et XXI
+Fiche hachée 2026-10-05-audit-erreurs-confiantes (pilote de 10 cas déclaré, 20 cas préenregistrés). Résultat sur 30 cas : étiquette contestable 27 %, rivale défendable 67 %, erreur du modèle 7 % : ambiguïté de codage établie (E+R 95 % sur les 20 préenregistrés), bruit d'étiquette non établi, erreur du modèle non dominante. Sensibilité : macro-F1 de l'ensemble 0,7721, 0,7917 sans XVIII, 0,8193 sans XVIII ni XXI ; classement des systèmes inchangé (+5,20, +4,76, +4,50). Relecteur : l'assistante, à contre-expertiser par un codeur avant citation externe.
