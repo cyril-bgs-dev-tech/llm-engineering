@@ -328,3 +328,14 @@ Prédictions de la fiche : macro-F1 entre 0,65 et 0,80 (0,6) : réalisé (0,7795
 - Les ensembles n'apportent pas de gain établi par rapport au meilleur composant (+6,1 puis +0,8 pour LoRA + encodeur sur l'encodeur moyenné).
 
 **Rapport qualité par coût** : le LoRA mûr coûte 3,5 h de GPU par pli contre 20 minutes pour cinq encodeurs (environ 10 fois plus) pour un score statistiquement équivalent ; son avantage mesuré est dans l'incertitude : au pli 1 ECE 0,111 brute et 0,034 après température, couverture conforme LAC 0,9025 avec 1,17 classe par ensemble, exactitude 0,904 à 90 %, 0,937 à 80 % et **0,964 à 70 % de couverture** (pli 0 : 0,960 ; encodeur : 0,946), AURC 0,033 : **la sélectivité du LoRA est la meilleure des modèles mesurés sur les deux plis**. Prédictions de la fiche : macro-F1 du pli 1 entre 0,70 et 0,82 (0,7) : réalisé ; le LoRA dépasse le TF-IDF, IC entièrement positif (0,75) : réalisé ; le LoRA au moins égal à l'encodeur moyenné (0,55) : réalisé (IC contenant 0) ; le LoRA dépasse l'encodeur moyenné, IC entièrement positif (0,15) : non.
+
+## Robustesse du LoRA mûr aux perturbations de texte (audit GLM v4, C5-A5 ; `robustness-llm-mur2-qwen3-5-4b-ep10-lr1e-4`, inférence sur l'adaptateur sauvegardé, pli 0, 717 patients, mêmes perturbations et même graine que pour le TF-IDF ; EXPLORE)
+
+| Variante du texte | macro-F1 du LoRA mûr | écart avec le texte propre | TF-IDF (même perturbation) |
+|---|---|---|---|
+| Propre (contrôle : redonne exactement le score du run) | 0,7795 | | 0,697 |
+| Accents retirés | 0,7744 | −0,5 | **−5,6** (0,641) |
+| Fautes de frappe sur 5 % des mots | 0,7950 | +1,6 | −0,7 |
+| Majuscules sur 5 % des mots | 0,7663 | −1,3 | 0 (casse normalisée) |
+
+Les écarts du LoRA restent dans le bruit de mesure d'un pli (écart-type bootstrap de 1,3 point sur 3 586 prédictions, environ le double sur 717) : **le LoRA mûr est insensible à ces trois perturbations, là où le TF-IDF perd 5,6 points sans accents**. Limite : perturbations douces (5 % des mots), un pli, une graine ; ni abréviations réelles, ni autre style d'auteur. Le contrôle de cohérence (texte propre = 0,7795 = macro-F1 du run d'entraînement) valide le rechargement de l'adaptateur.

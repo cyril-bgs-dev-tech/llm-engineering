@@ -217,3 +217,6 @@ Cadence du surveilleur remise à 20 minutes pendant le LoRA du pli 1 (id 57e19d8
 
 ### 10:52Z : reprise par surveilleur
 **LoRA pli 1 terminé** : macro-F1 0,7415 ; +5,3 [+0,75 ; +9,95] contre le TF-IDF (résolu), −1,1 [−6,0 ; +4,0] contre l'encodeur moyenné (non résolu) ; meilleure sélectivité (0,964 à 70 % de couverture). Sur deux plis : LoRA ≈ encodeur moyenné pour 10 fois le coût ; les deux battent le meilleur TF-IDF de 4 à 6 points. Surveilleur remis à 5 minutes. Lot suivant : robustesse du LoRA par inférence (lancée).
+
+### 11:04Z : reprise par surveilleur
+Robustesse du LoRA mûr consignée (insensible : accents −0,5, fautes +1,6, casse −1,3 ; le TF-IDF perd 5,6 sans accents). Prochain lot : essai du chemin --synthetic sur 1 époque d'encodeur avec un faux fichier de test.

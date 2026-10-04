@@ -1,0 +1,18 @@
+{
+ "propre": {
+  "macro_f1": 0.7795,
+  "accuracy": 0.8577
+ },
+ "accents": {
+  "macro_f1": 0.7744,
+  "accuracy": 0.8605
+ },
+ "typos": {
+  "macro_f1": 0.795,
+  "accuracy": 0.8647
+ },
+ "casse": {
+  "macro_f1": 0.7663,
+  "accuracy": 0.848
+ }
+}
