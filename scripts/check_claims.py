@@ -19,6 +19,7 @@ def main() -> int:
         known |= {d["slug"], d["run_id"]}
     known |= {Path(f).stem for f in glob.glob(str(ROOT / "experiments/*.md"))}
     known |= {Path(f).stem for f in glob.glob(str(ROOT / "knowledge/wiki/pages/*.md"))}
+    known |= {Path(f).name for f in glob.glob(str(ROOT / ".claude/skills/*"))}
     docs = [ROOT / "RESULTATS.md", *map(Path, glob.glob(str(ROOT / "docs/*.md"))), *map(Path, glob.glob(str(ROOT / "docs/presentation/*.md")))]
     bad = {}
     for d in docs:
