@@ -136,3 +136,13 @@ Fiabilité de l'incertitude du Qwen3.5-4B (rejeu, `q5-uncertainty-qwen4b-1e-4-fo
 ## Ensembles par moyenne de probabilités (pli 0, `results/measures/ensemble_fold0.json`, EXPLORE, bootstrap stratifié)
 
 TF-IDF 0,697 ; TF-IDF + CamemBERT-bio 6 époques 0,659 [différence avec le TF-IDF : −8,8 ; +0,7] ; TF-IDF + 4B 0,650 [−9,4 ; −0,8] ; les trois 0,654 [−9,3 ; 0,0] ; CamemBERT + 4B 0,596. **Aucun ensemble par simple moyenne ne dépasse le TF-IDF seul** : l'hypothèse de complémentarité des erreurs (A10 de GLM) n'est pas soutenue sous cette forme (moyenne non pondérée, probabilités non recalibrées) ; un empilement ou une pondération appris resterait à tester.
+
+## Variantes de recette du TF-IDF (fiche `2026-10-04-tfidf-variantes-recette`, EXPLORE, 5 plis par patient, 3 586 patients ; `tfidf-variants-minus-reference`)
+
+| Variante | macro-F1 | écart avec la référence (0,6844) | IC 95 % (points) | p Holm | run_id |
+|---|---|---|---|---|---|
+| Poids de classe équilibrés | 0,6805 | −0,38 | [−1,87 ; +1,17] | 1,0 | `tfidf-variant-balanced` |
+| N-grammes de caractères (3 à 5) | 0,6874 | +0,33 | [−1,32 ; +2,04] | 1,0 | `tfidf-variant-char` |
+| **Caractères (3 à 5) et poids équilibrés** | **0,7202** | **+3,65** | **[+1,94 ; +5,48]** | **0,0** | `tfidf-variant-char-balanced` |
+
+La combinaison n'est pas la somme des effets : seule elle améliore la référence, de façon résolue (borne basse positive, gain supérieur à δ = 2,0). Critère de la fiche : « amélioration » (EXPLORE ; la référence confirmatoire v1 ne change pas, une promotion exige une nouvelle version du protocole). Prédiction de la fiche (une variante améliore de plus de δ avec borne basse positive : probabilité 0,2) : réalisée. **La référence bon marché la plus forte est donc à 0,720, et l'écart avec le Qwen3.5-4B (0,587 au pli 0, TF-IDF 0,697 au même pli) s'élargit.** Le réglage de C est sur la grille réduite {10, 100, 1 000} ; les plis sont les mêmes que pour la référence. Coût : 13 minutes de CPU.
