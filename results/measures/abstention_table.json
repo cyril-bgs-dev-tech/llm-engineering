@@ -1,0 +1,237 @@
+{
+ "TF-IDF": {
+  "1.0": {
+   "n_traites": 717,
+   "exactitude": 0.824,
+   "wilson95": [
+    0.795,
+    0.85
+   ],
+   "taux_de_renvoi": 0.0
+  },
+  "0.9": {
+   "n_traites": 645,
+   "exactitude": 0.868,
+   "wilson95": [
+    0.84,
+    0.892
+   ],
+   "taux_de_renvoi": 0.1
+  },
+  "0.8": {
+   "n_traites": 574,
+   "exactitude": 0.902,
+   "wilson95": [
+    0.875,
+    0.924
+   ],
+   "taux_de_renvoi": 0.2
+  },
+  "0.7": {
+   "n_traites": 502,
+   "exactitude": 0.94,
+   "wilson95": [
+    0.916,
+    0.958
+   ],
+   "taux_de_renvoi": 0.3
+  },
+  "0.5": {
+   "n_traites": 358,
+   "exactitude": 0.975,
+   "wilson95": [
+    0.953,
+    0.987
+   ],
+   "taux_de_renvoi": 0.5
+  }
+ },
+ "TF-IDF caracteres+poids": {
+  "1.0": {
+   "n_traites": 717,
+   "exactitude": 0.828,
+   "wilson95": [
+    0.799,
+    0.854
+   ],
+   "taux_de_renvoi": 0.0
+  },
+  "0.9": {
+   "n_traites": 645,
+   "exactitude": 0.87,
+   "wilson95": [
+    0.842,
+    0.894
+   ],
+   "taux_de_renvoi": 0.1
+  },
+  "0.8": {
+   "n_traites": 574,
+   "exactitude": 0.906,
+   "wilson95": [
+    0.879,
+    0.927
+   ],
+   "taux_de_renvoi": 0.2
+  },
+  "0.7": {
+   "n_traites": 502,
+   "exactitude": 0.934,
+   "wilson95": [
+    0.909,
+    0.953
+   ],
+   "taux_de_renvoi": 0.3
+  },
+  "0.5": {
+   "n_traites": 358,
+   "exactitude": 0.978,
+   "wilson95": [
+    0.957,
+    0.989
+   ],
+   "taux_de_renvoi": 0.5
+  }
+ },
+ "CamemBERT 10 ep (s1000)": {
+  "1.0": {
+   "n_traites": 717,
+   "exactitude": 0.833,
+   "wilson95": [
+    0.804,
+    0.858
+   ],
+   "taux_de_renvoi": 0.0
+  },
+  "0.9": {
+   "n_traites": 645,
+   "exactitude": 0.865,
+   "wilson95": [
+    0.837,
+    0.889
+   ],
+   "taux_de_renvoi": 0.1
+  },
+  "0.8": {
+   "n_traites": 574,
+   "exactitude": 0.906,
+   "wilson95": [
+    0.879,
+    0.927
+   ],
+   "taux_de_renvoi": 0.2
+  },
+  "0.7": {
+   "n_traites": 502,
+   "exactitude": 0.946,
+   "wilson95": [
+    0.923,
+    0.963
+   ],
+   "taux_de_renvoi": 0.3
+  },
+  "0.5": {
+   "n_traites": 358,
+   "exactitude": 0.961,
+   "wilson95": [
+    0.935,
+    0.977
+   ],
+   "taux_de_renvoi": 0.5
+  }
+ },
+ "CamemBERT 10 ep (rejeu)": {
+  "1.0": {
+   "n_traites": 717,
+   "exactitude": 0.83,
+   "wilson95": [
+    0.801,
+    0.856
+   ],
+   "taux_de_renvoi": 0.0
+  },
+  "0.9": {
+   "n_traites": 645,
+   "exactitude": 0.86,
+   "wilson95": [
+    0.832,
+    0.885
+   ],
+   "taux_de_renvoi": 0.1
+  },
+  "0.8": {
+   "n_traites": 574,
+   "exactitude": 0.904,
+   "wilson95": [
+    0.877,
+    0.926
+   ],
+   "taux_de_renvoi": 0.2
+  },
+  "0.7": {
+   "n_traites": 502,
+   "exactitude": 0.93,
+   "wilson95": [
+    0.905,
+    0.949
+   ],
+   "taux_de_renvoi": 0.3
+  },
+  "0.5": {
+   "n_traites": 358,
+   "exactitude": 0.964,
+   "wilson95": [
+    0.939,
+    0.979
+   ],
+   "taux_de_renvoi": 0.5
+  }
+ },
+ "Qwen3.5-4B 2 ep": {
+  "1.0": {
+   "n_traites": 717,
+   "exactitude": 0.781,
+   "wilson95": [
+    0.749,
+    0.81
+   ],
+   "taux_de_renvoi": 0.0
+  },
+  "0.9": {
+   "n_traites": 645,
+   "exactitude": 0.823,
+   "wilson95": [
+    0.792,
+    0.851
+   ],
+   "taux_de_renvoi": 0.1
+  },
+  "0.8": {
+   "n_traites": 574,
+   "exactitude": 0.868,
+   "wilson95": [
+    0.837,
+    0.893
+   ],
+   "taux_de_renvoi": 0.2
+  },
+  "0.7": {
+   "n_traites": 502,
+   "exactitude": 0.892,
+   "wilson95": [
+    0.862,
+    0.917
+   ],
+   "taux_de_renvoi": 0.3
+  },
+  "0.5": {
+   "n_traites": 358,
+   "exactitude": 0.969,
+   "wilson95": [
+    0.946,
+    0.983
+   ],
+   "taux_de_renvoi": 0.5
+  }
+ }
+}

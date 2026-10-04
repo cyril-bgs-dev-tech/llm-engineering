@@ -211,3 +211,17 @@ La conjecture de GLM (+2 à +8 points sur le 4B) **n'est pas soutenue** : la cor
 **Le 0,7714 était un tirage favorable** : à graine égale, le rejeu fait 0,7362 (−3,5 points, non-déterminisme GPU) et la graine 1001 donne 0,7079. Les écarts entre runs atteignent 6 points, bien plus que le bruit d'un point mesuré sur le 4B : les chapitres rares, appris ou non selon le tirage, rendent la macro-F1 de l'encodeur très variable. La durée sature : 10, 15 et 20 époques sont équivalentes (0,74 environ). Lecture honnête : l'encodeur à 10 époques et plus vaut environ 0,71 à 0,77 contre 0,6971 pour le TF-IDF du pli 0 et 0,72 pour sa meilleure recette ; **l'avantage de l'encodeur existe en moyenne probable mais n'est pas établi par un tirage** ; les cinq graines tranchent. Prédictions de la fiche : 15 époques ≥ 10 époques (0,55) : faux de justesse selon la graine ; saturation avant 20 époques (0,65) : vrai.
 
 **Quantification INT8 dynamique de l'encodeur** (`quantization-camembert-deploy-ep10-lr1e-4`, PyTorch `quantize_dynamic` sur toutes les couches linéaires, CPU, 8 threads, pli 0) : flottant 32 bits macro-F1 0,7362, latence p50 190,8 ms et p95 210,0 ms, 443 Mo ; **INT8 : macro-F1 0,3356, exactitude 0,527 (effondrement)**, latence p50 118,4 ms, p95 137,4 ms, 25 Mo. La quantification dynamique naïve détruit la qualité (probablement les couches d'embeddings et de normalisation, ou le comportement sur-confiant de ce modèle) : **non utilisable telle quelle** ; une quantification statique avec étalonnage ou la quantification sélective des seules couches de la partie dense resterait à tester. Le TF-IDF déployable fait p50 1,9 ms : 100 fois plus rapide que l'encodeur en flottant.
+
+## Table d'abstention par modèle (audit GLM v4, E-c2, E-c3 ; `results/measures/abstention_table.json`, pli 0, 717 patients, confiance = probabilité maximale, exactitude des patients traités avec Wilson 95 %)
+
+| Modèle | 100 % de couverture | 90 % | 80 % | 70 % (30 % renvoyés) | 50 % |
+|---|---|---|---|---|---|
+| TF-IDF | 0,824 | 0,868 | 0,902 | 0,940 [0,916 ; 0,958] | 0,975 |
+| TF-IDF caractères et poids équilibrés | 0,828 | 0,870 | 0,906 | 0,934 [0,909 ; 0,953] | 0,978 |
+| CamemBERT-bio 10 époques (graine 1000) | 0,833 | 0,865 | 0,906 | 0,946 [0,923 ; 0,963] | 0,961 |
+| CamemBERT-bio 10 époques (rejeu) | 0,830 | 0,860 | 0,904 | 0,930 [0,905 ; 0,949] | 0,964 |
+| Qwen3.5-4B, 2 époques | 0,781 | 0,823 | 0,868 | 0,892 [0,862 ; 0,917] | 0,969 |
+
+Les trois premières familles bien réglées ne se distinguent pas par la politique d'abstention (intervalles qui se recouvrent) : ce que l'encodeur gagne en macro-F1 vient des chapitres rares, pas du tri des cas faciles. Un renvoi de 30 % des patients à l'humain amène l'exactitude des cas traités à 0,93 environ ; mesuré en développement, jamais validé sur le test, et c'est la politique du modèle, non du système complet.
+
+« Classe jamais couverte » du TF-IDF (`q5-uncertainty-tfidf-chapter`, LAC 90 %) : c'est la classe `AUTRE` (18 patients au développement), couverture 0/18, Wilson [0 ; 0,176]. C'est la classe fourre-tout (chapitres VII, VIII, XVI et XVII fusionnés), **exclue de la macro-F1** ; ce n'est pas un défaut de couverture sur un chapitre évalué (les plus basses sont XXI avec 0,21 et X avec 0,40 à l'indice près, effectifs de 49 et 36 environ : leurs intervalles de Wilson sont larges).

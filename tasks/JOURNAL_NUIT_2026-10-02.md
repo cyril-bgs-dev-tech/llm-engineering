@@ -138,3 +138,6 @@ Le Qwen3.5-4B à 1e-4 fait **0,5867**, au-dessus du 9B (0,565) : la prédiction 
 
 ### 2026-10-04T02:10Z : mode de nuit réarmé, surveilleur de silence instrumenté
 Cyril va dormir. Surveilleur de silence en trois couches (`tasks/SURVEILLEUR_SILENCE.md`) : tâche périodique de session toutes les 5 minutes (id 377244f5, expire après 7 jours, perdue à la fermeture de la session), `ScheduleWakeup` de fin de tour, témoin détaché `scripts/silence_watch.sh` (journal `results/logs/silence.log`). File inépuisable : `tasks/FILE_DE_TRAVAIL_NUIT.md`. Audit GLM v4 lu en entier : conjectures testées (correction de priorité : +0,65 pour le 4B, +13,8 pour l'encodeur à 6 époques ; leave-one-author-out en cours) ; plusieurs recommandations déjà dépassées par la mesure (époques : l'encodeur à 10 époques bat le TF-IDF), la suite du triage v4 est à écrire. Règle de relance de GLM (plafond 2, consignation) à adopter (N25).
+
+### 2026-10-04T02:14Z : reprise par surveilleur
+Graines de l'encodeur en cours (s3, s4), LOAO 13/66, 4B à 10 époques en file. Fait : table d'abstention par modèle (familles bien réglées indistinguables à 70 % de couverture), « classe jamais couverte » = AUTRE (0/18, exclue de la macro-F1). Choix : consigner le tout dans RESULTATS plutôt qu'ouvrir une nouvelle expérience tant que les graines ne sont pas là.

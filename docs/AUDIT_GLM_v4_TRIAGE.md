@@ -37,8 +37,8 @@ Source : `audit_GLM_v4.md` (04/10/2026, 8 axes, 40 corrections classées, 12 ver
 
 ## Axe E (incertitude)
 - E-c1 couverture par bloc CIM-10 : **écarté** (prédictions au niveau du chapitre) ; remplacé par la couverture par familles de chapitres, **planifié**.
-- E-c2 table d'abstention par modèle : **planifié** (données existantes : TF-IDF 0,931, encodeur 10 époques 0,946, 4B 0,892 à 70 % de couverture).
-- E-c3 Wilson sur « la classe jamais couverte » : **planifié**. E-c4 réserve d'échangeabilité : **fait** (gabarit). E-c5 simulation sur plis réels : **planifié**.
+- E-c2 table d'abstention par modèle : **fait** (RESULTATS ; les familles bien réglées ne se distinguent pas).
+- E-c3 Wilson sur « la classe jamais couverte » : **fait** (c'est `AUTRE`, 0/18 [0 ; 0,176], exclue de la macro-F1). E-c4 réserve d'échangeabilité : **fait** (gabarit). E-c5 simulation sur plis réels : **planifié**.
 - Ajout (issu de la mesure) : étalonner par plis d'auteurs donne 0,900 de couverture sous décalage ; intégré dans le service d'inférence du TF-IDF (`build_bundle.py`).
 
 ## Axe F (fuite et estimand)
