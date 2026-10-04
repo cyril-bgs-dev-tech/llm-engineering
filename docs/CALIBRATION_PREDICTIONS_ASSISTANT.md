@@ -1,6 +1,6 @@
 # Calibration des prédictions préenregistrées de l'assistant (audit GLM v4, B-c5)
 
-Les prédictions ont été écrites avant les résultats dans les fiches hachées (`experiments/`) ; l'issue est 1 si la prédiction s'est réalisée, 0 sinon. Liste limitée aux prédictions chiffrées d'une probabilité que j'ai pu retrouver (les prédictions de la première fiche TF-IDF, sans probabilité explicite, sont exclues).
+Les prédictions ont été écrites avant les résultats dans les fiches hachées (`experiments/`) ; l'issue est 1 si la prédiction s'est réalisée, 0 sinon. Liste limitée aux prédictions chiffrées d'une probabilité que j'ai pu retrouver (les prédictions de la première fiche TF-IDF, sans probabilité explicite, sont exclues). Mise à jour du 04/10 à 03h35Z.
 
 | Fiche | Prédiction | Probabilité | Issue | Brier |
 |---|---|---|---|---|
@@ -32,13 +32,19 @@ Les prédictions ont été écrites avant les résultats dans les fiches hachée
 | Fenêtres | Variante (b) dépasse 0,62 | 0.40 | 1 | 0.360 |
 | Saturation | 15 époques au moins égal à 10 époques (graine 1000, premier run) | 0.55 | 0 | 0.303 |
 | Saturation | Saturation avant 20 époques | 0.65 | 1 | 0.122 |
+| Graines encodeur | Écart-type entre graines entre 1,5 et 6 points | 0.70 | 1 | 0.090 |
+| Graines encodeur | La moyenne des 5 graines reste au-dessus du TF-IDF du pli 0 | 0.80 | 1 | 0.040 |
+| Confirmation pli 1 | L'ensemble dépasse le TF-IDF au pli 1 | 0.80 | 1 | 0.040 |
+| Confirmation pli 1 | IC de l'ensemble entièrement positif | 0.50 | 1 | 0.250 |
+| Confirmation pli 1 | Écart au pli 1 inférieur à celui du pli 0 | 0.65 | 0 | 0.423 |
+| Confirmation pli 1 | L'ensemble dépasse l'encodeur moyenné au pli 1 | 0.75 | 0 | 0.562 |
 
-**Score de Brier moyen : 0.230** sur 28 prédictions (0,25 = toujours 0,5 ; 0 = parfait). Probabilité moyenne annoncée 0.56 contre fréquence réalisée 0.64.
+**Score de Brier moyen : 0.231** sur 34 prédictions (0,25 = toujours 0,5 ; 0 = parfait). Probabilité moyenne annoncée 0.59 contre fréquence réalisée 0.65.
 
 | Tranche de probabilité | n | probabilité moyenne | fréquence réalisée |
 |---|---|---|---|
-| p≥0,7 | 5 | 0.74 | 0.80 |
-| 0,5 à 0,65 | 19 | 0.57 | 0.63 |
+| p≥0,7 | 9 | 0.75 | 0.78 |
+| 0,5 à 0,65 | 21 | 0.57 | 0.62 |
 | p<0,5 | 4 | 0.30 | 0.50 |
 
-Lecture : voir le Brier ci-dessus ; les prédictions sur « le LLM bat le TF-IDF » et « l'encodeur ne bat pas le TF-IDF » étaient fausses pour la même raison (recette gelée), et la méthode se corrige en notant d'abord l'incertitude sur la recette, pas seulement sur le modèle. Méthode : chaque prédiction reçoit une probabilité avant le run ; ce tableau est mis à jour à chaque lot.
+Lecture : le Brier proche de 0,25 dit que mes prédictions discriminent peu entre ce qui se réalise et ce qui échoue ; la calibration moyenne est correcte. Les erreurs les plus coûteuses portaient sur « le LLM bat le TF-IDF » et « l'encodeur ne bat pas le TF-IDF » (même cause : recette gelée). Méthode : chaque prédiction reçoit une probabilité avant le run ; ce tableau est mis à jour à chaque lot.
