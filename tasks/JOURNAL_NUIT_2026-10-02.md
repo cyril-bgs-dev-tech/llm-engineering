@@ -156,3 +156,6 @@ Fait : couverture conforme par famille (0,56 à 0,99 derrière 0,90 marginal), f
 
 ### 02:53Z : reprise par surveilleur
 Code du synthétique ciblé : plan de duplication, contrôle de lignée (source d'entraînement, étiquette de la source, classe cible) et détection de copies de la validation, 5 tests ; options --dup-targets et --dup-factor de p1_finetune (essai à blanc réussi). Génération non lancée (GPU réservé au 4B à 10 époques). LOAO 54/66.
+
+### 02:57Z : reprise par surveilleur
+Partitions répétées terminées : écart patient moins auteur 5,06 points en moyenne (4,7 ; 5,1 ; 5,3) avec classes réparties au mieux : pas un artefact de composition ; discrétisation = bruit, pas direction. LOAO 60/66.
