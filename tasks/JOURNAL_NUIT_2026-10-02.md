@@ -189,3 +189,6 @@ Page wiki des conclusions corrigées ajoutée (wiki 19 pages, vérifications ver
 
 ### 04:05Z : reprise par surveilleur
 4B à 10 époques : contrôle d'arrêt anticipé franchi (débit normal), en cours. Mémoire à jour.
+
+### 04:17Z : reprise par surveilleur
+Synthétique ciblé : invite, filtre, lignée testés (3 tests), script gen_synthetic.py (161 sources, 322 textes prévus au pli 0), option --synthetic de p1_finetune : **chemin non exercé de bout en bout** (le GPU est réservé au 4B) ; à essayer d'abord sur 1 époque d'encodeur quand le GPU sera libre. 4B en cours.
