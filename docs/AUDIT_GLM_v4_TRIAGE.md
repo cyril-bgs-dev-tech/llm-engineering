@@ -17,8 +17,8 @@ Source : `audit_GLM_v4.md` (04/10/2026, 8 axes, 40 corrections classées, 12 ver
 - A-c5 gabarit : **fait** (`docs/GABARIT_RAPPORT.md`).
 
 ## Axe B (protocole de validation)
-- B-c1 P1-19 cinq graines : **adopté et déplacé** vers l'encodeur (4 graines en file, 5 minutes chacune, pour 4,2 h le LoRA) ; ses prédictions alimentent RM-17 en EXPLORE (largeur d'IC mesurée sur l'encodeur, à dire).
-- B-c2 RM-17 : **code fait et testé** ; exécution sur les graines de l'encodeur dès qu'elles existent.
+- B-c1 P1-19 cinq graines : **fait sur l'encodeur** (0,7293 ± 0,0256 ; étendue 6,4 points) ; non fait sur le LoRA (4,2 h le run).
+- B-c2 RM-17 : **fait sur les graines de l'encodeur** : largeur moyenne 12,2 points contre 4,0, la règle échoue (EXPLORE).
 - B-c3 leave-one-author-out : **en file** (`tfidf-loao`).
 - B-c4 gabarit d'estimand : **fait**. B-c5 Brier de l'assistant : **fait** (`docs/CALIBRATION_PREDICTIONS_ASSISTANT.md` : Brier 0,23 sur 28 prédictions, à peine meilleur que 0,25).
 

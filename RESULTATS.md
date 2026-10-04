@@ -225,3 +225,19 @@ La conjecture de GLM (+2 à +8 points sur le 4B) **n'est pas soutenue** : la cor
 Les trois premières familles bien réglées ne se distinguent pas par la politique d'abstention (intervalles qui se recouvrent) : ce que l'encodeur gagne en macro-F1 vient des chapitres rares, pas du tri des cas faciles. Un renvoi de 30 % des patients à l'humain amène l'exactitude des cas traités à 0,93 environ ; mesuré en développement, jamais validé sur le test, et c'est la politique du modèle, non du système complet.
 
 « Classe jamais couverte » du TF-IDF (`q5-uncertainty-tfidf-chapter`, LAC 90 %) : c'est la classe `AUTRE` (18 patients au développement), couverture 0/18, Wilson [0 ; 0,176]. C'est la classe fourre-tout (chapitres VII, VIII, XVI et XVII fusionnés), **exclue de la macro-F1** ; ce n'est pas un défaut de couverture sur un chapitre évalué (les plus basses sont XXI avec 0,21 et IV avec 0,40, effectifs de 49 et 56 au développement : leurs intervalles de Wilson sont larges).
+
+## Cinq graines de l'encodeur à 10 époques et règle de puissance (fiche `2026-10-04-encodeur-saturation-et-graines`, EXPLORE, pli 0, 1e-4, graines 1000 à 1004)
+
+macro-F1 : 0,7714 ; 0,7079 ; 0,7175 ; 0,7148 ; 0,7349. **Moyenne 0,7293, écart-type 0,0256, étendue 6,4 points.** Prédiction de la fiche (écart-type entre 1,5 et 6 points, probabilité 0,7) : réalisée ; la moyenne des cinq graines reste au-dessus du TF-IDF du pli 0 (0,6971, probabilité 0,8) : réalisée en moyenne (+3,2 points) mais **aucune graine individuelle sauf la première n'est résolue** :
+
+| Graine | macro-F1 | contre TF-IDF v1 (0,6971) [IC 95 %] | contre TF-IDF caractères et poids équilibrés (0,7184) [IC 95 %] |
+|---|---|---|---|
+| 1000 | 0,7714 | +7,75 [+2,5 ; +13,4], p Holm 0,02 | +5,5 [+0,6 ; +10,7], p Holm 0,13 |
+| 1001 | 0,7079 | +1,3 [−4,8 ; +7,5] | −0,9 [−7,4 ; +5,3] |
+| 1002 | 0,7175 | +2,2 [−5,3 ; +9,5] | −0,0 [−7,0 ; +6,9] |
+| 1003 | 0,7148 | +2,2 [−3,9 ; +8,4] | −0,1 [−5,9 ; +5,9] |
+| 1004 | 0,7349 | +4,0 [−2,5 ; +10,6] | +1,8 [−4,1 ; +7,6] |
+
+**Correction de l'affirmation précédente** : à recette mûre, l'encodeur (0,73 en moyenne) et la meilleure recette du TF-IDF (0,72 sur le même pli) sont **équivalents** ; seul le premier tirage de l'encodeur sort du lot. Le « retournement » de la nuit est donc surtout : (1) la recette gelée à 2 époques sous-estimait fortement l'encodeur et les LLM (de 0,45 à 0,73) ; (2) le TF-IDF bien réglé est un concurrent à 20 Mo et 2 ms qui n'est pas dépassé de façon établie par un encodeur de 443 Mo à 190 ms.
+
+**Règle de puissance sur les cinq graines de l'encodeur** (`rm-17-power-rule-encodeur-ep10`, R = 10 000, graine de bootstrap 20261002, effectifs de strate du test scellé, EXPLORE ; ce n'est pas la règle du protocole, qui vise la LoRA de référence) : largeurs d'IC par paire de 10,4 à 14,1 points, **largeur moyenne 12,2 points contre un seuil de 4,0 : la règle échoue**, comme les simulations l'annonçaient (7,8 à 13,7). Conséquence : les comparaisons confirmatoires de cette famille seraient classées EXPLORE ; la largeur provient de la variabilité entre graines (écart-type 2,6 points) et de la taille des petits chapitres.
