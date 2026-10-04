@@ -21,7 +21,7 @@ import p1_04_06_tfidf
 import p1_finetune
 from llmft import evaluation
 from llmft.mini_registry import register_run
-from llmft.perturb import PERTURBATIONS
+from llmft.perturb import ABLATIONS, PERTURBATIONS
 
 
 def main() -> int:
@@ -42,7 +42,7 @@ def main() -> int:
     base.config.pad_token_id = pad_id
     model = PeftModel.from_pretrained(base, ROOT / "artifacts/adapters" / slug).to("cuda").eval()
     variants = {"propre": [texts[i] for i in te]}
-    for name, fn in PERTURBATIONS.items():
+    for name, fn in {**PERTURBATIONS, **ABLATIONS}.items():
         rng = random.Random(1000)
         variants[name] = [fn(texts[i], rng) for i in te]
     out = {}

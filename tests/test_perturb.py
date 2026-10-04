@@ -28,3 +28,25 @@ def test_uppercase_abbreviations_only_changes_case() -> None:
 
 def test_registry_lists_all_perturbations() -> None:
     assert set(PERTURBATIONS) == {"accents", "typos", "casse"}
+
+
+def test_tail_ablation_keeps_the_beginning_and_a_fraction_of_the_words() -> None:
+    from llmft.perturb import ABLATIONS
+
+    text = " ".join(f"m{i}" for i in range(100))
+    out = ABLATIONS["fin_retiree_30pct"](text, random.Random(0))
+    assert out.split() == [f"m{i}" for i in range(70)]
+
+
+def test_head_ablation_keeps_only_the_end() -> None:
+    from llmft.perturb import ABLATIONS
+
+    text = " ".join(f"m{i}" for i in range(100))
+    out = ABLATIONS["debut_retire_30pct"](text, random.Random(0))
+    assert out.split() == [f"m{i}" for i in range(30, 100)]
+
+
+def test_ablations_never_empty_a_text() -> None:
+    from llmft.perturb import ABLATIONS
+
+    assert ABLATIONS["fin_retiree_30pct"]("un", random.Random(0)) == "un"

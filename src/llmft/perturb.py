@@ -27,3 +27,19 @@ def uppercase_abbreviations(text: str, rng: random.Random) -> str:
 
 
 PERTURBATIONS: dict[str, Callable[[str, random.Random], str]] = {"accents": drop_accents, "typos": swap_typos, "casse": uppercase_abbreviations}
+
+
+def _drop_tail(text: str, rng: random.Random) -> str:
+    del rng
+    words = text.split(" ")
+    return " ".join(words[: max(1, round(0.7 * len(words)))])
+
+
+def _drop_head(text: str, rng: random.Random) -> str:
+    del rng
+    words = text.split(" ")
+    return " ".join(words[round(0.3 * len(words)) :]) if len(words) > 1 else text
+
+
+# Ablations de contenu (la conclusion et le diagnostic sont souvent en fin de compte rendu) : même interface, évaluées avec les mêmes scripts que les perturbations de forme
+ABLATIONS: dict[str, Callable[[str, random.Random], str]] = {"fin_retiree_30pct": _drop_tail, "debut_retire_30pct": _drop_head}
