@@ -180,3 +180,6 @@ File de travail mise à jour ; 4B à 10 époques en cours.
 
 ### 03:54Z : reprise par surveilleur
 Référence des commandes générée (docs/COMMANDES.md, 61 scripts). Témoin d'activité opérationnel (silence.log). 4B à 10 époques en cours.
+
+### 04:00Z : reprise par surveilleur
+Cahier d'audit GLM v5 préparé (docs/BRIEF_GLM_v5_audit_second_cycle.md ; non envoyé ; la ligne du 4B à 10 époques sera complétée au résultat). 4B en cours.
