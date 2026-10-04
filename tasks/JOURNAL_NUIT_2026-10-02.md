@@ -253,3 +253,6 @@ Pli 4 de l'encodeur : 3 runs sur 5, fin vers 16h01Z. scripts/post_plis_3_et_4.sh
 
 ### 16:06Z : reprise par surveilleur
 Plis 3 et 4 terminés (10 encodeurs). Ensemble moins TF-IDF : +6,71 [+3,61 ; +10,42] (pli 3), +4,69 [+1,85 ; +7,68] (pli 4) ; cinq plis regroupés +5,20 [+3,69 ; +6,78]. REGLE v2 PASSE : largeur 3,09 (95 %), 3,78 (98,33 %) ; encodeur seul 4,55 (ne passe pas). pooled_interval ajouté (testé), v2_power_preview sort les écarts. Consigné : RESULTATS, protocole v2, rapport, brief v5, présentation, PREUVES. LoRA plis 2 à 4 démarré à 16:01Z (pli 2 d'abord, fin vers 19:35Z).
+
+### 16:13Z : reprise par surveilleur
+RM-32 préparé sans toucher aux fichiers utilisés par le lot LoRA en cours (p1_finetune.py, lora_train.py inchangés) : src/llmft/distill.py (perte alpha*CE+(1-alpha)*T²*KL, oof_teacher_map strict, require_teacher, train_distilled) avec 7 tests analytiques ; scripts/p3_distill.py (élève encodeur, professeur par plis hors pli, empreintes des fichiers de professeur) ; fumée CPU réussie (1 pas, professeur de substitution = ensembles d'encodeurs, sans enregistrement). Réserve consignée dans distill.py : le professeur du pli j a vu le pli k de validation de l'élève (second ordre) ; seul le test scellé en est exempt. Fiche RM-32 à écrire quand les cinq plis du LoRA seront là (professeur = graine 1000 de chaque pli).
