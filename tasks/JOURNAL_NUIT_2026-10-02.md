@@ -325,3 +325,6 @@ Rien à consigner (LoRA pli 2 en cours, GPU 94 %, fin vers 19:30Z).
 
 ### 18:49Z : présentation mise à jour (demande de Cyril)
 13 diapositives : état au 4 octobre, références (ensemble +5,2 sur cinq plis, règle v2), nouvelle diapositive incertitude (conforme par famille, abstention), ingénierie (342 tests, 178 runs, 40 fiches hachées), matériel (INT8 sélectif, cascade, 21,7 h sur 90), autonomie (26 règles), feuille de route, notes 6,9 (perf 6, rigueur 8, incertitude 7 ; efficience 5) ; PREUVES.md lignes 28 à 30 et révision.
+
+### 18:51Z : reprise par surveilleur
+Rien à consigner (LoRA pli 2 en cours, GPU 94 %, fin vers 19:30Z). Journaux archivés.
