@@ -440,6 +440,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P4-09 | Front de Pareto | |
 | RM-38 | Encodeur quantifié correctement (statique, sélectif, ONNX) | L'INT8 dynamique naïf a effondré le modèle (0,336) |
 | RM-39 | Robustesse des modèles appris : perturbations, ablations de contenu, leave-one-author-out | Le TF-IDF à caractères est déjà insensible |
+| RM-40 | Cascade par seuil de confiance (TF-IDF, encodeur, LoRA) : calcul alloué selon la difficulté du cas | Aperçu hors ligne : 50 à 80 % des cas sans le LoRA, sans perte de macro-F1 ; seuil à valider sur plis distincts |
 
 ### Étape R15 : industrialisation
 
@@ -515,7 +516,7 @@ Appliqués dans `MICROTACHES.md`, sans renuméroter :
 
 ### Amendements du 04/10/2026 (mesures du premier cycle, audits GLM v3 et v4)
 
-- **15 tâches ajoutées sans renuméroter** (RM-25 à RM-39) : 12 ★ (références à recette mûre, discrétisation et auteur, LoRA mûr sur deux puis cinq plis, règle de puissance v2, ancrage externe, distillation vers l'encodeur, conforme par famille, mesures et service, rapport, acceptation du protocole v2) et 3 non ★ (9B mûr, quantification correcte, robustesse des modèles appris). Chemin court : 104 ★ sur 174.
+- **16 tâches ajoutées sans renuméroter** (RM-25 à RM-40) : 12 ★ (références à recette mûre, discrétisation et auteur, LoRA mûr sur deux puis cinq plis, règle de puissance v2, ancrage externe, distillation vers l'encodeur, conforme par famille, mesures et service, rapport, acceptation du protocole v2) et 4 non ★ (9B mûr, quantification correcte, robustesse des modèles appris, cascade par seuil de confiance). Chemin court : 104 ★ sur 175.
 - **Motif** : la recette gelée à 2 époques sous-estimait fortement les modèles appris (encodeur 0,448 contre 0,73 ; LoRA 0,587 contre 0,78), la règle de puissance v1 échoue (12,2 points contre 4,0), le meilleur TF-IDF bat la référence v1 de 3,65 points, et l'évaluation sur un pli est trop bruitée (cinq classes portent 85 % de la variance).
 - **Protocole** : le protocole v1 reste gelé ; `docs/PROTOCOLE_V2_BROUILLON.md` et l'ADR-015 décrivent la suite, à accepter par Cyril (RM-37) avant tout run du second cycle et avant RM-20.
 - **Tâches déjà réalisées à l'ajout** : RM-25, RM-26, RM-27, RM-36.

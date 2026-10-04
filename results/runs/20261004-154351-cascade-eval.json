@@ -1,0 +1,263 @@
+{
+  "created_at": "2026-10-04T15:43:51Z",
+  "kind": "measure",
+  "metrics": {
+    "pli0": {
+      "cascades": {
+        "encodeur_vers_lora": [
+          {
+            "latence_moyenne_ms": 963.2,
+            "macro_f1": 0.7794,
+            "part_traitee_par_le_premier": 0.93,
+            "seuil": 0.5
+          },
+          {
+            "latence_moyenne_ms": 974.7,
+            "macro_f1": 0.8018,
+            "part_traitee_par_le_premier": 0.831,
+            "seuil": 0.7
+          },
+          {
+            "latence_moyenne_ms": 982.3,
+            "macro_f1": 0.7978,
+            "part_traitee_par_le_premier": 0.767,
+            "seuil": 0.8
+          },
+          {
+            "latence_moyenne_ms": 988.3,
+            "macro_f1": 0.7963,
+            "part_traitee_par_le_premier": 0.715,
+            "seuil": 0.9
+          },
+          {
+            "latence_moyenne_ms": 994.3,
+            "macro_f1": 0.7949,
+            "part_traitee_par_le_premier": 0.664,
+            "seuil": 0.95
+          },
+          {
+            "latence_moyenne_ms": 1043.8,
+            "macro_f1": 0.7947,
+            "part_traitee_par_le_premier": 0.241,
+            "seuil": 0.99
+          }
+        ],
+        "tfidf_vers_encodeur": [
+          {
+            "latence_moyenne_ms": 103.1,
+            "macro_f1": 0.726,
+            "part_traitee_par_le_premier": 0.894,
+            "seuil": 0.5
+          },
+          {
+            "latence_moyenne_ms": 227.0,
+            "macro_f1": 0.7402,
+            "part_traitee_par_le_premier": 0.764,
+            "seuil": 0.7
+          },
+          {
+            "latence_moyenne_ms": 300.3,
+            "macro_f1": 0.7423,
+            "part_traitee_par_le_premier": 0.688,
+            "seuil": 0.8
+          },
+          {
+            "latence_moyenne_ms": 398.8,
+            "macro_f1": 0.7324,
+            "part_traitee_par_le_premier": 0.584,
+            "seuil": 0.9
+          },
+          {
+            "latence_moyenne_ms": 496.0,
+            "macro_f1": 0.7329,
+            "part_traitee_par_le_premier": 0.483,
+            "seuil": 0.95
+          },
+          {
+            "latence_moyenne_ms": 695.8,
+            "macro_f1": 0.7331,
+            "part_traitee_par_le_premier": 0.273,
+            "seuil": 0.99
+          }
+        ],
+        "tfidf_vers_lora": [
+          {
+            "latence_moyenne_ms": 14.3,
+            "macro_f1": 0.7415,
+            "part_traitee_par_le_premier": 0.894,
+            "seuil": 0.5
+          },
+          {
+            "latence_moyenne_ms": 29.5,
+            "macro_f1": 0.7683,
+            "part_traitee_par_le_premier": 0.764,
+            "seuil": 0.7
+          },
+          {
+            "latence_moyenne_ms": 38.5,
+            "macro_f1": 0.7791,
+            "part_traitee_par_le_premier": 0.688,
+            "seuil": 0.8
+          },
+          {
+            "latence_moyenne_ms": 50.5,
+            "macro_f1": 0.7857,
+            "part_traitee_par_le_premier": 0.584,
+            "seuil": 0.9
+          },
+          {
+            "latence_moyenne_ms": 62.4,
+            "macro_f1": 0.7857,
+            "part_traitee_par_le_premier": 0.483,
+            "seuil": 0.95
+          },
+          {
+            "latence_moyenne_ms": 86.9,
+            "macro_f1": 0.7947,
+            "part_traitee_par_le_premier": 0.273,
+            "seuil": 0.99
+          }
+        ]
+      },
+      "encodeur": 0.7331,
+      "lora": 0.7947,
+      "tfidf": 0.7184
+    },
+    "pli1": {
+      "cascades": {
+        "encodeur_vers_lora": [
+          {
+            "latence_moyenne_ms": 962.7,
+            "macro_f1": 0.7443,
+            "part_traitee_par_le_premier": 0.935,
+            "seuil": 0.5
+          },
+          {
+            "latence_moyenne_ms": 970.0,
+            "macro_f1": 0.7538,
+            "part_traitee_par_le_premier": 0.872,
+            "seuil": 0.7
+          },
+          {
+            "latence_moyenne_ms": 979.1,
+            "macro_f1": 0.7604,
+            "part_traitee_par_le_premier": 0.794,
+            "seuil": 0.8
+          },
+          {
+            "latence_moyenne_ms": 986.9,
+            "macro_f1": 0.7493,
+            "part_traitee_par_le_premier": 0.727,
+            "seuil": 0.9
+          },
+          {
+            "latence_moyenne_ms": 998.5,
+            "macro_f1": 0.7456,
+            "part_traitee_par_le_premier": 0.628,
+            "seuil": 0.95
+          },
+          {
+            "latence_moyenne_ms": 1044.5,
+            "macro_f1": 0.742,
+            "part_traitee_par_le_premier": 0.235,
+            "seuil": 0.99
+          }
+        ],
+        "tfidf_vers_encodeur": [
+          {
+            "latence_moyenne_ms": 205.4,
+            "macro_f1": 0.7413,
+            "part_traitee_par_le_premier": 0.787,
+            "seuil": 0.5
+          },
+          {
+            "latence_moyenne_ms": 394.3,
+            "macro_f1": 0.752,
+            "part_traitee_par_le_premier": 0.589,
+            "seuil": 0.7
+          },
+          {
+            "latence_moyenne_ms": 502.0,
+            "macro_f1": 0.7509,
+            "part_traitee_par_le_premier": 0.476,
+            "seuil": 0.8
+          },
+          {
+            "latence_moyenne_ms": 633.7,
+            "macro_f1": 0.7532,
+            "part_traitee_par_le_premier": 0.338,
+            "seuil": 0.9
+          },
+          {
+            "latence_moyenne_ms": 770.7,
+            "macro_f1": 0.7532,
+            "part_traitee_par_le_premier": 0.195,
+            "seuil": 0.95
+          },
+          {
+            "latence_moyenne_ms": 940.9,
+            "macro_f1": 0.7532,
+            "part_traitee_par_le_premier": 0.017,
+            "seuil": 0.99
+          }
+        ],
+        "tfidf_vers_lora": [
+          {
+            "latence_moyenne_ms": 26.8,
+            "macro_f1": 0.7336,
+            "part_traitee_par_le_premier": 0.787,
+            "seuil": 0.5
+          },
+          {
+            "latence_moyenne_ms": 50.0,
+            "macro_f1": 0.7413,
+            "part_traitee_par_le_premier": 0.589,
+            "seuil": 0.7
+          },
+          {
+            "latence_moyenne_ms": 63.2,
+            "macro_f1": 0.7443,
+            "part_traitee_par_le_premier": 0.476,
+            "seuil": 0.8
+          },
+          {
+            "latence_moyenne_ms": 79.3,
+            "macro_f1": 0.7415,
+            "part_traitee_par_le_premier": 0.338,
+            "seuil": 0.9
+          },
+          {
+            "latence_moyenne_ms": 96.1,
+            "macro_f1": 0.7415,
+            "part_traitee_par_le_premier": 0.195,
+            "seuil": 0.95
+          },
+          {
+            "latence_moyenne_ms": 116.9,
+            "macro_f1": 0.7415,
+            "part_traitee_par_le_premier": 0.017,
+            "seuil": 0.99
+          }
+        ]
+      },
+      "encodeur": 0.7532,
+      "lora": 0.7415,
+      "tfidf": 0.6886
+    }
+  },
+  "params": {
+    "thresholds": [
+      0.5,
+      0.7,
+      0.8,
+      0.9,
+      0.95,
+      0.99
+    ]
+  },
+  "run_id": "20261004-154351-cascade-eval",
+  "schema": "mini-1",
+  "slug": "cascade-eval",
+  "status": "ok",
+  "summary": "Cascade TF-IDF, encodeur, LoRA par seuil de confiance (hors ligne, plis 0 et 1)"
+}

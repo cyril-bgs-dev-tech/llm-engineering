@@ -241,3 +241,6 @@ Feuille de route amendée (roadmap_unifié.md §7, MICROTACHES.md) : 15 tâches 
 
 ### 15:40Z : reprise par surveilleur
 Harnais de développement : fonction de lancement partagée scripts/lib/lot.sh (code de sortie capturé avant affichage, essais plafonnés et consignés, DEJA au registre, arrêt sur code non relançable), 5 tests ; à utiliser pour tout nouveau lot (N25). Plis 3 et 4 de l'encodeur en cours (graine 1004 du pli 3 faite, pli 4 à venir).
+
+### 15:44Z : reprise par surveilleur
+Remarque de Cyril sur la gestion dynamique du contexte traitée : cascade par seuil de confiance (scripts/cascade_eval.py, run cascade-eval, RM-40 ajouté) et lecture des mesures existantes sur la longueur de contexte (RESULTATS). Plis 3 et 4 : 6 encodeurs sur 10.

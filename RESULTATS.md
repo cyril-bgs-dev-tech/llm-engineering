@@ -427,3 +427,24 @@ Graine 1001 : **macro-F1 0,7893**, exactitude 0,863, log loss 0,770, 12 665 s ; 
 | Ensemble des trois (LoRA 2 graines, encodeur, TF-IDF) | 0,7819 | +6,5 [+3,1 ; +10,5] | n/a |
 
 **Au pli 0, avec la graine 1001 comme avec la moyenne de deux graines, le LoRA mûr dépasse l'encodeur moyenné de façon résolue (+5,75 à +6,4 points)**, ce que la graine 1000 seule ne montrait pas (+4,9, non résolu) ; au pli 1 (une graine) le LoRA était équivalent à l'encodeur (−1,1). Lecture mesurée : le LoRA mûr est **au moins équivalent et probablement meilleur** que l'encodeur moyenné d'environ +2 à +6 points selon le pli et la graine ; il reste dix fois plus coûteux à entraîner. Incertitude de la graine 1001 : ECE 0,107 brute et 0,033 après température, couverture conforme LAC 0,897 avec 1,135 classe par ensemble, exactitude 0,899 à 90 %, 0,939 à 80 %, 0,964 à 70 % de couverture, comme la graine 1000. Prédictions de la fiche : l'écart entre les deux graines inférieur à 3 points (0,6) : réalisé ; la graine 1001 donne moins que la graine 1000 (0,6) : non ; encodeur moyenné au-dessus du TF-IDF au pli 2 (0,8) : réalisé en valeur.
+
+## Allocation dynamique du calcul à l'inférence : cascade par seuil de confiance (`cascade-eval`, `scripts/cascade_eval.py`, hors ligne sur prédictions hors pli existantes, plis 0 et 1, EXPLORE ; remarque de Cyril sur la gestion dynamique du contexte)
+
+Un modèle bon marché répond quand sa probabilité maximale dépasse τ ; sinon le cas passe au modèle suivant. Latences de référence mesurées : TF-IDF 1,9 ms (CPU), encodeur 191 ms par modèle (CPU), LoRA 117 ms (GPU).
+
+| Cascade (seuil τ) | pli 0 : part traitée par le premier / macro-F1 | pli 1 : part traitée par le premier / macro-F1 |
+|---|---|---|
+| LoRA seul (référence) | 0,7947 (deux graines moyennées) | 0,7415 |
+| TF-IDF → LoRA, τ = 0,8 | 69 % / 0,7791 | 48 % / **0,7443** |
+| TF-IDF → LoRA, τ = 0,9 | 58 % / 0,7857 | 34 % / 0,7415 |
+| **Encodeur moyenné → LoRA, τ = 0,8** | **77 % / 0,7978** | **79 % / 0,7604** |
+| Encodeur moyenné → LoRA, τ = 0,7 | 83 % / **0,8018** | 87 % / 0,7538 |
+| Encodeur moyenné seul | 0,7331 | 0,7532 |
+
+**Entre 50 % et 80 % des patients n'ont pas besoin du LoRA, sans perte de macro-F1** : la cascade encodeur → LoRA à τ = 0,8 est au niveau du LoRA seul ou au-dessus (0,7978 contre 0,7947 ; 0,7604 contre 0,7415) en appelant le LoRA pour 21 à 23 % des patients ; la cascade TF-IDF → LoRA perd de 0,6 à 1,4 point au pli 0 mais fait mieux au pli 1 en n'appelant le LoRA que pour 31 à 66 % des cas. Un seuil de 0,8 est « bon » aux deux plis ; **il n'a pas été choisi sur un pli et appliqué à l'autre** (exploratoire) : la validation propre choisit τ sur un pli et le rapporte sur les autres. Cela signale une piste d'efficience peu coûteuse (aucun entraînement) pour le déploiement : routage selon la confiance, avec l'abstention conforme comme garde-fou. À confirmer sur cinq plis quand le LoRA mûr y sera (RM-28).
+
+### Gestion dynamique du contexte : ce que les mesures existantes disent déjà (lecture, sans nouveau run)
+
+- **Gain de qualité attendu faible** : seuls 9 patients sur 3 586 dépassent la fenêtre du modèle (aucun dans les chapitres rares) ; l'encodeur lisant tout le dossier par fenêtres de 510 tokens ne s'améliore pas (gain nul à 6 époques, perte à 10 époques, `encodeur-fenetres`).
+- **Gain d'efficience possible, non mesuré** : regroupement des dossiers par longueur (bucketing) et troncature adaptative réduisent le calcul inutile à l'entraînement et au service ; ils changent le budget de la comparaison, donc à tester sur un lot jouet avant tout run préenregistré (déjà noté en C7-A5 de l'audit v3).
+- **Piste nouvelle plus rentable** : l'allocation dynamique du calcul entre modèles (cascade, section précédente), qui économise 50 à 80 % des appels au LoRA sans perte de macro-F1 sur les deux plis mesurés. Un test de longueur de contexte du LoRA (P1-15, 512 contre 1 024 tokens) reste dans le chemin complet ; il ne sera lancé que si la cascade ne suffit pas à la cible d'efficience.

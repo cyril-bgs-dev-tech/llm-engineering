@@ -336,6 +336,7 @@ Ces tâches viennent du point fait le 01/10/2026 (voir `roadmap_unifié.md`, sec
 | RM-37 | ★ | décision | Acceptation du protocole v2 (ADR-015) par Cyril avant tout run du second cycle et avant l'ouverture du test scellé | Q2 Q3 | doubt-driven-development | Décision datée de Cyril, ADR mise à jour ; protocole v1 gelé inchangé | RM-29 |
 | RM-38 |  | mesure | Encodeur quantifié correctement (quantification statique avec étalonnage ou sélective, ONNX si utile) ; perte de macro-F1 inférieure à 1 point sinon abandon | Q8 | performance-optimization, paired-comparison | Run `quantization-*` ; tableau qualité contre latence contre taille | RM-25 |
 | RM-39 |  | mesure | Robustesse des modèles appris : perturbations de forme, ablations de contenu (fin ou début retirés), leave-one-author-out de l'encodeur ; adaptateur ou poids sauvegardés | Q4 | paired-comparison, leakage-guard | Runs `robustness-*` ; courbes de dégradation | RM-27, RM-25 |
+| RM-40 |  | mesure | Allocation dynamique du calcul : cascade TF-IDF, encodeur, LoRA par seuil de confiance ; seuil choisi sur un pli et rapporté sur les autres ; latence moyenne et part de cas escaladés ; abstention conforme comme garde-fou | Q8 Q9 | performance-optimization, paired-comparison | Run `cascade-eval` ; seuil préenregistré avant le pli de contrôle ; coût moyen par patient | RM-28, RM-34 |
 
 ---
 
