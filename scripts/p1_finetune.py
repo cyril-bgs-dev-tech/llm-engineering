@@ -31,6 +31,7 @@ from llmft import evaluation, failures, last_token, lora_train
 from llmft.fingerprint import dir_sha256
 from llmft.mini_registry import register_run
 from llmft.quant import load_kwargs
+from llmft.windowed import WindowedClassifier
 
 
 def build_inputs(tok: Any, texts: list[str], max_len: int) -> list[list[int]]:
@@ -110,6 +111,7 @@ def main() -> int:
     ap.add_argument("--limit-seconds", type=float, default=0.0, help="arrêt anticipé : limite de durée projetée (1,5 fois l'estimation de la fiche) ; 0 = aucune")
     ap.add_argument("--class-weights", choices=["none", "inv-sqrt"], default="none", help="perte pondérée par classe en 1/√n (exploration Q19, fiche à part) ; none = référence")
     ap.add_argument("--quant", choices=["none", "nf4"], default="none", help="QLoRA : chargement 4 bits NF4 pour les modèles de 24 à 31 milliards de paramètres")
+    ap.add_argument("--windows", action="store_true", help="encodeur par fenêtres de 510 tokens sur tout le dossier (mode full, voie A) ; passer --max-len 4096")
     ap.add_argument("--fiche", default="")
     ap.add_argument("--slug", required=True)
     ap.add_argument("--register", action="store_true")
@@ -135,6 +137,11 @@ def main() -> int:
         tr = tr[order]
     torch.manual_seed(a.seed)
     model, route = load_model(a.model, a.mode, len(labels), pad_id, a.rank, a.alpha, a.quant)
+    if a.windows:
+        if a.mode != "full" or route != "A":
+            raise SystemExit("--windows : mode full et voie A seulement")
+        prefix, suffix = lora_train.special_affixes(tok.encode)
+        model = WindowedClassifier(model, prefix[0], suffix[-1], pad_id, window=510)
     if a.quant == "none":
         model = model.to("cuda")
     elif route == "B":  # le modèle quantifié est déjà sur le GPU (device_map) ; la tête linéaire, créée ensuite, est sur le processeur
