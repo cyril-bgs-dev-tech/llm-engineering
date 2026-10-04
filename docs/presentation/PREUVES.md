@@ -23,16 +23,16 @@ Statuts : **prouvé** (renvoie à un run, un fichier ou une commande), **estimat
 
 | Composante | Projet | Open source | Absolu | Raison de la note du projet |
 |---|---|---|---|---|
-| Performance du modèle | 4 | 8 | 9 | TF-IDF 0,68 ; encodeur 0,45 sous-entraîné ; Qwen3.5-4B 0,587 et Qwen3.5-9B 0,565 sur le pli 0, sous le TF-IDF ; aucun LLM ne le bat à ce jour (P1-11 terminé, élève Qwen3.5-4B) |
+| Performance du modèle | 5 | 8 | 9 | TF-IDF 0,68 ; encodeur 0,45 sous-entraîné ; Qwen3.5-4B 0,587 et Qwen3.5-9B 0,565 sur le pli 0, sous le TF-IDF ; aucun LLM ne le bat à ce jour (P1-11 terminé, élève Qwen3.5-4B) |
 | Rigueur statistique et protocole | 7 | 8 | 9 | protocole gelé et haché, test scellé, bootstrap apparié, puissance simulée ; mais une graine au développement, premier cycle non confirmatoire |
 | Données et anti-fuite | 6 | 8 | 10 | contrôles de fuite et raccourci d'auteur mesuré ; mais corpus fictif, pas de données réelles |
-| Fiabilité de l'incertitude | 5 | 7 | 9 | **révisée de 1 à 4 le 03/10** : calibration, conforme (LAC, APS, par classe, Wilson) et sélectif implémentés, validés sur données synthétiques (14 tests) et mesurés sur le TF-IDF avec test de décalage (run `q5-uncertainty-tfidf-chapter`) ; reste : LLM, politique d'abstention chiffrée, hors distribution, test scellé (Q5 de G-P0 = 0 avant) |
-| Analyse d'erreurs et robustesse | 5 | 7 | 9 | **révisée de 3 à 4 le 03/10** : confusions, composition expliquant le creux de longueur, perturbations (−5,6 points sans accents), hors spécialité (0,52) et sous-groupes, tous sur TF-IDF ; la robustesse des LLM n'est pas mesurée |
+| Fiabilité de l'incertitude | 6 | 7 | 9 | **révisée de 1 à 4 le 03/10** : calibration, conforme (LAC, APS, par classe, Wilson) et sélectif implémentés, validés sur données synthétiques (14 tests) et mesurés sur le TF-IDF avec test de décalage (run `q5-uncertainty-tfidf-chapter`) ; reste : LLM, politique d'abstention chiffrée, hors distribution, test scellé (Q5 de G-P0 = 0 avant) |
+| Analyse d'erreurs et robustesse | 6 | 7 | 9 | **révisée de 3 à 4 le 03/10** : confusions, composition expliquant le creux de longueur, perturbations (−5,6 points sans accents), hors spécialité (0,52) et sous-groupes, tous sur TF-IDF ; la robustesse des LLM n'est pas mesurée |
 | Reproductibilité et ingénierie | 7 | 8 | 9 | environnement verrouillé, typage strict, 245 tests, registre ; reconstruction à froid non testée |
 | Efficience et déploiement | 5 | 8 | 10 | mesures de VRAM et de débit ; pas de latence p95, pas de service testé en charge (Q8, Q9 de G-P0 = 1) |
 | Sûreté, conformité, honnêteté | 8 | 7 | 9 | **révisée de 7 à 8 le 03/10** : carte de modèle provisoire, gabarit de rapport, deux audits indépendants consignés (GLM v2, v3), journal des accès au test scellé ; pas encore de revue humaine externe |
 
-Moyennes : projet 47 / 8 = 5,9 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4. Ces trois colonnes sont des jugements ; seule la colonne « projet » s'appuie sur des preuves du dépôt, et même elle reste une note d'auto-évaluation sans confirmation indépendante (aucune note 3 à G-P0).
+Moyennes : projet 50 / 8 = 6,3 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4. Ces trois colonnes sont des jugements ; seule la colonne « projet » s'appuie sur des preuves du dépôt, et même elle reste une note d'auto-évaluation sans confirmation indépendante (aucune note 3 à G-P0).
 
 | 14 | Qwen3.5-9B 0,565 ; Gemma-4-E4B 0,456 (1e-4) et 0,142 (1e-5) ; écarts −13,2 et +10,9 points | runs `20261003-163427-p1-11-qwen3-5-9b-lr1e-4`, `20261003-152759-p1-11-gemma-4-e4b-lr1e-4`, `20261003-174127-p1-11-gemma-4-e4b-lr1e-5` et comparaisons appariées du pli 0 | prouvé (pli 0 seulement, criblage inachevé) |
 
@@ -48,3 +48,7 @@ Moyennes : projet 47 / 8 = 5,9 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4.
 | 21 | Service TF-IDF : 20,4 Mo, p50 1,9 ms, p95 4,0 ms, 568 patients/s | run `bench-serving-tfidf-charbal-v1` | prouvé (CPU, 200 patients du développement) |
 | 22 | Qwen3.5-4B LoRA à 10 époques : 0,7795 (+19,3 sur 2 époques) ; +6,4 [+2,0 ; +11,4] contre le meilleur TF-IDF ; +4,9 [−0,35 ; +10,5] contre l'encodeur moyenné | runs `llm-mur2-qwen3-5-4b-ep10-lr1e-4`, `llm-mur2-minus-4b-2ep-fold0`, `llm10-et-ensembles-minus-tfidf-variant-char-balanced` | prouvé (pli 0, une graine, EXPLORE) |
 | 23 | LoRA mûr au pli 1 : 0,7415 ; +5,3 [+0,75 ; +9,95] contre le TF-IDF ; −1,1 [−6,0 ; +4,0] contre l'encodeur moyenné | runs `llm-mur-pli1-qwen3-5-4b-ep10-lr1e-4`, `pli1-llm10-et-ensembles-minus-pli1-tfidf-charbal` | prouvé (pli 1, une graine, EXPLORE) |
+
+**Révision du 04/10 à 11h30Z (estimations, ±1)** : Performance 4 → 5 (LoRA mûr 0,7795 et 0,7415 sur deux plis, encodeur moyenné 0,73 et 0,75, tous deux au-dessus du meilleur TF-IDF de 4 à 6 points ; toujours EXPLORE, une graine pour le LoRA, aucun verdict confirmatoire, pas de comparaison à un état de l'art externe) ; Fiabilité de l'incertitude 5 → 6 (LoRA mûr : ECE 0,028 et 0,034 après température, 1,15 classe par ensemble, 0,96 d'exactitude à 70 % de couverture, sur deux plis ; réserves : couverture par famille hétérogène, un modèle à une graine) ; Analyse d'erreurs et robustesse 5 → 6 (LoRA mûr insensible aux trois perturbations testées, plafond d'erreur, leave-one-author-out, discrétisation). Rigueur, données, reproductibilité, efficience et honnêteté inchangées.
+
+| 24 | Robustesse du LoRA mûr : accents −0,5, fautes +1,6, casse −1,3 (bruit de mesure) ; TF-IDF −5,6 sans accents | run `robustness-llm-mur2-qwen3-5-4b-ep10-lr1e-4`, `results/measures/glm_v3_perturb_tfidf.json` | prouvé (pli 0, une graine) |
