@@ -153,3 +153,6 @@ Partitions répétées, graine 1 : patient 0,6364 contre groupé par auteur (Str
 
 ### 02:47Z : reprise par surveilleur
 Fait : couverture conforme par famille (0,56 à 0,99 derrière 0,90 marginal), fiche hachée du synthétique ciblé (EXPLORE, après le 4B). LOAO 50/66, partitions répétées 3/6, 4B à 10 époques en cours (fin vers 06h30Z). Choix : fiche avant code pour la génération synthétique (règle de préenregistrement).
+
+### 02:53Z : reprise par surveilleur
+Code du synthétique ciblé : plan de duplication, contrôle de lignée (source d'entraînement, étiquette de la source, classe cible) et détection de copies de la validation, 5 tests ; options --dup-targets et --dup-factor de p1_finetune (essai à blanc réussi). Génération non lancée (GPU réservé au 4B à 10 époques). LOAO 54/66.
