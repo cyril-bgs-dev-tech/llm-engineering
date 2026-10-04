@@ -1,0 +1,19 @@
+{
+ "modele": "camembert-deploy-ep10-lr1e-4",
+ "threads": 8,
+ "n_latence": 200,
+ "fp32": {
+  "macro_f1": 0.7362,
+  "accuracy": 0.8298,
+  "latence_ms_p50": 190.8,
+  "latence_ms_p95": 210.0,
+  "taille_approx_mo": 443
+ },
+ "int8_dynamique": {
+  "macro_f1": 0.3356,
+  "accuracy": 0.5272,
+  "latence_ms_p50": 118.4,
+  "latence_ms_p95": 137.4,
+  "taille_approx_mo": 25
+ }
+}
