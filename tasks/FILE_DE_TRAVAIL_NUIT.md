@@ -23,7 +23,7 @@ Mise à jour le 04/10/2026 (audit GLM v4 intégré ; règle de sélection : info
 
 ## Idées de Cyril à instruire (04/10)
 - Lire `split-check.out` (écart patient contre auteur sur partitions répétées, variance par classe) et consigner : part de l'écart due à la discrétisation des petites classes.
-- Sur-échantillonnage ciblé des chapitres rares : d'abord par duplication et poids (déjà testé : perte pondérée sans effet à 2 époques), puis données synthétiques avec lignée (P2-10 ciblé, fiche à écrire, EXPLORE, comparaison à la duplication).
+- Sur-échantillonnage ciblé des chapitres rares : fiche écrite et hachée (`2026-10-04-synthetique-cible-chapitres-rares`) ; code de génération et contrôle de lignée à écrire après le 4B à 10 époques (tests d'abord).
 
 ## Après libération du GPU (sans décision humaine)
 - Robustesse du 4B et de l'encodeur par inférence (perturbations) ; latence de l'encodeur (p50, p95) ; export INT8 mesuré.

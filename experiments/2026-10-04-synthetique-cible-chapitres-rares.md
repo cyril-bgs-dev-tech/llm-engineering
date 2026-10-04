@@ -1,0 +1,13 @@
+# Fiche préenregistrée : données synthétiques ciblées sur les chapitres rares, contre sur-échantillonnage par duplication (P2-10 ciblé, EXPLORE)
+
+Écrite avant tout code de génération et avant tout résultat. Idée de Cyril (04/10) ; point P2-10 du backlog (données synthétiques avec lignée, contrôle de fuite).
+
+- **question** : des comptes rendus synthétiques des chapitres IV, V, XII, XXI et XXII, générés à partir des seuls patients d'entraînement, améliorent-ils la macro-F1 de l'encodeur mûr sur des patients réels, au-delà d'un simple sur-échantillonnage par duplication ?
+- **référence** : encodeur CamemBERT-bio 10 époques, 1e-4, pli 0, cinq graines : 0,7293 ± 0,0256 (`camembert-recette-lr1e-4-ep10`, `camembert-graine-ep10-s1` à `s4`).
+- **variantes** (trois bras, cinq graines chacun, mêmes plis) : (a) **duplication** : chaque patient des cinq classes ciblées apparaît 3 fois dans l'entraînement ; (b) **synthétique** : 2 textes synthétiques par patient ciblé (même volume que (a)), générés par le LLM local le plus apte du dépôt à partir de ce patient seul, chaque texte portant l'identifiant de sa source ; (c) référence sans ajout (déjà mesurée).
+- **règles de fuite** (`leakage-guard`) : source = patient du pli d'entraînement uniquement ; l'identifiant de la source est vérifié contre la carte patient → pli ; aucun texte synthétique n'entre dans la validation ; test scellé jamais lu ; génération sans accès aux étiquettes de validation.
+- **jeux et découpage** : développement, pli 0 pour la mesure ; un second pli (pli 1) pour confirmer si le bras (b) paraît gagner ; évaluation sur patients réels uniquement.
+- **métrique principale** : macro-F1 du pli (17 chapitres) moyennée sur les cinq graines ; secondaires : F1 des cinq classes ciblées, exactitude, log loss équilibrée.
+- **critère de décision** : différence des moyennes sur cinq graines avec IC de bootstrap sur patients (même tirage pour les deux bras) ; « amélioration » seulement si le bras (b) dépasse la référence et le bras (a) d'au moins δ = 2,0 points avec borne basse positive ; sinon « non résolu » ; EXPLORE, aucun statut confirmatoire.
+- **budget** : génération : environ 300 textes de 1 300 tokens (quatre chapitres sur cinq ont moins de 60 patients) avec un LLM local en HF `generate` : environ 1,5 h de GPU (à mesurer au pré-vol) ; entraînements : 10 runs d'encodeur de 4 minutes ; au plus 2,5 h au total, **après** le Qwen3.5-4B à 10 époques.
+- **prédiction** : (b) dépasse la référence de plus de δ avec IC positif (probabilité 0,2) ; (a) dépasse la référence (probabilité 0,35) ; (b) dépasse (a) (probabilité 0,45) ; au moins un texte synthétique sur cinq porte un artefact de style détectable (stylométrie séparant réel et synthétique à plus de 0,9, probabilité 0,7).
