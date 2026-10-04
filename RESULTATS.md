@@ -146,3 +146,11 @@ TF-IDF 0,697 ; TF-IDF + CamemBERT-bio 6 époques 0,659 [différence avec le TF-I
 | **Caractères (3 à 5) et poids équilibrés** | **0,7202** | **+3,65** | **[+1,94 ; +5,48]** | **0,0** | `tfidf-variant-char-balanced` |
 
 La combinaison n'est pas la somme des effets : seule elle améliore la référence, de façon résolue (borne basse positive, gain supérieur à δ = 2,0). Critère de la fiche : « amélioration » (EXPLORE ; la référence confirmatoire v1 ne change pas, une promotion exige une nouvelle version du protocole). Prédiction de la fiche (une variante améliore de plus de δ avec borne basse positive : probabilité 0,2) : réalisée. **La référence bon marché la plus forte est donc à 0,720, et l'écart avec le Qwen3.5-4B (0,587 au pli 0, TF-IDF 0,697 au même pli) s'élargit.** Le réglage de C est sur la grille réduite {10, 100, 1 000} ; les plis sont les mêmes que pour la référence. Coût : 13 minutes de CPU.
+
+## Plafond d'erreur par accord entre modèles (pli 0, 717 patients, développement, agrégats ; EXPLORE)
+
+Exactitude au pli 0 : TF-IDF 0,824 ; TF-IDF caractères et poids équilibrés 0,828 ; CamemBERT-bio 6 époques 0,809 ; Qwen3.5-4B 0,789 ; 9B 0,788 ; Gemma-4-E4B 0,689. **Au moins un des six modèles est juste pour 91,8 % des patients ; tous se trompent pour 8,2 % ; tous sont justes pour 59,6 %.** Les 8,2 % d'erreurs communes représentent 48 % des erreurs du meilleur modèle : près de la moitié de ses erreurs ne sont corrigées par aucun autre modèle, ce qui évoque une ambiguïté d'étiquette (diagnostic principal rival) plutôt qu'un défaut de modèle. Un vote majoritaire des six modèles donne 0,824, sans gain. Plafond utile d'un empilement : entre 0,83 et 0,92 d'exactitude, à ne pas confondre avec un résultat.
+
+## Étalonnage conforme par plis d'auteurs (audit : fiabilité de l'incertitude sous décalage ; TF-IDF, probabilités hors pli par auteur, α = 0,10)
+
+Étalonner sur quatre plis groupés par auteur et évaluer sur le cinquième : couverture LAC par pli 0,869 ; 0,895 ; 0,920 ; 0,909 ; 0,907, **moyenne 0,900**, 1,44 classe par ensemble (APS : 0,899, 12,6 classes). Contre 0,887 quand l'étalonnage vient des plis par patient et l'évaluation des plis par auteur (décalage). Étalonner par auteur rétablit la couverture visée sous décalage d'auteur, au prix d'une variabilité entre plis de 5 points.
