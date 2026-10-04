@@ -19,9 +19,9 @@ PARHAF, comptes rendus fictifs en français : 4 254 patients, 3 586 au développ
 | CamemBERT-bio, 10 époques, 5 graines | 0,7293 ± 0,0256 (pli 0), 0,7475 (pli 1) | plis 0 et 1 | p50 191 ms, 443 Mo (CPU, 8 threads) |
 | Encodeur, moyenne de 5 graines | 0,7331 (pli 0), 0,7532 (pli 1) | plis 0 et 1 | 5 × 191 ms |
 | Qwen3.5-4B LoRA, 2 époques | 0,587 | pli 0 | p50 117 ms, GPU, 15,5 Gio |
-| **Qwen3.5-4B LoRA, 10 époques** | **0,7795** (une graine ; +6,4 [+2,0 ; +11,4] contre le meilleur TF-IDF, +4,9 [−0,35 ; +10,5] contre l'encodeur moyenné) | pli 0 | 12 467 s d'entraînement, GPU, p50 117 ms (à 2 époques, même architecture) |
+| **Qwen3.5-4B LoRA, 10 époques** | **0,7795** (pli 0) et **0,7415** (pli 1), une graine ; contre le meilleur TF-IDF : +6,4 [+2,0 ; +11,4] et +5,3 [+0,75 ; +9,95] ; contre l'encodeur moyenné : +4,9 [−0,35 ; +10,5] et −1,1 [−6,0 ; +4,0] | plis 0 et 1 | 3,5 h d'entraînement par pli ; inférence p50 117 ms sur GPU (même architecture) |
 
-Écarts de l'encodeur moyenné contre le meilleur TF-IDF : +1,5 point (pli 0, non résolu) et +6,4 [+0,8 ; +12,1] (pli 1). L'ensemble 50/50 encodeur et TF-IDF n'apporte rien sur l'encodeur moyenné (+3,0 puis −0,2). L'ensemble LoRA mûr + encodeur moyenné fait 0,7926 (+6,1 [+1,2 ; +11,4] contre l'encodeur moyenné). Qwen3.5-9B, Gemma-4-E4B : 0,565 et 0,456 à 2 époques ; le 31B à 2 époques a été annulé (durée projetée 6 h).
+Écarts de l'encodeur moyenné contre le meilleur TF-IDF : +1,5 point (pli 0, non résolu) et +6,4 [+0,8 ; +12,1] (pli 1). L'ensemble 50/50 encodeur et TF-IDF n'apporte rien sur l'encodeur moyenné (+3,0 puis −0,2). Les ensembles (LoRA + encodeur : 0,7926 au pli 0, 0,7603 au pli 1) n'apportent pas de gain établi sur le meilleur composant. **Sur deux plis, le LoRA mûr et l'encodeur moyenné battent le meilleur TF-IDF de 4 à 6 points et sont statistiquement équivalents entre eux, pour un coût d'entraînement environ dix fois plus élevé du LoRA ; l'avantage mesuré du LoRA est la sélectivité (exactitude 0,960 et 0,964 à 70 % de couverture, contre 0,946 pour l'encodeur).** Qwen3.5-9B, Gemma-4-E4B : 0,565 et 0,456 à 2 époques ; le 31B à 2 époques a été annulé (durée projetée 6 h).
 
 ## 4. Ce qui n'a pas marché (publié)
 Perte pondérée 1/√n sur le 4B (−2,3 [−5,3 ; +1,5]) ; hiérarchie des blocs CIM-10 comme supervision (−4,0 ou −1,05) ; ensembles de modèles sous-entraînés ; encodeur par fenêtres sur tout le dossier (+0,3 à 6 époques, −6,8 à 10) ; taux 2e-4 ; quantification INT8 dynamique naïve (macro-F1 0,336) ; test de taille 31B à 2 époques (arrêt anticipé).
@@ -33,7 +33,7 @@ Encodeur 10 époques : ECE 0,106 brute, 0,050 après température ; conforme LAC
 TF-IDF : sans accents −5,6 points ; fautes de frappe −0,7 ; hors spécialité 0,522 d'exactitude. Les erreurs traversent les familles (96 %) ; au moins un des six modèles est juste pour 91,8 % des patients, tous se trompent pour 8,2 % (probable ambiguïté d'étiquette). La robustesse des modèles appris n'est pas mesurée.
 
 ## 7. Ce que nous ne savons pas
-Si l'avantage du LoRA mûr tient sur d'autres graines et un second pli (pli 1 en cours) ; si un modèle plus grand change la conclusion (non testé à recette mûre) ; si l'avantage de l'encodeur tient sur les trois autres plis et sur le test ; la généralisation à de nouveaux auteurs de l'encodeur ; la latence et la qualité d'un encodeur quantifié correctement ; l'apport de données synthétiques ciblées (fiche écrite, non exécutée).
+Si l'avantage du LoRA mûr tient sur d'autres graines (une graine seulement) ; si un modèle plus grand change la conclusion (non testé à recette mûre) ; si l'avantage de l'encodeur tient sur les trois autres plis et sur le test ; la généralisation à de nouveaux auteurs de l'encodeur ; la latence et la qualité d'un encodeur quantifié correctement ; l'apport de données synthétiques ciblées (fiche écrite, non exécutée).
 
 ## 8. Limites
 Un pli ou deux, quelques graines ; cinq chapitres de 27 à 63 patients portent 85 % de la variance de la macro-F1 (écart-type bootstrap de 1,3 point sur 3 586 prédictions) ; non-déterminisme GPU (à graine égale, 0,7714 puis 0,7362) ; corpus fictif.
