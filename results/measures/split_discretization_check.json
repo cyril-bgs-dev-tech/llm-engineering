@@ -1,0 +1,41 @@
+{
+ "sd_macro_f1_bootstrap_points": 1.3,
+ "part_de_variance_par_classe": {
+  "XXII": 0.261,
+  "XII": 0.208,
+  "XXI": 0.165,
+  "IV": 0.136,
+  "V": 0.082,
+  "VI": 0.04,
+  "I": 0.034,
+  "XVIII": 0.023,
+  "XIX": 0.016,
+  "XIII": 0.01,
+  "III": 0.006,
+  "IX": 0.006,
+  "XIV": 0.005,
+  "XI": 0.003,
+  "X": 0.003,
+  "XV": 0.003,
+  "II": 0.001
+ },
+ "part_des_cinq_plus_petites_classes": 0.851,
+ "partitions_repetees": {
+  "patient": [
+   0.6364,
+   0.6408,
+   0.6428
+  ],
+  "auteur": [
+   0.5894,
+   0.5894,
+   0.5894
+  ],
+  "ecart_patient_moins_auteur_points": [
+   4.7,
+   5.14,
+   5.34
+  ],
+  "ecart_moyen_points": 5.06
+ }
+}
