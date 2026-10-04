@@ -6,7 +6,7 @@ run_lot() {
   local log="$1" slug="$2" max="$3"; shift 3
   local runs_dir="${RUNS_DIR:-results/runs}" retry="${RETRY_CODES:-1 134 139}" attempt code=0
   for attempt in $(seq 1 "$max"); do
-    if ls "$runs_dir" 2>/dev/null | grep -q -- "-$slug.json"; then echo "$(date -u +%FT%TZ) DEJA $slug" >> "$log"; return 0; fi
+    if ls "$runs_dir" 2>/dev/null | grep -Eq -- "^[0-9]{8}-[0-9]{6}-${slug//./\\.}\.json$"; then echo "$(date -u +%FT%TZ) DEJA $slug" >> "$log"; return 0; fi
     echo "$(date -u +%FT%TZ) DEBUT $slug essai=$attempt" >> "$log"
     "$@"
     code=$?

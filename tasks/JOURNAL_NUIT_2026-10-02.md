@@ -286,3 +286,6 @@ make_tables.py : section « systèmes hors pli à cinq plis » recalculée depui
 
 ### 17:07Z : reprise par surveilleur
 RM-32 préparé de bout en bout : fiche hachée experiments/2026-10-04-distillation-vers-encodeur.md (bras professeur LoRA et bras ensemble, alpha_kd 0,5 et T 2 fixés non réglés, trois graines, cinq plis, 30 runs, réserve de second ordre déclarée) ; lot scripts/run_distillation_encodeur.sh lancé en détaché (attend TERMINE23). Chaîne GPU de nuit : LoRA plis 2-4 (en cours) puis service LoRA et zéro-shot, service encodeur, distillation (2,5 h).
+
+### 17:16Z : reprise par surveilleur
+Relecture de mon code du jour : lot.sh reconnaissait un run déjà au registre par suffixe (un slug court pouvait être masqué par un slug plus long) ; corrigé par motif ancré (horodatage + slug exact), test ajouté. Les lots déjà lancés ont chargé l'ancienne version, sans risque (slugs uniques). LoRA pli 2 en cours.

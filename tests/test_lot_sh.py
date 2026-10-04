@@ -36,3 +36,8 @@ def test_attempts_are_capped_and_the_failure_is_declared(tmp_path) -> None:
 def test_run_already_in_the_registry_is_skipped(tmp_path) -> None:
     rc, log = _run(tmp_path, 'touch "$RUNS_DIR/20260101-000000-a.json"; run_lot "$LOG" a 3 bash -c "exit 1"')
     assert rc == 0 and "DEJA" in log and "DEBUT" not in log
+
+
+def test_a_registered_run_with_a_longer_slug_does_not_hide_a_shorter_one(tmp_path) -> None:
+    rc, log = _run(tmp_path, 'touch "$RUNS_DIR/20260101-000000-camembert-pli2.json"; run_lot "$LOG" pli2 1 bash -c "exit 0"')
+    assert rc == 0 and "DEBUT" in log and "DEJA" not in log
