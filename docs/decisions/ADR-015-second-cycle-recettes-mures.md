@@ -14,6 +14,8 @@ Statut : **proposée** le 04/10/2026 (audit GLM v4, décision déléguée Q20 et
 4. **Conserver** : test scellé à ouverture unique en deux temps, métrique primaire macro-F1 sur 17 chapitres, δ = 2,0 (à réviser seulement si la largeur à cinq plis reste au-dessus de 4 points), verdict en trois valeurs, fiches hachées avant les runs.
 5. **Professeur de distillation** : conditionné à un pilote sur l'encodeur (le professeur est le LLM mûr, l'élève l'encodeur ou le TF-IDF) et à la règle de puissance du second cycle ; aucun run de professeur avant.
 
+6. **Petites classes (idée de Cyril, 04/10)** : (a) partitions de contrôle par auteur à classes réparties explicitement (`StratifiedGroupKFold`, graines répétées) et métriques moins sensibles à la discrétisation (log loss équilibrée, intervalle de bootstrap par classe) ; (b) levier **P2-10 ciblé** : données synthétiques des chapitres rares (IV, V, XII, XXI, XXII), générées **uniquement à partir de patients du pli d'entraînement**, chaque texte portant l'identifiant de sa source (contrôle de fuite `leakage-guard`), comparées en EXPLORE à un simple sur-échantillonnage par duplication pour séparer « plus d'exemples » et « contenu nouveau » ; évaluation sur patients réels seulement.
+
 ## Conséquences
 Le coût estimé du second cycle tombe à quelques heures de GPU pour les familles bon marché (cinq plis × cinq graines × 4 minutes ≈ 1,7 h par recette d'encodeur) ; le LLM mûr ajoute environ 4,2 h par run de 10 époques (4B). Le premier cycle reste classé EXPLORE et ses résultats sont publiés tels quels (recette gelée à 2 époques sous-estimée, mesure faite).
 

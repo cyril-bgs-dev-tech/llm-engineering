@@ -21,6 +21,10 @@ Mise à jour le 04/10/2026 (audit GLM v4 intégré ; règle de sélection : info
 7. Rapports : gabarit rempli pour l'encodeur mûr ; claim-gate sur chaque sortie.
 8. Réserves : tests de couverture par bloc CIM-10 (audit E-c1), simulation de couverture par classe sur les plis réels (E-c5).
 
+## Idées de Cyril à instruire (04/10)
+- Lire `split-check.out` (écart patient contre auteur sur partitions répétées, variance par classe) et consigner : part de l'écart due à la discrétisation des petites classes.
+- Sur-échantillonnage ciblé des chapitres rares : d'abord par duplication et poids (déjà testé : perte pondérée sans effet à 2 époques), puis données synthétiques avec lignée (P2-10 ciblé, fiche à écrire, EXPLORE, comparaison à la duplication).
+
 ## Après libération du GPU (sans décision humaine)
 - Robustesse du 4B et de l'encodeur par inférence (perturbations) ; latence de l'encodeur (p50, p95) ; export INT8 mesuré.
 - Si le 4B à 10 époques rattrape l'encodeur : une fiche de test de taille à recette mûre (coût estimé environ 20 h pour le 31B : décision de Cyril, jamais lancée seule).
