@@ -355,3 +355,6 @@ Rien à consigner (LoRA pli 3 en cours, fin vers 23:35Z).
 
 ### 20:37Z : présentation mise à jour (demande de Cyril)
 LoRA pli 2 (0,779, non résolu), TF-IDF souple (15 % de l'écart), huit leviers d'efficience dans la feuille de route, compteurs (349 tests, 185 runs, 41 fiches hachées, 25,4 h sur 90) ; PREUVES.md lignes 31 et 32 ; notes inchangées (6,9).
+
+### 20:51Z : reprise par surveilleur
+Rien à consigner (LoRA pli 3 en cours, fin vers 23:35Z). Journaux archivés.
