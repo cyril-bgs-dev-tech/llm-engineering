@@ -277,3 +277,6 @@ RM-38 : quantize_eval_encoder.py --selective (INT8 sans tête, FFN seulement, at
 
 ### 16:59Z : reprise par surveilleur
 RM-38 consigné : INT8 sélectif de l'encodeur ; effondrement dû au feed-forward (0,35), attention seule 0,723 (−1,3, +11 % vitesse) ; dynamique non retenue ; reste statique/GPU.
+
+### 17:01Z : reprise par surveilleur
+RM-34 complété : scripts/bench_encoder_gpu.py (fp32 et bf16, latence, débit, énergie) et lot scripts/run_encoder_gpu.sh lancé en détaché (attend TERMINE22). Mesure sans hypothèse ni seuil (la fiche ancrage-zero-shot-et-service-lora reste figée ; mesure descriptive, consignée comme telle). Chaîne GPU : LoRA plis 2-4, puis service LoRA et zéro-shot, puis service encodeur.
