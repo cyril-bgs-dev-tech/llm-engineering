@@ -42,7 +42,7 @@ Source : `audit_GLM_v4.md` (04/10/2026, 8 axes, 40 corrections classées, 12 ver
 - Ajout (issu de la mesure) : étalonner par plis d'auteurs donne 0,900 de couverture sous décalage ; intégré dans le service d'inférence du TF-IDF (`build_bundle.py`).
 
 ## Axe F (fuite et estimand)
-- F-c1 leave-one-author-out : **en file**. F-c2 sur le LLM : **planifié**. F-c3 déclencheur exécutable dans la fiche Q18 : **fait** (ADR-013 : écart patient/auteur du candidat final ; ajout du leave-one-author-out comme mesure). F-c4 patient et auteur côte à côte : **adopté**. F-c5 seuil de quasi-doublons : **fait** (9, 45, 171 paires, presque toutes du même auteur).
+- F-c1 leave-one-author-out : **fait** (0,6185 ; l'effet d'auteur pur vaut environ 2 points ; le reste de l'écart des plis groupés est un rétrécissement de l'entraînement). F-c2 sur le LLM : **planifié**. F-c3 déclencheur exécutable dans la fiche Q18 : **fait** (ADR-013 : écart patient/auteur du candidat final ; ajout du leave-one-author-out comme mesure). F-c4 patient et auteur côte à côte : **adopté**. F-c5 seuil de quasi-doublons : **fait** (9, 45, 171 paires, presque toutes du même auteur).
 
 ## Axe G (ingénierie)
 - G-c1 déclaration de reproductibilité : **fait** (gabarit). G-c2 relances plafonnées et consignées : **adopté** (N25). G-c3 journaux dans le dépôt : **planifié** (copie des journaux de lot sous `results/logs/`). G-c4 deuxième rejeu : **écarté** (le rejeu de l'encodeur a déjà donné un deuxième point de bruit : 0,7714 → 0,7362). G-c5 rendu hebdomadaire des écarts : **planifié**.

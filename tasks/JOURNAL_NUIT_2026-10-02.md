@@ -159,3 +159,6 @@ Code du synthétique ciblé : plan de duplication, contrôle de lignée (source 
 
 ### 02:57Z : reprise par surveilleur
 Partitions répétées terminées : écart patient moins auteur 5,06 points en moyenne (4,7 ; 5,1 ; 5,3) avec classes réparties au mieux : pas un artefact de composition ; discrétisation = bruit, pas direction. LOAO 60/66.
+
+### 02:59Z : reprise par surveilleur
+LOAO terminé : 0,6185 ; signature d'auteur pure environ 2 points (écart des plis groupés surtout dû au rétrécissement de l'entraînement) ; ADR-013 et triage mis à jour. Reste en file : 4B à 10 époques (fin vers 06h30Z), puis synthétique ciblé.

@@ -16,3 +16,5 @@ Rien à faire tant qu'aucun déclencheur n'est atteint. Mesure à produire d'abo
 
 ## Mesure ajoutée le 04/10/2026 (audit GLM v4, F-c1)
 Le leave-one-author-out sur le TF-IDF (`scripts/loao_tfidf.py`, run `tfidf-loao`) est la mesure « nouveaux auteurs » qui opérationnalise la lecture « fuite » : proche de 0,6844 (l'auteur n'aide pas), proche de 0,6457 (signature d'auteur), ou intermédiaire. Elle précède toute décision de basculement.
+
+**Résultat (04/10/2026)** : leave-one-author-out du TF-IDF = 0,6185 (66 auteurs, 3 234 patients) ; à configuration égale, 2,2 à 2,4 points sous les plis par patient, 3 points au-dessus des plis de cinq groupes d'auteurs. Lecture : signature d'auteur d'environ 2 points ; le reste de l'écart des plis groupés est un rétrécissement de l'entraînement. Le déclencheur « écart supérieur à 3 points » se mesure désormais en leave-one-author-out sur le candidat final ; il n'est pas atteint pour le TF-IDF.
