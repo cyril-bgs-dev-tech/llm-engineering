@@ -46,7 +46,10 @@ def main() -> int:
     labels = sorted(set(y))
     te = np.where(folds == fold)[0][: limit or None]
     tok = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.bfloat16).to(device).eval()
+    model, info = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.bfloat16, output_loading_info=True)
+    if info["missing_keys"]:  # des poids manquants seraient initialisés au hasard : le zéro-shot n'aurait aucun sens
+        raise SystemExit(f"poids manquants au chargement : {sorted(info['missing_keys'])[:5]}")
+    model = model.to(device).eval()
     letters = zeroshot.class_letters(len(classes))
     letter_ids = [tok.encode(lt, add_special_tokens=False)[0] for lt in letters]
     marker = tok.encode("[...]", add_special_tokens=False)

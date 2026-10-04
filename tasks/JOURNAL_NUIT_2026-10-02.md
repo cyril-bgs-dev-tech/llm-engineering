@@ -304,3 +304,6 @@ ADR-015 (proposée) complétée avec les résultats à cinq plis et la chaîne p
 
 ### 17:40Z : reprise par surveilleur
 Brief GLM v5 mis à jour (cinq plis, règle v2, conforme par famille, abstention, cascade, INT8 sélectif, chaîne préenregistrée) ; toujours non envoyé (décision de Cyril).
+
+### 17:51Z : reprise par surveilleur
+Vérifié avant le lot : Qwen3.5-4B et 9B se chargent en Qwen3_5ForCausalLM sans clé manquante (4B vérifié à vide), le gabarit désactive la réflexion, les lettres A à R sont des jetons uniques ; garde ajoutée dans zero_shot.py (refus si poids manquants ; lot pas encore démarré). Fumée CPU reprise.
