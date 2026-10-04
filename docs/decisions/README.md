@@ -18,3 +18,4 @@ Une décision structurante, un fichier `ADR-NNN-titre.md`, jamais supprimé : un
 | ADR-012 | Porte RM-15 après les références : GO conditionnel au criblage P1-11 (décision de nuit) | RM-15 | Acceptée provisoirement, à confirmer par Cyril |
 | ADR-013 | Scénario de repli : plis groupés par auteur comme estimand principal (préparé, déclencheurs écrits d'avance) | RM-14, Q18 | Proposée, non appliquée |
 | ADR-014 | Élève retenu : Qwen3.5-4B (P1-12, règle ADR-009 telle qu'écrite ; écart avec le 9B non résolu, le moins coûteux est retenu) | P1-12 | Acceptée provisoirement, à confirmer par Cyril |
+| ADR-015 | Second cycle : recettes mûres et budget de réglage égal par famille (proposée, protocole gelé inchangé) | Q20, Q21 | Proposée, non appliquée |
