@@ -1,5 +1,7 @@
 # Carte de modèle provisoire (mise à jour le 04/10/2026)
 
+> **Remplacée le 04/10/2026 par `docs/CARTE_DE_MODELE_V3.md`** (la présente version reste pour l'historique et pour la checklist TRIPOD-LLM).
+
 Statut : **EXPLORE, développement seulement**. Le test scellé n'a jamais été ouvert ; aucun verdict confirmatoire n'existe. Tâche : chapitre CIM-10 du diagnostic principal, PARHAF (cas fictifs en français, 4 254 patients, 17 chapitres comparés, `AUTRE` exclue de la moyenne). Aucune donnée de patient réel. Sources des chiffres : `RESULTATS.md`.
 
 ## Modèles évalués
