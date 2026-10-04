@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import p1_04_06_tfidf  # chargement des étiquettes de développement, même fonction que les références TF-IDF
-from llmft import evaluation, failures, last_token, lora_train
+from llmft import augment, evaluation, failures, last_token, lora_train
 from llmft.fingerprint import dir_sha256
 from llmft.mini_registry import register_run
 from llmft.quant import load_kwargs
@@ -113,6 +113,8 @@ def main() -> int:
     ap.add_argument("--quant", choices=["none", "nf4"], default="none", help="QLoRA : chargement 4 bits NF4 pour les modèles de 24 à 31 milliards de paramètres")
     ap.add_argument("--windows", action="store_true", help="encodeur par fenêtres de 510 tokens sur tout le dossier (mode full, voie A) ; passer --max-len 4096")
     ap.add_argument("--save-model", action="store_true", help="mode full : sauvegarde les poids et le tokenizer dans artifacts/models/<slug> (candidat de déploiement)")
+    ap.add_argument("--dup-targets", default="", help="chapitres sur-échantillonnés par duplication (fiche du synthétique ciblé), séparés par des virgules")
+    ap.add_argument("--dup-factor", type=int, default=1, help="nombre total d'occurrences de chaque patient d'une classe ciblée dans l'entraînement")
     ap.add_argument("--fiche", default="")
     ap.add_argument("--slug", required=True)
     ap.add_argument("--register", action="store_true")
@@ -126,6 +128,11 @@ def main() -> int:
     labels = sorted(set(y))
     idx = np.array([labels.index(v) for v in y])
     tr, te = np.where(folds != a.fold)[0], np.where(folds == a.fold)[0]
+    if a.dup_factor > 1:
+        targets = {c for c in a.dup_targets.split(",") if c}
+        by_pos = {int(i): str(y[i]) for i in tr}
+        plan = augment.duplication_plan([str(i) for i in tr], {str(i): by_pos[int(i)] for i in tr}, targets, a.dup_factor)
+        tr = np.array([int(i) for i in plan])
     tok = AutoTokenizer.from_pretrained(a.model)
     pad_id = tok.pad_token_id if tok.pad_token_id is not None else tok.eos_token_id
     t_tok = time.time()
