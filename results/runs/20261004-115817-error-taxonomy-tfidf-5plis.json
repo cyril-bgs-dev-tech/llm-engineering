@@ -1,0 +1,201 @@
+{
+  "created_at": "2026-10-04T11:58:17Z",
+  "kind": "measure",
+  "metrics": {
+    "erreurs": 638,
+    "erreurs_confiantes": 65,
+    "erreurs_confiantes_par_chapitre": {
+      "I": 2,
+      "II": 11,
+      "IX": 2,
+      "VI": 6,
+      "XIII": 2,
+      "XIV": 2,
+      "XIX": 4,
+      "XVIII": 25,
+      "XXI": 8,
+      "XXII": 1
+    },
+    "exactitude_top1": 0.8221,
+    "exactitude_top2": 0.9261,
+    "n": 3586,
+    "paires_les_plus_frequentes": [
+      {
+        "n": 36,
+        "predit": "XIV",
+        "vrai": "II"
+      },
+      {
+        "n": 27,
+        "predit": "X",
+        "vrai": "XVIII"
+      },
+      {
+        "n": 27,
+        "predit": "VI",
+        "vrai": "XVIII"
+      },
+      {
+        "n": 26,
+        "predit": "IX",
+        "vrai": "XVIII"
+      },
+      {
+        "n": 25,
+        "predit": "XI",
+        "vrai": "II"
+      },
+      {
+        "n": 22,
+        "predit": "XIV",
+        "vrai": "XVIII"
+      },
+      {
+        "n": 14,
+        "predit": "V",
+        "vrai": "VI"
+      },
+      {
+        "n": 14,
+        "predit": "XVIII",
+        "vrai": "VI"
+      },
+      {
+        "n": 13,
+        "predit": "XVIII",
+        "vrai": "II"
+      },
+      {
+        "n": 13,
+        "predit": "XI",
+        "vrai": "XVIII"
+      },
+      {
+        "n": 13,
+        "predit": "I",
+        "vrai": "XIV"
+      },
+      {
+        "n": 12,
+        "predit": "IX",
+        "vrai": "VI"
+      }
+    ],
+    "par_specialite": {
+      "anatomopathologie": {
+        "n": 329,
+        "top1": 1.0,
+        "top2": 1.0
+      },
+      "cancero adulte": {
+        "n": 435,
+        "top1": 0.989,
+        "top2": 1.0
+      },
+      "cardiologie": {
+        "n": 83,
+        "top1": 0.807,
+        "top2": 0.952
+      },
+      "chir ortho et traumato": {
+        "n": 208,
+        "top1": 0.88,
+        "top2": 0.942
+      },
+      "chirurgie viscerale": {
+        "n": 255,
+        "top1": 0.949,
+        "top2": 0.984
+      },
+      "gynecologie": {
+        "n": 182,
+        "top1": 0.824,
+        "top2": 0.973
+      },
+      "hematologie clinique": {
+        "n": 131,
+        "top1": 0.916,
+        "top2": 0.969
+      },
+      "hepato-gastro-entero": {
+        "n": 144,
+        "top1": 0.736,
+        "top2": 0.91
+      },
+      "maladies infectieuses": {
+        "n": 241,
+        "top1": 0.793,
+        "top2": 0.954
+      },
+      "medecine geriatrique": {
+        "n": 133,
+        "top1": 0.541,
+        "top2": 0.684
+      },
+      "medecine inter-specialites": {
+        "n": 64,
+        "top1": 0.625,
+        "top2": 0.781
+      },
+      "medecine interne": {
+        "n": 185,
+        "top1": 0.676,
+        "top2": 0.827
+      },
+      "medecine pediatrique": {
+        "n": 71,
+        "top1": 0.521,
+        "top2": 0.69
+      },
+      "nephrologie": {
+        "n": 87,
+        "top1": 0.644,
+        "top2": 0.839
+      },
+      "neurologie": {
+        "n": 217,
+        "top1": 0.585,
+        "top2": 0.843
+      },
+      "obstetrique": {
+        "n": 149,
+        "top1": 0.946,
+        "top2": 0.98
+      },
+      "pneumologie": {
+        "n": 448,
+        "top1": 0.779,
+        "top2": 0.92
+      },
+      "urologie": {
+        "n": 150,
+        "top1": 0.793,
+        "top2": 0.947
+      }
+    },
+    "par_tercile_de_longueur": {
+      "court": {
+        "n": 1197,
+        "top1": 0.877,
+        "top2": 0.952
+      },
+      "long": {
+        "n": 1192,
+        "top1": 0.815,
+        "top2": 0.92
+      },
+      "moyen": {
+        "n": 1197,
+        "top1": 0.774,
+        "top2": 0.906
+      }
+    },
+    "part_des_erreurs_confiantes": 0.102
+  },
+  "params": {},
+  "run_id": "20261004-115817-error-taxonomy-tfidf-5plis",
+  "schema": "mini-1",
+  "slug": "error-taxonomy-tfidf-5plis",
+  "status": "ok",
+  "summary": "Taxonomie d'erreurs sur cinq plis (TF-IDF caractères et poids)"
+}

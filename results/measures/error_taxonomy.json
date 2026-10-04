@@ -1,0 +1,191 @@
+{
+ "n": 3586,
+ "exactitude_top1": 0.8221,
+ "exactitude_top2": 0.9261,
+ "erreurs": 638,
+ "erreurs_confiantes": 65,
+ "part_des_erreurs_confiantes": 0.102,
+ "paires_les_plus_frequentes": [
+  {
+   "vrai": "II",
+   "predit": "XIV",
+   "n": 36
+  },
+  {
+   "vrai": "XVIII",
+   "predit": "X",
+   "n": 27
+  },
+  {
+   "vrai": "XVIII",
+   "predit": "VI",
+   "n": 27
+  },
+  {
+   "vrai": "XVIII",
+   "predit": "IX",
+   "n": 26
+  },
+  {
+   "vrai": "II",
+   "predit": "XI",
+   "n": 25
+  },
+  {
+   "vrai": "XVIII",
+   "predit": "XIV",
+   "n": 22
+  },
+  {
+   "vrai": "VI",
+   "predit": "V",
+   "n": 14
+  },
+  {
+   "vrai": "VI",
+   "predit": "XVIII",
+   "n": 14
+  },
+  {
+   "vrai": "II",
+   "predit": "XVIII",
+   "n": 13
+  },
+  {
+   "vrai": "XVIII",
+   "predit": "XI",
+   "n": 13
+  },
+  {
+   "vrai": "XIV",
+   "predit": "I",
+   "n": 13
+  },
+  {
+   "vrai": "VI",
+   "predit": "IX",
+   "n": 12
+  }
+ ],
+ "erreurs_confiantes_par_chapitre": {
+  "XVIII": 25,
+  "II": 11,
+  "XXI": 8,
+  "VI": 6,
+  "XIX": 4,
+  "XIII": 2,
+  "XIV": 2,
+  "I": 2,
+  "IX": 2,
+  "XXII": 1
+ },
+ "par_tercile_de_longueur": {
+  "court": {
+   "n": 1197,
+   "top1": 0.877,
+   "top2": 0.952
+  },
+  "moyen": {
+   "n": 1197,
+   "top1": 0.774,
+   "top2": 0.906
+  },
+  "long": {
+   "n": 1192,
+   "top1": 0.815,
+   "top2": 0.92
+  }
+ },
+ "par_specialite": {
+  "anatomopathologie": {
+   "n": 329,
+   "top1": 1.0,
+   "top2": 1.0
+  },
+  "cancero adulte": {
+   "n": 435,
+   "top1": 0.989,
+   "top2": 1.0
+  },
+  "cardiologie": {
+   "n": 83,
+   "top1": 0.807,
+   "top2": 0.952
+  },
+  "chir ortho et traumato": {
+   "n": 208,
+   "top1": 0.88,
+   "top2": 0.942
+  },
+  "chirurgie viscerale": {
+   "n": 255,
+   "top1": 0.949,
+   "top2": 0.984
+  },
+  "gynecologie": {
+   "n": 182,
+   "top1": 0.824,
+   "top2": 0.973
+  },
+  "hematologie clinique": {
+   "n": 131,
+   "top1": 0.916,
+   "top2": 0.969
+  },
+  "hepato-gastro-entero": {
+   "n": 144,
+   "top1": 0.736,
+   "top2": 0.91
+  },
+  "maladies infectieuses": {
+   "n": 241,
+   "top1": 0.793,
+   "top2": 0.954
+  },
+  "medecine geriatrique": {
+   "n": 133,
+   "top1": 0.541,
+   "top2": 0.684
+  },
+  "medecine inter-specialites": {
+   "n": 64,
+   "top1": 0.625,
+   "top2": 0.781
+  },
+  "medecine interne": {
+   "n": 185,
+   "top1": 0.676,
+   "top2": 0.827
+  },
+  "medecine pediatrique": {
+   "n": 71,
+   "top1": 0.521,
+   "top2": 0.69
+  },
+  "nephrologie": {
+   "n": 87,
+   "top1": 0.644,
+   "top2": 0.839
+  },
+  "neurologie": {
+   "n": 217,
+   "top1": 0.585,
+   "top2": 0.843
+  },
+  "obstetrique": {
+   "n": 149,
+   "top1": 0.946,
+   "top2": 0.98
+  },
+  "pneumologie": {
+   "n": 448,
+   "top1": 0.779,
+   "top2": 0.92
+  },
+  "urologie": {
+   "n": 150,
+   "top1": 0.793,
+   "top2": 0.947
+  }
+ }
+}
