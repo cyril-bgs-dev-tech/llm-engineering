@@ -55,6 +55,8 @@ Terminés cette nuit : criblage, grille du 4B, encodeur (recette, fenêtres, sat
 
 **Audit GLM v6 (triage fait)** : suite immédiate sans GPU : audit des erreurs confiantes (P2-06, gabarit à trois verdicts : étiquette contestable, rivale défendable, correcte ; agrégats seulement dans les sorties ; jamais d'étiquette de test modifiée) ; fiche de la recette d'encodeur v2 (RM-55) et des encodeurs alternatifs (RM-53, licence d'abord) à écrire pour la fenêtre GPU libre ; RM-54 (représentations gelées) idem.
 
+**Post-traitement des dominos (CPU, détaché)** : `post_dominos.sh` (attend TERMINE25 ; sorties `post_dominos.out`, TERMINE27) : aperçu de la règle de sélection du système final (`final_selection_preview.py`, module `llmft.selection`), cascade validée hors pli encodeur puis LoRA et TF-IDF puis LoRA (`cascade_cv.py`, fiche `cascade-cinq-plis`) ; à lire et consigner, puis appliquer les règles de bifurcation (b) de la section 6 de la feuille de route.
+
 **Chaîne GPU étendue (05/10)** : après TERMINE24 : `run_encodeur_v2.sh` (fiche `2026-10-05-encodeur-recette-v2`, RM-41 encodeur et RM-55, 60 runs, environ 4 h ; TERMINE26 ; journal `encodeur_v2.log`). Code : `llmft.train_v2`, `scripts/p1_encoder_v2.py`. À consigner à la fin : un tableau par facteur (macro-F1 regroupée de la moyenne des trois graines, différence avec la référence par blocs d'auteurs, vitesse et énergie pour bf16).
 
 **Réservé à Cyril** : acceptation du protocole v2 (RM-37) ; ouverture du test scellé (RM-20) ; push ; envoi du brief GLM v5 ; location de GPU et API payante.
