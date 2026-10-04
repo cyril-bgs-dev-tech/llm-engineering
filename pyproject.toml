@@ -52,7 +52,7 @@ mypy_path = "src"
 
 # Bibliothèques scientifiques sans stubs complets : le typage strict porte sur notre code
 [[tool.mypy.overrides]]
-module = ["pandas.*", "sklearn.*", "scipy.*", "statsmodels.*", "transformers.*", "peft.*", "trl.*", "datasets.*"]
+module = ["pandas.*", "joblib.*", "sklearn.*", "scipy.*", "statsmodels.*", "transformers.*", "peft.*", "trl.*", "datasets.*"]
 ignore_missing_imports = true
 follow_untyped_imports = true
 disallow_untyped_calls = false

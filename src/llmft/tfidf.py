@@ -18,21 +18,34 @@ GRID: list[tuple[float, tuple[int, int]]] = [(c, ng) for c in (0.1, 1.0, 10.0, 1
 GRID_V2: list[tuple[float, tuple[int, int]]] = [(c, ng) for c in (1.0, 10.0, 100.0, 1000.0, 10000.0) for ng in ((1, 1), (1, 2))]  # fiche v2 : C au bord haut de la grille v1
 
 
-def fit_predict_proba(
-    train_texts: Sequence[str], train_y: Sequence[str], test_texts: Sequence[str], labels: Sequence[str], c: float, ngram: tuple[int, int],
-    class_weight: str | None = None, analyzer: str = "word",
-) -> np.ndarray:
-    """Probabilités alignées sur `labels` ; une classe absente de l'entraînement garde une colonne à zéro."""
+def fit_model(
+    train_texts: Sequence[str], train_y: Sequence[str], c: float, ngram: tuple[int, int], class_weight: str | None = None, analyzer: str = "word",
+) -> tuple[Any, Any]:
+    """Vectoriseur et modèle ajustés (réutilisés par le service d'inférence)."""
     vec = _Vectorizer(sublinear_tf=True, min_df=1 if len(train_texts) < 50 else 2, max_features=200000, ngram_range=ngram, analyzer=analyzer)
     x_train = vec.fit_transform(train_texts)
     model = _Logistic(C=c, max_iter=1000, class_weight=class_weight)
     model.fit(x_train, list(train_y))
-    raw = model.predict_proba(vec.transform(test_texts))
+    return vec, model
+
+
+def predict_aligned(vec: Any, model: Any, texts: Sequence[str], labels: Sequence[str]) -> np.ndarray:
+    """Probabilités alignées sur `labels` ; une classe absente de l'entraînement garde une colonne à zéro."""
+    raw = model.predict_proba(vec.transform(texts))
     out = np.zeros((raw.shape[0], len(labels)))
     index = {lab: i for i, lab in enumerate(labels)}
     for j, cls in enumerate(model.classes_):
         out[:, index[str(cls)]] = raw[:, j]
     return out
+
+
+def fit_predict_proba(
+    train_texts: Sequence[str], train_y: Sequence[str], test_texts: Sequence[str], labels: Sequence[str], c: float, ngram: tuple[int, int],
+    class_weight: str | None = None, analyzer: str = "word",
+) -> np.ndarray:
+    """Probabilités alignées sur `labels` ; une classe absente de l'entraînement garde une colonne à zéro."""
+    vec, model = fit_model(train_texts, train_y, c, ngram, class_weight, analyzer)
+    return predict_aligned(vec, model, test_texts, labels)
 
 
 def select_config(
