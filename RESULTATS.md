@@ -310,3 +310,21 @@ Arrêt anticipé par la règle écrite d'avance après 90 pas (une époque, 43 m
 **Incertitude du LoRA mûr** (`q5-uncertainty-llm-mur2-fold0`, étalonnage croisé en deux moitiés du pli) : ECE 0,110 brute et **0,028 après température** (la meilleure des modèles mesurés), log loss 0,817 → 0,478 ; conforme LAC 90 % : couverture 0,909 avec **1,15 classe par ensemble**, par classe 0,923 (minimum 0,864) ; exactitude **0,905 à 90 %, 0,937 à 80 %, 0,960 à 70 % de couverture** (encodeur 0,946, TF-IDF 0,931–0,940), AURC 0,037 (encodeur 0,049). Pour la politique d'abstention, le LoRA mûr est le meilleur des modèles mesurés (30 % de renvois à l'humain : 0,960 d'exactitude sur les cas traités), mêmes réserves de périmètre.
 
 Prédictions de la fiche : macro-F1 entre 0,65 et 0,80 (0,6) : réalisé (0,7795, juste sous la borne haute) ; égal ou supérieur à l'encodeur à 10 époques (0,35) : réalisé (IC contenant 0) ; supérieur au TF-IDF du pli 0 avec IC entièrement positif (0,45) : réalisé ; au moins un des chapitres XII, XXI, XXII quitte zéro (0,85) : réalisé ; l'arrêt anticipé ne se déclenche pas sur GPU libre (0,8) : réalisé.
+
+## Confirmation du Qwen3.5-4B LoRA à 10 époques au pli 1 (fiche `2026-10-04-llm-mur-pli1`, EXPLORE, pli 1, 718 patients, graine 1000 ; run `20261004-104947-llm-mur-pli1-qwen3-5-4b-ep10-lr1e-4`)
+
+**macro-F1 0,7415**, exactitude 0,855, log loss 0,814, 12 421 s d'entraînement. Comparaisons appariées au pli 1 (`pli1-llm10-et-ensembles-minus-*`) :
+
+| Système (pli 1) | macro-F1 | contre TF-IDF caractères et poids (0,6886) | contre l'encodeur moyenné (0,7532) |
+|---|---|---|---|
+| LoRA 10 époques | 0,7415 | **+5,3 [+0,75 ; +9,95], Holm 0,02, résolu** | −1,1 [−6,0 ; +4,0], non résolu |
+| Ensemble 50/50 LoRA + encodeur moyenné | 0,7603 | +7,2 [+2,6 ; +11,9] | +0,8 [−3,9 ; +5,6] |
+| Ensemble des trois (LoRA, encodeur, TF-IDF) | 0,7643 | +7,6 [+3,1 ; +12,0] | +1,2 [−3,2 ; +5,6] |
+
+**Synthèse sur les deux plis (une graine pour le LoRA, cinq graines moyennées pour l'encodeur)** :
+- LoRA mûr contre le meilleur TF-IDF : +6,4 puis +5,3 points, **résolu aux deux plis** (moyenne +5,9).
+- LoRA mûr contre l'encodeur moyenné : +4,9 puis −1,1, **non résolu** (moyenne +1,9) : le LoRA rattrape l'encodeur moyenné sans le dépasser de façon établie.
+- Encodeur moyenné contre le meilleur TF-IDF : +1,5 puis +6,4 (moyenne +4,0).
+- Les ensembles n'apportent pas de gain établi par rapport au meilleur composant (+6,1 puis +0,8 pour LoRA + encodeur sur l'encodeur moyenné).
+
+**Rapport qualité par coût** : le LoRA mûr coûte 3,5 h de GPU par pli contre 20 minutes pour cinq encodeurs (environ 10 fois plus) pour un score statistiquement équivalent ; son avantage mesuré est dans l'incertitude : au pli 1 ECE 0,111 brute et 0,034 après température, couverture conforme LAC 0,9025 avec 1,17 classe par ensemble, exactitude 0,904 à 90 %, 0,937 à 80 % et **0,964 à 70 % de couverture** (pli 0 : 0,960 ; encodeur : 0,946), AURC 0,033 : **la sélectivité du LoRA est la meilleure des modèles mesurés sur les deux plis**. Prédictions de la fiche : macro-F1 du pli 1 entre 0,70 et 0,82 (0,7) : réalisé ; le LoRA dépasse le TF-IDF, IC entièrement positif (0,75) : réalisé ; le LoRA au moins égal à l'encodeur moyenné (0,55) : réalisé (IC contenant 0) ; le LoRA dépasse l'encodeur moyenné, IC entièrement positif (0,15) : non.

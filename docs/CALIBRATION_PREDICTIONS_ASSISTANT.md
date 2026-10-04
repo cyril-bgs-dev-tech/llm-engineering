@@ -1,6 +1,6 @@
 # Calibration des prédictions préenregistrées de l'assistant (audit GLM v4, B-c5)
 
-Les prédictions ont été écrites avant les résultats dans les fiches hachées (`experiments/`) ; l'issue est 1 si la prédiction s'est réalisée, 0 sinon. Liste limitée aux prédictions chiffrées d'une probabilité que j'ai pu retrouver (les prédictions de la première fiche TF-IDF, sans probabilité explicite, sont exclues). Mise à jour du 04/10 à 07h20Z.
+Les prédictions ont été écrites avant les résultats dans les fiches hachées (`experiments/`) ; l'issue est 1 si la prédiction s'est réalisée, 0 sinon. Liste limitée aux prédictions chiffrées d'une probabilité que j'ai pu retrouver (les prédictions de la première fiche TF-IDF, sans probabilité explicite, sont exclues). Mise à jour du 04/10 à 10h55Z.
 
 | Fiche | Prédiction | Probabilité | Issue | Brier |
 |---|---|---|---|---|
@@ -43,13 +43,17 @@ Les prédictions ont été écrites avant les résultats dans les fiches hachée
 | LoRA 10 époques | Supérieur au TF-IDF du pli 0, IC entièrement positif | 0.45 | 1 | 0.303 |
 | LoRA 10 époques | Un des chapitres XII, XXI, XXII quitte zéro | 0.85 | 1 | 0.023 |
 | LoRA 10 époques | L'arrêt anticipé ne se déclenche pas sur GPU libre | 0.80 | 1 | 0.040 |
+| LoRA pli 1 | Macro-F1 du pli 1 entre 0,70 et 0,82 | 0.70 | 1 | 0.090 |
+| LoRA pli 1 | Le LoRA dépasse le TF-IDF, IC entièrement positif | 0.75 | 1 | 0.062 |
+| LoRA pli 1 | Le LoRA au moins égal à l'encodeur moyenné | 0.55 | 1 | 0.202 |
+| LoRA pli 1 | Le LoRA dépasse l'encodeur moyenné, IC entièrement positif | 0.15 | 0 | 0.022 |
 
-**Score de Brier moyen : 0.225** sur 39 prédictions (0,25 = toujours 0,5 ; 0 = parfait). Probabilité moyenne annoncée 0.59 contre fréquence réalisée 0.69.
+**Score de Brier moyen : 0.213** sur 43 prédictions (0,25 = toujours 0,5 ; 0 = parfait). Probabilité moyenne annoncée 0.58 contre fréquence réalisée 0.70.
 
 | Tranche de probabilité | n | probabilité moyenne | fréquence réalisée |
 |---|---|---|---|
-| p≥0,7 | 11 | 0.76 | 0.82 |
-| 0,5 à 0,65 | 22 | 0.57 | 0.64 |
-| p<0,5 | 6 | 0.33 | 0.67 |
+| p≥0,7 | 13 | 0.76 | 0.85 |
+| 0,5 à 0,65 | 23 | 0.57 | 0.65 |
+| p<0,5 | 7 | 0.31 | 0.57 |
 
 Lecture : le Brier proche de 0,25 dit que mes prédictions discriminent peu ; la calibration moyenne est correcte et les prédictions récentes (recettes mûres) sont meilleures que celles de la première nuit. Méthode : chaque prédiction reçoit une probabilité avant le run ; ce tableau est mis à jour à chaque lot.
