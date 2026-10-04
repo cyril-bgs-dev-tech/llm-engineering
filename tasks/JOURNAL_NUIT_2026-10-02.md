@@ -141,3 +141,6 @@ Cyril va dormir. Surveilleur de silence en trois couches (`tasks/SURVEILLEUR_SIL
 
 ### 2026-10-04T02:14Z : reprise par surveilleur
 Graines de l'encodeur en cours (s3, s4), LOAO 13/66, 4B à 10 époques en file. Fait : table d'abstention par modèle (familles bien réglées indistinguables à 70 % de couverture), « classe jamais couverte » = AUTRE (0/18, exclue de la macro-F1). Choix : consigner le tout dans RESULTATS plutôt qu'ouvrir une nouvelle expérience tant que les graines ne sont pas là.
+
+### 02:17Z : reprise par surveilleur
+Graines de l'encodeur : 0,7714 (1000), 0,7079, 0,7175, 0,7148 (1001 à 1003), s4 en cours ; LOAO 20/66 ; 4B à 10 époques en attente de la fin des graines. Rien à décider ; j'attends s4 pour lancer RM-17 sur l'encodeur et rédiger l'ADR du second cycle avec l'écart-type mesuré.

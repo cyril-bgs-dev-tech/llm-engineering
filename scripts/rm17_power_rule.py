@@ -2,7 +2,8 @@
 """RM-17 : règle de puissance (PROTOCOLE.md 6.3), à lancer une seule fois après P1-19 et P1-20, jamais avec une autre graine de bootstrap.
 
 Lit les prédictions du pli 0 des runs `p1-19-s<k>` (k = 0 à 4). `--rehearsal` : répétition de la machinerie sur des fichiers de prédiction donnés
-(pas des graines : aucun résultat, rien n'est enregistré). Usage : rm17_power_rule.py [--register] | --rehearsal FICHIER.json FICHIER.json FICHIER.json"""
+(pas des graines : aucun résultat, rien n'est enregistré). `--files F1.json F2.json ... [--slug NOM] [--register]` : même calcul sur des fichiers de graines d'une autre recette (EXPLORE, par exemple l'encodeur) ; le résultat n'est pas la règle du protocole (LoRA de référence).
+Usage : rm17_power_rule.py [--register] | --rehearsal FICHIER.json FICHIER.json FICHIER.json | --files ..."""
 import json
 import sys
 from pathlib import Path
@@ -19,7 +20,16 @@ from llmft.mini_registry import register_run
 
 def main() -> int:
     rehearsal = "--rehearsal" in sys.argv
-    files = [Path(a) for a in sys.argv[2:]] if rehearsal else [p for k in range(5) if (p := ROOT / f"results/predictions/p1-19-s{k}.json").exists()]
+    custom = "--files" in sys.argv
+    slug = sys.argv[sys.argv.index("--slug") + 1] if "--slug" in sys.argv else ("rm-17-power-rule-custom" if custom else "rm-17-power-rule")
+    if custom:
+        start = sys.argv.index("--files") + 1
+        files = [Path(a) for a in sys.argv[start:] if not a.startswith("--") and a != slug]
+    elif rehearsal:
+        files = [Path(a) for a in sys.argv[2:]]
+    else:
+        files = None
+    files = files if files is not None else [p for k in range(5) if (p := ROOT / f"results/predictions/p1-19-s{k}.json").exists()]
     _, y, folds, other, ids = p1_04_06_tfidf.load("chapter")
     labels = sorted(set(y))
     pool = [i for i, g in zip(ids, folds, strict=True) if g == 0]
@@ -36,10 +46,10 @@ def main() -> int:
     widths = power_rule.pair_widths(truth, preds, counts, scored) if len(preds) >= 3 else []
     mean = float(np.mean(widths)) if widths else None
     passed = mean is not None and mean <= power_rule.THRESHOLD_POINTS
-    out = {"graines": len(preds), "largeurs_par_paire": [round(w, 4) for w in widths], "largeur_moyenne": mean, "seuil": power_rule.THRESHOLD_POINTS, "regle": "réussite" if passed else "échec", "repetition": rehearsal}
+    out = {"graines": len(preds), "largeurs_par_paire": [round(w, 4) for w in widths], "largeur_moyenne": mean, "seuil": power_rule.THRESHOLD_POINTS, "regle": "réussite" if passed else "échec", "repetition": rehearsal, "recette_personnalisee": custom}
     print(json.dumps(out, ensure_ascii=False, indent=1))
     if "--register" in sys.argv and not rehearsal:
-        print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": "rm-17-power-rule", "status": "ok", "summary": f"Règle de puissance RM-17 : largeur moyenne {mean}, règle {out['regle']}", "params": {"seed": power_rule.SEED, "n_boot": power_rule.N_BOOT}, "metrics": out}))
+        print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": slug, "status": "ok", "summary": f"Règle de puissance RM-17 : largeur moyenne {mean}, règle {out['regle']}", "params": {"seed": power_rule.SEED, "n_boot": power_rule.N_BOOT}, "metrics": out}))
     return 0
 
 
