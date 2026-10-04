@@ -25,14 +25,14 @@ Statuts : **prouvé** (renvoie à un run, un fichier ou une commande), **estimat
 |---|---|---|---|---|
 | Performance du modèle | 5 | 8 | 9 | TF-IDF 0,68 ; encodeur 0,45 sous-entraîné ; Qwen3.5-4B 0,587 et Qwen3.5-9B 0,565 sur le pli 0, sous le TF-IDF ; aucun LLM ne le bat à ce jour (P1-11 terminé, élève Qwen3.5-4B) |
 | Rigueur statistique et protocole | 7 | 8 | 9 | protocole gelé et haché, test scellé, bootstrap apparié, puissance simulée ; mais une graine au développement, premier cycle non confirmatoire |
-| Données et anti-fuite | 6 | 8 | 10 | contrôles de fuite et raccourci d'auteur mesuré ; mais corpus fictif, pas de données réelles |
+| Données et anti-fuite | 7 | 8 | 10 | contrôles de fuite et raccourci d'auteur mesuré ; mais corpus fictif, pas de données réelles |
 | Fiabilité de l'incertitude | 6 | 7 | 9 | **révisée de 1 à 4 le 03/10** : calibration, conforme (LAC, APS, par classe, Wilson) et sélectif implémentés, validés sur données synthétiques (14 tests) et mesurés sur le TF-IDF avec test de décalage (run `q5-uncertainty-tfidf-chapter`) ; reste : LLM, politique d'abstention chiffrée, hors distribution, test scellé (Q5 de G-P0 = 0 avant) |
 | Analyse d'erreurs et robustesse | 6 | 7 | 9 | **révisée de 3 à 4 le 03/10** : confusions, composition expliquant le creux de longueur, perturbations (−5,6 points sans accents), hors spécialité (0,52) et sous-groupes, tous sur TF-IDF ; la robustesse des LLM n'est pas mesurée |
-| Reproductibilité et ingénierie | 7 | 8 | 9 | environnement verrouillé, typage strict, 245 tests, registre ; reconstruction à froid non testée |
+| Reproductibilité et ingénierie | 8 | 8 | 9 | environnement verrouillé, typage strict, 245 tests, registre ; reconstruction à froid non testée |
 | Efficience et déploiement | 5 | 8 | 10 | mesures de VRAM et de débit ; pas de latence p95, pas de service testé en charge (Q8, Q9 de G-P0 = 1) |
 | Sûreté, conformité, honnêteté | 8 | 7 | 9 | **révisée de 7 à 8 le 03/10** : carte de modèle provisoire, gabarit de rapport, deux audits indépendants consignés (GLM v2, v3), journal des accès au test scellé ; pas encore de revue humaine externe |
 
-Moyennes : projet 50 / 8 = 6,3 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4. Ces trois colonnes sont des jugements ; seule la colonne « projet » s'appuie sur des preuves du dépôt, et même elle reste une note d'auto-évaluation sans confirmation indépendante (aucune note 3 à G-P0).
+Moyennes : projet 52 / 8 = 6,5 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4. Ces trois colonnes sont des jugements ; seule la colonne « projet » s'appuie sur des preuves du dépôt, et même elle reste une note d'auto-évaluation sans confirmation indépendante (aucune note 3 à G-P0).
 
 | 14 | Qwen3.5-9B 0,565 ; Gemma-4-E4B 0,456 (1e-4) et 0,142 (1e-5) ; écarts −13,2 et +10,9 points | runs `20261003-163427-p1-11-qwen3-5-9b-lr1e-4`, `20261003-152759-p1-11-gemma-4-e4b-lr1e-4`, `20261003-174127-p1-11-gemma-4-e4b-lr1e-5` et comparaisons appariées du pli 0 | prouvé (pli 0 seulement, criblage inachevé) |
 
@@ -53,3 +53,5 @@ Moyennes : projet 50 / 8 = 6,3 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4.
 
 | 24 | Robustesse du LoRA mûr : accents −0,5, fautes +1,6, casse −1,3 (bruit de mesure) ; TF-IDF à mots −5,6 sans accents ; TF-IDF à caractères insensible (+1,0 ; ablations −0,1 à −0,6) | run `robustness-llm-mur2-qwen3-5-4b-ep10-lr1e-4`, `results/measures/glm_v3_perturb_tfidf.json` | prouvé (pli 0, une graine) |
 | 25 | Pli 2 : encodeur moyenné +1,2 (non résolu), ensemble encodeur + TF-IDF +4,3 [+1,2 ; +7,5] ; sur trois plis l'ensemble +4,5, +6,2, +4,3 | runs `camembert-pli2-ep10-s0` à `s4`, `pli2-encodeur-minus-tfidf-charbal` | prouvé (EXPLORE, trois plis) |
+
+**Révision du 04/10 à 12h30Z (estimations, ±1)** : Données et anti-fuite 6 → 7 (fiche de données `docs/FICHE_DE_DONNEES_PARHAF.md`, leave-one-author-out, partitions répétées, débiaisage par auteur testé et fermé, audit des erreurs confiantes) ; Reproductibilité et ingénierie 7 → 8 (tableaux regénérés depuis le registre, contrôle automatique des références de runs branché à `make check`, budget en contrôle, 300 tests). Rigueur inchangée à 7 : le protocole v2 est un brouillon non accepté et l'aperçu de puissance (4,29 points à 95 % sur trois plis) n'est pas une règle appliquée.

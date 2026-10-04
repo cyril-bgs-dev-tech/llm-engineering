@@ -229,3 +229,6 @@ Pli 2 de l'encodeur : moyenné 0,7613 (+1,2 non résolu), ensemble encodeur + TF
 
 ### 11:35Z : reprise par surveilleur
 Cadence remise à 20 minutes pendant le LoRA graine 1001 (cron 84013523). ADR-015 mise à jour avec les résultats de recette mûre (trois plis).
+
+### 12:23Z : reprise par surveilleur
+Brainstorm par composante traité (voir mémoire et RESULTATS) ; correction d'un calcul de contrôle invalide (conforme par famille lisant l'étiquette) ; plis 3 et 4 de l'encodeur en file derrière le LoRA graine 1001.
