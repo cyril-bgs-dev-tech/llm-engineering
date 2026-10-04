@@ -144,3 +144,6 @@ Graines de l'encodeur en cours (s3, s4), LOAO 13/66, 4B à 10 époques en file. 
 
 ### 02:17Z : reprise par surveilleur
 Graines de l'encodeur : 0,7714 (1000), 0,7079, 0,7175, 0,7148 (1001 à 1003), s4 en cours ; LOAO 20/66 ; 4B à 10 époques en attente de la fin des graines. Rien à décider ; j'attends s4 pour lancer RM-17 sur l'encodeur et rédiger l'ADR du second cycle avec l'écart-type mesuré.
+
+### 02:30Z : reprise par surveilleur
+Présentation mise à jour (notes à 5,9 : performance 4, incertitude 5, erreurs 5, efficience 5), ADR-015 et triage v4 écrits, RM-17 sur l'encodeur : 12,2 contre 4,0 (échec). En cours : LOAO TF-IDF, contrôle de discrétisation des plis (partitions répétées), Qwen3.5-4B à 10 époques (fin vers 06h30Z). Choix : ne rien lancer d'autre sur le GPU pendant le 4B ; travail CPU seulement.
