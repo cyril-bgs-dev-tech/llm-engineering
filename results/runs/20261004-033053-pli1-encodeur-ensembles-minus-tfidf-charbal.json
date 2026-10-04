@@ -1,0 +1,96 @@
+{
+  "created_at": "2026-10-04T03:30:53Z",
+  "kind": "measure",
+  "metrics": {
+    "comparaisons": [
+      {
+        "delta_points": 7.31,
+        "ic95_points": [
+          1.42,
+          13.2
+        ],
+        "macro_f1": 0.7605,
+        "p_bootstrap": 0.0168,
+        "p_holm": 0.0672,
+        "variante": "pli1-enc-s0.probs.npz"
+      },
+      {
+        "delta_points": 8.91,
+        "ic95_points": [
+          3.74,
+          14.2
+        ],
+        "macro_f1": 0.7763,
+        "p_bootstrap": 0.0,
+        "p_holm": 0.0,
+        "variante": "pli1-enc-s1.probs.npz"
+      },
+      {
+        "delta_points": 8.01,
+        "ic95_points": [
+          2.62,
+          13.44
+        ],
+        "macro_f1": 0.7679,
+        "p_bootstrap": 0.0056,
+        "p_holm": 0.0336,
+        "variante": "pli1-enc-s2.probs.npz"
+      },
+      {
+        "delta_points": 1.98,
+        "ic95_points": [
+          -3.71,
+          7.65
+        ],
+        "macro_f1": 0.708,
+        "p_bootstrap": 0.4856,
+        "p_holm": 0.4856,
+        "variante": "pli1-enc-s3.probs.npz"
+      },
+      {
+        "delta_points": 3.57,
+        "ic95_points": [
+          -2.3,
+          9.45
+        ],
+        "macro_f1": 0.7247,
+        "p_bootstrap": 0.2216,
+        "p_holm": 0.4432,
+        "variante": "pli1-enc-s4.probs.npz"
+      },
+      {
+        "delta_points": 6.43,
+        "ic95_points": [
+          0.8,
+          12.06
+        ],
+        "macro_f1": 0.7532,
+        "p_bootstrap": 0.0252,
+        "p_holm": 0.0756,
+        "variante": "pli1-ensemble-encodeur5.probs.npz"
+      },
+      {
+        "delta_points": 6.19,
+        "ic95_points": [
+          1.41,
+          11.17
+        ],
+        "macro_f1": 0.7512,
+        "p_bootstrap": 0.0104,
+        "p_holm": 0.052,
+        "variante": "pli1-ensemble-encodeur5-tfidf-charbal.probs.npz"
+      }
+    ],
+    "macro_f1_reference": 0.6886,
+    "n": 718,
+    "reference": "pli1-tfidf-charbal.probs.npz"
+  },
+  "params": {
+    "ref": "pli1-tfidf-charbal.probs.npz"
+  },
+  "run_id": "20261004-033053-pli1-encodeur-ensembles-minus-tfidf-charbal",
+  "schema": "mini-1",
+  "slug": "pli1-encodeur-ensembles-minus-tfidf-charbal",
+  "status": "ok",
+  "summary": "Comparaison appariée de 7 variantes contre pli1-tfidf-charbal.probs.npz"
+}

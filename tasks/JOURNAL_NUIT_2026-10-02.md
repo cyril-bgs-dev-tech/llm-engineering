@@ -168,3 +168,6 @@ Ensemble encodeur (5 graines) + TF-IDF : 0,7626 au pli 0, +4,5 points résolu co
 
 ### 03:06Z : reprise par surveilleur
 4B à 10 époques interrompu par la règle d'arrêt (contention GPU et CPU : 28,6 s par pas contre 16,8). Fiche v2 hachée, relance en exclusivité après les encodeurs du pli 1 (un seul essai). Je ne lance plus de calcul CPU lourd pendant le 4B.
+
+### 03:31Z : reprise par surveilleur
+Pli 1 : encodeur (5 graines moyennées) 0,7532, ensemble avec TF-IDF 0,7512, TF-IDF 0,6886 ; critère de la fiche satisfait mais l'apport propre de l'ensemble sur l'encodeur n'est pas confirmé (pli 0 : +3,0 ; pli 1 : −0,2). Premier lancement du 4B v2 mort en 70 s sans sortie (code de sortie masqué par $(date) : même bug que le 03/10, corrigé) ; relancé avec essais consignés.

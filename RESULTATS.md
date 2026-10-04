@@ -281,3 +281,13 @@ Les pondérations essayées : 0,3 (0,7271), 0,5 (0,7626), 0,7 (0,7618) et une mo
 ## Qwen3.5-4B à 10 époques : premier lancement interrompu (fiche `2026-10-04-llm-recette-mure-qwen4b`, run `20261004-030327-llm-mur-qwen3-5-4b-ep10-lr1e-4`, statut `aborted`)
 
 Arrêt anticipé par la règle écrite d'avance après 90 pas (une époque, 43 minutes) : durée projetée 23 383 s au-delà de la limite de 22 700 s. Pas moyen de 28,6 s contre 16,8 s pour le run à 2 époques sur GPU libre : le lancement a partagé la carte avec des runs d'encodeur et le processeur avec des calculs lourds. Aucune macro-F1 produite. Relance en exclusivité décidée (fiche v2 hachée, un seul essai) après les runs d'encodeur du pli 1. Leçon (N25) : un lot d'estimation serrée ne partage ni le GPU ni le processeur.
+
+## Confirmation de l'ensemble au pli 1 (fiche `2026-10-04-confirmation-ensemble-pli1`, EXPLORE, pli 1, 718 patients, cinq encodeurs graines 1000 à 1004 entraînés sur les plis 0, 2, 3, 4 ; `pli1-encodeur-ensembles-minus-tfidf-charbal`)
+
+| Système (pli 1) | macro-F1 | contre le TF-IDF caractères et poids équilibrés (0,6886) [IC 95 %] |
+|---|---|---|
+| Encodeur, graines 1000 à 1004 | 0,7605 ; 0,7763 ; 0,7679 ; 0,7080 ; 0,7247 (moyenne 0,7475) | +7,3 [+1,4 ; +13,2] ; +8,9 [+3,7 ; +14,2] ; +8,0 [+2,6 ; +13,4] ; +2,0 [−3,7 ; +7,7] ; +3,6 [−2,3 ; +9,5] |
+| Encodeur, moyenne des 5 graines | 0,7532 | +6,4 [+0,8 ; +12,1] |
+| **Ensemble 50/50 encodeur (5 graines) + TF-IDF** | **0,7512** | **+6,2 [+1,4 ; +11,2]**, p Holm 0,052 sur les sept comparaisons du tableau |
+
+**Critère de la fiche satisfait** (borne basse de l'IC 95 % de « ensemble moins TF-IDF » supérieure à 0 au pli 1). **Mais l'apport propre de l'ensemble n'est pas confirmé** : au pli 1 le TF-IDF n'ajoute rien à l'encodeur moyenné sur cinq graines (0,7512 contre 0,7532), alors qu'au pli 0 l'ensemble gagnait 3 points sur l'encodeur moyenné (0,7626 contre 0,7331). Synthèse sur les deux plis : l'encodeur mûr (moyenne de cinq graines) bat le meilleur TF-IDF de +1,5 (pli 0, non résolu) et +6,4 (pli 1) points, soit environ +4 points en moyenne ; l'ensemble encodeur + TF-IDF le bat de +4,5 et +6,2, soit environ +5,4 points ; le gain de l'ensemble sur l'encodeur moyenné est +3,0 puis −0,2. **Conclusion mesurée** : le meilleur système bon marché est une moyenne de graines d'encodeurs mûrs, à compléter éventuellement par le TF-IDF ; l'avantage de l'encodeur sur le TF-IDF est positif aux deux plis mais plus faible et plus variable qu'annoncé la nuit. Prédictions de la fiche : l'ensemble dépasse le TF-IDF (0,8) : vrai ; IC entièrement positif (0,5) : vrai ; écart plus petit qu'au pli 0 (0,65) : faux (plus grand) ; l'ensemble dépasse l'encodeur seul (0,75) : faux contre la moyenne de 5 graines (−0,2).
