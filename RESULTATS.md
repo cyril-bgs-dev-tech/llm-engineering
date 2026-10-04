@@ -414,3 +414,16 @@ Largeur de l'IC de la différence appariée de macro-F1 (bootstrap stratifié de
 | Qwen3.5-4B LoRA 10 époques (une graine) | 0,761 (plis 0 et 1) | 12 450 s de GPU (3,5 h) | 117 ms (GPU) | adaptateur 196 Mo + modèle de base |
 
 **Non dominés** : le TF-IDF caractères et poids (le plus rapide et le plus léger, à 0,72) et l'ensemble encodeur + TF-IDF (le plus élevé, à 0,77) ; le LoRA mûr n'est dominé ni en qualité (équivalent à l'encodeur moyenné, plus sélectif) ni en latence GPU, mais coûte environ dix fois plus à entraîner que cinq encodeurs. Sur une machine sans GPU seuls les deux premiers sont déployables. Les périmètres diffèrent (plis, nombre de graines) : ce tableau est une aide de lecture, pas un classement.
+
+## Seconde graine du Qwen3.5-4B LoRA à 10 époques, pli 0 (fiche `2026-10-04-confirmation-pli2-et-graine-lora`, EXPLORE ; run `20261004-150718-llm-mur-s1001-qwen3-5-4b-ep10-lr1e-4`)
+
+Graine 1001 : **macro-F1 0,7893**, exactitude 0,863, log loss 0,770, 12 665 s ; **écart avec la graine 1000 (0,7795) : +1,0 point [−3,1 ; +5,0], non résolu** (`llm-s1001-minus-s1000-fold0`). La variabilité du LoRA entre graines est faible au pli 0 (1,0 point entre deux graines, à comparer à l'écart-type de 2,6 points de l'encodeur sur cinq graines) ; deux graines ne suffisent pas à estimer un écart-type. Moyenne des deux graines : 0,7844 ; moyenne des probabilités des deux graines : 0,7947.
+
+| Système (pli 0) | macro-F1 | contre TF-IDF caractères et poids (0,7184) | contre l'encodeur moyenné (0,7331) |
+|---|---|---|---|
+| LoRA graine 1001 | 0,7893 | +7,3 [+1,6 ; +13,1], Holm 0,014 | **+5,75 [+1,1 ; +10,6], Holm 0,027, résolu** |
+| LoRA moyenné sur 2 graines | 0,7947 | +7,8 [+3,6 ; +12,6] | +6,3 [+1,0 ; +11,8], Holm 0,027 |
+| Ensemble 50/50 LoRA (2 graines) + encodeur (5 graines) | 0,7959 | +8,0 [+3,8 ; +12,5] | +6,4 [+2,2 ; +11,0], Holm 0,004 |
+| Ensemble des trois (LoRA 2 graines, encodeur, TF-IDF) | 0,7819 | +6,5 [+3,1 ; +10,5] | n/a |
+
+**Au pli 0, avec la graine 1001 comme avec la moyenne de deux graines, le LoRA mûr dépasse l'encodeur moyenné de façon résolue (+5,75 à +6,4 points)**, ce que la graine 1000 seule ne montrait pas (+4,9, non résolu) ; au pli 1 (une graine) le LoRA était équivalent à l'encodeur (−1,1). Lecture mesurée : le LoRA mûr est **au moins équivalent et probablement meilleur** que l'encodeur moyenné d'environ +2 à +6 points selon le pli et la graine ; il reste dix fois plus coûteux à entraîner. Incertitude de la graine 1001 : ECE 0,107 brute et 0,033 après température, couverture conforme LAC 0,897 avec 1,135 classe par ensemble, exactitude 0,899 à 90 %, 0,939 à 80 %, 0,964 à 70 % de couverture, comme la graine 1000. Prédictions de la fiche : l'écart entre les deux graines inférieur à 3 points (0,6) : réalisé ; la graine 1001 donne moins que la graine 1000 (0,6) : non ; encodeur moyenné au-dessus du TF-IDF au pli 2 (0,8) : réalisé en valeur.

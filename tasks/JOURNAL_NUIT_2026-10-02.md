@@ -232,3 +232,6 @@ Cadence remise à 20 minutes pendant le LoRA graine 1001 (cron 84013523). ADR-01
 
 ### 12:23Z : reprise par surveilleur
 Brainstorm par composante traité (voir mémoire et RESULTATS) ; correction d'un calcul de contrôle invalide (conforme par famille lisant l'étiquette) ; plis 3 et 4 de l'encodeur en file derrière le LoRA graine 1001.
+
+### 15:13Z : reprise par surveilleur
+**LoRA graine 1001 terminé** : 0,7893 (écart +1,0 [−3,1 ; +5,0] avec la graine 1000 : variance faible) ; contre l'encodeur moyenné au pli 0 : +5,75 [+1,1 ; +10,6] résolu (la graine 1000 : +4,9 non résolu) ; LoRA ≥ encodeur de 2 à 6 points selon pli et graine, 10 fois plus cher. Plis 3 et 4 de l'encodeur démarrés (50 min). Surveilleur remis à 5 minutes.
