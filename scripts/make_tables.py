@@ -38,7 +38,7 @@ def five_fold_section() -> list[str]:
         scored = [labels.index(c) for c in labels if c != other]
         cells = [f4(_macro_f1(t[f == k][None, :], pred[f == k][None, :], scored)[0]) for k in range(5)]
         cells.append(f4(_macro_f1(t[None, :], pred[None, :], scored)[0]))
-        lines.append(f"| {name} (`{slug}`) | " + " | ".join(cells) + " |")
+        lines.append(f"| {name} | " + " | ".join(cells) + " |")
     return lines
 
 

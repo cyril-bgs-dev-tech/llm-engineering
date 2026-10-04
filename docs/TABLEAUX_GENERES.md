@@ -81,6 +81,6 @@
 
 | système | pli 0 | pli 1 | pli 2 | pli 3 | pli 4 | regroupée (3 586) |
 |---|---|---|---|---|---|---|
-| TF-IDF caractères équilibré (`tfidf-variant-char-balanced`) | 0,7184 | 0,6886 | 0,7483 | 0,7073 | 0,7248 | 0,7202 |
-| Encodeur moyenné (5 graines) (`cinq-plis-ensemble-encodeur5`) | 0,7331 | 0,7532 | 0,7613 | 0,7428 | 0,7684 | 0,7528 |
-| Ensemble encodeur + TF-IDF (`cinq-plis-ensemble-encodeur5-tfidf-charbal`) | 0,7626 | 0,7512 | 0,7923 | 0,7746 | 0,7735 | 0,7721 |
+| TF-IDF caractères équilibré | 0,7184 | 0,6886 | 0,7483 | 0,7073 | 0,7248 | 0,7202 |
+| Encodeur moyenné (5 graines) | 0,7331 | 0,7532 | 0,7613 | 0,7428 | 0,7684 | 0,7528 |
+| Ensemble encodeur + TF-IDF | 0,7626 | 0,7512 | 0,7923 | 0,7746 | 0,7735 | 0,7721 |
