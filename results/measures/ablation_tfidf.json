@@ -1,0 +1,26 @@
+{
+ "propre": {
+  "macro_f1": 0.7135,
+  "accuracy": 0.8187
+ },
+ "accents": {
+  "macro_f1": 0.7235,
+  "accuracy": 0.8257
+ },
+ "typos": {
+  "macro_f1": 0.7125,
+  "accuracy": 0.8187
+ },
+ "casse": {
+  "macro_f1": 0.7135,
+  "accuracy": 0.8187
+ },
+ "fin_retiree_30pct": {
+  "macro_f1": 0.7122,
+  "accuracy": 0.8229
+ },
+ "debut_retire_30pct": {
+  "macro_f1": 0.7071,
+  "accuracy": 0.8006
+ }
+}

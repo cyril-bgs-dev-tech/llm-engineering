@@ -386,3 +386,15 @@ Exactitude top-1 0,822, top-2 0,926 ; 638 erreurs. **Paires de confusion les plu
 | ∝ 1 / √volume d'auteur (« invsqrt ») | 0,6412 | 0,5872 | 5,40 |
 
 **Aucun effet** : la généralisation à de nouveaux auteurs ne progresse pas (−0,4 et −0,2 point sur plis groupés), l'écart patient moins auteur grandit légèrement. Les trois prédictions de la fiche sont fausses (gain d'au moins 1 point sur plis groupés : probabilité 0,3 ; perte de plus d'un point par patient : 0,45 ; réduction de l'écart : 0,5). La part « signature d'auteur » de l'écart ne se corrige pas par une pondération d'exemples ; elle est liée au contenu (thèmes d'auteurs spécialisés), non à la seule fréquence. Piste fermée.
+
+## Perturbations et ablations du TF-IDF caractères et poids équilibrés (audit GLM v4, C5 ; `ablation-tfidf-charbal-fold0`, pli 0, entraînement sur les plis 1 à 4, EXPLORE)
+
+| Variante du texte | macro-F1 | écart avec le texte propre (0,7135) |
+|---|---|---|
+| Accents retirés | 0,7235 | +1,0 |
+| Fautes de frappe sur 5 % des mots | 0,7125 | −0,1 |
+| Majuscules sur 5 % des mots | 0,7135 | 0 |
+| **Fin retirée (30 % des mots)** | 0,7122 | −0,1 |
+| Début retiré (30 % des mots) | 0,7071 | −0,6 |
+
+**Rectification de la comparaison de robustesse** : la perte de 5,6 points sans accents mesurée plus haut concerne le **TF-IDF à mots (référence v1)**, pas la meilleure recette. Le TF-IDF à n-grammes de caractères est insensible à toutes les perturbations de forme (±1 point) et aux ablations de contenu (retirer 30 % de la fin ou du début ne coûte que 0,1 à 0,6 point : l'information diagnostique est répartie dans le texte, pas concentrée en conclusion). Le LoRA mûr (−0,5, +1,6, −1,3 sur les trois perturbations de forme) n'est donc pas plus robuste que le meilleur TF-IDF ; l'avantage de robustesse du LoRA est face au TF-IDF à mots seulement. Les ablations de contenu sur le LoRA et l'encodeur restent à mesurer (script `robustness_llm.py` étendu, GPU libre).
