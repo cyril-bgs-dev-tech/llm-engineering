@@ -150,3 +150,6 @@ Présentation mise à jour (notes à 5,9 : performance 4, incertitude 5, erreurs
 
 ### 02:39Z : reprise par surveilleur
 Partitions répétées, graine 1 : patient 0,6364 contre groupé par auteur (StratifiedGroupKFold) 0,5894, écart 4,7 points : l'écart d'auteur persiste avec des classes réparties au mieux (une graine sur trois ; la suite arrive). Carte de modèle mise à jour. LOAO 45/66. 4B à 10 époques en cours.
+
+### 02:47Z : reprise par surveilleur
+Fait : couverture conforme par famille (0,56 à 0,99 derrière 0,90 marginal), fiche hachée du synthétique ciblé (EXPLORE, après le 4B). LOAO 50/66, partitions répétées 3/6, 4B à 10 époques en cours (fin vers 06h30Z). Choix : fiche avant code pour la génération synthétique (règle de préenregistrement).
