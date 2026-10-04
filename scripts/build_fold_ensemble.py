@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Construit l'ensemble par moyenne simple des cinq graines d'encodeur d'un pli, et son mélange 50/50 avec le TF-IDF caractères équilibré.
 
-Usage : build_fold_ensemble.py PLI | --pool (concatène les cinq plis dans cinq-plis-*.probs.npz)   (écrit pliK-ensemble-encodeur5.probs.npz et pliK-ensemble-encodeur5-tfidf-charbal.probs.npz ; le pli 0 garde ses noms historiques)."""
+Usage : build_fold_ensemble.py PLI | --pool (concatène les cinq plis dans cinq-plis-*.probs.npz) | --pool-files SORTIE SLUG... (concatène des fichiers par pli)   (écrit pliK-ensemble-encodeur5.probs.npz et pliK-ensemble-encodeur5-tfidf-charbal.probs.npz ; le pli 0 garde ses noms historiques)."""
 import sys
 from pathlib import Path
 
@@ -31,9 +31,22 @@ def pool() -> int:
     return 0
 
 
+def pool_files(out_name: str, slugs: list[str]) -> int:
+    """Concatène des fichiers de probabilités hors pli de plis distincts (un fichier par pli) en un fichier unique."""
+    parts = [load(s) for s in slugs]
+    ids = [i for p_ids, _, _ in parts for i in p_ids]
+    if len(set(ids)) != len(ids):
+        raise SystemExit("patients en double entre plis")
+    np.savez(P / f"{out_name}.probs.npz", ids=np.array(ids), probs=np.vstack([p for _, p, _ in parts]), labels=parts[0][2])
+    print("écrit", out_name, len(ids))
+    return 0
+
+
 def main() -> int:
     if sys.argv[1] == "--pool":
         return pool()
+    if sys.argv[1] == "--pool-files":
+        return pool_files(sys.argv[2], sys.argv[3:])
     fold = int(sys.argv[1])
     seeds = [f"camembert-pli{fold}-ep10-s{s}" for s in range(5)]
     missing = [s for s in seeds if not (P / f"{s}.probs.npz").exists()]

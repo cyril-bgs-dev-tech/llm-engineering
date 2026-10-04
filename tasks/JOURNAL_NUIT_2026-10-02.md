@@ -289,3 +289,6 @@ RM-32 préparé de bout en bout : fiche hachée experiments/2026-10-04-distillat
 
 ### 17:16Z : reprise par surveilleur
 Relecture de mon code du jour : lot.sh reconnaissait un run déjà au registre par suffixe (un slug court pouvait être masqué par un slug plus long) ; corrigé par motif ancré (horodatage + slug exact), test ajouté. Les lots déjà lancés ont chargé l'ancienne version, sans risque (slugs uniques). LoRA pli 2 en cours.
+
+### 17:22Z : reprise par surveilleur
+Post-traitement du LoRA automatisé : scripts/post_lora_plis.sh lancé en détaché (q5, compare_probs par pli, puis agrégat à cinq plis via build_fold_ensemble.py --pool-files et pooled_compare.py, conforme par famille, abstention). Reste à lire les sorties et à consigner dans RESULTATS.
