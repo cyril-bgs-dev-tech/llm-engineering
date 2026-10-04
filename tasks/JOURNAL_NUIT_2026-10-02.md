@@ -186,3 +186,6 @@ Cahier d'audit GLM v5 préparé (docs/BRIEF_GLM_v5_audit_second_cycle.md ; non e
 
 ### 04:04Z : reprise par surveilleur
 Page wiki des conclusions corrigées ajoutée (wiki 19 pages, vérifications vertes). 4B à 10 époques en cours.
+
+### 04:05Z : reprise par surveilleur
+4B à 10 époques : contrôle d'arrêt anticipé franchi (débit normal), en cours. Mémoire à jour.
