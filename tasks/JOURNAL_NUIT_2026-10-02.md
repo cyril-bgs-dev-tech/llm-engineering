@@ -238,3 +238,6 @@ Brainstorm par composante traité (voir mémoire et RESULTATS) ; correction d'un
 
 ### 15:38Z : reprise par surveilleur
 Feuille de route amendée (roadmap_unifié.md §7, MICROTACHES.md) : 15 tâches RM-25 à RM-39 ajoutées sans renuméroter (104 ★ sur 174), placées dans R6 (références mûres, discrétisation), R7 (LoRA mûr, cinq plis, puissance v2, ancrage externe), R8 (distillation vers l'encodeur), R9 (acceptation de la v2 avant RM-20), R10 (conforme par famille), R11 (service, rapport), R12 (9B mûr), R14 (quantification, robustesse) ; check_microtasks et check_roadmap verts ; todo.md exporté, huit cases cochées (RM-25, 26, 27, 36, P1-11, 12, 13, 26). Plan V6 : compteurs et paragraphe sur les époques mis à jour.
+
+### 15:40Z : reprise par surveilleur
+Harnais de développement : fonction de lancement partagée scripts/lib/lot.sh (code de sortie capturé avant affichage, essais plafonnés et consignés, DEJA au registre, arrêt sur code non relançable), 5 tests ; à utiliser pour tout nouveau lot (N25). Plis 3 et 4 de l'encodeur en cours (graine 1004 du pli 3 faite, pli 4 à venir).
