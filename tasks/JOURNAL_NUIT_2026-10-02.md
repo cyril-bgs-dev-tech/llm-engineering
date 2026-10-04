@@ -370,3 +370,6 @@ Rien à consigner (LoRA pli 3 en cours, GPU 94 %, fin vers 23:35Z).
 
 ### 22:11Z : reprise par surveilleur
 Rien à consigner (LoRA pli 3 en cours, GPU 95 %, fin vers 23:35Z).
+
+### 22:15Z : cahier d'audit GLM v6 préparé (demande de Cyril)
+docs/BRIEF_GLM_v6_audit_30_leviers.md (27 Ko, autonome) : posture de chercheur de trente ans, mission « 30 leviers les plus déterminants pour la performance, qui rendent le reste inutile, plus simple ou obsolète », contraintes dures (RTX 5090, environ 50 h de GPU restantes, protocole gelé, test scellé), dossier de preuve (tâche, protocole, systèmes à cinq plis, essais et verdicts, structure des erreurs, incertitude, efficience, infrastructure, chaîne en cours), inventaire des pistes connues et douze conclusions à attaquer, huit questions, plan de livrable (30 lignes exactement, colonnes imposées, fiches des dix premiers, graphe, trajectoire, obsolescence), règles, prompt prêt à coller, tableau de preuve. Non envoyé : décision de Cyril. À mettre à jour avec les plis 3 et 4 du LoRA avant envoi.
