@@ -158,3 +158,14 @@ Exactitude au pli 0 : TF-IDF 0,824 ; TF-IDF caractères et poids équilibrés 0,
 ## Hiérarchie CIM-10 comme supervision (fiche `2026-10-04-hierarchie-comme-supervision`, EXPLORE, TF-IDF, 5 plis ; `tfidf-hier-minus-reference`)
 
 Entraîner sur les blocs CIM-10 puis agréger par chapitre : sans poids 0,6448 (**−3,99 points [−5,95 ; −2,08], dégradation résolue**) ; avec poids équilibrés 0,6740 (−1,05 [−2,69 ; +0,58], non résolu). **Piste non soutenue** : la supervision plus fine ne remonte pas le chapitre avec un TF-IDF ; les blocs rares ont trop peu d'exemples. Prédictions de la fiche : gain entre 0 et 3 points (0,45) et gain d'au moins 2 points (0,15) : faux ; perte (0,35) : vrai pour la version sans poids.
+
+## Recette mûre de l'encodeur CamemBERT-bio (fiche `2026-10-04-encodeur-recette-mure`, EXPLORE, pli 0, graine 1000, 508 tokens tête et fin)
+
+| Run | macro-F1 | exactitude | log loss | ECE | durée | run_id |
+|---|---|---|---|---|---|---|
+| 2 époques, 1e-4 (recette gelée) | 0,4484 | 0,770 | 1,015 | 0,176 | 43 s | `p1-07-camembert-bio-lr1e-4` |
+| 6 époques, 1e-4 | 0,5527 | 0,809 | n/a ici | 0,049 | 128 s | `camembert-epoques-lr1e-4-ep6` |
+| **10 époques, 1e-4** | **0,7714** | 0,833 | 0,739 | 0,107 | 215 s | `camembert-recette-lr1e-4-ep10` |
+| 6 époques, 2e-4 | 0,6291 | 0,819 | 0,653 | 0,067 | 133 s | `camembert-recette-lr2e-4-ep6` |
+
+**À 10 époques, CamemBERT-bio dépasse le TF-IDF du même pli de 7,4 points [+2,6 ; +12,9]** (`camembert-ep10-minus-tfidf-fold0` : 0,7714 contre 0,6971, « A meilleur », borne basse supérieure à δ = 2,0) **et le Qwen3.5-4B à 2 époques de 18,5 points [+12,7 ; +24,1]** (`camembert-ep10-minus-qwen4b-fold0`) ; contre sa propre version à 6 époques : +21,9 points [+16,5 ; +26,4]. Précautions : un pli, une graine, bruit de run de l'ordre du point ; le calcul d'ECE (0,107) montre un modèle sur-confiant à cette durée. La macro-F1 passe de 0,553 à 0,771 entre 6 et 10 époques, un saut qui suggère que les petits chapitres sont enfin appris (à vérifier par chapitre). Prédictions de la fiche : au moins un run dépasse 0,60 (0,5) : réalisé ; **aucun ne dépasse le TF-IDF du pli 0 (0,75) : faux**. **Conclusion à retenir : la conclusion « aucun modèle appris ne bat le TF-IDF » est un artefact de la recette gelée à 2 époques.** Les LLM LoRA à 2 époques sont très probablement sous-entraînés dans la même mesure : leur comparaison n'a pas été faite à recette mûre.
