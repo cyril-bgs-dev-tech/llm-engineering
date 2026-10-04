@@ -1,0 +1,256 @@
+{
+ "n": 3586,
+ "n_auteurs": 104,
+ "A_blocs_auteurs": {
+  "ensemble_moins_tfidf": {
+   "difference": 5.2,
+   "blocs_auteurs": [
+    3.84,
+    7.23,
+    3.39
+   ],
+   "patients": [
+    3.69,
+    6.78,
+    3.09
+   ]
+  },
+  "encodeur_moins_tfidf": {
+   "difference": 3.27,
+   "blocs_auteurs": [
+    1.24,
+    5.94,
+    4.7
+   ],
+   "patients": [
+    1.0,
+    5.55,
+    4.55
+   ]
+  }
+ },
+ "B_empilement": {
+  "poids_choisis_par_pli": {
+   "0": 0.6,
+   "1": 0.6,
+   "2": 0.6,
+   "3": 0.6,
+   "4": 0.6
+  },
+  "S0_50_50": {
+   "macro_f1": 0.7721
+  },
+  "S1_poids_global": {
+   "macro_f1": 0.7763,
+   "contre_S0_points": [
+    0.41,
+    -0.25,
+    1.13
+   ]
+  },
+  "S2_regression_logistique": {
+   "macro_f1": 0.7124,
+   "contre_S0_points": [
+    -5.98,
+    -8.19,
+    -3.45
+   ]
+  },
+  "S4_biais_par_classe": {
+   "macro_f1": 0.767,
+   "contre_S0_points": [
+    -0.51,
+    -1.58,
+    1.14
+   ]
+  }
+ },
+ "C_variance": {
+  "macro_f1_par_pli_et_graine": [
+   [
+    0.7714,
+    0.7079,
+    0.7175,
+    0.7148,
+    0.7349
+   ],
+   [
+    0.7605,
+    0.7763,
+    0.7679,
+    0.708,
+    0.7247
+   ],
+   [
+    0.7392,
+    0.7428,
+    0.7705,
+    0.7675,
+    0.7481
+   ],
+   [
+    0.7054,
+    0.7461,
+    0.7146,
+    0.7126,
+    0.7208
+   ],
+   [
+    0.7125,
+    0.7638,
+    0.7728,
+    0.7335,
+    0.7319
+   ]
+  ],
+  "ecarts_types_points": {
+   "pli": 0.9,
+   "graine": 0.0,
+   "reste_interaction_et_noyau": 2.32
+  },
+  "ecart_type_entre_graines_par_pli_points": [
+   2.55,
+   2.95,
+   1.44,
+   1.57,
+   2.48
+  ]
+ },
+ "D_sous_ensembles": {
+  "General": {
+   "n": 3048,
+   "ensemble": {
+    "exactitude": 0.844,
+    "wilson95": [
+     0.831,
+     0.856
+    ],
+    "macro_f1": 0.745
+   },
+   "encodeur": {
+    "exactitude": 0.832,
+    "wilson95": [
+     0.818,
+     0.845
+    ],
+    "macro_f1": 0.723
+   },
+   "tfidf": {
+    "exactitude": 0.807,
+    "wilson95": [
+     0.792,
+     0.82
+    ],
+    "macro_f1": 0.688
+   }
+  },
+  "CU 2 - ICD-10 coding": {
+   "n": 245,
+   "ensemble": {
+    "exactitude": 0.918,
+    "wilson95": [
+     0.877,
+     0.947
+    ],
+    "macro_f1": 0.41
+   },
+   "encodeur": {
+    "exactitude": 0.902,
+    "wilson95": [
+     0.858,
+     0.933
+    ],
+    "macro_f1": 0.404
+   },
+   "tfidf": {
+    "exactitude": 0.898,
+    "wilson95": [
+     0.854,
+     0.93
+    ],
+    "macro_f1": 0.407
+   }
+  },
+  "CU 6 - Infectiology": {
+   "n": 110,
+   "ensemble": {
+    "exactitude": 0.864,
+    "wilson95": [
+     0.787,
+     0.916
+    ],
+    "macro_f1": 0.269
+   },
+   "encodeur": {
+    "exactitude": 0.845,
+    "wilson95": [
+     0.766,
+     0.901
+    ],
+    "macro_f1": 0.264
+   },
+   "tfidf": {
+    "exactitude": 0.782,
+    "wilson95": [
+     0.696,
+     0.849
+    ],
+    "macro_f1": 0.249
+   }
+  },
+  "CU 5b - Oncology (response to treatment)": {
+   "n": 92,
+   "ensemble": {
+    "exactitude": 1.0,
+    "wilson95": [
+     0.96,
+     1.0
+    ],
+    "macro_f1": 0.059
+   },
+   "encodeur": {
+    "exactitude": 1.0,
+    "wilson95": [
+     0.96,
+     1.0
+    ],
+    "macro_f1": 0.059
+   },
+   "tfidf": {
+    "exactitude": 1.0,
+    "wilson95": [
+     0.96,
+     1.0
+    ],
+    "macro_f1": 0.059
+   }
+  },
+  "CU 5a - Oncology (biomarkers)": {
+   "n": 91,
+   "ensemble": {
+    "exactitude": 1.0,
+    "wilson95": [
+     0.959,
+     1.0
+    ],
+    "macro_f1": 0.059
+   },
+   "encodeur": {
+    "exactitude": 1.0,
+    "wilson95": [
+     0.959,
+     1.0
+    ],
+    "macro_f1": 0.059
+   },
+   "tfidf": {
+    "exactitude": 1.0,
+    "wilson95": [
+     0.959,
+     1.0
+    ],
+    "macro_f1": 0.059
+   }
+  }
+ }
+}

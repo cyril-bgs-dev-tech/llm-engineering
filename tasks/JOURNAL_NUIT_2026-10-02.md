@@ -382,3 +382,6 @@ roadmap_unifié.md : section 4.1 (chaîne critique, douze dominos mappés aux t�
 
 ### 22:33Z : reprise par surveilleur (domino 0 en cours ; préparation du domino 5)
 Brouillon de la fiche de gel RM-50 : candidats A à G, règle de non-infériorité puis coût, éléments figés, prédiction chiffrée du test scellé à remplir, conditions d'arrêt (docs/BROUILLON_GEL_SYSTEME_FINAL.md) ; non haché, en attente de RM-37 (Cyril). LoRA pli 3 en cours (fin vers 23:35Z).
+
+### 22:45Z : audit GLM v6 reçu et traité (Cyril : « GLM a déjà répondu »)
+audit_GLM_v6.md lu en entier. Mesures le jour même (fiche hachée 2026-10-05-audit-glm-v6-mesures-cpu, 4 runs glm-v6-*) : blocs d'auteurs : ensemble moins TF-IDF +5,20 [+3,84 ; +7,23], largeur 3,39 (95 %) mais 4,24 à 98,33 % : règle v2 valable pour une question primaire unique (citations rectifiées partout) ; empilement appris réfuté (S1 +0,41 non résolu, S2 −5,98) ; variance : pli 0,9, graine 0, reste 2,32 ; par pool : codage CIM-10 0,918 contre général 0,844. Erreur de notre cahier corrigée : « pool » = sous-ensembles d'usage, pas une piscine hors distribution (leviers 10 et 12 écartés). Triage des 30 dans docs/AUDIT_GLM_v6_TRIAGE.md ; RM-53 à RM-55 ajoutées, RM-29 et RM-43 précisées ; 110 ★ sur 190.

@@ -1,0 +1,48 @@
+{
+  "created_at": "2026-10-04T22:41:03Z",
+  "kind": "measure",
+  "metrics": {
+    "S0_50_50": {
+      "macro_f1": 0.7721
+    },
+    "S1_poids_global": {
+      "contre_S0_points": [
+        0.41,
+        -0.25,
+        1.13
+      ],
+      "macro_f1": 0.7763
+    },
+    "S2_regression_logistique": {
+      "contre_S0_points": [
+        -5.98,
+        -8.19,
+        -3.45
+      ],
+      "macro_f1": 0.7124
+    },
+    "S4_biais_par_classe": {
+      "contre_S0_points": [
+        -0.51,
+        -1.58,
+        1.14
+      ],
+      "macro_f1": 0.767
+    },
+    "poids_choisis_par_pli": {
+      "0": 0.6,
+      "1": 0.6,
+      "2": 0.6,
+      "3": 0.6,
+      "4": 0.6
+    }
+  },
+  "params": {
+    "fiche": "2026-10-05-audit-glm-v6-mesures-cpu"
+  },
+  "run_id": "20261004-224103-glm-v6-empilement",
+  "schema": "mini-1",
+  "slug": "glm-v6-empilement",
+  "status": "ok",
+  "summary": "Audit GLM v6, mesure B_empilement"
+}

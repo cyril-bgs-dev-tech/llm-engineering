@@ -522,3 +522,29 @@ Qwen3.5-4B LoRA r = 16, 10 époques, taux 1e-4, graine 1000, 13 329 s d'entraîn
 | LoRA moins encodeur moyenné (0,7613) | +1,78 | [−2,79 ; +6,41] | non résolu |
 
 Incertitude (étalonnage croisé sur deux moitiés du pli, un seul pli : exploratoire) : ECE de 0,112 à 0,044 après température (T = 2,4 et 2,6), Brier 0,257 vers 0,229, log loss 0,913 vers 0,534 ; conforme LAC à 90 % : couverture 0,904 avec 1,17 classe par ensemble, mais les classes rares ne sont pas couvertes en marginal (couverture minimale par classe 0,0) ; exactitude à 70 % de couverture 0,946. Même ordre de grandeur qu'aux plis 0 et 1. Prédictions de la fiche : macro-F1 entre 0,68 et 0,82 (réalisée) ; avantage sur le TF-IDF à IC entièrement positif (non réalisé à ce pli, 1 pli sur 3 vus). Note de registre : le post-traitement a enregistré l'analyse d'incertitude sous le même nom de run que l'entraînement (deux identifiants distincts, 194722 et 194822) ; à lire par identifiant.
+
+## Quatre mesures sans GPU issues de l'audit GLM v6 (fiche `2026-10-05-audit-glm-v6-mesures-cpu`, EXPLORE, cinq plis, 3 586 patients, 104 auteurs ; runs `glm-v6-blocs-auteurs`, `glm-v6-blocs-auteurs-niveaux`, `glm-v6-empilement`, `glm-v6-variance`, `glm-v6-par-pool`)
+
+**A. Bootstrap par blocs d'auteurs (levier 1 de GLM).** Les intervalles par patients sous-estiment légèrement l'incertitude ; la corrélation d'auteur est faible mais non nulle.
+
+| Différence regroupée | observée | IC 95 % par patients (largeur) | **IC 95 % par blocs d'auteurs (largeur)** | IC 98,33 % par patients | **IC 98,33 % par blocs d'auteurs** |
+|---|---|---|---|---|---|
+| Ensemble moins TF-IDF | +5,20 | [+3,69 ; +6,78] (3,09) | **[+3,84 ; +7,23] (3,39)** | (3,78) | **[+3,57 ; +7,81] (4,24)** |
+| Encodeur moyenné moins TF-IDF | +3,27 | [+1,00 ; +5,55] (4,55) | **[+1,24 ; +5,94] (4,70)** | (5,51) | **[+0,75 ; +6,61] (5,86)** |
+
+Verdict de la fiche : **« résiste »** à 95 % (borne basse +3,84 > 0, largeur 3,39 ≤ 4,0). **Correction importante** : à 98,33 % (famille de trois comparaisons) la largeur par blocs d'auteurs est **4,24, au-dessus du seuil de 4,0** : la règle de puissance v2 passe pour **une question primaire unique à 95 %**, pas pour trois comparaisons corrigées ; notre phrase « 3,78 à 98,33 %, atteinte » ne valait que pour le bootstrap par patients. Prédictions de la fiche : intervalle par blocs plus large (réalisée), borne basse > 0 (réalisée), largeur ≤ 4,0 (réalisée à 95 %, probabilité 0,45).
+
+**B. Empilement et décision (leviers 4 et 15).** Validation croisée par pli, comparaison avec le mélange 50/50 par blocs d'auteurs :
+
+| Variante | macro-F1 regroupée | contre S0 [IC 95 % par blocs] | verdict |
+|---|---|---|---|
+| S0 : 50/50 | 0,7721 | : | référence |
+| S1 : poids global appris (0,6 pour l'encodeur à chacun des cinq plis) | 0,7763 | +0,41 [−0,25 ; +1,13] | sans gain |
+| S2 : régression logistique sur les log-probabilités | 0,7124 | −5,98 [−8,19 ; −3,45] | **dégrade** (surajustement ; non-convergence à 500 itérations) |
+| S4 : S0 plus biais par classe | 0,7670 | −0,51 [−1,58 ; +1,14] | sans gain |
+
+**Le mélange 50/50 est quasiment au mélange optimal** (le poids appris est 0,6 à chaque pli, stable ; gain +0,4 non résolu) : **le levier « empilement appris, +1 à +2,5 points » de GLM est réfuté**, et la trajectoire de gain par le haut s'en trouve abaissée. Prédictions : S1 entre 0,0 et +0,5 (réalisée), S2 entre −1,0 et +1,5 (**non réalisée**, −5,98), S4 entre −0,5 et +1,0 (**non réalisée de peu**, −0,51), aucun gain ≥ 2,0 (réalisée).
+
+**C. Décomposition de variance de l'encodeur (levier 11).** Macro-F1 par pli et par graine (5 × 5). Écarts-types de composantes (points) : pli 0,9 ; effet principal de graine 0,0 ; **reste (interaction pli × graine et non-déterminisme du GPU) 2,32**. Écart-type entre graines par pli : 2,55 ; 2,95 ; 1,44 ; 1,57 ; 2,48. **La variance d'un run isolé est presque entièrement du « reste »** : aucune graine n'est systématiquement meilleure, l'écart entre deux runs d'un même pli est du bruit d'interaction et de noyau GPU ; d'où la nécessité des moyennes de graines et des prédictions regroupées. (La prédiction « pli supérieur à 1,5 fois graine » est vraie de façon triviale, la composante de graine étant nulle.)
+
+**D. Mesure par sous-ensemble d'usage (`pool`).** Le champ `pool` désigne les sous-ensembles d'usage annotés du corpus (général 3 048 patients de développement, codage CIM-10 245, infectiologie 110, oncologie réponse au traitement 92, oncologie biomarqueurs 91), **tous présents dans les plis de développement** ; ce n'est pas une piscine hors distribution (erreur de notre cahier GLM v6, corrigée). Exactitude de l'ensemble [Wilson 95 %] : général 0,844 [0,831 ; 0,856] ; **codage CIM-10 0,918 [0,877 ; 0,947]** (au-dessus du général) ; infectiologie 0,864 [0,787 ; 0,916] ; oncologie (deux sous-ensembles) 1,000 : ils ne contiennent qu'un chapitre (le II), donc la macro-F1 y est sans objet. **Toute la difficulté est dans le sous-ensemble général** ; les sous-ensembles d'usage sont faciles. Prédictions : codage au-dessus du général (réalisée), au moins un sous-ensemble plus difficile (**non réalisée**).

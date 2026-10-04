@@ -314,7 +314,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P1-23 | Analyse d'erreurs initiale | |
 | P1-25 | Page d'analyse et premier `RESULTATS.md` | Résultats négatifs au même rang |
 | RM-28 | LoRA mûr aux plis 2, 3 et 4 : évaluation à cinq plis et professeur strictement hors pli (environ 10,5 h de GPU) | Porte de la distillation et de l'évaluation à cinq plis |
-| RM-29 | Règle de puissance v2 : largeur de la différence entre deux systèmes sur cinq plis, seuil 4,0 | Aperçu : 4,29 points sur trois plis pour ensemble contre TF-IDF |
+| RM-29 | Règle de puissance v2 : largeur de la différence entre deux systèmes sur cinq plis, seuil 4,0 | Fait en partie : 3,09 par patients, **3,39 par blocs d'auteurs à 95 %** (question primaire unique), 4,24 à 98,33 % ; reste à refaire avec le LoRA |
 | RM-52 | Rubrique de notation vérifiable par composante, correspondance Q1 à Q12, chaîne de dominos | Fait le 05/10/2026 (section 4.1) ; écart note estimée contre scorecard à chaque porte |
 | RM-41 | Débit d'entraînement à résultat équivalent (checkpointing, noyaux linéaires, bf16 de l'encodeur) | Jamais pendant un lot en cours ; équivalence statistique d'abord |
 | RM-17 | **Porte go/no-go après la LoRA de référence** | |
@@ -418,6 +418,9 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P1-24 | Raccourcis du LLM : plis patient contre plis auteur | Sorti du premier cycle |
 | P0-07 | SDPA contre FlashAttention 2 sur SM120 | |
 | RM-31 | Capacité à recette mûre : 9B LoRA 10 époques au pli 0 | Arrêt de l'exploration de taille si le gain est sous δ |
+| RM-53 | Encodeurs français alternatifs (DrBERT, ModernBERT-fr) à recette mûre | Licence d'abord ; deux fois moins cher qu'un pli de LoRA |
+| RM-54 | Représentations gelées d'un LLM et régression logistique | Embeddings de 0,5 h contre 3,7 h d'affinage |
+| RM-55 | Recette d'encodeur v2 : lissage, EMA, curriculum, un facteur à la fois | Environ 1,2 h par facteur (trois graines, cinq plis) |
 
 ### Étape R13 : leviers de données et de distillation
 
@@ -566,6 +569,7 @@ Appliqués dans `MICROTACHES.md`, sans renuméroter :
 - **Motif** : les dix leviers d'efficience et de déploiement retenus (distillation vers un élève bon marché, débit d'entraînement, mesures de service, cascade, quantification correcte, élève plus léger, service empaqueté, énergie par run, contexte adaptatif, fiche de décision) sont couverts par RM-32, RM-34, RM-35, RM-40 et ces huit tâches ; le service FastAPI, la charge, vLLM contre Transformers et la dérive restent P5-01, P5-02, P5-03 et P5-08, sans doublon.
 - **RM-49 ajoutée le 05/10/2026** (benchmark public à résultats publiés) : sans repère publié, aucun écart avec l'état de l'art n'est vérifiable ; chemin court : 107 ★ sur 184.
 - **Chaîne de dominos (05/10/2026)** : section 4.1 ajoutée (chemin critique, correspondance Q1 à Q12 et huit composantes, règles d'ordonnancement) ; règles de bifurcation écrites d'avance en section 6 ; **RM-50, RM-51, RM-52 ajoutées** (gel du système final avant l'ouverture, lecture confirmatoire de l'incertitude, rubrique de notation) ; RM-20 dépend désormais de RM-50 ; chemin court : 110 ★ sur 187.
+- **Audit GLM v6 (05/10/2026)** : triage dans `docs/AUDIT_GLM_v6_TRIAGE.md` ; RM-53 à RM-55 ajoutées (encodeurs alternatifs, représentations gelées d'un LLM, recette d'encodeur v2) ; RM-29 réécrite (bootstrap par blocs d'auteurs, question primaire unique à 95 %) ; RM-43 complétée (couverture par région de la cascade) ; chemin court inchangé : 110 ★ sur 190.
 - **Règle d'exécution** : aucune de ces tâches ne modifie un fichier qu'un lot en cours importe ; RM-41 attend la fin du lot RM-28 et se valide par équivalence statistique avant tout usage dans une fiche préenregistrée.
 
 ---

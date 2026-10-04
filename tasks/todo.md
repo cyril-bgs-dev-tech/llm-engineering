@@ -257,7 +257,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-28 (GPU) : LoRA mûr aux plis 2, 3 et 4 (une graine chacun) : évaluation du candidat sur les cinq plis et professeur strictement hors pli pour la distillation (environ 10,5 h de GPU)
   - Preuve de fin : Probabilités hors pli des 3 586 patients ; manifeste ; contrôle strictement hors pli
   - Skills : lora-classifier-recipe, leakage-guard, vram-preflight ; dépendances : RM-27
-- [ ] RM-29 (mesure) : Règle de puissance v2 : largeur de l'IC de la différence appariée entre deux systèmes sur les prédictions regroupées de cinq plis (seuil 4,0 points) ; plis 3 et 4 de l'encodeur
+- [ ] RM-29 (mesure) : Règle de puissance v2 : largeur de l'IC de la différence appariée entre deux systèmes sur les prédictions regroupées de cinq plis, **bootstrap par blocs d'auteurs, une question primaire unique à 95 %** (seuil 4,0 points ; mesuré le 05/10 : 3,39 à 95 %, 4,24 à 98,33 %) ; plis 3 et 4 de l'encodeur
   - Preuve de fin : Run `v2-power-preview-*` à cinq plis ; ligne datée de `experiments/INDEX.md`
   - Skills : paired-comparison ; dépendances : RM-25, RM-28
 - [x] RM-52 (doc) : Rubrique vérifiable de notation par composante, correspondance avec Q1 à Q12, chaîne de dominos ; réévaluation des notes de la présentation avec preuve citée à chaque porte et écart noté entre note estimée et scorecard
@@ -434,6 +434,15 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-31 (GPU) : Capacité à recette mûre : Qwen3.5-9B LoRA 10 époques au pli 0 (environ 5 h) ; arrêt de l'exploration de taille si le gain est sous δ
   - Preuve de fin : Run au registre ; comparaison appariée avec le 4B
   - Skills : lora-classifier-recipe, vram-preflight ; dépendances : RM-27
+- [ ] RM-53 (GPU) : Encodeurs français alternatifs à recette mûre (DrBERT, ModernBERT-fr si la licence le permet), cinq plis, même protocole que CamemBERT-bio ; différence appariée avec le plancher actuel
+  - Preuve de fin : Fiche hachée ; runs au registre ; licence vérifiée dans `docs/LICENCES.md` ; verdict en trois valeurs
+  - Skills : experiment-preregistration, vram-preflight, paired-comparison ; dépendances : RM-25
+- [ ] RM-54 (GPU) : Représentations gelées d'un LLM (Qwen3.5-4B de base, moyenne des états cachés) et régression logistique : coût de 0,5 h d'inférence contre 3,7 h d'affinage par pli ; comparaison à l'encodeur et au LoRA
+  - Preuve de fin : Fiche hachée ; runs au registre ; régression entraînée hors pli ; verdict en trois valeurs
+  - Skills : experiment-preregistration, vram-preflight, leakage-guard ; dépendances : RM-27
+- [ ] RM-55 (GPU) : Recette d'encodeur v2 : lissage d'étiquettes, moyenne de poids (EMA), curriculum pondéré, un facteur à la fois, trois graines et cinq plis par facteur (environ 1,2 h chacun)
+  - Preuve de fin : Fiche hachée ; trois facteurs mesurés ; verdict par facteur ; pas de combinaison avant résultat individuel
+  - Skills : experiment-preregistration, paired-comparison, vram-preflight ; dépendances : RM-25, RM-41
 
 ## Étape R13 : leviers de données et de distillation
 
@@ -551,7 +560,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-40 (mesure) : Allocation dynamique du calcul : cascade TF-IDF, encodeur, LoRA par seuil de confiance ; seuil choisi sur un pli et rapporté sur les autres ; latence moyenne et part de cas escaladés ; abstention conforme comme garde-fou
   - Preuve de fin : Run `cascade-eval` ; seuil préenregistré avant le pli de contrôle ; coût moyen par patient
   - Skills : performance-optimization, paired-comparison ; dépendances : RM-28, RM-34
-- [ ] RM-43 (mesure) : Routage de la cascade par taille de l'ensemble conforme (escalade quand l'ensemble contient plusieurs classes) en plus du seuil de probabilité ; comparaison appariée avec le seuil, couverture et coût
+- [ ] RM-43 (mesure) : Routage de la cascade par taille de l'ensemble conforme (escalade quand l'ensemble contient plusieurs classes) en plus du seuil de probabilité ; **couverture conforme mesurée par région de la cascade (système appelé)** ; comparaison appariée avec le seuil, couverture et coût
   - Preuve de fin : Run `cascade-conforme-cinq-plis` ; part des cas escaladés contre macro-F1
   - Skills : model-card-calibration, paired-comparison ; dépendances : RM-40, RM-33
 

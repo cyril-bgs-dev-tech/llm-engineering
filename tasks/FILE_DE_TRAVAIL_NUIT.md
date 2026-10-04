@@ -53,4 +53,6 @@ Terminés cette nuit : criblage, grille du 4B, encodeur (recette, fenêtres, sat
 
 **Chaîne de dominos (roadmap §4.1)** : ordre de travail après la chaîne GPU de nuit : (1) lire les sorties de `post_lora_plis.sh` et consigner ; (2) RM-41 (équivalence d'entraînement) puis les décisions de bifurcation (a) et (b) de la section 6 ; (3) fenêtre de décision synthétique et audit d'étiquettes (P2-10, P2-06) avant RM-50 ; (4) préparer, sans l'exécuter, la fiche de gel RM-50 et la prédiction chiffrée du test scellé (hachée seulement après acceptation du protocole v2 par Cyril) ; (5) rien d'autre n'est lancé entre RM-50 et RM-20. Chaque réveil du surveilleur note le domino en cours.
 
+**Audit GLM v6 (triage fait)** : suite immédiate sans GPU : audit des erreurs confiantes (P2-06, gabarit à trois verdicts : étiquette contestable, rivale défendable, correcte ; agrégats seulement dans les sorties ; jamais d'étiquette de test modifiée) ; fiche de la recette d'encodeur v2 (RM-55) et des encodeurs alternatifs (RM-53, licence d'abord) à écrire pour la fenêtre GPU libre ; RM-54 (représentations gelées) idem.
+
 **Réservé à Cyril** : acceptation du protocole v2 (RM-37) ; ouverture du test scellé (RM-20) ; push ; envoi du brief GLM v5 ; location de GPU et API payante.
