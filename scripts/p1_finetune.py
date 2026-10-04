@@ -115,6 +115,7 @@ def main() -> int:
     ap.add_argument("--save-model", action="store_true", help="mode full : sauvegarde les poids et le tokenizer dans artifacts/models/<slug> (candidat de déploiement)")
     ap.add_argument("--dup-targets", default="", help="chapitres sur-échantillonnés par duplication (fiche du synthétique ciblé), séparés par des virgules")
     ap.add_argument("--dup-factor", type=int, default=1, help="nombre total d'occurrences de chaque patient d'une classe ciblée dans l'entraînement")
+    ap.add_argument("--synthetic", default="", help="fichier JSONL de textes synthétiques ciblés (scripts/gen_synthetic.py) ajoutés à l'entraînement ; lignée vérifiée ; jamais en préflight")
     ap.add_argument("--fiche", default="")
     ap.add_argument("--slug", required=True)
     ap.add_argument("--register", action="store_true")
@@ -136,7 +137,18 @@ def main() -> int:
     tok = AutoTokenizer.from_pretrained(a.model)
     pad_id = tok.pad_token_id if tok.pad_token_id is not None else tok.eos_token_id
     t_tok = time.time()
-    x_tr = build_inputs(tok, [texts[i] for i in tr], a.max_len)
+    extra_texts: list[str] = []
+    extra_labels: list[int] = []
+    if a.synthetic:
+        if a.max_steps:
+            raise SystemExit("--synthetic : pas en préflight")
+        records = [json.loads(line) for line in (ROOT / a.synthetic).read_text(encoding="utf-8").splitlines() if line.strip()]
+        train_ids = {ids[i] for i in tr}
+        label_of = dict(zip(ids, y, strict=True))
+        augment.validated_synthetic(records, train_ids, {r["label"] for r in records}, label_of)
+        extra_texts = [r["text"] for r in records]
+        extra_labels = [labels.index(r["label"]) for r in records]
+    x_tr = build_inputs(tok, [texts[i] for i in tr] + extra_texts, a.max_len)
     x_te = build_inputs(tok, [texts[i] for i in te], a.max_len) if not a.max_steps else []
     tok_seconds = time.time() - t_tok
     if a.max_steps:  # pré-vol : le plus long exemple d'abord, le pire cas mémoire
@@ -155,12 +167,12 @@ def main() -> int:
     elif route == "B":  # le modèle quantifié est déjà sur le GPU (device_map) ; la tête linéaire, créée ensuite, est sur le processeur
         model.head.to("cuda")
     cfg: dict[str, Any] = {k: v for k, v in vars(a).items() if k not in ("register",)}
-    cfg.update({"route": route, "labels": labels, "n_train": len(tr), "n_eval": len(te), "fiche_sha256": fiche_sha, "train_token_length_max": max(len(x) for x in x_tr)})
+    cfg.update({"route": route, "labels": labels, "n_train": len(tr) + len(extra_texts), "n_synthetic": len(extra_texts), "n_eval": len(te), "fiche_sha256": fiche_sha, "train_token_length_max": max(len(x) for x in x_tr)})
     record: dict[str, Any] = {"kind": "preflight" if a.max_steps else "train", "slug": a.slug, "params": cfg}
     try:
-        res = lora_train.train(model, x_tr, [int(idx[i]) for i in tr], pad_id, "cuda", a.effective_batch, a.micro_batch, a.epochs if not a.max_steps else 1,
+        res = lora_train.train(model, x_tr, [int(idx[i]) for i in tr] + extra_labels, pad_id, "cuda", a.effective_batch, a.micro_batch, a.epochs if not a.max_steps else 1,
                                a.lr, a.warmup, a.seed, projected_limit_seconds=a.limit_seconds or None,
-                               class_weights=lora_train.inverse_sqrt_class_weights([int(idx[i]) for i in tr], len(labels)) if a.class_weights == "inv-sqrt" else None)
+                               class_weights=lora_train.inverse_sqrt_class_weights([int(idx[i]) for i in tr] + extra_labels, len(labels)) if a.class_weights == "inv-sqrt" else None)
     except lora_train.TrainingAborted as exc:
         record.update({"status": "aborted", "summary": f"{a.slug} : arrêt anticipé, durée projetée {exc.projected_seconds:.0f} s", "loss_history": exc.loss_history, "error": str(exc)})
         print(json.dumps({k: record[k] for k in ("slug", "summary")}, ensure_ascii=False))
