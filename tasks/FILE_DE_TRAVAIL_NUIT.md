@@ -47,4 +47,6 @@ Terminés cette nuit : criblage, grille du 4B, encodeur (recette, fenêtres, sat
 
 **Après la chaîne, sur décision de l'assistante** : 9B mûr (RM-31, 5 h), seconde graine du LoRA aux plis 1 à 4 si la variance l'exige, adoption propre de fla dans pyproject (GPU libre), quantification statique de l'encodeur (RM-38).
 
+**Efficience et déploiement, tâches ajoutées le 04/10 au soir (voir roadmap §7)** : RM-46 (TF-IDF souple, CPU, fiche hachée, en cours avec le professeur ensemble, puis bras LoRA quand `cinq-plis-llm-mur` existe) ; RM-42 (module d'énergie et de coût au registre : écrire dans de nouveaux fichiers, brancher aux scripts après la fin du lot LoRA) ; après TERMINE24, GPU libre : RM-41 (débit d'entraînement : fiche d'équivalence d'abord, sur le pli 0, encodeur bf16 contre fp32 puis LoRA sans checkpointing en 100 pas), RM-45 (encodeur élagué), RM-47 (contexte et regroupement par longueur) ; sans GPU après `cascade_cv` : RM-43 (routage conforme), RM-44 (ONNX et INT8 statique, vérifier d'abord que `onnxruntime` s'installe sans casser le verrou) ; en dernier RM-48 (fiche de déploiement) quand les services sont mesurés.
+
 **Réservé à Cyril** : acceptation du protocole v2 (RM-37) ; ouverture du test scellé (RM-20) ; push ; envoi du brief GLM v5 ; location de GPU et API payante.

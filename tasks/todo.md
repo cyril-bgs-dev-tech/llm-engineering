@@ -233,6 +233,9 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-16 (GPU) : Mesure pilote de débit : un pli, une configuration LoRA, 100 pas ; recaler budgets et calendrier (hypothèse, mesure, marge)
   - Preuve de fin : Tableau hypothèse, mesure, marge ; `PROTOCOLE.md` complété ; aucune durée annoncée avant cette mesure
   - Skills : vram-preflight, run-registry ; dépendances : P1-12
+- [ ] RM-42 (code) : Énergie et coût par run au registre : échantillonneur de puissance intégré aux scripts d'entraînement et de mesure, Wh par run, euros par run avec prix du kWh en paramètre, Pareto qualité contre énergie généré depuis le registre
+  - Preuve de fin : Champs au registre ; tests ; tableau généré dans `docs/TABLEAUX_GENERES.md` ; Pareto reproductible
+  - Skills : performance-optimization, test-driven-development, run-registry ; dépendances : RM-05, RM-16
 - [x] P1-13 (GPU) : Balayage du taux d'apprentissage LoRA (1e-5, 2e-5, 5e-5, 1e-4), une graine par taux (PROTOCOLE.md 6.3 et 6.5, C2 ; ADR-010)
   - Preuve de fin : 4 runs ; courbe taux contre macro-F1
   - Skills : lora-classifier-recipe, vram-preflight ; dépendances : P1-12
@@ -257,6 +260,9 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-29 (mesure) : Règle de puissance v2 : largeur de l'IC de la différence appariée entre deux systèmes sur les prédictions regroupées de cinq plis (seuil 4,0 points) ; plis 3 et 4 de l'encodeur
   - Preuve de fin : Run `v2-power-preview-*` à cinq plis ; ligne datée de `experiments/INDEX.md`
   - Skills : paired-comparison ; dépendances : RM-25, RM-28
+- [ ] RM-41 (GPU) : Débit d'entraînement à résultat équivalent : gradient checkpointing désactivé (pic 12,9 Gio sur 32), noyaux linéaires causal-conv1d et flash-linear-attention installés proprement, encodeur en bf16 ou TF32 ; pas par seconde avant et après, équivalence statistique des macro-F1 sur un pli (mêmes graines, écart dans le bruit mesuré)
+  - Preuve de fin : Tableau pas par seconde et heures par run ; équivalence appariée consignée ; fiche hachée ; aucun changement pendant un lot en cours
+  - Skills : performance-optimization, vram-preflight, lora-classifier-recipe ; dépendances : RM-28
 - [ ] RM-17 (décision) : Porte go/no-go après la LoRA de référence : la distillation se poursuit comme question scientifique, ou comme expérience d'apprentissage limitée si la LoRA est dominée par l'encodeur
   - Preuve de fin : Décision datée, avec la largeur d'intervalle de la règle de puissance de PROTOCOLE.md 6.3 (calculée sur les cinq graines de P1-19, avant P2-01)
   - Skills : doubt-driven-development ; dépendances : P1-20, P1-26
@@ -359,6 +365,9 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] RM-36 (doc) : Rapport préliminaire, carte de modèle v3, fiche de données, protocole v2 en brouillon, tableaux regénérés depuis le registre, contrôle automatique des références de runs
   - Preuve de fin : `docs/RAPPORT_PREMIER_CYCLE.md`, `docs/CARTE_DE_MODELE_V3.md`, `docs/FICHE_DE_DONNEES_PARHAF.md`, `docs/PROTOCOLE_V2_BROUILLON.md`, `scripts/check_claims.py` vert
   - Skills : documentation-and-adrs, claim-gate ; dépendances : RM-25, RM-27
+- [ ] RM-48 (doc) : Fiche de déploiement par contrainte : arbre de décision (CPU seul, GPU modeste, GPU 32 Go, énergie ou coût imposé) vers le système à servir, avec latence, débit, énergie par 1 000 patients, qualité et incertitude de chacun ; dit quels modèles deviennent inutiles à servir
+  - Preuve de fin : `docs/FICHE_DE_DEPLOIEMENT.md` ; chaque chiffre relié à un run ; ADR si un système est retiré du service
+  - Skills : documentation-and-adrs, claim-gate ; dépendances : RM-34, RM-35, RM-32
 - [ ] P5-09 (mesure) : Reconstruction à froid : clone neuf puis `make reproduce-small`
   - Preuve de fin : Chiffre clé reproduit dans la tolérance
   - Skills : ci-cd-and-automation ; dépendances : P0-11, P0-42, P1-20
@@ -389,6 +398,9 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P1-15 (GPU) : Balayage de la longueur de contexte et de la troncature (milieu, tête et fin)
   - Preuve de fin : Runs au registre
   - Skills : lora-classifier-recipe, vram-preflight ; dépendances : P1-13
+- [ ] RM-47 (GPU) : Longueur de contexte et regroupement par longueur : débit du LoRA et de l'encodeur à 512, 1 024, 2 048 et 4 096 tokens, regroupement par longueur au service, troncature adaptative ; perte de macro-F1 par longueur
+  - Preuve de fin : Tableau débit contre macro-F1 ; seuil de longueur par profil
+  - Skills : performance-optimization, vram-preflight ; dépendances : P1-15, RM-41
 - [ ] P1-16 (GPU) : Nombre d'époques et ordonnanceur
   - Preuve de fin : Runs au registre
   - Skills : lora-classifier-recipe, vram-preflight ; dépendances : P1-13
@@ -449,6 +461,12 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P2-12 (doc) : Pages wiki des professeurs, de la qualité des étiquettes et de la tâche voisine
   - Preuve de fin : Pages et `wiki-lint` vert
   - Skills : wiki-update ; dépendances : P2-08
+- [ ] RM-45 (GPU) : Encodeur élagué (six couches sur douze) affiné, avec et sans distillation depuis l'encodeur complet ; latence divisée par environ deux, perte de macro-F1 mesurée
+  - Preuve de fin : Runs au registre ; différence appariée avec l'encodeur complet ; latence sur processeur
+  - Skills : distillation-pipeline, vram-preflight, paired-comparison ; dépendances : RM-32
+- [ ] RM-46 (mesure) : Élève TF-IDF à étiquettes souples : régression logistique entraînée sur les probabilités hors pli du professeur (réplication pondérée par classe), latence 2 ms conservée ; écart avec le TF-IDF dur et avec le professeur
+  - Preuve de fin : Run `tfidf-souple-*` ; contrôle strictement hors pli ; verdict en trois valeurs
+  - Skills : distillation-pipeline, leakage-guard, paired-comparison ; dépendances : RM-32
 - [ ] P3-03 (GPU) : Balayage d'alpha et de T
   - Preuve de fin : Runs au registre
   - Skills : distillation-pipeline, vram-preflight ; dépendances : P3-02
@@ -512,9 +530,18 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-38 (mesure) : Encodeur quantifié correctement (quantification statique avec étalonnage ou sélective, ONNX si utile) ; perte de macro-F1 inférieure à 1 point sinon abandon
   - Preuve de fin : Run `quantization-*` ; tableau qualité contre latence contre taille
   - Skills : performance-optimization, paired-comparison ; dépendances : RM-25
+- [ ] RM-44 (mesure) : Export ONNX Runtime de l'encodeur et quantification statique avec étalonnage des activations ; perte de macro-F1 inférieure à 1 point et gain de latence mesuré, sinon abandon et service sur GPU
+  - Preuve de fin : Run `onnx-int8-statique-*` ; tableau qualité, latence, taille ; dépendance ajoutée au verrou seulement si retenue
+  - Skills : performance-optimization, paired-comparison ; dépendances : RM-38
 - [ ] RM-39 (mesure) : Robustesse des modèles appris : perturbations de forme, ablations de contenu (fin ou début retirés), leave-one-author-out de l'encodeur ; adaptateur ou poids sauvegardés
   - Preuve de fin : Runs `robustness-*` ; courbes de dégradation
   - Skills : paired-comparison, leakage-guard ; dépendances : RM-27, RM-25
+- [ ] RM-40 (mesure) : Allocation dynamique du calcul : cascade TF-IDF, encodeur, LoRA par seuil de confiance ; seuil choisi sur un pli et rapporté sur les autres ; latence moyenne et part de cas escaladés ; abstention conforme comme garde-fou
+  - Preuve de fin : Run `cascade-eval` ; seuil préenregistré avant le pli de contrôle ; coût moyen par patient
+  - Skills : performance-optimization, paired-comparison ; dépendances : RM-28, RM-34
+- [ ] RM-43 (mesure) : Routage de la cascade par taille de l'ensemble conforme (escalade quand l'ensemble contient plusieurs classes) en plus du seuil de probabilité ; comparaison appariée avec le seuil, couverture et coût
+  - Preuve de fin : Run `cascade-conforme-cinq-plis` ; part des cas escaladés contre macro-F1
+  - Skills : model-card-calibration, paired-comparison ; dépendances : RM-40, RM-33
 
 ## Étape R15 : industrialisation
 

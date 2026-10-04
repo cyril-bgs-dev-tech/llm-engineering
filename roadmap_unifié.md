@@ -283,6 +283,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | RM-27 | LoRA de l'élève retenu à recette mûre (10 époques), pli 0 en deux graines, pli 1 en une graine | Fait le 04/10/2026 : 0,7795 et 0,7893 (pli 0), 0,7415 (pli 1) |
 | RM-30 | Ancrage externe : LLM ouvert local en zéro-shot et quelques exemples sur le pli 0, piscine hors distribution à part | Réalise P1-09 et P1-10 pour ce pli ; sans affinage, référence de lecteur extérieur |
 | RM-16 | Mesure pilote du débit : recaler budgets et calendrier | Première durée annoncée, sur mesure |
+| RM-42 | Énergie et coût par run au registre, Pareto généré | Rend l'efficience mesurable à chaque run, pas seulement au service |
 | P1-13 | Balayage du taux d'apprentissage, une graine par taux (ADR-010) | |
 | P1-19 | Variance entre graines, cinq graines | |
 | P1-20 | Geler la configuration de référence | |
@@ -291,6 +292,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P1-25 | Page d'analyse et premier `RESULTATS.md` | Résultats négatifs au même rang |
 | RM-28 | LoRA mûr aux plis 2, 3 et 4 : évaluation à cinq plis et professeur strictement hors pli (environ 10,5 h de GPU) | Porte de la distillation et de l'évaluation à cinq plis |
 | RM-29 | Règle de puissance v2 : largeur de la différence entre deux systèmes sur cinq plis, seuil 4,0 | Aperçu : 4,29 points sur trois plis pour ensemble contre TF-IDF |
+| RM-41 | Débit d'entraînement à résultat équivalent (checkpointing, noyaux linéaires, bf16 de l'encodeur) | Jamais pendant un lot en cours ; équivalence statistique d'abord |
 | RM-17 | **Porte go/no-go après la LoRA de référence** | |
 | G-P1 | Scorecard G-P1 | **Jalon A** |
 
@@ -361,6 +363,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | RM-34 | Mesures de service par profil : latence, débit, mémoire, énergie ; LoRA fusionné ; encodeur sur GPU | Échec de l'INT8 naïf déjà consigné |
 | RM-35 | Service multi-modèles avec ensembles conformes, abstention et conteneur vérifié | Tests et banc de latence |
 | RM-36 | Rapport préliminaire, carte v3, fiche de données, protocole v2, tableaux regénérés, contrôle des références | Fait le 04/10/2026 ; à tenir à jour |
+| RM-48 | **Fiche de déploiement par contrainte et règle de décision** | Dit quels systèmes deviennent inutiles à servir |
 | P5-09 | Reconstruction à froid : clone neuf puis `make reproduce-small` | |
 | P5-12 | Rapport final et textes sortants passés par `claim-gate` | Aucune formulation au-delà de la preuve |
 | G-P5 | Scorecard G-P5 | **Jalon B : fin du MVP** |
@@ -380,6 +383,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P1-10 | Few-shot, exemples hors test | |
 | P1-14 | Balayage du rang et d'alpha | |
 | P1-15 | Longueur de contexte et troncature | |
+| RM-47 | Débit contre macro-F1 par longueur de contexte, regroupement par longueur | Après RM-41 |
 | P1-16 | Époques et ordonnanceur | |
 | P1-17 | Tête contre verbaliseur | |
 | P1-18 | Pooling, avec et sans masque bidirectionnel | |
@@ -409,6 +413,8 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P2-10 | Données synthétiques avec lignée | Contrôle de fuite |
 | P2-11 | Multi-étiquettes et paires de bout en bout | |
 | P2-12 | Pages wiki des professeurs et de la qualité des étiquettes | |
+| RM-45 | Encodeur élagué (six couches), avec et sans distillation | Latence divisée par deux visée |
+| RM-46 | Élève TF-IDF à étiquettes souples | Latence de 2 ms conservée |
 | P3-03 | Balayage d'alpha et de T | |
 | P3-04 | Plusieurs professeurs : moyenne ou pondération | |
 | P3-05 | Direction de la KL | |
@@ -439,8 +445,10 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P4-07 | Robustesse : perturbations et spécialité exclue | |
 | P4-09 | Front de Pareto | |
 | RM-38 | Encodeur quantifié correctement (statique, sélectif, ONNX) | Fait en partie le 04/10/2026 : INT8 dynamique sélectif, l'effondrement vient du feed-forward ; attention seule −1,3 point, +11 % de vitesse, non retenue ; reste la quantification statique |
+| RM-44 | Export ONNX Runtime et quantification statique étalonnée de l'encodeur | Dépendance au verrou seulement si retenue |
 | RM-39 | Robustesse des modèles appris : perturbations, ablations de contenu, leave-one-author-out | Le TF-IDF à caractères est déjà insensible |
 | RM-40 | Cascade par seuil de confiance (TF-IDF, encodeur, LoRA) : calcul alloué selon la difficulté du cas | Aperçu hors ligne : 50 à 80 % des cas sans le LoRA, sans perte de macro-F1 ; seuil à valider sur plis distincts |
+| RM-43 | Routage de la cascade par taille de l'ensemble conforme | Compare au seuil de probabilité |
 
 ### Étape R15 : industrialisation
 
@@ -521,6 +529,12 @@ Appliqués dans `MICROTACHES.md`, sans renuméroter :
 - **Protocole** : le protocole v1 reste gelé ; `docs/PROTOCOLE_V2_BROUILLON.md` et l'ADR-015 décrivent la suite, à accepter par Cyril (RM-37) avant tout run du second cycle et avant RM-20.
 - **Tâches déjà réalisées à l'ajout** : RM-25, RM-26, RM-27, RM-36.
 - **Existant recoupé** : P1-09 et P1-10 sont réalisées pour le pli 0 par RM-30 (elles restent au chemin complet pour les autres modèles) ; P1-16 (époques) est couverte pour l'encodeur et le LoRA par RM-25 et RM-27 ; P4-02, P4-07 et P4-09 restent les tâches de compression, de robustesse et de Pareto du chemin complet.
+
+### Amendements du 04/10/2026, soir (efficience et déploiement)
+
+- **8 tâches ajoutées sans renuméroter** (RM-41 à RM-48) : 3 ★ (débit d'entraînement, énergie et coût par run, fiche de déploiement) et 5 non ★ (routage conforme de la cascade, ONNX et INT8 statique, encodeur élagué, élève TF-IDF souple, longueur de contexte). Chemin court : 107 ★ sur 183.
+- **Motif** : les dix leviers d'efficience et de déploiement retenus (distillation vers un élève bon marché, débit d'entraînement, mesures de service, cascade, quantification correcte, élève plus léger, service empaqueté, énergie par run, contexte adaptatif, fiche de décision) sont couverts par RM-32, RM-34, RM-35, RM-40 et ces huit tâches ; le service FastAPI, la charge, vLLM contre Transformers et la dérive restent P5-01, P5-02, P5-03 et P5-08, sans doublon.
+- **Règle d'exécution** : aucune de ces tâches ne modifie un fichier qu'un lot en cours importe ; RM-41 attend la fin du lot RM-28 et se valide par équivalence statistique avant tout usage dans une fiche préenregistrée.
 
 ---
 
