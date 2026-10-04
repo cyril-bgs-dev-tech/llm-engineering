@@ -376,3 +376,13 @@ L'étalonnage conditionnel par famille relève la couverture de la famille la mo
 ## Taxonomie d'erreurs sur cinq plis (brainstorm, point 5 ; `error-taxonomy-tfidf-5plis`, `results/measures/error_taxonomy.json`, TF-IDF caractères et poids équilibrés, 3 586 prédictions hors pli, agrégats seulement)
 
 Exactitude top-1 0,822, top-2 0,926 ; 638 erreurs. **Paires de confusion les plus fréquentes** : II → XIV (36), XVIII → X (27), XVIII → VI (27), XVIII → IX (26), II → XI (25), XVIII → XIV (22) : le chapitre XVIII (symptômes et signes non classés) et le II (tumeurs) sont les sources. **Erreurs confiantes** (probabilité de la bonne classe sous 0,10 pour une classe prédite au-dessus de 0,90) : 65 patients, soit 1,8 % des patients et 10,2 % des erreurs, dont XVIII 25, II 11, XXI 8, VI 6 : candidats à un audit d'étiquette (cas où le modèle est sûr et « faux »), à instruire sur l'étiquette source sans lire de texte dans une sortie. **Par spécialité**, les plus difficiles (top-1 / top-2) : pédiatrie 0,52 / 0,69, gériatrie 0,54 / 0,68, neurologie 0,59 / 0,84, médecine interne 0,68 / 0,83, néphrologie 0,64 / 0,84 : dans les spécialités à diagnostics multiples, même le top-2 est faible (0,68 à 0,69 pour pédiatrie et gériatrie). **Par longueur** : court 0,877, moyen 0,774, long 0,815 (effet de composition déjà expliqué).
+
+## Entraînement débiaisé par auteur du TF-IDF (fiche `2026-10-04-debiaisage-auteur-tfidf`, EXPLORE, TF-IDF mots (1, 2), C = 100, cinq plis, graine 1 ; `author-debias-tfidf`)
+
+| Poids d'exemples | par patient | par groupes d'auteurs | écart patient moins auteur |
+|---|---|---|---|
+| Aucun | 0,6364 | 0,5894 | 4,70 |
+| ∝ 1 / volume d'auteur (« inv ») | 0,6381 | 0,5855 | 5,26 |
+| ∝ 1 / √volume d'auteur (« invsqrt ») | 0,6412 | 0,5872 | 5,40 |
+
+**Aucun effet** : la généralisation à de nouveaux auteurs ne progresse pas (−0,4 et −0,2 point sur plis groupés), l'écart patient moins auteur grandit légèrement. Les trois prédictions de la fiche sont fausses (gain d'au moins 1 point sur plis groupés : probabilité 0,3 ; perte de plus d'un point par patient : 0,45 ; réduction de l'écart : 0,5). La part « signature d'auteur » de l'écart ne se corrige pas par une pondération d'exemples ; elle est liée au contenu (thèmes d'auteurs spécialisés), non à la seule fréquence. Piste fermée.
