@@ -394,3 +394,6 @@ Fiche hachée 2026-10-05-audit-erreurs-confiantes (pilote de 10 cas déclaré, 2
 
 ### 23:01Z : reprise par surveilleur (domino 3 préparé)
 RM-41 (partie encodeur) et RM-55 préparés sans toucher aux fichiers du lot LoRA : llmft.train_v2 (lissage, EMA, curriculum, bf16 ; test d'équivalence avec la boucle gelée sans option, 5 tests), scripts/p1_encoder_v2.py (fumée CPU réussie), fiche hachée 2026-10-05-encodeur-recette-v2 (quatre facteurs un à un, 60 runs, critères et prédictions), lot run_encodeur_v2.sh lancé en détaché (attend TERMINE24). Pli 3 du LoRA en cours (fin vers 23:35Z).
+
+### 23:11Z : reprise par surveilleur
+Lecture complémentaire des 35 erreurs confiantes restantes (indicatif, hors fiche) : E 29 %, R 71 %, M 0 ; sur les 65 : E 28 %, R 69 %, M 3 % ; consigné dans RESULTATS et dans le triage. LoRA pli 3 en cours (fin vers 23:35Z).
