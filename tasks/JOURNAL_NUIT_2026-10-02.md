@@ -346,3 +346,6 @@ Pli 2 fini à 19:47Z (13 329 s) : macro-F1 0,7785 ; +3,02 [−1,48 ; +7,31] cont
 
 ### 19:51Z : reprise par surveilleur
 RM-44 : vérifié que onnxruntime se télécharge (roue disponible) ; installation reportée à la fin des lots (uv add + verrou + test de licence), jamais pendant un run. Téléchargement d'essai effacé. Pli 3 du LoRA en cours.
+
+### 20:11Z : reprise par surveilleur
+Mémoire à jour (état de la chaîne). Pli 3 du LoRA en cours (GPU 91 %, fin vers 23:35Z).
