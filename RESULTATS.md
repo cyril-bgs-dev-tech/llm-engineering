@@ -186,3 +186,14 @@ Suite de la recette mûre de l'encodeur (même fiche) : **2e-4, 10 époques : 0,
 Bundle `artifacts/models/tfidf_chapter_charbal_v1` (TF-IDF caractères 3 à 5, poids équilibrés, C = 10 ; température 0,855, quantile conforme LAC 0,893 et seuil d'abstention 0,703 calculés sur des prédictions hors pli groupées par auteur ; empreinte SHA-256 vérifiée au chargement) : **20,4 Mo, chargement 0,87 s, latence par patient p50 1,9 ms et p95 4,0 ms, 568 patients par seconde par lot de 300, pic de mémoire 484 Mo** (inclut le chargement des textes de mesure). À comparer avec le Qwen3.5-4B en bf16 : médiane 117 ms, p95 environ 290 ms sur GPU (P0-09), 15,5 Gio. Le TF-IDF est 60 fois plus rapide, sans GPU, et 700 fois plus léger.
 
 Fiabilité de l'incertitude de CamemBERT-bio à 10 époques (`q5-uncertainty-camembert-ep10-fold0`, pli 0, étalonnage croisé en deux moitiés stratifiées du pli, EXPLORE) : ECE brute 0,106, **0,050 après température** (log loss 0,739 → 0,682) ; conforme LAC à 90 % : couverture 0,901 avec 1,53 classe par ensemble, par classe 0,922 (minimum 0,789) ; exactitude **0,865 à 90 %, 0,906 à 80 %, 0,946 à 70 % de couverture** (TF-IDF 0,931, 4B à 2 époques 0,892), AURC 0,049 (CamemBERT 6 époques 0,058, 4B 0,063). Plus long entraînement : modèle plus sur-confiant avant étalonnage, mais mieux calibré et plus sélectif après température ; le même périmètre limité s'applique (un pli, une graine, 358 patients d'étalonnage).
+
+## Correction de priorité à l'inférence (audit GLM v4, A-c1 ; `prior-correction-fold0`, `results/measures/prior_correction.json` ; p' ∝ p / q^τ, q = prévalence d'entraînement, τ choisi sur une moitié du pli 0, évalué sur l'autre, rôles échangés ; EXPLORE)
+
+| Modèle (pli 0) | macro-F1 τ = 0 | meilleur τ fixe | macro-F1 avec τ choisi par moitié |
+|---|---|---|---|
+| Qwen3.5-4B, 2 époques (rejeu) | 0,5756 | 0,5887 (τ = 0,25) | 0,5821 (+0,65) |
+| Qwen3.5-4B, perte pondérée | 0,5632 | 0,5632 (τ = 0) | 0,5547 |
+| CamemBERT-bio, 10 époques | 0,7677 | 0,7781 (τ = 0,75) | 0,7781 (+1,0) |
+| **CamemBERT-bio, 6 époques** | 0,5510 | **0,6889 (τ = 1)** | **0,6889 (+13,8)** |
+
+La conjecture de GLM (+2 à +8 points sur le 4B) **n'est pas soutenue** : la correction n'apporte que +0,65 au 4B à 2 époques et rien à la version pondérée. En revanche, elle récupère **+13,8 points** pour l'encodeur à 6 époques (0,551 → 0,689) et c'est le même mécanisme que le saut de 6 à 10 époques : un modèle qui n'a pas fini d'apprendre les chapitres rares les sous-prédit, et la correction de prévalence (gratuite) en récupère une partie ; à 10 époques le modèle a appris et la correction ne sert presque plus (+1,0). Lecture : le déficit des petits chapitres vient d'un sous-apprentissage de la queue de distribution, que l'entraînement plus long ou la correction de priorité peuvent combler ; le 4B à 2 époques n'en bénéficie pas parce que son déficit est plus général (0,59 contre 0,77).
