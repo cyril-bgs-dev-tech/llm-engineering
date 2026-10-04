@@ -265,6 +265,8 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P1-06 | TF-IDF et régression logistique sur `parhaf_cim10_chapter` | |
 | P1-07 | Encodeur français affiné (DrBERT ou CamemBERT-bio) | Réglage consigné |
 | RM-14 | Raccourcis sur les références : plis patient contre plis auteur | |
+| RM-25 | Références bon marché à recette mûre et même effort de réglage (TF-IDF caractères et poids, encodeur 10 époques, cinq graines) | Fait le 04/10/2026 : la recette gelée à 2 époques sous-estimait les modèles appris |
+| RM-26 | Discrétisation et auteur : variance par classe, partitions répétées, leave-one-author-out, débiaisage | Fait le 04/10/2026 : cinq classes portent 85 % de la variance |
 | RM-15 | **Porte go/no-go après les références** | |
 
 ### Étape R7 : une LoRA de référence (jalon A)
@@ -278,6 +280,8 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 |---|---|---|
 | P1-11 | Criblage de 2 à 3 candidats fixés par RM-13 | Un pli, réglages identiques |
 | P1-12 | Choix de l'élève par la règle écrite avant | |
+| RM-27 | LoRA de l'élève retenu à recette mûre (10 époques), pli 0 en deux graines, pli 1 en une graine | Fait le 04/10/2026 : 0,7795 et 0,7893 (pli 0), 0,7415 (pli 1) |
+| RM-30 | Ancrage externe : LLM ouvert local en zéro-shot et quelques exemples sur le pli 0, piscine hors distribution à part | Réalise P1-09 et P1-10 pour ce pli ; sans affinage, référence de lecteur extérieur |
 | RM-16 | Mesure pilote du débit : recaler budgets et calendrier | Première durée annoncée, sur mesure |
 | P1-13 | Balayage du taux d'apprentissage, une graine par taux (ADR-010) | |
 | P1-19 | Variance entre graines, cinq graines | |
@@ -285,6 +289,8 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P1-26 | Rejeu à la même graine, déterminisme | |
 | P1-23 | Analyse d'erreurs initiale | |
 | P1-25 | Page d'analyse et premier `RESULTATS.md` | Résultats négatifs au même rang |
+| RM-28 | LoRA mûr aux plis 2, 3 et 4 : évaluation à cinq plis et professeur strictement hors pli (environ 10,5 h de GPU) | Porte de la distillation et de l'évaluation à cinq plis |
+| RM-29 | Règle de puissance v2 : largeur de la différence entre deux systèmes sur cinq plis, seuil 4,0 | Aperçu : 4,29 points sur trois plis pour ensemble contre TF-IDF |
 | RM-17 | **Porte go/no-go après la LoRA de référence** | |
 | G-P1 | Scorecard G-P1 | **Jalon A** |
 
@@ -301,6 +307,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P2-01 | Professeur 1 : réglage minimal du taux (QLoRA) | |
 | P3-01 | Perte de distillation et ses tests | Ne dépend plus des logits hors pli |
 | RM-19 | **Spike de distillation et décision go/no-go** | Règle préenregistrée |
+| RM-32 | Élève distillé de la LoRA mûr vers l'encodeur, professeur strictement hors pli | Thèse du projet : qualité du LoRA à coût d'encodeur |
 
 ### Étape R9 : expérience confirmatoire de distillation
 
@@ -319,6 +326,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | G-P2 | Scorecard G-P2 | |
 | P3-02 | Élève distillé | |
 | P3-07 | Entraîner les 20 modèles gelés ; l'évaluation est celle de RM-20 (ADR-010) | Pas de verdict avant RM-20 |
+| RM-37 | **Acceptation du protocole v2 par Cyril** | Avant tout run du second cycle et avant l'ouverture |
 | RM-20 | Ouverture unique du test scellé | Un seul accès journalisé |
 | RM-21 | **Porte go/no-go après le verdict de distillation** | |
 | G-P3 | Scorecard G-P3 | Contre-lecture adversariale des verdicts exigée par le tableau « qui prouve quoi » |
@@ -336,6 +344,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P4-04 | Calibration par température, ECE avant et après | S'applique au meilleur candidat, pas seulement à l'élève distillé |
 | P4-05 | Prédiction conforme MAPIE, couverture empirique | Hypothèse d'échangeabilité énoncée |
 | RM-22 | Validation conforme : cas analytiques, invariants, couverture conditionnelle, rupture d'échangeabilité | |
+| RM-33 | Conforme conditionnel par famille (Mondrian) et couverture par famille avec Wilson | La couverture marginale cache des familles à 0,56 |
 | P4-08 | Politique d'abstention, courbe automatisation contre exactitude | |
 | P4-10 | Carte de modèle et checklist TRIPOD-LLM | |
 | G-P4 | Scorecard G-P4 | |
@@ -349,6 +358,9 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 
 | ID | Rôle dans l'étape | Point d'attention |
 |---|---|---|
+| RM-34 | Mesures de service par profil : latence, débit, mémoire, énergie ; LoRA fusionné ; encodeur sur GPU | Échec de l'INT8 naïf déjà consigné |
+| RM-35 | Service multi-modèles avec ensembles conformes, abstention et conteneur vérifié | Tests et banc de latence |
+| RM-36 | Rapport préliminaire, carte v3, fiche de données, protocole v2, tableaux regénérés, contrôle des références | Fait le 04/10/2026 ; à tenir à jour |
 | P5-09 | Reconstruction à froid : clone neuf puis `make reproduce-small` | |
 | P5-12 | Rapport final et textes sortants passés par `claim-gate` | Aucune formulation au-delà de la preuve |
 | G-P5 | Scorecard G-P5 | **Jalon B : fin du MVP** |
@@ -375,6 +387,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P1-22 | Courbe d'apprentissage de la référence | |
 | P1-24 | Raccourcis du LLM : plis patient contre plis auteur | Sorti du premier cycle |
 | P0-07 | SDPA contre FlashAttention 2 sur SM120 | |
+| RM-31 | Capacité à recette mûre : 9B LoRA 10 époques au pli 0 | Arrêt de l'exploration de taille si le gain est sous δ |
 
 ### Étape R13 : leviers de données et de distillation
 
@@ -425,6 +438,8 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P4-06 | Vérification croisée des implémentations conformes | Contrôle d'implémentation, pas validation des hypothèses |
 | P4-07 | Robustesse : perturbations et spécialité exclue | |
 | P4-09 | Front de Pareto | |
+| RM-38 | Encodeur quantifié correctement (statique, sélectif, ONNX) | L'INT8 dynamique naïf a effondré le modèle (0,336) |
+| RM-39 | Robustesse des modèles appris : perturbations, ablations de contenu, leave-one-author-out | Le TF-IDF à caractères est déjà insensible |
 
 ### Étape R15 : industrialisation
 
@@ -497,6 +512,14 @@ Appliqués dans `MICROTACHES.md`, sans renuméroter :
 - **Chemin court** : de 68 à 92 tâches ★ ; 159 tâches au total.
 
 À appliquer dans `PLAN_PROJET_V6.md` (formulations corrigées par ChatGPT et par ma vérification) : livrable cible rendu neutre ; « meilleur niveau mesurable » remplacé par un compromis sous budget B et N ; « tout se transpose en changeant un contrat » remplacé par « une tâche de même famille ne modifie pas le noyau » ; « exactement ce qu'un site évaluateur attend » remplacé par « compatible avec l'architecture fédérée décrite » ; couverture conforme « valable sur PARHAF » remplacée par « conditionnelle aux hypothèses, évaluée sur le split observé » ; « trois mesures indépendantes » remplacé par « trois implémentations qui se recoupent » ; chiffres PARHAF avec révision et divergence de sources ; Gemma 4 non conditionné ; « plusieurs semaines » remplacé par « durée à mesurer en RM-16 » ; compte du chemin court.
+
+### Amendements du 04/10/2026 (mesures du premier cycle, audits GLM v3 et v4)
+
+- **15 tâches ajoutées sans renuméroter** (RM-25 à RM-39) : 12 ★ (références à recette mûre, discrétisation et auteur, LoRA mûr sur deux puis cinq plis, règle de puissance v2, ancrage externe, distillation vers l'encodeur, conforme par famille, mesures et service, rapport, acceptation du protocole v2) et 3 non ★ (9B mûr, quantification correcte, robustesse des modèles appris). Chemin court : 104 ★ sur 174.
+- **Motif** : la recette gelée à 2 époques sous-estimait fortement les modèles appris (encodeur 0,448 contre 0,73 ; LoRA 0,587 contre 0,78), la règle de puissance v1 échoue (12,2 points contre 4,0), le meilleur TF-IDF bat la référence v1 de 3,65 points, et l'évaluation sur un pli est trop bruitée (cinq classes portent 85 % de la variance).
+- **Protocole** : le protocole v1 reste gelé ; `docs/PROTOCOLE_V2_BROUILLON.md` et l'ADR-015 décrivent la suite, à accepter par Cyril (RM-37) avant tout run du second cycle et avant RM-20.
+- **Tâches déjà réalisées à l'ajout** : RM-25, RM-26, RM-27, RM-36.
+- **Existant recoupé** : P1-09 et P1-10 sont réalisées pour le pli 0 par RM-30 (elles restent au chemin complet pour les autres modèles) ; P1-16 (époques) est couverte pour l'encodeur et le LoRA par RM-25 et RM-27 ; P4-02, P4-07 et P4-09 restent les tâches de compression, de robustesse et de Pareto du chemin complet.
 
 ---
 

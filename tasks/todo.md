@@ -206,22 +206,34 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] RM-14 (mesure) : Raccourcis sur les références : TF-IDF et régression logistique avec plis par patient contre plis par auteur, comparés au modèle témoin de P0-30
   - Preuve de fin : Verdict apparié ; ADR si l'écart est significatif
   - Skills : leakage-guard, paired-comparison ; dépendances : P1-06, P0-29, P0-30
+- [x] RM-25 (mesure) : Références bon marché à recette mûre et au même effort de réglage : TF-IDF (caractères 3 à 5, poids équilibrés) et encodeur affiné 10 époques en cinq graines ; saturation de la durée ; variance entre graines
+  - Preuve de fin : Fiches hachées ; runs au registre ; TF-IDF +3,65 point résolu contre la référence v1 ; encodeur 0,7293 ± 0,0256 (pli 0)
+  - Skills : experiment-preregistration, paired-comparison ; dépendances : P1-06, P1-07
+- [x] RM-26 (mesure) : Discrétisation et auteur : variance de la macro-F1 par classe, partitions répétées, leave-one-author-out, débiaisage par auteur
+  - Preuve de fin : Runs `split-discretization-check`, `tfidf-loao`, `author-debias-tfidf` ; part de l'écart patient/auteur chiffrée
+  - Skills : leakage-guard, paired-comparison ; dépendances : RM-14, RM-25
 - [x] RM-15 (décision) : Porte go/no-go après les références : la comparaison est-elle informative (variance, puissance, raccourcis), ou faut-il arrêter ou simplifier avant le LLM
   - Preuve de fin : Décision datée avec les chiffres de P1-04, P1-06, P1-07 et RM-14
   - Skills : doubt-driven-development ; dépendances : P1-04, P1-06, P1-07, RM-14
 
 ## Étape R7 : une LoRA de référence (jalon A)
 
-- [ ] P1-11 (GPU) : Criblage des points de départ : un pli, réglages identiques, deux à trois candidats fixés par RM-13 (au moins un généraliste) ; criblage de quatre à six modèles au chemin complet
+- [x] P1-11 (GPU) : Criblage des points de départ : un pli, réglages identiques, deux à trois candidats fixés par RM-13 (au moins un généraliste) ; criblage de quatre à six modèles au chemin complet
   - Preuve de fin : Un run par modèle au registre
   - Skills : lora-classifier-recipe, vram-preflight ; dépendances : P0-06, P1-06, P0-43, RM-13
-- [ ] P1-12 (décision) : Choisir l'élève selon la règle écrite avant le criblage (meilleur macro-F1 sous contrainte de VRAM et de latence)
+- [x] P1-12 (décision) : Choisir l'élève selon la règle écrite avant le criblage (meilleur macro-F1 sous contrainte de VRAM et de latence)
   - Preuve de fin : ADR-élève ; règle datée avant P1-11
   - Skills : experiment-preregistration ; dépendances : P1-11
+- [x] RM-27 (GPU) : LoRA de l'élève retenu à recette mûre (10 époques, taux 1e-4) : pli 0 en deux graines, pli 1 en une graine ; probabilités et adaptateur conservés
+  - Preuve de fin : Runs `llm-mur2-*`, `llm-mur-pli1-*`, `llm-mur-s1001-*` ; comparaison appariée avec TF-IDF et encodeur
+  - Skills : lora-classifier-recipe, vram-preflight, run-registry ; dépendances : P1-12, RM-25
+- [ ] RM-30 (mesure) : Ancrage externe sur le pli 0 : LLM ouvert local en zéro-shot et en quelques exemples sans affinage (réalise P1-09 et P1-10 pour ce pli) ; piscine hors distribution de PARHAF rapportée à part
+  - Preuve de fin : Fiche hachée ; runs au registre ; écart avec le LoRA mûr
+  - Skills : experiment-preregistration, leakage-guard ; dépendances : P1-12
 - [ ] RM-16 (GPU) : Mesure pilote de débit : un pli, une configuration LoRA, 100 pas ; recaler budgets et calendrier (hypothèse, mesure, marge)
   - Preuve de fin : Tableau hypothèse, mesure, marge ; `PROTOCOLE.md` complété ; aucune durée annoncée avant cette mesure
   - Skills : vram-preflight, run-registry ; dépendances : P1-12
-- [ ] P1-13 (GPU) : Balayage du taux d'apprentissage LoRA (1e-5, 2e-5, 5e-5, 1e-4), une graine par taux (PROTOCOLE.md 6.3 et 6.5, C2 ; ADR-010)
+- [x] P1-13 (GPU) : Balayage du taux d'apprentissage LoRA (1e-5, 2e-5, 5e-5, 1e-4), une graine par taux (PROTOCOLE.md 6.3 et 6.5, C2 ; ADR-010)
   - Preuve de fin : 4 runs ; courbe taux contre macro-F1
   - Skills : lora-classifier-recipe, vram-preflight ; dépendances : P1-12
 - [ ] P1-19 (GPU) : Variance entre graines : cinq graines de la configuration réglée
@@ -230,7 +242,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P1-20 (doc) : Geler la configuration de référence (LoRA réglée) : fichier de config et run_id
   - Preuve de fin : `configs/reference.yaml` citant le run_id
   - Skills : run-registry ; dépendances : P1-19
-- [ ] P1-26 (GPU) : Rejouer le run de référence avec la même graine ; mesurer le déterminisme
+- [x] P1-26 (GPU) : Rejouer le run de référence avec la même graine ; mesurer le déterminisme
   - Preuve de fin : Prédictions identiques ou écart borné, consigné
   - Skills : run-registry, vram-preflight ; dépendances : P1-20
 - [ ] P1-23 (mesure) : Analyse d'erreurs initiale : matrice de confusion hiérarchique, par spécialité, longueur, type de document
@@ -239,6 +251,12 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P1-25 (doc) : Page d'analyse V0 dans le wiki et premier `RESULTATS.md` (positifs et négatifs)
   - Preuve de fin : Chaque chiffre cite un run_id ; `wiki-lint` vert
   - Skills : wiki-ingest, claim-gate ; dépendances : P1-23, RM-14
+- [ ] RM-28 (GPU) : LoRA mûr aux plis 2, 3 et 4 (une graine chacun) : évaluation du candidat sur les cinq plis et professeur strictement hors pli pour la distillation (environ 10,5 h de GPU)
+  - Preuve de fin : Probabilités hors pli des 3 586 patients ; manifeste ; contrôle strictement hors pli
+  - Skills : lora-classifier-recipe, leakage-guard, vram-preflight ; dépendances : RM-27
+- [ ] RM-29 (mesure) : Règle de puissance v2 : largeur de l'IC de la différence appariée entre deux systèmes sur les prédictions regroupées de cinq plis (seuil 4,0 points) ; plis 3 et 4 de l'encodeur
+  - Preuve de fin : Run `v2-power-preview-*` à cinq plis ; ligne datée de `experiments/INDEX.md`
+  - Skills : paired-comparison ; dépendances : RM-25, RM-28
 - [ ] RM-17 (décision) : Porte go/no-go après la LoRA de référence : la distillation se poursuit comme question scientifique, ou comme expérience d'apprentissage limitée si la LoRA est dominée par l'encodeur
   - Preuve de fin : Décision datée, avec la largeur d'intervalle de la règle de puissance de PROTOCOLE.md 6.3 (calculée sur les cinq graines de P1-19, avant P2-01)
   - Skills : doubt-driven-development ; dépendances : P1-20, P1-26
@@ -260,6 +278,9 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-19 (GPU) : Spike de distillation miniature : un pli ou un sous-échantillon, une paire professeur élève, perte CE et KL ; écart avec la recette LMSYS exacte documenté (CE, deux KL, deux pertes cosinus) ; coût du run complet estimé ; règle go/no-go préenregistrée
   - Preuve de fin : Run au registre ; coût mesuré ; décision écrite
   - Skills : distillation-pipeline, vram-preflight ; dépendances : P2-01, P3-01, P1-20, RM-18
+- [ ] RM-32 (GPU) : Élève distillé de la LoRA mûre vers l'encodeur (ou un élève plus léger), professeur strictement hors pli (RM-28), perte `alpha·CE + (1 - alpha)·T²·KL`
+  - Preuve de fin : Runs au registre ; écart avec le professeur et avec l'encodeur non distillé ; coût d'inférence mesuré
+  - Skills : distillation-pipeline, leakage-guard, paired-comparison, vram-preflight ; dépendances : RM-28, P3-01, RM-19
 
 ## Étape R9 : expérience confirmatoire de distillation
 
@@ -287,6 +308,9 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P3-07 (mesure) : Entraîner les 20 modèles gelés (4 recettes × 5 graines : référence, distillation, tâche voisine, les deux), sans les évaluer ; l'évaluation est celle de RM-20
   - Preuve de fin : 20 runs au registre (`ok` ou `failed` classés) avec adaptateurs sauvegardés et leur empreinte ; les prédictions sur le texte du test relèvent du temps A de RM-20
   - Skills : paired-comparison ; dépendances : P3-02, P2-08
+- [ ] RM-37 (décision) : Acceptation du protocole v2 (ADR-015) par Cyril avant tout run du second cycle et avant l'ouverture du test scellé
+  - Preuve de fin : Décision datée de Cyril, ADR mise à jour ; protocole v1 gelé inchangé
+  - Skills : doubt-driven-development ; dépendances : RM-29
 - [ ] RM-20 (mesure) : Ouverture unique du test scellé pour la comparaison confirmatoire, via le seul script autorisé
   - Preuve de fin : Un seul accès journalisé ; verdict confirmatoire en trois valeurs seulement si la règle de puissance de PROTOCOLE.md 6.3 a réussi, sinon évaluation du candidat final sans verdict ; procédure en deux temps de 6.8 : code `sealed.py` à deux fonctions écrit avant, répétition générale du temps B réussie avant l'ouverture, marqueur à chemin fixe
   - Skills : leakage-guard ; dépendances : P3-07, P0-34
@@ -311,6 +335,9 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-22 (code) : Valider la prédiction conforme au-delà de la proximité des trois outils : cas jouets analytiques, invariants, couverture conditionnelle (par classe, par spécialité), test sous rupture d'échangeabilité
   - Preuve de fin : Tests verts ; couverture conditionnelle rapportée avec ses limites
   - Skills : test-driven-development ; dépendances : P4-05
+- [ ] RM-33 (code) : Prédiction conforme conditionnelle par famille de chapitres (Mondrian) en plus du marginal ; couverture par famille avec Wilson ; coût en taille d'ensemble
+  - Preuve de fin : Fonctions testées ; run `conformal-by-family` ; arbitrage taille contre couverture consigné
+  - Skills : model-card-calibration, test-driven-development ; dépendances : P4-05, RM-22
 - [ ] P4-08 (code) : Politique d'abstention et courbe automatisation contre exactitude ; recalibration si un modèle quantifié est retenu
   - Preuve de fin : Courbe et point de fonctionnement
   - Skills : model-card-calibration ; dépendances : P4-05
@@ -323,6 +350,15 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 
 ## Étape R11 : livraison ciblée (jalon B)
 
+- [ ] RM-34 (mesure) : Mesures de service par profil (CPU seul, GPU modeste, GPU 32 Go) : latence p50 et p95, débit, mémoire, énergie par patient, LoRA fusionné en bf16 et par lots, encodeur sur GPU
+  - Preuve de fin : Runs au registre ; tableau de coût par 1 000 patients ; échec de l'INT8 naïf consigné
+  - Skills : performance-optimization, vram-preflight ; dépendances : RM-27
+- [ ] RM-35 (code) : Service multi-modèles (ensemble, ensembles conformes, abstention et renvoi à l'humain) avec tests, banc de latence et conteneur vérifié par un build local
+  - Preuve de fin : Tests verts ; `scripts/bench_serving.py` ; build local réussi
+  - Skills : test-driven-development, ci-cd-and-automation ; dépendances : RM-33, RM-34, RM-25
+- [x] RM-36 (doc) : Rapport préliminaire, carte de modèle v3, fiche de données, protocole v2 en brouillon, tableaux regénérés depuis le registre, contrôle automatique des références de runs
+  - Preuve de fin : `docs/RAPPORT_PREMIER_CYCLE.md`, `docs/CARTE_DE_MODELE_V3.md`, `docs/FICHE_DE_DONNEES_PARHAF.md`, `docs/PROTOCOLE_V2_BROUILLON.md`, `scripts/check_claims.py` vert
+  - Skills : documentation-and-adrs, claim-gate ; dépendances : RM-25, RM-27
 - [ ] P5-09 (mesure) : Reconstruction à froid : clone neuf puis `make reproduce-small`
   - Preuve de fin : Chiffre clé reproduit dans la tolérance
   - Skills : ci-cd-and-automation ; dépendances : P0-11, P0-42, P1-20
@@ -374,6 +410,9 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P0-07 (spike) : Mesurer débit et mémoire de SDPA contre FlashAttention 2 (et Liger-Kernel si installable) sur SM120
   - Preuve de fin : Courbes débit et mémoire pour 3 longueurs ; décision écrite
   - Skills : performance-optimization, vram-preflight ; dépendances : P0-05
+- [ ] RM-31 (GPU) : Capacité à recette mûre : Qwen3.5-9B LoRA 10 époques au pli 0 (environ 5 h) ; arrêt de l'exploration de taille si le gain est sous δ
+  - Preuve de fin : Run au registre ; comparaison appariée avec le 4B
+  - Skills : lora-classifier-recipe, vram-preflight ; dépendances : RM-27
 
 ## Étape R13 : leviers de données et de distillation
 
@@ -470,6 +509,12 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P4-09 (mesure) : Front de Pareto qualité contre coût (VRAM, latence, énergie)
   - Preuve de fin : Graphique et tableau
   - Skills : performance-optimization ; dépendances : P4-02
+- [ ] RM-38 (mesure) : Encodeur quantifié correctement (quantification statique avec étalonnage ou sélective, ONNX si utile) ; perte de macro-F1 inférieure à 1 point sinon abandon
+  - Preuve de fin : Run `quantization-*` ; tableau qualité contre latence contre taille
+  - Skills : performance-optimization, paired-comparison ; dépendances : RM-25
+- [ ] RM-39 (mesure) : Robustesse des modèles appris : perturbations de forme, ablations de contenu (fin ou début retirés), leave-one-author-out de l'encodeur ; adaptateur ou poids sauvegardés
+  - Preuve de fin : Runs `robustness-*` ; courbes de dégradation
+  - Skills : paired-comparison, leakage-guard ; dépendances : RM-27, RM-25
 
 ## Étape R15 : industrialisation
 
