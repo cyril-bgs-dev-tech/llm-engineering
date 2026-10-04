@@ -402,3 +402,15 @@ Exactitude top-1 0,822, top-2 0,926 ; 638 erreurs. **Paires de confusion les plu
 ## Aperçu de la règle de puissance du protocole v2 (brouillon ; `v2-power-preview-3-plis`, `scripts/v2_power_preview.py`, `power_rule.pooled_width`, 2 152 prédictions hors pli des plis 0 à 2, encodeur moyenné sur cinq graines, TF-IDF caractères et poids équilibrés, EXPLORE)
 
 Largeur de l'IC de la différence appariée de macro-F1 (bootstrap stratifié de patients, même tirage pour les deux systèmes, R = 10 000) : **ensemble encodeur + TF-IDF moins TF-IDF : 4,29 points à 95 % et 5,24 à 98,33 %** ; encodeur moyenné moins TF-IDF : 6,32 à 95 %. À comparer à 12,2 points pour la règle v1 (un pli, cinq graines) et au seuil de 4,0. **Extrapolation à cinq plis (3 586 patients), en 1/√n : environ 3,3 points à 95 % et 4,1 à 98,33 %** (estimation, à mesurer quand les plis 3 et 4 de l'encodeur seront entraînés, environ 50 minutes de GPU) : avec une question primaire unique (95 %), la règle v2 devrait **passer** ; avec trois comparaisons Bonferroni (98,33 %) elle serait à la limite. C'est le résultat qui rend un verdict confirmatoire possible pour la famille bon marché.
+
+## Front de Pareto qualité contre coût (audit GLM v4, C7-A3 ; tous chiffres issus des runs et mesures cités ; moyennes sur les plis disponibles ; EXPLORE)
+
+| Système | macro-F1 (moyenne, plis) | Coût d'entraînement par pli | Inférence par patient | Taille |
+|---|---|---|---|---|
+| TF-IDF à mots, référence v1 | 0,684 (5 plis) | environ 2 minutes de CPU | quelques ms (CPU) | quelques Mo |
+| **TF-IDF caractères et poids équilibrés** | 0,720 (5 plis) | environ 3 minutes de CPU | **1,9 ms (CPU)** | **20,4 Mo** |
+| Encodeur moyenné sur 5 graines | 0,749 (plis 0 à 2) | 18 minutes de GPU (5 × 215 s) | 5 × 191 ms (CPU, 8 threads) ; GPU non mesuré | 5 × 443 Mo |
+| Ensemble encodeur (5) + TF-IDF | 0,769 (plis 0 à 2) | 18 minutes de GPU + 3 de CPU | environ 1 s (CPU) ; GPU non mesuré | environ 2,2 Go |
+| Qwen3.5-4B LoRA 10 époques (une graine) | 0,761 (plis 0 et 1) | 12 450 s de GPU (3,5 h) | 117 ms (GPU) | adaptateur 196 Mo + modèle de base |
+
+**Non dominés** : le TF-IDF caractères et poids (le plus rapide et le plus léger, à 0,72) et l'ensemble encodeur + TF-IDF (le plus élevé, à 0,77) ; le LoRA mûr n'est dominé ni en qualité (équivalent à l'encodeur moyenné, plus sélectif) ni en latence GPU, mais coûte environ dix fois plus à entraîner que cinq encodeurs. Sur une machine sans GPU seuls les deux premiers sont déployables. Les périmètres diffèrent (plis, nombre de graines) : ce tableau est une aide de lecture, pas un classement.
