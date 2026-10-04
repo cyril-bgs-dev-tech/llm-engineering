@@ -23,7 +23,7 @@ Source : `audit_GLM_v4.md` (04/10/2026, 8 axes, 40 corrections classées, 12 ver
 - B-c4 gabarit d'estimand : **fait**. B-c5 Brier de l'assistant : **fait** (`docs/CALIBRATION_PREDICTIONS_ASSISTANT.md` : Brier 0,23 sur 28 prédictions, à peine meilleur que 0,25).
 
 ## Axe C (réglage et équité)
-- C-c1 sensibilité aux époques sur le 4B : **en file, plus fort que proposé** (10 époques au lieu de 4 et 6).
+- C-c1 sensibilité aux époques sur le 4B : **fait, plus fort que proposé** (10 époques au lieu de 4 et 6) : 0,587 → 0,7795, +19,3 points ; la conjecture de GLM (« +5 à +10 points ») est dépassée ; confirmation au pli 1 en cours.
 - C-c2 ADR si le gain est confirmé : **planifié** (ADR du second cycle ; Q20/Q21 déléguées).
 - C-c3 planning de taux, C-c5 rang : **planifié**, après le 4B à 10 époques.
 - C-c4 clause d'égalité de budget par famille dans les fiches : **adopté** (à inscrire dans chaque fiche à venir et dans l'ADR du second cycle).

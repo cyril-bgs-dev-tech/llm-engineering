@@ -46,3 +46,4 @@ Moyennes : projet 47 / 8 = 5,9 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4.
 
 | 20 | Encodeur 10 époques, cinq graines : 0,7293 ± 0,0256 ; règle de puissance 12,2 points contre 4,0 ; TF-IDF caractères et poids équilibrés 0,7202 | runs `camembert-recette-lr1e-4-ep10`, `camembert-graine-ep10-s1` à `s4`, `rm-17-power-rule-encodeur-ep10`, `tfidf-variant-char-balanced` | prouvé (pli 0 pour l'encodeur, EXPLORE) |
 | 21 | Service TF-IDF : 20,4 Mo, p50 1,9 ms, p95 4,0 ms, 568 patients/s | run `bench-serving-tfidf-charbal-v1` | prouvé (CPU, 200 patients du développement) |
+| 22 | Qwen3.5-4B LoRA à 10 époques : 0,7795 (+19,3 sur 2 époques) ; +6,4 [+2,0 ; +11,4] contre le meilleur TF-IDF ; +4,9 [−0,35 ; +10,5] contre l'encodeur moyenné | runs `llm-mur2-qwen3-5-4b-ep10-lr1e-4`, `llm-mur2-minus-4b-2ep-fold0`, `llm10-et-ensembles-minus-tfidf-variant-char-balanced` | prouvé (pli 0, une graine, EXPLORE) |

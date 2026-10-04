@@ -2,9 +2,9 @@
 
 Demande de Cyril, 2026-10-02T23:28Z : « et continues d'avancer cette nuit moi je vais me coucher donc tu dois définir un contrat de travail suffisant pour avancer sans moi en faisant les choix les plus adaptés et intelligent pour évoluer pendant une douzaine d'heures ». Contrat appliqué : `tasks/CONTRAT_NUIT.md`. HEAD au départ : 314fc71 (trois commits du lot en attente encore en cours à l'ouverture). Fenêtre visée : 2026-10-02T23:28Z → environ 11 h 30 UTC le 2026-10-03 (12 h). Heures lues par `date -u` (N7).
 
-## Résumé pour Cyril, nuit du 03 au 04/10/2026 (mis à jour à 04 h 20 UTC, la nuit continue)
+## Résumé pour Cyril, nuit du 03 au 04/10/2026 (mis à jour à 07 h 25 UTC, la nuit continue)
 - **Résultat central** : la recette gelée (4 taux, 2 époques) sous-estimait fortement les modèles appris. À recette mûre : CamemBERT-bio à 10 époques = 0,7293 ± 0,0256 (pli 0, 5 graines), 0,7475 (pli 1) ; TF-IDF caractères + poids équilibrés = 0,7202 (5 plis, +3,65 point résolu contre la référence v1). L'encodeur moyenné bat le meilleur TF-IDF de +1,5 (pli 0, non résolu) et +6,4 (pli 1) ; l'ensemble avec le TF-IDF n'apporte rien sur l'encodeur moyenné. Le premier tirage flatteur (0,7714) était un tirage favorable : je l'avais annoncé trop tôt.
-- **LLM** : Qwen3.5-4B à 2 époques = 0,587 ; **le test à 10 époques tourne depuis 03 h 29 UTC (fin vers 07 h 45 UTC)** ; le test de taille 31B à 2 époques a été annulé (projeté 6 h), remplacé.
+- **LLM** : Qwen3.5-4B à 2 époques = 0,587 ; **à 10 époques = 0,7795 (pli 0, une graine) : +6,4 [+2,0 ; +11,4] contre le meilleur TF-IDF, +4,9 [−0,35 ; +10,5] contre l'encodeur moyenné ; confirmation au pli 1 lancée à 07 h 19 UTC (fin vers 10 h 50 UTC)** ; le test de taille 31B à 2 époques a été annulé (projeté 6 h), remplacé.
 - **Puissance** : règle RM-17 sur les 5 graines de l'encodeur : largeur 12,2 points contre 4,0 : échec, le cycle reste EXPLORE.
 - **Données** : 5 plus petits chapitres = 85 % de la variance de la macro-F1 ; écart patient/auteur 5,06 points sur partitions répétées, signature d'auteur pure ≈ 2 points (leave-one-author-out 0,6185).
 - **Déploiement** : service TF-IDF 20 Mo, p50 1,9 ms ; encodeur 443 Mo, 190 ms ; INT8 dynamique naïf : effondrement.
