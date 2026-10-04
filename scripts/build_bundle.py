@@ -11,6 +11,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import glm_v3_families
 import p1_04_06_tfidf
 from llmft import serving
 
@@ -27,7 +28,9 @@ def main() -> int:
     chosen = json.loads(next((ROOT / "results/runs").glob("*-tfidf-variant-char-balanced.json")).read_text(encoding="utf-8"))["metrics"]["chosen"]
     values = [x["C"] for x in chosen]
     c = float(max(set(values), key=values.count))  # C le plus fréquent parmi les plis de la référence
-    bundle = serving.train_bundle(texts, y, labels, c=c, ngram=(3, 5), oof_probs=oof, oof_y=oof_y, alpha=0.10, coverage_target=0.70, class_weight="balanced", analyzer="char_wb",
+    names = list(glm_v3_families.FAMILIES)
+    group_of = {k: next(i for i, n in enumerate(names) if labels[k] in glm_v3_families.FAMILIES[n]) for k in range(len(labels))}
+    bundle = serving.train_bundle(texts, y, labels, c=c, ngram=(3, 5), oof_probs=oof, oof_y=oof_y, alpha=0.10, coverage_target=0.70, class_weight="balanced", analyzer="char_wb", group_of_class=group_of,
                                   meta={"calibration": "prédictions hors pli groupées par auteur", "n_train": len(texts), "excluded_label": other})
     serving.save_bundle(bundle, out_dir)
     print(json.dumps({"dossier": str(out_dir), "c": c, "temperature": bundle.temperature, "qhat": bundle.qhat, "seuil_abstention": bundle.abstain_threshold}))

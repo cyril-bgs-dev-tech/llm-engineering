@@ -43,3 +43,19 @@ def test_abstention_threshold_reaches_the_target_coverage_on_calibration_data() 
     probs = np.asarray(serving.predict_probs(b, TEXTS))
     kept = (probs.max(1) >= b.abstain_threshold).mean()
     assert kept >= 0.6
+
+
+def test_family_mode_needs_group_quantiles_and_returns_sets_from_family_thresholds(tmp_path) -> None:
+    rng = np.random.default_rng(0)
+    oof = rng.dirichlet(np.ones(3), size=len(Y))
+    oof[np.arange(len(Y)), [LABELS.index(v) for v in Y]] += 1.0
+    oof /= oof.sum(1, keepdims=True)
+    groups = {0: 0, 1: 1, 2: 1}
+    b = serving.train_bundle(TEXTS, Y, LABELS, c=10.0, ngram=(1, 1), oof_probs=oof, oof_y=np.array([LABELS.index(v) for v in Y]), group_of_class=groups)
+    out = serving.predict(b, ["alpha tumeur kyste"], mode="famille")
+    assert out[0]["label"] in out[0]["set"]
+    serving.save_bundle(b, tmp_path)
+    again = serving.load_bundle(tmp_path)
+    assert serving.predict(b, ["beta fracture femur"], mode="famille") == serving.predict(again, ["beta fracture femur"], mode="famille")
+    with pytest.raises(ValueError, match="famille"):
+        serving.predict(_bundle(), ["alpha"], mode="famille")
