@@ -458,6 +458,9 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P2-11 (GPU) : Tâches multi-étiquettes (MorFITT) et sur paires (CLISTER) de bout en bout avec le même code
   - Preuve de fin : Deux runs au registre sans branche propre à une tâche
   - Skills : test-driven-development, vram-preflight ; dépendances : P0-24, P0-25, P1-20
+- [ ] RM-49 (GPU) : Ancrage sur un benchmark public à résultats publiés (MorFITT en premier) avec le même code et le même protocole que PARHAF : seul moyen de situer le projet par rapport à l'état de l'art connu ; chiffres publiés cités avec leur source, sans les extrapoler à PARHAF
+  - Preuve de fin : Fiche hachée ; run au registre ; tableau « nos chiffres contre chiffres publiés » avec URL et passage ; verdict en trois valeurs
+  - Skills : dataset-intake, experiment-preregistration, paired-comparison, vram-preflight ; dépendances : P0-24, P2-11, RM-28
 - [ ] P2-12 (doc) : Pages wiki des professeurs, de la qualité des étiquettes et de la tâche voisine
   - Preuve de fin : Pages et `wiki-lint` vert
   - Skills : wiki-update ; dépendances : P2-08

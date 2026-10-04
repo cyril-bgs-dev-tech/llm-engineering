@@ -412,6 +412,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P2-09 | Pré-entraînement continu léger sur PARCOMED | |
 | P2-10 | Données synthétiques avec lignée | Contrôle de fuite |
 | P2-11 | Multi-étiquettes et paires de bout en bout | |
+| RM-49 | Ancrage sur un benchmark public à résultats publiés (MorFITT) avec le même code | Seul moyen vérifiable de se situer face à l'état de l'art ; chiffres publiés cités avec source |
 | P2-12 | Pages wiki des professeurs et de la qualité des étiquettes | |
 | RM-45 | Encodeur élagué (six couches), avec et sans distillation | Latence divisée par deux visée |
 | RM-46 | Élève TF-IDF à étiquettes souples | Latence de 2 ms conservée ; bras ensemble fait le 04/10/2026 : +0,69 [−1,03 ; +2,29], non résolu, 15 % de l'écart au professeur ; bras LoRA à faire |
@@ -534,6 +535,7 @@ Appliqués dans `MICROTACHES.md`, sans renuméroter :
 
 - **8 tâches ajoutées sans renuméroter** (RM-41 à RM-48) : 3 ★ (débit d'entraînement, énergie et coût par run, fiche de déploiement) et 5 non ★ (routage conforme de la cascade, ONNX et INT8 statique, encodeur élagué, élève TF-IDF souple, longueur de contexte). Chemin court : 107 ★ sur 183.
 - **Motif** : les dix leviers d'efficience et de déploiement retenus (distillation vers un élève bon marché, débit d'entraînement, mesures de service, cascade, quantification correcte, élève plus léger, service empaqueté, énergie par run, contexte adaptatif, fiche de décision) sont couverts par RM-32, RM-34, RM-35, RM-40 et ces huit tâches ; le service FastAPI, la charge, vLLM contre Transformers et la dérive restent P5-01, P5-02, P5-03 et P5-08, sans doublon.
+- **RM-49 ajoutée le 05/10/2026** (benchmark public à résultats publiés) : sans repère publié, aucun écart avec l'état de l'art n'est vérifiable ; chemin court : 107 ★ sur 184.
 - **Règle d'exécution** : aucune de ces tâches ne modifie un fichier qu'un lot en cours importe ; RM-41 attend la fin du lot RM-28 et se valide par équivalence statistique avant tout usage dans une fiche préenregistrée.
 
 ---
