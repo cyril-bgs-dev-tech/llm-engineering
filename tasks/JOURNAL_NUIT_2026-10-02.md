@@ -292,3 +292,6 @@ Relecture de mon code du jour : lot.sh reconnaissait un run déjà au registre p
 
 ### 17:22Z : reprise par surveilleur
 Post-traitement du LoRA automatisé : scripts/post_lora_plis.sh lancé en détaché (q5, compare_probs par pli, puis agrégat à cinq plis via build_fold_ensemble.py --pool-files et pooled_compare.py, conforme par famille, abstention). Reste à lire les sorties et à consigner dans RESULTATS.
+
+### 17:25Z : reprise par surveilleur
+Mémoire : feedback-pas-de-modif-pendant-un-lot (cible mouvante). LoRA pli 2 en cours (GPU 95 %), post_lora_plis.sh en attente.
