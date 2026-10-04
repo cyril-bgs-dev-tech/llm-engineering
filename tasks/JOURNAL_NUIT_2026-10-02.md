@@ -313,3 +313,6 @@ RM-40 : llmft.cascade (choose_threshold, cascade_probs ; 2 tests), scripts/casca
 
 ### 17:56Z : reprise par surveilleur
 Rien à consigner (LoRA pli 2 en cours, fin vers 19:30Z) ; file sans GPU épuisée pour l'instant en dehors des mises à jour de documents, qui attendent les résultats pour ne pas gonfler les notes sans preuve.
+
+### 18:00Z : reprise par surveilleur
+Cadence du surveilleur portée à 20 minutes pendant le LoRA des plis 2 à 4 (id 64695581 remplace d0d09631), pour ne pas consommer de tours sans travail ; page SURVEILLEUR_SILENCE mise à jour.
