@@ -2,7 +2,17 @@
 
 Demande de Cyril, 2026-10-02T23:28Z : « et continues d'avancer cette nuit moi je vais me coucher donc tu dois définir un contrat de travail suffisant pour avancer sans moi en faisant les choix les plus adaptés et intelligent pour évoluer pendant une douzaine d'heures ». Contrat appliqué : `tasks/CONTRAT_NUIT.md`. HEAD au départ : 314fc71 (trois commits du lot en attente encore en cours à l'ouverture). Fenêtre visée : 2026-10-02T23:28Z → environ 11 h 30 UTC le 2026-10-03 (12 h). Heures lues par `date -u` (N7).
 
-## Résumé pour Cyril (rempli à 11 h 36 UTC le 2026-10-03, fenêtre écoulée)
+## Résumé pour Cyril, nuit du 03 au 04/10/2026 (mis à jour à 04 h 20 UTC, la nuit continue)
+- **Résultat central** : la recette gelée (4 taux, 2 époques) sous-estimait fortement les modèles appris. À recette mûre : CamemBERT-bio à 10 époques = 0,7293 ± 0,0256 (pli 0, 5 graines), 0,7475 (pli 1) ; TF-IDF caractères + poids équilibrés = 0,7202 (5 plis, +3,65 point résolu contre la référence v1). L'encodeur moyenné bat le meilleur TF-IDF de +1,5 (pli 0, non résolu) et +6,4 (pli 1) ; l'ensemble avec le TF-IDF n'apporte rien sur l'encodeur moyenné. Le premier tirage flatteur (0,7714) était un tirage favorable : je l'avais annoncé trop tôt.
+- **LLM** : Qwen3.5-4B à 2 époques = 0,587 ; **le test à 10 époques tourne depuis 03 h 29 UTC (fin vers 07 h 45 UTC)** ; le test de taille 31B à 2 époques a été annulé (projeté 6 h), remplacé.
+- **Puissance** : règle RM-17 sur les 5 graines de l'encodeur : largeur 12,2 points contre 4,0 : échec, le cycle reste EXPLORE.
+- **Données** : 5 plus petits chapitres = 85 % de la variance de la macro-F1 ; écart patient/auteur 5,06 points sur partitions répétées, signature d'auteur pure ≈ 2 points (leave-one-author-out 0,6185).
+- **Déploiement** : service TF-IDF 20 Mo, p50 1,9 ms ; encodeur 443 Mo, 190 ms ; INT8 dynamique naïf : effondrement.
+- **Livrables prêts, rien envoyé** : `docs/BRIEF_GLM_v5_audit_second_cycle.md` (à compléter avec le résultat du 4B), `docs/RAPPORT_PREMIER_CYCLE.md`, ADR-014 (élève 4B), ADR-015 (second cycle, proposée), carte de modèle, `docs/CALIBRATION_PREDICTIONS_ASSISTANT.md` (Brier 0,231), triages des audits GLM v3 et v4, surveilleur de silence (`tasks/SURVEILLEUR_SILENCE.md`, cron de session).
+- **Erreurs de ma part cette nuit** : conclusions sur un seul tirage ; bug du code de sortie (`$(date)` remet `$?` à zéro) deux fois ; `find /` hors périmètre (signalé) ; pré-vol qui n'avait pas exercé le chemin complet (tête sur CPU, 28 minutes perdues) ; criblage LLM avant les références bon marché réglées.
+- **À décider par toi** : promouvoir ou non des recettes plus longues en référence (ADR-015, Q20, Q21) ; changer δ ou les plis du second cycle ; poursuivre la distillation (RM-17 provisoire) ; envoyer les cahiers GLM v5 ; push des commits locaux (non fait).
+
+## Ancien résumé (rempli à 11 h 36 UTC le 2026-10-03)
 - **Fait et commité (local, rien poussé)** : protocole gelé P0-46 et G-P0 franchie ; P1-01 (harnais d'évaluation), P1-02 (comparaison appariée + couverture simulée de l'intervalle hiérarchique), P1-03 (bornes sans modèle : macro-F1 chapitre au plancher ≈ 0,06). HEAD `74fc3f0`. Détails : entrées horodatées ci-dessous.
 - **Constat majeur** : à δ = 2,0 le premier cycle ne tranchera presque jamais (gain confirmé simulé 2,3 % à 2δ) ; décision C1 : EXPLORE, δ inchangé. Voir `project-risque-puissance-delta` et `experiments/ERRATA-PROTOCOLE.md`.
 - **Non fait, faute de temps** : unification mathématique de la métrique (`scripts/spikes/metric_widths.py` écrit, non lancé, non commité ; Q15 reste ouverte), P1-04/P1-06 (TF-IDF), RM-14, P1-19 code, `sealed.py` à deux temps, P0-09 vLLM, ingestions wiki R-j/R-k (dont sliding-window). Aucun run GPU comparatif lancé : aucune fiche préenregistrée n'existait.
@@ -192,3 +202,6 @@ Page wiki des conclusions corrigées ajoutée (wiki 19 pages, vérifications ver
 
 ### 04:17Z : reprise par surveilleur
 Synthétique ciblé : invite, filtre, lignée testés (3 tests), script gen_synthetic.py (161 sources, 322 textes prévus au pli 0), option --synthetic de p1_finetune : **chemin non exercé de bout en bout** (le GPU est réservé au 4B) ; à essayer d'abord sur 1 époque d'encodeur quand le GPU sera libre. 4B en cours.
+
+### 04:23Z : reprise par surveilleur
+Résumé de nuit remis à jour en tête du journal (état de 04h20Z). 4B en cours.
