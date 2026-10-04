@@ -4,10 +4,42 @@ Usage : make_tables.py"""
 import glob
 import json
 import statistics as st
+import sys
 from pathlib import Path
+
+import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs/TABLEAUX_GENERES.md"
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+SYSTEMS = {"TF-IDF caractères équilibré": "tfidf-variant-char-balanced", "Encodeur moyenné (5 graines)": "cinq-plis-ensemble-encodeur5", "Ensemble encodeur + TF-IDF": "cinq-plis-ensemble-encodeur5-tfidf-charbal"}
+
+
+def five_fold_section() -> list[str]:
+    """Macro-F1 par pli et regroupée des prédictions hors pli à cinq plis, recalculée depuis les fichiers de probabilités (aucune recopie)."""
+    import p1_04_06_tfidf
+    from llmft.power_rule import _macro_f1
+
+    _, y, folds, other, ids = p1_04_06_tfidf.load("chapter")
+    fold_of = dict(zip(ids, folds.tolist(), strict=True))
+    truth_of = dict(zip(ids, y, strict=True))
+    lines = ["", "## Systèmes hors pli à cinq plis : macro-F1 (17 chapitres, AUTRE exclu) par pli et regroupée", "", "| système | pli 0 | pli 1 | pli 2 | pli 3 | pli 4 | regroupée (3 586) |", "|---|---|---|---|---|---|---|"]
+    for name, slug in SYSTEMS.items():
+        path = ROOT / "results/predictions" / f"{slug}.probs.npz"
+        if not path.exists():
+            continue
+        z = np.load(path, allow_pickle=False)
+        labels = [str(c) for c in z["labels"]]
+        pid = [str(i) for i in z["ids"]]
+        t = np.array([labels.index(truth_of[i]) for i in pid])
+        pred = z["probs"].argmax(1)
+        f = np.array([fold_of[i] for i in pid])
+        scored = [labels.index(c) for c in labels if c != other]
+        cells = [f4(_macro_f1(t[f == k][None, :], pred[f == k][None, :], scored)[0]) for k in range(5)]
+        cells.append(f4(_macro_f1(t[None, :], pred[None, :], scored)[0]))
+        lines.append(f"| {name} (`{slug}`) | " + " | ".join(cells) + " |")
+    return lines
 
 
 def show(x: object) -> str:
@@ -38,6 +70,7 @@ def main() -> int:
     for (model, fold, ep, lr, var), v in sorted(groups.items(), key=lambda kv: tuple(map(str, kv[0]))):
         if len(v) >= 2:
             lines.append(f"| {model} | {var} | {fold} | {ep} | {lr} | {len(v)} | {f4(st.mean(v))} | {f4(st.stdev(v))} | {f4(min(v))} | {f4(max(v))} |")
+    lines += five_fold_section()
     OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(len(runs), "runs ->", OUT.relative_to(ROOT))
     return 0

@@ -280,3 +280,6 @@ RM-38 consigné : INT8 sélectif de l'encodeur ; effondrement dû au feed-forwar
 
 ### 17:01Z : reprise par surveilleur
 RM-34 complété : scripts/bench_encoder_gpu.py (fp32 et bf16, latence, débit, énergie) et lot scripts/run_encoder_gpu.sh lancé en détaché (attend TERMINE22). Mesure sans hypothèse ni seuil (la fiche ancrage-zero-shot-et-service-lora reste figée ; mesure descriptive, consignée comme telle). Chaîne GPU : LoRA plis 2-4, puis service LoRA et zéro-shot, puis service encodeur.
+
+### 17:03Z : reprise par surveilleur
+make_tables.py : section « systèmes hors pli à cinq plis » recalculée depuis les probabilités (TF-IDF 0,7202, encodeur moyenné 0,7528, ensemble 0,7721 regroupés) ; docs/TABLEAUX_GENERES.md régénéré. Journaux archivés. LoRA pli 2 en cours (une heure écoulée).
