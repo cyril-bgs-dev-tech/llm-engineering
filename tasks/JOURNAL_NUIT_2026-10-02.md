@@ -340,3 +340,6 @@ RM-42 amorcé : src/llmft/energy.py (PowerSampler injectable, énergie, coût po
 
 ### 19:39Z : reprise par surveilleur
 Pli 2 du LoRA dépasse l'estimation de 12 500 s (19:29Z) : en cours, GPU 62 %, 404 W ; attente (limite d'arrêt anticipé 18 800 s, soit 21:15Z).
+
+### 19:49Z : pli 2 du LoRA consigné
+Pli 2 fini à 19:47Z (13 329 s) : macro-F1 0,7785 ; +3,02 [−1,48 ; +7,31] contre TF-IDF et +1,78 [−2,79 ; +6,41] contre l'encodeur, non résolus ; ECE 0,112 vers 0,044 après température. Pli 3 démarré à 19:47Z (fin vers 23:35Z), pli 4 vers 03:20Z. post_lora_plis.sh continue.

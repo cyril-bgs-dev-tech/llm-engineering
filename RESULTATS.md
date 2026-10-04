@@ -511,3 +511,14 @@ TF-IDF caractères (3 à 5, poids équilibrés), cible `0,5 × étiquette + 0,5 
 | Professeur : ensemble encodeur + TF-IDF | 0,7721 | 0,858 | 0,948 |
 
 Souple moins dur : **+0,69 point [−1,03 ; +2,29]** : **non résolu** (l'IC dépasse δ = 2,0 par le haut et inclut zéro) ; l'élève reste **4,5 points [+2,31 ; +6,72] sous son professeur**. Les prédictions de la fiche : gain entre 0,5 et 3 points (réalisée, +0,69), IC entièrement positif (non), gain ≥ 2,0 (non), reste à plus de 2 points sous le professeur (réalisée). **La distillation d'un professeur fort vers le TF-IDF ne transmet que 15 % de l'écart** (0,69 sur 5,2) : un modèle linéaire sur n-grammes de caractères n'a pas la capacité de reproduire la frontière de l'ensemble ; la compression utile est à chercher vers un élève de type encodeur (RM-32, RM-45). Le bras LoRA reste à lancer quand les prédictions du LoRA sur les cinq plis existeront. Réserve de second ordre : voir la fiche de distillation vers l'encodeur.
+
+## LoRA mûr au pli 2 (RM-28, fiche `2026-10-04-llm-mur-plis-2-3-4`, EXPLORE ; runs `llm-mur-pli2-qwen3-5-4b-ep10-lr1e-4`, `pli2-llm-mur`, `pli2-llm-mur-vs-encodeur`)
+
+Qwen3.5-4B LoRA r = 16, 10 époques, taux 1e-4, graine 1000, 13 329 s d'entraînement, pic réservé 12,37 Gio. **macro-F1 0,7785**, exactitude 0,8536, log loss 0,913, ECE brute 0,110.
+
+| Comparaison appariée au pli 2 | différence | IC 95 % | verdict |
+|---|---|---|---|
+| LoRA moins meilleur TF-IDF (0,7483) | +3,02 | [−1,48 ; +7,31] | non résolu |
+| LoRA moins encodeur moyenné (0,7613) | +1,78 | [−2,79 ; +6,41] | non résolu |
+
+Incertitude (étalonnage croisé sur deux moitiés du pli, un seul pli : exploratoire) : ECE de 0,112 à 0,044 après température (T = 2,4 et 2,6), Brier 0,257 vers 0,229, log loss 0,913 vers 0,534 ; conforme LAC à 90 % : couverture 0,904 avec 1,17 classe par ensemble, mais les classes rares ne sont pas couvertes en marginal (couverture minimale par classe 0,0) ; exactitude à 70 % de couverture 0,946. Même ordre de grandeur qu'aux plis 0 et 1. Prédictions de la fiche : macro-F1 entre 0,68 et 0,82 (réalisée) ; avantage sur le TF-IDF à IC entièrement positif (non réalisé à ce pli, 1 pli sur 3 vus). Note de registre : le post-traitement a enregistré l'analyse d'incertitude sous le même nom de run que l'entraînement (deux identifiants distincts, 194722 et 194822) ; à lire par identifiant.

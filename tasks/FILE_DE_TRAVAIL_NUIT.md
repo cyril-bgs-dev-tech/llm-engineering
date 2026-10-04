@@ -32,7 +32,7 @@ Terminés cette nuit : criblage, grille du 4B, encodeur (recette, fenêtres, sat
 
 ## État de la file au 04/10/2026 à 17h10Z (remplace les listes ci-dessus quand elles divergent)
 **Chaîne GPU détachée, dans l'ordre** (chaque lot attend le TERMINE du précédent ; journaux dans `scratchpad/p1_11`) :
-1. `run_llm_plis_2_3_4.sh` (RM-28, LoRA mûr plis 2 à 4, environ 10,5 h, début 16h01Z) ; fin du pli 2 vers 19h30Z, pli 3 vers 23h00Z, pli 4 vers 02h30Z (corrigé le 04/10 à 17h40Z : 12 500 s par pli, et non 5 h 35 après le début) ; TERMINE20.
+1. `run_llm_plis_2_3_4.sh` (RM-28, LoRA mûr plis 2 à 4, environ 10,5 h, début 16h01Z) ; pli 2 fini à 19h47Z (13 329 s d'entraînement, consigné), pli 3 vers 23h35Z, pli 4 vers 03h20Z (un pli dure environ 3 h 45 avec le chargement et l'évaluation) ; TERMINE20.
 2. `run_ancrage_et_service.sh` (RM-34 service du LoRA fusionné, RM-30 zéro-shot 4B et 9B) ; TERMINE22.
 3. `run_encoder_gpu.sh` (RM-34 service de l'encodeur fp32 et bf16) ; TERMINE23.
 4. `run_distillation_encodeur.sh` (RM-32, 30 runs, 2,5 h) ; TERMINE24.
