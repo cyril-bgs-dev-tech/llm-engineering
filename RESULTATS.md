@@ -457,3 +457,15 @@ Un modèle bon marché répond quand sa probabilité maximale dépasse τ ; sino
 | 4 | 0,7248 | 0,7684 (+4,20 [+0,51 ; +7,91]) | 0,7735 | **+4,69 [+1,85 ; +7,68]** |
 
 **Cinq plis regroupés (3 586 patients)** : ensemble moins TF-IDF **+5,20 points [+3,69 ; +6,78]** ; encodeur moyenné seul moins TF-IDF +3,27 [+1,00 ; +5,55]. **Règle de puissance v2** (largeur de l'IC de la différence appariée entre deux systèmes, seuil 4,0) : ensemble contre TF-IDF **3,09 points à 95 %, 3,78 à 98,33 %** : **la règle passe** (l'extrapolation depuis trois plis annonçait 3,3 et 4,1) ; encodeur moyenné contre TF-IDF 4,55 à 95 % : elle ne passe pas pour cette paire. L'ensemble bat le TF-IDF à chacun des cinq plis (résolu aux plis 1 à 4 d'après les IC par pli ; non résolu au pli 0), et sur l'agrégat l'IC est entièrement au-dessus de δ = 2,0 (borne basse 3,69). Prédictions de la fiche : largeur < 4,0 (probabilité 0,7) : réalisée ; ensemble > TF-IDF aux plis 3 et 4 (0,85) : réalisée ; IC entièrement positif aux deux (0,35) : réalisée. Réserve : EXPLORE, protocole v2 non accepté (RM-37) ; le mélange 50/50 a été fixé avant ces plis, mais le TF-IDF de référence et l'encodeur ont été choisis sur les plis de développement 0 à 2.
+
+## Prédiction conforme sur cinq plis : marginale contre conditionnelle par famille (RM-33, run `conformal-by-family` du 04/10 16:26, EXPLORE, niveau visé 0,90, 3 586 patients hors pli)
+
+Étalonnage croisé par plis, sans étiquette de test ; « min famille » est la plus basse couverture parmi les familles de chapitres.
+
+| Système (cinq plis) | marginal : couverture / taille moyenne / min famille | par famille (Mondrian) : couverture / taille moyenne / min famille |
+|---|---|---|
+| Ensemble encodeur + TF-IDF | 0,901 / 1,14 / 0,655 | 0,901 / **1,89** / **0,892** |
+| Encodeur moyenné | 0,900 / 1,17 / 0,685 | 0,898 / 2,50 / 0,831 |
+| TF-IDF caractères équilibré | 0,900 / 1,30 / 0,646 | 0,900 / 2,69 / 0,897 |
+
+La couverture marginale de 0,90 cache des familles à 0,65 ; l'étalonnage par famille ramène le minimum à 0,89 pour l'ensemble au prix d'ensembles plus grands (1,14 vers 1,89 classes). **À couverture minimale égale (0,89 à 0,90), les ensembles de l'ensemble sont 30 % plus petits que ceux du TF-IDF seul (1,89 contre 2,69)** : l'ensemble améliore l'incertitude utile, pas seulement la macro-F1. Réserve : l'étalonnage par plis n'est pas un test indépendant (EXPLORE) ; la couverture de la classe AUTRE (0/18 sur le développement) reste hors de portée de toute méthode sans exemple.

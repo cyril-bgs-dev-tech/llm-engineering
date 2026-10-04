@@ -259,3 +259,6 @@ RM-32 préparé sans toucher aux fichiers utilisés par le lot LoRA en cours (p1
 
 ### 16:23Z : reprise par surveilleur
 RM-34 et RM-30 préparés : src/llmft/servicecost.py (latences, énergie, coût pour 1 000 patients ; 4 tests), scripts/bench_lora_serving.py (LoRA fusionné bf16, énergie échantillonnée), llmft/zeroshot.py (invite depuis le contrat, softmax sur lettres ; 3 tests), scripts/zero_shot.py (fumée CPU réussie avec Qwen3-0.6B, 3 patients), fiche hachée 2026-10-04-ancrage-zero-shot-et-service-lora.md, lot scripts/run_ancrage_et_service.sh lancé en détaché (attend TERMINE20 : service LoRA, puis zéro-shot 4B et 9B au pli 0). Chaîne de nuit : encodeurs (fait) puis LoRA plis 2-4 (en cours) puis ancrage et service. La robustesse du LoRA aux ablations de contenu existe déjà (robustesse llm-mur2).
+
+### 16:26Z : reprise par surveilleur
+RM-33 sur cinq plis : fichiers poolés cinq-plis-ensemble-* (build_fold_ensemble.py --pool) ; conforme par famille : ensemble min famille 0,655 (marginal) vers 0,892 (famille) avec ensembles de 1,89 classes contre 2,69 pour le TF-IDF à couverture minimale égale. LoRA pli 2 en cours.
