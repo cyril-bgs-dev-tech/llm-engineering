@@ -339,3 +339,21 @@ Prédictions de la fiche : macro-F1 entre 0,65 et 0,80 (0,6) : réalisé (0,7795
 | Majuscules sur 5 % des mots | 0,7663 | −1,3 | 0 (casse normalisée) |
 
 Les écarts du LoRA restent dans le bruit de mesure d'un pli (écart-type bootstrap de 1,3 point sur 3 586 prédictions, environ le double sur 717) : **le LoRA mûr est insensible à ces trois perturbations, là où le TF-IDF perd 5,6 points sans accents**. Limite : perturbations douces (5 % des mots), un pli, une graine ; ni abréviations réelles, ni autre style d'auteur. Le contrôle de cohérence (texte propre = 0,7795 = macro-F1 du run d'entraînement) valide le rechargement de l'adaptateur.
+
+## Troisième pli de l'encodeur (fiche `2026-10-04-confirmation-pli2-et-graine-lora`, EXPLORE, pli 2, 717 patients, cinq graines 1000 à 1004 entraînées sur les plis 0, 1, 3, 4 ; `pli2-encodeur-minus-tfidf-charbal`)
+
+| Système (pli 2) | macro-F1 | contre le TF-IDF caractères et poids (0,7483) [IC 95 %] |
+|---|---|---|
+| Encodeur, graines 1000 à 1004 | 0,7392 ; 0,7428 ; 0,7705 ; 0,7675 ; 0,7481 (moyenne 0,7536) | −0,9 ; −0,6 ; +2,4 ; +1,9 ; +0,0 (tous non résolus) |
+| Encodeur moyenné sur 5 graines | 0,7613 | +1,2 [−3,6 ; +5,9], non résolu |
+| **Ensemble 50/50 encodeur (5 graines) + TF-IDF** | **0,7923** | **+4,3 [+1,2 ; +7,5], Holm 0,042, résolu** |
+
+**Synthèse sur les trois plis** (contre le TF-IDF caractères et poids équilibrés, même pli) :
+
+| Système | pli 0 | pli 1 | pli 2 | moyenne |
+|---|---|---|---|---|
+| Encodeur moyenné (5 graines) | +1,5 | +6,4 | +1,2 | +3,0 |
+| Ensemble encodeur + TF-IDF | +4,5 | +6,2 | +4,3 | **+5,0 (résolu aux trois plis)** |
+| LoRA mûr (une graine, deux plis) | +6,4 | +5,3 | n/a | +5,9 |
+
+Le gain de l'ensemble sur l'encodeur moyenné seul : +3,0 ; −0,2 ; +3,0 (moyenne +2,0). **L'ensemble encodeur + TF-IDF est le système bon marché le plus constant : son avantage de 4,3 à 6,2 points sur le meilleur TF-IDF est résolu à chacun des trois plis**, ce que l'encodeur moyenné seul n'obtient pas (non résolu aux plis 0 et 2). Coût : 20 minutes de GPU par pli pour cinq encodeurs plus 13 minutes de CPU pour le TF-IDF. Prédictions de la fiche : l'encodeur moyenné dépasse le TF-IDF au pli 2 (0,8) : réalisé en valeur ; IC entièrement positif (0,45) : non.

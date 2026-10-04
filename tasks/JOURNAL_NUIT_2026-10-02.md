@@ -223,3 +223,6 @@ Robustesse du LoRA mûr consignée (insensible : accents −0,5, fautes +1,6, ca
 
 ### 11:07Z : reprise par surveilleur
 Chemin --synthetic exercé de bout en bout (1 époque d'encodeur, faux fichier de 3 textes supprimé ensuite) : fonctionne. GPU libre : lot lancé (fiche hachée) : cinq encodeurs au pli 2 (25 minutes) puis LoRA mûr graine 1001 au pli 0 (3,5 h, variance du LoRA), fin vers 15h10Z. La génération synthétique reste après ce lot (valeur attendue plus faible).
+
+### 11:32Z : reprise par surveilleur
+Pli 2 de l'encodeur : moyenné 0,7613 (+1,2 non résolu), ensemble encodeur + TF-IDF 0,7923 (+4,3 [+1,2 ; +7,5] résolu). Sur trois plis, l'ensemble bat le meilleur TF-IDF de 4,3 à 6,2 points, résolu à chaque pli : système bon marché le plus constant.
