@@ -23,6 +23,7 @@ check: check-fast test  ## fin de tâche : plus tests, couverture des lignes mod
 	$(PY) scripts/check_scorecards.py
 	$(PY) scripts/check_frozen.py
 	$(PY) scripts/budget_alert.py
+	$(PY) scripts/check_claims.py
 
 test-gpu:          ## variantes GPU des tests (RTX 5090)
 	$(PY) -m pytest -q -p no:cacheprovider -m gpu

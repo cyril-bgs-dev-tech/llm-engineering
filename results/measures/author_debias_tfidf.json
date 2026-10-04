@@ -1,0 +1,13 @@
+{
+ "patient-none": 0.6364,
+ "patient-inv": 0.6381,
+ "patient-invsqrt": 0.6412,
+ "auteur-none": 0.5894,
+ "auteur-inv": 0.5855,
+ "auteur-invsqrt": 0.5872,
+ "ecart_patient_moins_auteur": {
+  "none": 4.7,
+  "inv": 5.26,
+  "invsqrt": 5.4
+ }
+}
