@@ -66,3 +66,6 @@ Pages créées : etat-par-composante. Source : RESULTATS.md, triage GLM v3.
 
 ## [2026-10-03] ingest | Contrats des modules
 Pages créées : contrats-des-modules-du-chemin-court.
+
+## [2026-10-04] ingest | Conclusions corrigées (recette, tirage, discrétisation)
+Pages créées : conclusions-corrigees-recette-et-tirage. Source : RESULTATS.md.
