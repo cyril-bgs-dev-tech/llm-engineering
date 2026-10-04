@@ -29,3 +29,18 @@ Terminés cette nuit : criblage, grille du 4B, encodeur (recette, fenêtres, sat
 - Robustesse du 4B et de l'encodeur par inférence (perturbations) ; latence de l'encodeur (p50, p95) ; export INT8 mesuré.
 - Confirmer l'ensemble encodeur + TF-IDF sur un second pli (pli 1, cinq graines d'encodeur, ~25 minutes GPU, fiche à écrire d'abord) ; puis ajouter le 4B mûr à l'ensemble s'il rattrape.
 - Si le 4B à 10 époques rattrape l'encodeur : une fiche de test de taille à recette mûre (coût estimé environ 20 h pour le 31B : décision de Cyril, jamais lancée seule).
+
+## État de la file au 04/10/2026 à 17h10Z (remplace les listes ci-dessus quand elles divergent)
+**Chaîne GPU détachée, dans l'ordre** (chaque lot attend le TERMINE du précédent ; journaux dans `scratchpad/p1_11`) :
+1. `run_llm_plis_2_3_4.sh` (RM-28, LoRA mûr plis 2 à 4, environ 10,5 h, début 16h01Z) ; fin du pli 2 vers 17h35Z, pli 3 vers 21h05Z, pli 4 vers 00h35Z ; TERMINE20.
+2. `run_ancrage_et_service.sh` (RM-34 service du LoRA fusionné, RM-30 zéro-shot 4B et 9B) ; TERMINE22.
+3. `run_encoder_gpu.sh` (RM-34 service de l'encodeur fp32 et bf16) ; TERMINE23.
+4. `run_distillation_encodeur.sh` (RM-32, 30 runs, 2,5 h) ; TERMINE24.
+
+**À consigner quand chaque lot finit** : pli du LoRA terminé (q5_uncertainty, compare_probs contre TF-IDF et encodeur, RESULTATS) ; zéro-shot (compare_probs contre le LoRA du pli 0) ; services (tableau de coût par 1 000 patients, carte de modèle) ; distillation (pooled_interval contre l'encodeur non distillé, verdict en trois valeurs).
+
+**Sans GPU, faisable à tout moment** : cascade à seuil choisi sur un pli et rapportée sur les autres, dès que le LoRA a cinq plis (RM-40) ; conforme par famille et abstention du LoRA aux cinq plis ; ensemble LoRA + encodeur + TF-IDF aux cinq plis ; mise à jour de la carte de modèle, du rapport, du protocole v2, de la présentation, de la mémoire ; relectures (`code-reviewer`, `test-engineer`) du code ajouté ce jour (distill, zeroshot, servicecost, lot.sh, scripts de banc).
+
+**Après la chaîne, sur décision de l'assistante** : 9B mûr (RM-31, 5 h), seconde graine du LoRA aux plis 1 à 4 si la variance l'exige, adoption propre de fla dans pyproject (GPU libre), quantification statique de l'encodeur (RM-38).
+
+**Réservé à Cyril** : acceptation du protocole v2 (RM-37) ; ouverture du test scellé (RM-20) ; push ; envoi du brief GLM v5 ; location de GPU et API payante.
