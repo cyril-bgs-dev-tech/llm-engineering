@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-10-04T00:44:44Z",
+  "kind": "train",
+  "metrics": {
+    "accuracy": 0.798382598996096,
+    "log_loss": 0.796344675487988,
+    "macro_f1": 0.6447605961410661,
+    "mode": "plain",
+    "n_blocs": 162,
+    "seconds": 705
+  },
+  "params": {
+    "mode": "plain"
+  },
+  "run_id": "20261004-004444-tfidf-hier-plain",
+  "schema": "mini-1",
+  "slug": "tfidf-hier-plain",
+  "status": "ok",
+  "summary": "TF-IDF supervisé sur les blocs CIM-10, agrégé par chapitre (plain) : macro-F1 0.6448"
+}

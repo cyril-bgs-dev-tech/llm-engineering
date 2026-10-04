@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-10-04T00:53:30Z",
+  "kind": "train",
+  "metrics": {
+    "accuracy": 0.8053541550474066,
+    "log_loss": 0.8621449106546274,
+    "macro_f1": 0.6739530951808725,
+    "mode": "balanced",
+    "n_blocs": 162,
+    "seconds": 515
+  },
+  "params": {
+    "mode": "balanced"
+  },
+  "run_id": "20261004-005330-tfidf-hier-balanced",
+  "schema": "mini-1",
+  "slug": "tfidf-hier-balanced",
+  "status": "ok",
+  "summary": "TF-IDF supervisé sur les blocs CIM-10, agrégé par chapitre (balanced) : macro-F1 0.6740"
+}

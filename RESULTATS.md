@@ -154,3 +154,7 @@ Exactitude au pli 0 : TF-IDF 0,824 ; TF-IDF caractères et poids équilibrés 0,
 ## Étalonnage conforme par plis d'auteurs (audit : fiabilité de l'incertitude sous décalage ; TF-IDF, probabilités hors pli par auteur, α = 0,10)
 
 Étalonner sur quatre plis groupés par auteur et évaluer sur le cinquième : couverture LAC par pli 0,869 ; 0,895 ; 0,920 ; 0,909 ; 0,907, **moyenne 0,900**, 1,44 classe par ensemble (APS : 0,899, 12,6 classes). Contre 0,887 quand l'étalonnage vient des plis par patient et l'évaluation des plis par auteur (décalage). Étalonner par auteur rétablit la couverture visée sous décalage d'auteur, au prix d'une variabilité entre plis de 5 points.
+
+## Hiérarchie CIM-10 comme supervision (fiche `2026-10-04-hierarchie-comme-supervision`, EXPLORE, TF-IDF, 5 plis ; `tfidf-hier-minus-reference`)
+
+Entraîner sur les blocs CIM-10 puis agréger par chapitre : sans poids 0,6448 (**−3,99 points [−5,95 ; −2,08], dégradation résolue**) ; avec poids équilibrés 0,6740 (−1,05 [−2,69 ; +0,58], non résolu). **Piste non soutenue** : la supervision plus fine ne remonte pas le chapitre avec un TF-IDF ; les blocs rares ont trop peu d'exemples. Prédictions de la fiche : gain entre 0 et 3 points (0,45) et gain d'au moins 2 points (0,15) : faux ; perte (0,35) : vrai pour la version sans poids.
