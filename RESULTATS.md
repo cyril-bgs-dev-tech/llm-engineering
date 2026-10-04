@@ -245,3 +245,19 @@ macro-F1 : 0,7714 ; 0,7079 ; 0,7175 ; 0,7148 ; 0,7349. **Moyenne 0,7293, écart-
 ## Discrétisation des petites classes (hypothèse de Cyril du 04/10 ; `scripts/split_discretization_check.py`, `results/measures/split_discretization_check.json`, prédictions hors pli du TF-IDF sur cinq plis par patient, bootstrap stratifié de 2 000 répliques)
 
 **Les cinq plus petites classes (IV, V, XII, XXI, XXII) portent 85,1 % de la variance bootstrap de la macro-F1** : XXII 26,1 %, XII 20,8 %, XXI 16,5 %, IV 13,6 %, V 8,2 % ; les douze autres classes se partagent les 14,9 % restants (le chapitre II seul : 0,1 %). L'écart-type bootstrap de la macro-F1 regroupée est de **1,3 point** (n = 3 586 prédictions) : pour un seul pli de 717 patients il est environ deux fois plus grand. La métrique est donc surtout une mesure de cinq classes de 27 à 63 patients ; chaque patient de ces classes déplace la macro-F1 de 0,2 à 0,5 point, et c'est la source principale du bruit entre graines (écart-type de l'encodeur : 2,6 points). Conséquence de conception : comparer deux recettes sur un pli unique ne distingue pas moins de 3 points ; la log loss équilibrée par chapitre (secondaire) et les plis répétés réduisent ce bruit. L'écart patient moins auteur sur partitions répétées est en calcul.
+
+## Couverture conforme par famille de chapitres (audit GLM v4, E-c1 sous forme de familles ; `coverage-by-family-tfidf`, TF-IDF, LAC 90 %, étalonnage croisé par plis par patient, développement, 3 586 patients, Wilson 95 %)
+
+| Famille | patients | couverture | Wilson 95 % |
+|---|---|---|---|
+| Grossesse | 148 | 0,993 | [0,963 ; 0,999] |
+| Digestif | 312 | 0,978 | [0,954 ; 0,989] |
+| Circulatoire et respiratoire | 704 | 0,970 | [0,955 ; 0,980] |
+| Infectieux, tumeurs, sang | 1 254 | 0,951 | [0,938 ; 0,962] |
+| Peau, muscle, urinaire | 513 | 0,932 | [0,907 ; 0,951] |
+| Nerveux | 108 | 0,759 | [0,671 ; 0,830] |
+| Symptômes, lésions, facteurs | 432 | 0,662 | [0,616 ; 0,705] |
+| Endocrinien et mental | 101 | 0,564 | [0,467 ; 0,657] |
+| Autre (`AUTRE`) | 14 | 0,000 | [0 ; 0,215] |
+
+**La couverture marginale de 0,90 est une moyenne qui cache des familles à 0,56 et 0,66** : les familles faciles sont sur-couvertes (0,93 à 0,99) et les difficiles sous-couvertes (endocrinien et mental, symptômes et lésions, nerveux), exactement celles où le diagnostic est ambigu. Une politique d'abstention ou d'ensembles qui s'appuierait sur la couverture marginale tromperait l'utilisateur sur ces familles ; l'étalonnage conditionnel (par classe ou par famille, de type Mondrian) corrige le niveau, au prix d'ensembles plus grands, déjà mesuré par classe (0,904, minimum 0,893 sur les classes de plus de 20 patients). À rapporter dans tout résultat d'incertitude : couverture par famille avec Wilson, pas seulement la marginale.
