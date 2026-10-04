@@ -174,3 +174,6 @@ Pli 1 : encodeur (5 graines moyennées) 0,7532, ensemble avec TF-IDF 0,7512, TF-
 
 ### 03:37Z : reprise par surveilleur
 Rapport préliminaire du premier cycle écrit (docs/RAPPORT_PREMIER_CYCLE.md, gabarit et tableau de preuve) ; Brier des prédictions : 0,231 sur 34. 4B à 10 époques en cours (fin vers 07h45Z), travail léger seulement.
+
+### 03:44Z : reprise par surveilleur
+File de travail mise à jour ; 4B à 10 époques en cours.
