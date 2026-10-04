@@ -13,3 +13,6 @@ Déclencheurs écrits d'avance, à vérifier avant l'ouverture du test scellé :
 
 ## Conséquences
 Rien à faire tant qu'aucun déclencheur n'est atteint. Mesure à produire d'abord : l'écart patient/auteur du candidat final LLM (pli 0 et plis de contrôle groupés existent).
+
+## Mesure ajoutée le 04/10/2026 (audit GLM v4, F-c1)
+Le leave-one-author-out sur le TF-IDF (`scripts/loao_tfidf.py`, run `tfidf-loao`) est la mesure « nouveaux auteurs » qui opérationnalise la lecture « fuite » : proche de 0,6844 (l'auteur n'aide pas), proche de 0,6457 (signature d'auteur), ou intermédiaire. Elle précède toute décision de basculement.

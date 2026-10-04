@@ -24,6 +24,9 @@
 - Liste datée des lectures non tranchées (RM-14), des mesures manquantes (latence, quantification, robustesse du modèle rapporté), des sources non lues.
 - Chapitres à moins de 10 patients au test : leurs F1 et couvertures sont non vérifiables individuellement.
 
+## 5 bis. Reproductibilité (par famille)
+- Reproductibilité **statistique**, pas bit-à-bit, sur GPU : deux runs de même graine diffèrent (Qwen3.5-4B : 40 prédictions sur 717, macro-F1 0,5807 contre 0,5867 ; CamemBERT-bio à 10 époques : 0,7714 contre 0,7362). Écrire le chiffre de rejeu et l'écart-type entre graines de la famille rapportée. TF-IDF : déterministe sur CPU.
+
 ## 6. Tableau de preuve
 | Affirmation | Preuve | Statut (prouvé, reformulé, retiré) |
 |---|---|---|
