@@ -260,6 +260,9 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-29 (mesure) : Règle de puissance v2 : largeur de l'IC de la différence appariée entre deux systèmes sur les prédictions regroupées de cinq plis (seuil 4,0 points) ; plis 3 et 4 de l'encodeur
   - Preuve de fin : Run `v2-power-preview-*` à cinq plis ; ligne datée de `experiments/INDEX.md`
   - Skills : paired-comparison ; dépendances : RM-25, RM-28
+- [x] RM-52 (doc) : Rubrique vérifiable de notation par composante, correspondance avec Q1 à Q12, chaîne de dominos ; réévaluation des notes de la présentation avec preuve citée à chaque porte et écart noté entre note estimée et scorecard
+  - Preuve de fin : `docs/CHAINE_DE_DOMINOS.md` et section 4.1 de la feuille de route ; écart consigné à chaque scorecard
+  - Skills : documentation-and-adrs, claim-gate ; dépendances : RM-29
 - [ ] RM-41 (GPU) : Débit d'entraînement à résultat équivalent : gradient checkpointing désactivé (pic 12,9 Gio sur 32), noyaux linéaires causal-conv1d et flash-linear-attention installés proprement, encodeur en bf16 ou TF32 ; pas par seconde avant et après, équivalence statistique des macro-F1 sur un pli (mêmes graines, écart dans le bruit mesuré)
   - Preuve de fin : Tableau pas par seconde et heures par run ; équivalence appariée consignée ; fiche hachée ; aucun changement pendant un lot en cours
   - Skills : performance-optimization, vram-preflight, lora-classifier-recipe ; dépendances : RM-28
@@ -317,9 +320,12 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-37 (décision) : Acceptation du protocole v2 (ADR-015) par Cyril avant tout run du second cycle et avant l'ouverture du test scellé
   - Preuve de fin : Décision datée de Cyril, ADR mise à jour ; protocole v1 gelé inchangé
   - Skills : doubt-driven-development ; dépendances : RM-29
+- [ ] RM-50 (décision) : Gel du système final avant l'ouverture du test scellé : règle de sélection écrite avant lecture des prédictions complètes (cinq plis du LoRA, élèves distillés, ensemble) ; candidat unique, composition de l'ensemble, seuils conformes et d'abstention figés ; prédiction chiffrée de la macro-F1 du test scellé et de son intervalle écrite et hachée
+  - Preuve de fin : ADR de gel datée avec empreinte ; prédiction hachée avant l'ouverture ; aucune modification après
+  - Skills : experiment-preregistration, doubt-driven-development ; dépendances : RM-28, RM-32, RM-37
 - [ ] RM-20 (mesure) : Ouverture unique du test scellé pour la comparaison confirmatoire, via le seul script autorisé
   - Preuve de fin : Un seul accès journalisé ; verdict confirmatoire en trois valeurs seulement si la règle de puissance de PROTOCOLE.md 6.3 a réussi, sinon évaluation du candidat final sans verdict ; procédure en deux temps de 6.8 : code `sealed.py` à deux fonctions écrit avant, répétition générale du temps B réussie avant l'ouverture, marqueur à chemin fixe
-  - Skills : leakage-guard ; dépendances : P3-07, P0-34
+  - Skills : leakage-guard ; dépendances : P3-07, P0-34, RM-50
 - [ ] RM-21 (décision) : Porte go/no-go après le verdict de distillation : le meilleur candidat mérite-t-il calibration et robustesse, ou le budget manque-t-il pour lever l'incertitude
   - Preuve de fin : Décision datée
   - Skills : doubt-driven-development ; dépendances : RM-20
@@ -344,6 +350,9 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-33 (code) : Prédiction conforme conditionnelle par famille de chapitres (Mondrian) en plus du marginal ; couverture par famille avec Wilson ; coût en taille d'ensemble
   - Preuve de fin : Fonctions testées ; run `conformal-by-family` ; arbitrage taille contre couverture consigné
   - Skills : model-card-calibration, test-driven-development ; dépendances : P4-05, RM-22
+- [ ] RM-51 (mesure) : Lecture confirmatoire de l'incertitude et de la robustesse sur le test scellé (second temps de RM-20) : couverture conforme par famille, abstention, nouveaux auteurs ; seuils, familles et niveaux figés avant l'ouverture ; aucune recalibration après lecture
+  - Preuve de fin : Tableau couverture mesurée contre niveau visé ; un seul accès journalisé (celui de RM-20) ; hypothèse d'échangeabilité énoncée
+  - Skills : leakage-guard, model-card-calibration ; dépendances : RM-20, RM-33
 - [ ] P4-08 (code) : Politique d'abstention et courbe automatisation contre exactitude ; recalibration si un modèle quantifié est retenu
   - Preuve de fin : Courbe et point de fonctionnement
   - Skills : model-card-calibration ; dépendances : P4-05

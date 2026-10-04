@@ -129,6 +129,29 @@ Test scellé à accès unique (P0-34) ; test de transposabilité ; chemin court 
 | R11 | Livraison ciblée | Reconstruction à froid ; rapport ; `claim-gate` ; **G-P5** | | **B** |
 | R12 à R16 | Chemin complet et options (références et réglage, leviers, compression, industrialisation, pistes optionnelles) | Selon la décision de périmètre de Cyril | | |
 
+### 4.1 Chaîne critique : des petits dominos au domino géant (05/10/2026)
+
+Principe : un objectif n'en fait tomber un autre que si la **cause physique est écrite** : chacun produit une pièce de preuve (un run au registre, une fiche hachée, un intervalle) dont le suivant a besoin. On commence par le plus petit domino qui touche le suivant ; le domino géant est connu d'avance : **RM-20 (ouverture unique du test scellé) sur un système figé (RM-50)**, puis **RM-49 (ancrage sur benchmark public à résultats publiés)**. Détail, critères de 10/10 et plafonds : `docs/CHAINE_DE_DOMINOS.md`.
+
+| Domino | Tâches | Étape | Pièce de preuve produite | Composantes |
+|---|---|---|---|---|
+| 0 | RM-28 | R7 | probabilités hors pli du LoRA sur cinq plis | performance, rigueur |
+| 1 | RM-34, RM-42, RM-30 | R7, R11 | latence, débit, énergie par profil ; repère zéro-shot | efficience, honnêteté |
+| 2 | RM-32 | R8 | élève distillé et écart au professeur | efficience, performance par coût |
+| 3 | RM-41 | R7 | débit d'entraînement à résultat équivalent | efficience |
+| 4 | P2-06, P2-10 | R9, R13 | audit d'étiquettes ; synthétique ciblé | performance, données, erreurs |
+| 5 | RM-50 | R9 | ADR de gel, prédiction hachée du test scellé | rigueur |
+| 6 | RM-37 | R9 | acceptation de Cyril | rigueur |
+| 7 | RM-20, RM-51 | R9, R10 | verdict confirmatoire ; incertitude confirmée | rigueur, performance, incertitude |
+| 8 | RM-33, RM-39 | R10, R14 | couverture par famille ; nouveaux auteurs | incertitude, erreurs |
+| 9 | RM-49 | R13 | tableau chiffres publiés contre les nôtres | performance, données |
+| 10 | P5-09, P5-12, RM-48 | R11 | reconstruction à froid, rapport, fiche de déploiement | reproductibilité, honnêteté, efficience |
+| 11 | P5-10 | R15 | revue indépendante | rigueur, honnêteté |
+
+**Correspondance avec la notation** : les huit composantes de la présentation se rattachent aux douze catégories Q : *performance* = résultat mesuré sous Q2 et Q3 ; *rigueur* = Q2 et Q3 ; *données* = Q1 ; *incertitude* = Q5 ; *erreurs et robustesse* = Q4 ; *reproductibilité et ingénierie* = Q6 et Q7 ; *efficience et déploiement* = Q8 et Q9 ; *sûreté, conformité, honnêteté* = Q10, Q11 et Q12. À chaque scorecard, on note l'écart entre la note estimée de la présentation et la note 0 à 3 prouvée (RM-52).
+
+**Règles d'ordonnancement** : (1) un seul lot GPU à la fois, enchaîné par marqueurs ; le calcul CPU léger se fait en parallèle, à priorité basse ; (2) aucune tâche ne modifie un fichier qu'un lot en cours importe (RM-41 attend la fin du lot RM-28) ; (3) aucune nouvelle recette ne s'insère entre RM-50 et RM-20 ; (4) le synthétique ciblé et l'audit d'étiquettes (P2-06, P2-10) se tranchent **avant** RM-50 si le budget le permet (fenêtre de décision, sans dépendance de fermeture entre tâches ★ et non ★) ; (5) l'ancrage RM-49 se lit **après** RM-20 pour ne pas influencer le choix du candidat.
+
 ---
 
 ## 5. La séquence
@@ -292,6 +315,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P1-25 | Page d'analyse et premier `RESULTATS.md` | Résultats négatifs au même rang |
 | RM-28 | LoRA mûr aux plis 2, 3 et 4 : évaluation à cinq plis et professeur strictement hors pli (environ 10,5 h de GPU) | Porte de la distillation et de l'évaluation à cinq plis |
 | RM-29 | Règle de puissance v2 : largeur de la différence entre deux systèmes sur cinq plis, seuil 4,0 | Aperçu : 4,29 points sur trois plis pour ensemble contre TF-IDF |
+| RM-52 | Rubrique de notation vérifiable par composante, correspondance Q1 à Q12, chaîne de dominos | Fait le 05/10/2026 (section 4.1) ; écart note estimée contre scorecard à chaque porte |
 | RM-41 | Débit d'entraînement à résultat équivalent (checkpointing, noyaux linéaires, bf16 de l'encodeur) | Jamais pendant un lot en cours ; équivalence statistique d'abord |
 | RM-17 | **Porte go/no-go après la LoRA de référence** | |
 | G-P1 | Scorecard G-P1 | **Jalon A** |
@@ -315,7 +339,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 
 **Objectif** : répondre à la question scientifique centrale.
 **Skills à charger** : distillation-pipeline, leakage-guard, paired-comparison, lora-classifier-recipe, claim-gate.
-**Porte de sortie** : probabilités hors pli complètes avec manifeste ; configuration gelée ; référence, tâche voisine, distillation et combinaison comparées ; verdict en trois valeurs ; test scellé ouvert une seule fois ; G-P2 et G-P3.
+**Porte de sortie** : probabilités hors pli complètes avec manifeste ; configuration gelée ; **système final figé et prédiction du test scellé hachée (RM-50) avant l'ouverture** ; référence, tâche voisine, distillation et combinaison comparées ; verdict en trois valeurs ; test scellé ouvert une seule fois ; G-P2 et G-P3.
 **Arrêt ou repli si** : verdict non résolu et aucun budget pour lever l'incertitude.
 
 | ID | Rôle dans l'étape | Point d'attention |
@@ -329,6 +353,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P3-02 | Élève distillé | |
 | P3-07 | Entraîner les 20 modèles gelés ; l'évaluation est celle de RM-20 (ADR-010) | Pas de verdict avant RM-20 |
 | RM-37 | **Acceptation du protocole v2 par Cyril** | Avant tout run du second cycle et avant l'ouverture |
+| RM-50 | **Gel du système final et prédiction chiffrée du test scellé** | Règle de sélection écrite avant lecture ; rien ne change après |
 | RM-20 | Ouverture unique du test scellé | Un seul accès journalisé |
 | RM-21 | **Porte go/no-go après le verdict de distillation** | |
 | G-P3 | Scorecard G-P3 | Contre-lecture adversariale des verdicts exigée par le tableau « qui prouve quoi » |
@@ -347,6 +372,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P4-05 | Prédiction conforme MAPIE, couverture empirique | Hypothèse d'échangeabilité énoncée |
 | RM-22 | Validation conforme : cas analytiques, invariants, couverture conditionnelle, rupture d'échangeabilité | |
 | RM-33 | Conforme conditionnel par famille (Mondrian) et couverture par famille avec Wilson | La couverture marginale cache des familles à 0,56 |
+| RM-51 | Lecture confirmatoire de l'incertitude et de la robustesse sur le test scellé | Second temps de RM-20 ; seuils figés avant l'ouverture |
 | P4-08 | Politique d'abstention, courbe automatisation contre exactitude | |
 | P4-10 | Carte de modèle et checklist TRIPOD-LLM | |
 | G-P4 | Scorecard G-P4 | |
@@ -509,6 +535,9 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | Avant R15 | R11 | Un consommateur et un scénario de démonstration existent | Le service ne sert qu'à cocher un mot de l'offre |
 | Avant R16 location | | Déclencheur scientifique précis et plafond accepté | La location sert seulement à agrandir le modèle |
 
+
+**Règles de bifurcation écrites d'avance (05/10/2026)** : (a) *distillation (RM-32)* : élève à moins de 2 points du professeur, le LoRA sort du service et l'élève devient le système bon marché de référence ; élève à plus de 4 points sous l'encodeur non distillé, la distillation est publiée comme résultat négatif et l'ensemble encodeur + TF-IDF reste le système bon marché ; entre les deux, non résolu, une seconde graine par pli au plus. (b) *LoRA à cinq plis* : au moins 2 points au-dessus de l'ensemble avec borne basse positive, il entre dans le système final ; sinon il reste un professeur. (c) *synthétique et audit (P2-10, P2-06)* : gain résolu sur les cinq petits chapitres, entrée dans le système final ; sinon retrait et résultat négatif publié. (d) *benchmark public (RM-49)* : un chiffre publié dépassé avec intervalle, la performance se note 9 sur ce repère ; sinon 8, avec le repère cité honnêtement. (e) *débit d'entraînement (RM-41)* : équivalence statistique non démontrée, la modification n'entre pas dans les fiches.
+
 ---
 
 ## 7. Journal des amendements appliqués le 01/10/2026
@@ -536,6 +565,7 @@ Appliqués dans `MICROTACHES.md`, sans renuméroter :
 - **8 tâches ajoutées sans renuméroter** (RM-41 à RM-48) : 3 ★ (débit d'entraînement, énergie et coût par run, fiche de déploiement) et 5 non ★ (routage conforme de la cascade, ONNX et INT8 statique, encodeur élagué, élève TF-IDF souple, longueur de contexte). Chemin court : 107 ★ sur 183.
 - **Motif** : les dix leviers d'efficience et de déploiement retenus (distillation vers un élève bon marché, débit d'entraînement, mesures de service, cascade, quantification correcte, élève plus léger, service empaqueté, énergie par run, contexte adaptatif, fiche de décision) sont couverts par RM-32, RM-34, RM-35, RM-40 et ces huit tâches ; le service FastAPI, la charge, vLLM contre Transformers et la dérive restent P5-01, P5-02, P5-03 et P5-08, sans doublon.
 - **RM-49 ajoutée le 05/10/2026** (benchmark public à résultats publiés) : sans repère publié, aucun écart avec l'état de l'art n'est vérifiable ; chemin court : 107 ★ sur 184.
+- **Chaîne de dominos (05/10/2026)** : section 4.1 ajoutée (chemin critique, correspondance Q1 à Q12 et huit composantes, règles d'ordonnancement) ; règles de bifurcation écrites d'avance en section 6 ; **RM-50, RM-51, RM-52 ajoutées** (gel du système final avant l'ouverture, lecture confirmatoire de l'incertitude, rubrique de notation) ; RM-20 dépend désormais de RM-50 ; chemin court : 110 ★ sur 187.
 - **Règle d'exécution** : aucune de ces tâches ne modifie un fichier qu'un lot en cours importe ; RM-41 attend la fin du lot RM-28 et se valide par équivalence statistique avant tout usage dans une fiche préenregistrée.
 
 ---

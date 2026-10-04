@@ -69,7 +69,7 @@ Fichier généré depuis `roadmap_unifié.md`. L'ordre, les portes et les arrêt
 
 - **Objectif** : répondre à la question scientifique centrale.
 - **Skills à charger** : distillation-pipeline, leakage-guard, paired-comparison, lora-classifier-recipe, claim-gate.
-- **Porte de sortie** : probabilités hors pli complètes avec manifeste ; configuration gelée ; référence, tâche voisine, distillation et combinaison comparées ; verdict en trois valeurs ; test scellé ouvert une seule fois ; G-P2 et G-P3.
+- **Porte de sortie** : probabilités hors pli complètes avec manifeste ; configuration gelée ; **système final figé et prédiction du test scellé hachée (RM-50) avant l'ouverture** ; référence, tâche voisine, distillation et combinaison comparées ; verdict en trois valeurs ; test scellé ouvert une seule fois ; G-P2 et G-P3.
 - **Arrêt ou repli si** : verdict non résolu et aucun budget pour lever l'incertitude.
 
 ## Étape R10 : fiabilité du meilleur candidat

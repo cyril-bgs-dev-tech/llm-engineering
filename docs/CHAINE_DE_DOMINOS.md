@@ -25,6 +25,8 @@ Un domino n'en fait tomber un plus grand que si la **cause physique est écrite*
 
 **Lecture honnête** : « 10/10 partout » et « dépasser le meilleur niveau connu » ne sont **pas** simultanément atteignables ni vérifiables ici. Cinq composantes peuvent atteindre 9 ou 10 sur des critères contrôlables ; la performance plafonne à 8 (9 sous condition) parce qu'aucun repère publié n'existe pour PARHAF, corpus nouveau ; l'efficience et les données plafonnent à 9. La moyenne atteignable est de l'ordre de **9,2 à 9,4** (contre 6,9 aujourd'hui), au-dessus du niveau ouvert estimé (7,6) et au niveau du niveau absolu estimé (9,4) au mieux, sans prétendre le dépasser composante par composante.
 
+Intégration : la chaîne est la section 4.1 de `roadmap_unifié.md` ; les tâches RM-50 (gel du système final), RM-51 (lecture confirmatoire de l'incertitude) et RM-52 (rubrique de notation) en sont les pièces de liaison ; les règles de bifurcation sont en section 6 de la feuille de route.
+
 ## 3. La chaîne, dans l'ordre causal
 
 Chaque ligne : le domino, ce qu'il fait tomber, les composantes qu'il fait monter (note actuelle vers cible), le coût, la condition d'arrêt.

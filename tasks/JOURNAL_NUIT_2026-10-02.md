@@ -376,3 +376,6 @@ docs/BRIEF_GLM_v6_audit_30_leviers.md (27 Ko, autonome) : posture de chercheur d
 
 ### 22:26Z : chaîne de dominos (demande de Cyril)
 docs/CHAINE_DE_DOMINOS.md : critères vérifiables de 10/10 par composante, plafonds réalistes (performance 8 ou 9, efficience et données 9, rigueur, reproductibilité et honnêteté 10), douze dominos dans l'ordre causal, chemin critique, bifurcations, hors de portée ; moyenne atteignable 9,2 à 9,4 contre 6,9. RM-49 ajouté (ancrage sur benchmark public à résultats publiés) : 107 ★ sur 184.
+
+### 22:31Z : chaîne de dominos intégrée à la feuille de route (demande de Cyril)
+roadmap_unifié.md : section 4.1 (chaîne critique, douze dominos mappés aux tâches, étapes et pièces de preuve ; correspondance Q1 à Q12 et huit composantes ; règles d'ordonnancement) ; section 6 : règles de bifurcation écrites d'avance (distillation, LoRA à cinq plis, synthétique, benchmark public, débit d'entraînement) ; RM-50 (gel du système final, avant RM-20), RM-51 (lecture confirmatoire de l'incertitude), RM-52 (rubrique de notation, faite) ; RM-20 dépend de RM-50 ; R9 : porte de sortie complétée ; 110 ★ sur 187 ; checkers verts ; todo exporté ; file de travail mise à jour. Domino en cours : 0 (LoRA pli 3).
