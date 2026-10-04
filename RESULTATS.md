@@ -362,4 +362,13 @@ Le gain de l'ensemble sur l'encodeur moyenné seul : +3,0 ; −0,2 ; +3,0 (moyen
 
 Exactitude top-1, top-2 et top-3 : LoRA mûr 0,858 / 0,950 / 0,975 ; encodeur moyenné 0,835 / 0,936 / 0,968 ; ensemble LoRA + encodeur + TF-IDF 0,870 / 0,958 / 0,983 ; TF-IDF 0,823 / 0,916 / 0,961. **Le bon chapitre est dans les deux premiers dans 95 % des cas** : la confusion est surtout entre deux diagnostics rivaux.
 
-Étalonnage conforme LAC 90 % du LoRA mûr, deux moitiés du pli : **marginal** couverture 0,909, 1,15 classe par ensemble, mais par famille : symptômes et lésions 0,65, nerveux 0,77, endocrinien et mental 0,80 ; **conditionnel par famille (Mondrian)** couverture 0,891, 1,59 classe par ensemble, par famille : symptômes et lésions 0,87, nerveux 0,86, endocrinien et mental 0,80, circulatoire et respiratoire 0,89. Le conditionnement par famille corrige les familles sous-couvertes pour un demi-point de taille d'ensemble en plus.
+**Correction (04/10, après relecture de mon propre calcul)** : le calcul de contrôle précédent de l'étalonnage « par famille » utilisait la famille de la **vraie** classe du patient pour choisir le quantile au moment de la prédiction, ce qui revient à lire l'étiquette : ses chiffres (couverture 0,87 avec 1,59 classe par ensemble) sont **invalides et retirés**. La version correcte (`conformal.fit_by_group`, `predict_sets_by_group` : une classe candidate entre dans l'ensemble si son score est sous le quantile de sa famille ; test synthétique ; `scripts/conformal_by_family.py`, run `conformal-by-family`) donne :
+
+| Jeu | couverture marginale | taille | couverture minimale par famille | par famille : couverture | taille | couverture minimale par famille |
+|---|---|---|---|---|---|---|
+| TF-IDF 5 plis | 0.901 | 1.3 | 0.564 | 0.901 | 2.05 | 0.896 |
+| LoRA mûr pli 0 | 0.909 | 1.15 | 0.647 | 0.894 | 2.74 | 0.8 |
+| LoRA mûr pli 1 | 0.903 | 1.17 | 0.663 | 0.905 | 2.74 | 0.864 |
+| Encodeur moyenné pli 0 | 0.902 | 1.2 | 0.682 | 0.905 | 3.56 | 0.85 |
+
+L'étalonnage conditionnel par famille relève la couverture de la famille la moins bien couverte de 0,56 à 0,90 (TF-IDF, cinq plis), de 0,65 à 0,80 et de 0,66 à 0,86 (LoRA mûr, plis 0 et 1), de 0,68 à 0,85 (encodeur moyenné), **mais multiplie la taille des ensembles par 1,6 à 3** (de 1,15 à 2,74 pour le LoRA, de 1,2 à 3,56 pour l'encodeur) : le coût de l'équité par famille est élevé. Arbitrage à poser avec l'utilisateur (renvoi à l'humain d'un cas à deux candidats contre un cas à trois ou quatre) ; l'option intermédiaire est de n'appliquer la correction qu'aux deux ou trois familles ambiguës (symptômes et lésions, nerveux, endocrinien et mental).

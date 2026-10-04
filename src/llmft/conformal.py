@@ -47,6 +47,19 @@ def fit_by_class(probs: NDArray[np.float64], y: NDArray[np.int_], alpha: float, 
     return {c: conformal_quantile(s[y == c], alpha) for c in range(n_classes)}
 
 
+def fit_by_group(probs: NDArray[np.float64], y: NDArray[np.int_], group_of_class: Mapping[int, int], alpha: float, method: str = "lac") -> dict[int, float]:
+    """Quantile par groupe de classes (famille) : calibré sur les exemples dont la **vraie** classe est dans le groupe ; le groupe sans exemple reçoit un quantile infini."""
+    s = _scores_all(probs, method)[np.arange(len(y)), y]
+    groups = np.array([group_of_class[int(c)] for c in y])
+    return {g: conformal_quantile(s[groups == g], alpha) for g in set(group_of_class.values())}
+
+
+def predict_sets_by_group(probs: NDArray[np.float64], qhats: Mapping[int, float], group_of_class: Mapping[int, int], method: str = "lac") -> list[set[int]]:
+    """La classe candidate c est dans l'ensemble si son score est sous le quantile du groupe de c (aucune étiquette de test n'intervient)."""
+    s = _scores_all(probs, method)
+    return [{c for c in range(s.shape[1]) if row[c] <= qhats[group_of_class[c]]} for row in s]
+
+
 def predict_sets(probs: NDArray[np.float64], qhat: float, method: str = "lac") -> list[set[int]]:
     s = _scores_all(probs, method)
     return [set(np.flatnonzero(row <= qhat).tolist()) for row in s]

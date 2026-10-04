@@ -124,3 +124,26 @@ def test_exactitude_selective_a_couverture_donnee():
     correct = np.array([1, 1, 1, 0])
     assert selective.accuracy_at_coverage(conf, correct, 0.75) == 1.0
     assert selective.accuracy_at_coverage(conf, correct, 1.0) == 0.75
+
+
+def test_conforme_par_groupe_couvre_le_groupe_difficile_que_le_marginal_sacrifie():
+    rng = np.random.default_rng(0)
+    n = 4000
+    y = rng.choice(4, size=n, p=[0.45, 0.4, 0.1, 0.05])  # classes 0,1 = groupe facile (85 %) ; 2,3 = groupe difficile (15 %)
+    probs = np.full((n, 4), 0.01)
+    for i, c in enumerate(y):
+        good = rng.random() < (0.99 if c < 2 else 0.5)
+        top = c if good else (c ^ 1 if c < 2 else 2 + ((c - 2) ^ 1))
+        probs[i, top] += 1.0
+    probs /= probs.sum(1, keepdims=True)
+    group_of = {0: 0, 1: 0, 2: 1, 3: 1}
+    cal, te = np.arange(0, n, 2), np.arange(1, n, 2)
+    q = conformal.fit(probs[cal], y[cal], 0.1, "lac")
+    marginal = conformal.predict_sets(probs[te], q, "lac")
+    qg = conformal.fit_by_group(probs[cal], y[cal], group_of, 0.1, "lac")
+    grouped = conformal.predict_sets_by_group(probs[te], qg, group_of, "lac")
+    hard = y[te] >= 2
+    def cov(sets, mask):
+        return float(np.mean([y[te][i] in sets[i] for i in np.flatnonzero(mask)]))
+    assert cov(marginal, hard) < 0.88
+    assert cov(grouped, hard) >= 0.88
