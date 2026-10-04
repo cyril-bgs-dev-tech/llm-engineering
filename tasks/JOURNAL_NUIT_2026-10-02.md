@@ -310,3 +310,6 @@ Vérifié avant le lot : Qwen3.5-4B et 9B se chargent en Qwen3_5ForCausalLM sans
 
 ### 17:55Z : reprise par surveilleur
 RM-40 : llmft.cascade (choose_threshold, cascade_probs ; 2 tests), scripts/cascade_cv.py (seuil choisi hors pli, tolérance 1 point, essai de plomberie sur deux plis non enregistré), fiche hachée cascade-cinq-plis. Point d'honnêteté consigné : la cascade encodeur vers LoRA économise des appels GPU mais pas de la latence (5 x 191 ms CPU contre 117 ms GPU). À lancer après TERMINE25.
+
+### 17:56Z : reprise par surveilleur
+Rien à consigner (LoRA pli 2 en cours, fin vers 19:30Z) ; file sans GPU épuisée pour l'instant en dehors des mises à jour de documents, qui attendent les résultats pour ne pas gonfler les notes sans preuve.
