@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Variantes de recette du TF-IDF sur le chapitre (fiche 2026-10-04-tfidf-variantes-recette) : cinq plis par patient, EXPLORE.
-Usage : tfidf_variants.py {balanced|char|char-balanced} [--register]"""
+Usage : tfidf_variants.py {balanced|char|char-balanced} [--folds author] [--register]
+`--folds author` : plis de contrôle groupés par auteur (étalonnage conforme robuste au décalage d'auteur du service)."""
 import json
 import sys
 import time
@@ -22,7 +23,9 @@ GRID = [(c, None) for c in (10.0, 100.0, 1000.0)]
 def main() -> int:
     name = sys.argv[1]
     cw, analyzer, ngram = VARIANTS[name]
-    texts, y, folds, excluded, ids = p1_04_06_tfidf.load("chapter")
+    author = "--folds" in sys.argv and sys.argv[sys.argv.index("--folds") + 1] == "author"
+    texts, y, folds, excluded, ids = p1_04_06_tfidf.load("chapter", "control_folds_by_author" if author else "folds")
+    tag = f"{name}-author" if author else name
     labels = sorted(set(y))
     scored = [lab for lab in labels if lab != excluded]
     idx = np.array([labels.index(v) for v in y])
@@ -37,12 +40,12 @@ def main() -> int:
         oof[te] = tfidf.fit_predict_proba([texts[i] for i in tr], [y[i] for i in tr], [texts[i] for i in te], labels, cfg[0], cfg[1], cw, analyzer)
         print(k, chosen[-1], round(time.time() - t0), "s", flush=True)
     rep = evaluation.chapter_report(idx, oof, labels, excluded=(excluded,))
-    out = {"variant": name, "macro_f1": rep["macro_f1"], "accuracy": rep["accuracy"], "log_loss": rep["log_loss"], "chosen": chosen, "seconds": round(time.time() - t0)}
-    probs_path = ROOT / f"results/predictions/tfidf-variant-{name}.probs.npz"
+    out = {"variant": tag, "macro_f1": rep["macro_f1"], "accuracy": rep["accuracy"], "log_loss": rep["log_loss"], "chosen": chosen, "seconds": round(time.time() - t0)}
+    probs_path = ROOT / f"results/predictions/tfidf-variant-{tag}.probs.npz"
     np.savez_compressed(probs_path, ids=np.array(ids), probs=oof, labels=np.array(labels))
     print(json.dumps(out))
     if "--register" in sys.argv:
-        print(register_run(ROOT / "results/runs", {"kind": "train", "slug": f"tfidf-variant-{name}", "status": "ok", "summary": f"TF-IDF variante {name} : macro-F1 {rep['macro_f1']:.4f} sur cinq plis",
+        print(register_run(ROOT / "results/runs", {"kind": "train", "slug": f"tfidf-variant-{tag}", "status": "ok", "summary": f"TF-IDF variante {name} : macro-F1 {rep['macro_f1']:.4f} sur cinq plis",
               "params": {"variant": name, "class_weight": cw, "analyzer": analyzer, "ngram": list(ngram)}, "metrics": out}))
     return 0
 

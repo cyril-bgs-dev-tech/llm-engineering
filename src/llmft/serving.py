@@ -32,15 +32,15 @@ class Bundle:
 
 def train_bundle(
     texts: list[str], y: list[str], labels: list[str], c: float, ngram: tuple[int, int], oof_probs: NDArray[np.float64], oof_y: NDArray[np.int_],
-    alpha: float = 0.10, coverage_target: float = 0.70, meta: dict[str, Any] | None = None,
+    alpha: float = 0.10, coverage_target: float = 0.70, meta: dict[str, Any] | None = None, class_weight: str | None = None, analyzer: str = "word",
 ) -> Bundle:
-    vec, model = tfidf.fit_model(texts, y, c, ngram)
+    vec, model = tfidf.fit_model(texts, y, c, ngram, class_weight, analyzer)
     temperature = calibration.fit_temperature(oof_probs, oof_y)
     cal = calibration.apply_temperature(oof_probs, temperature)
     qhat = conformal.fit(cal, oof_y, alpha, "lac")
     conf = np.sort(cal.max(1))[::-1]
     threshold = float(conf[max(0, round(coverage_target * len(conf)) - 1)])
-    return Bundle(vec, model, list(labels), float(temperature), float(qhat), threshold, alpha, dict(meta or {}, c=c, ngram=list(ngram), coverage_target=coverage_target))
+    return Bundle(vec, model, list(labels), float(temperature), float(qhat), threshold, alpha, dict(meta or {}, c=c, ngram=list(ngram), coverage_target=coverage_target, class_weight=class_weight, analyzer=analyzer))
 
 
 def predict_probs(bundle: Bundle, texts: list[str]) -> NDArray[np.float64]:
