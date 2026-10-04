@@ -244,3 +244,6 @@ Harnais de développement : fonction de lancement partagée scripts/lib/lot.sh (
 
 ### 15:44Z : reprise par surveilleur
 Remarque de Cyril sur la gestion dynamique du contexte traitée : cascade par seuil de confiance (scripts/cascade_eval.py, run cascade-eval, RM-40 ajouté) et lecture des mesures existantes sur la longueur de contexte (RESULTATS). Plis 3 et 4 : 6 encodeurs sur 10.
+
+### 15:52Z : reprise par surveilleur
+Pli 3 de l'encodeur complet, pli 4 en cours (s2 à s4). Ensembles : module llmft.ensemble + scripts/build_fold_ensemble.py (testés ; reproduit exactement l'ensemble du pli 2 : écart 0,0) ; pli3-ensemble-encodeur5 construit. Lot suivant décidé (N23) : fiche hachée experiments/2026-10-04-llm-mur-plis-2-3-4.md (RM-28, LoRA mûr plis 2, 3, 4, environ 10,5 h) et scripts/run_llm_plis_2_3_4.sh (run_lot, attend TERMINE19) lancé en détaché. À faire dès TERMINE19 : build_fold_ensemble.py 4, compare_probs, v2_power_preview --register (CPU, nice, sans gêner le LoRA).
