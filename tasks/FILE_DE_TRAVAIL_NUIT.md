@@ -2,10 +2,10 @@
 
 Mise à jour le 04/10/2026 (audit GLM v4 intégré ; règle de sélection : information attendue par heure, bon marché d'abord).
 
-## Lots GPU en cours ou en file (voir les journaux de lot)
-1. Encodeur : saturation (15, 20 époques) et graines 1001 à 1004 (fiche `2026-10-04-encodeur-saturation-et-graines`).
-2. Candidat de déploiement : CamemBERT-bio 10 époques avec poids sauvegardés, puis mesure INT8 en CPU.
-3. Qwen3.5-4B à 10 époques (fiche `2026-10-04-llm-recette-mure-qwen4b`, environ 4,2 h).
+## Lots GPU en cours ou en file (état de 03h40Z)
+1. Qwen3.5-4B à 10 époques sur GPU libre (fiche v2, journal `llm_mur2.log`, fin vers 07h45Z). **Aucun calcul CPU ou GPU lourd pendant ce run.**
+2. Ensuite (dans l'ordre, un lot à la fois) : (a) si le 4B mûr rattrape l'encodeur, ajouter ses probabilités à l'ensemble et mesurer ; (b) synthétique ciblé (fiche écrite, code de lignée prêt, génération à mesurer au pré-vol) ; (c) robustesse de l'encodeur et du 4B par inférence (perturbations) ; (d) cinq encodeurs au pli 2 pour une troisième confirmation.
+Terminés cette nuit : criblage, grille du 4B, encodeur (recette, fenêtres, saturation, graines, pli 1), leave-one-author-out, partitions répétées, RM-17 sur l'encodeur, service TF-IDF, INT8 (échec), rapport préliminaire.
 
 ## À consigner à la fin de chaque lot
 - Résultats dans `RESULTATS.md` (avec `run_id`), comparaisons appariées (`pair_preds.py`, `compare_probs.py`), probabilités conservées, incertitude (`q5_uncertainty.py`), robustesse sur adaptateur ou poids sauvegardés.
