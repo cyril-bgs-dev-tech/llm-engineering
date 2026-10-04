@@ -385,3 +385,6 @@ Brouillon de la fiche de gel RM-50 : candidats A à G, règle de non-infériorit
 
 ### 22:45Z : audit GLM v6 reçu et traité (Cyril : « GLM a déjà répondu »)
 audit_GLM_v6.md lu en entier. Mesures le jour même (fiche hachée 2026-10-05-audit-glm-v6-mesures-cpu, 4 runs glm-v6-*) : blocs d'auteurs : ensemble moins TF-IDF +5,20 [+3,84 ; +7,23], largeur 3,39 (95 %) mais 4,24 à 98,33 % : règle v2 valable pour une question primaire unique (citations rectifiées partout) ; empilement appris réfuté (S1 +0,41 non résolu, S2 −5,98) ; variance : pli 0,9, graine 0, reste 2,32 ; par pool : codage CIM-10 0,918 contre général 0,844. Erreur de notre cahier corrigée : « pool » = sous-ensembles d'usage, pas une piscine hors distribution (leviers 10 et 12 écartés). Triage des 30 dans docs/AUDIT_GLM_v6_TRIAGE.md ; RM-53 à RM-55 ajoutées, RM-29 et RM-43 précisées ; 110 ★ sur 190.
+
+### 22:48Z : présentation mise à jour (demande de Cyril)
+Audit GLM v6 traité, règle de puissance rectifiée, mélange 50/50 quasi optimal, nouvelles erreurs vues et corrigées, chaîne de dominos et 190 micro-tâches, plafond atteignable 9,2 à 9,4 ; compteurs 352 tests, 190 runs, 42 fiches ; PREUVES lignes 34 et 35 ; notes inchangées (6,9).
