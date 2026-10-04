@@ -27,4 +27,5 @@ Mise à jour le 04/10/2026 (audit GLM v4 intégré ; règle de sélection : info
 
 ## Après libération du GPU (sans décision humaine)
 - Robustesse du 4B et de l'encodeur par inférence (perturbations) ; latence de l'encodeur (p50, p95) ; export INT8 mesuré.
+- Confirmer l'ensemble encodeur + TF-IDF sur un second pli (pli 1, cinq graines d'encodeur, ~25 minutes GPU, fiche à écrire d'abord) ; puis ajouter le 4B mûr à l'ensemble s'il rattrape.
 - Si le 4B à 10 époques rattrape l'encodeur : une fiche de test de taille à recette mûre (coût estimé environ 20 h pour le 31B : décision de Cyril, jamais lancée seule).
