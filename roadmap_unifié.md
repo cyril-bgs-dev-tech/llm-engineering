@@ -353,7 +353,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P3-02 | Élève distillé | |
 | P3-07 | Entraîner les 20 modèles gelés ; l'évaluation est celle de RM-20 (ADR-010) | Pas de verdict avant RM-20 |
 | RM-37 | **Acceptation du protocole v2 par Cyril** | Avant tout run du second cycle et avant l'ouverture |
-| RM-50 | **Gel du système final et prédiction chiffrée du test scellé** | Règle de sélection écrite avant lecture ; rien ne change après |
+| RM-50 | **Gel du système final et prédiction chiffrée du test scellé** | Règle de sélection écrite avant lecture ; rien ne change après ; brouillon : `docs/BROUILLON_GEL_SYSTEME_FINAL.md` |
 | RM-20 | Ouverture unique du test scellé | Un seul accès journalisé |
 | RM-21 | **Porte go/no-go après le verdict de distillation** | |
 | G-P3 | Scorecard G-P3 | Contre-lecture adversariale des verdicts exigée par le tableau « qui prouve quoi » |

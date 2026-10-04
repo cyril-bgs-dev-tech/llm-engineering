@@ -379,3 +379,6 @@ docs/CHAINE_DE_DOMINOS.md : critères vérifiables de 10/10 par composante, plaf
 
 ### 22:31Z : chaîne de dominos intégrée à la feuille de route (demande de Cyril)
 roadmap_unifié.md : section 4.1 (chaîne critique, douze dominos mappés aux tâches, étapes et pièces de preuve ; correspondance Q1 à Q12 et huit composantes ; règles d'ordonnancement) ; section 6 : règles de bifurcation écrites d'avance (distillation, LoRA à cinq plis, synthétique, benchmark public, débit d'entraînement) ; RM-50 (gel du système final, avant RM-20), RM-51 (lecture confirmatoire de l'incertitude), RM-52 (rubrique de notation, faite) ; RM-20 dépend de RM-50 ; R9 : porte de sortie complétée ; 110 ★ sur 187 ; checkers verts ; todo exporté ; file de travail mise à jour. Domino en cours : 0 (LoRA pli 3).
+
+### 22:33Z : reprise par surveilleur (domino 0 en cours ; préparation du domino 5)
+Brouillon de la fiche de gel RM-50 : candidats A à G, règle de non-infériorité puis coût, éléments figés, prédiction chiffrée du test scellé à remplir, conditions d'arrêt (docs/BROUILLON_GEL_SYSTEME_FINAL.md) ; non haché, en attente de RM-37 (Cyril). LoRA pli 3 en cours (fin vers 23:35Z).
