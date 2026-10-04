@@ -391,3 +391,6 @@ Audit GLM v6 traité, règle de puissance rectifiée, mélange 50/50 quasi optim
 
 ### 22:52Z : audit des erreurs confiantes (P2-06, pilote) et sensibilité XVIII et XXI
 Fiche hachée 2026-10-05-audit-erreurs-confiantes (pilote de 10 cas déclaré, 20 cas préenregistrés). Résultat sur 30 cas : étiquette contestable 27 %, rivale défendable 67 %, erreur du modèle 7 % : ambiguïté de codage établie (E+R 95 % sur les 20 préenregistrés), bruit d'étiquette non établi, erreur du modèle non dominante. Sensibilité : macro-F1 de l'ensemble 0,7721, 0,7917 sans XVIII, 0,8193 sans XVIII ni XXI ; classement des systèmes inchangé (+5,20, +4,76, +4,50). Relecteur : l'assistante, à contre-expertiser par un codeur avant citation externe.
+
+### 23:01Z : reprise par surveilleur (domino 3 préparé)
+RM-41 (partie encodeur) et RM-55 préparés sans toucher aux fichiers du lot LoRA : llmft.train_v2 (lissage, EMA, curriculum, bf16 ; test d'équivalence avec la boucle gelée sans option, 5 tests), scripts/p1_encoder_v2.py (fumée CPU réussie), fiche hachée 2026-10-05-encodeur-recette-v2 (quatre facteurs un à un, 60 runs, critères et prédictions), lot run_encodeur_v2.sh lancé en détaché (attend TERMINE24). Pli 3 du LoRA en cours (fin vers 23:35Z).

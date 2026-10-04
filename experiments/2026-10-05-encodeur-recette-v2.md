@@ -1,0 +1,12 @@
+# Fiche préenregistrée : recette d'encodeur v2, quatre facteurs un à un (RM-41 partie encodeur, RM-55 ; EXPLORE, cinq plis)
+
+Écrite avant les runs. Suite des audits GLM v4 et v6 (leviers lissage d'étiquettes, moyenne de poids, curriculum) et de la tâche RM-41 (débit d'entraînement). Code : `llmft.train_v2` (équivalent à la boucle gelée sans option, test dédié) et `scripts/p1_encoder_v2.py`. Aucune modification des fichiers du lot LoRA.
+
+- **question** : parmi (A) bf16 par autocast, (B) lissage d'étiquettes 0,1, (C) moyenne exponentielle des poids (décroissance 0,99, environ 900 pas d'optimisation), (D) curriculum pondéré en 1/fréquence de classe pendant les deux premières époques, lesquels changent la macro-F1 de l'encodeur de façon résolue, et (pour A) à quelle vitesse et à quelle énergie ?
+- **référence** : encodeur CamemBERT-bio fp32, 10 époques, taux 1e-4, 508 tokens, graines 1000 à 1002, mêmes plis ; prédictions déjà au registre (`camembert-recette-lr1e-4-ep10`, `camembert-graine-ep10-s1`, `camembert-graine-ep10-s2` pour le pli 0 ; `camembert-pliK-ep10-s0` à `s2` pour les plis 1 à 4), moyennées en probabilités.
+- **variantes** : un seul facteur par famille de runs ; slugs `enc2-bf16`, `enc2-ls01`, `enc2-ema99`, `enc2-curr2` suivis de `-pliK-sS` ; trois graines (1000 à 1002) par pli ; 15 runs par facteur, 60 en tout ; aucune combinaison de facteurs avant le résultat individuel.
+- **jeux et découpage** : développement, plis 0 à 4 ; test scellé jamais lu.
+- **métrique principale** : macro-F1 regroupée des cinq plis de la moyenne des trois graines ; différence avec la référence par bootstrap de blocs d'auteurs (`llmft.cluster_bootstrap`, IC 95 %) ; pour (A) : secondes d'entraînement par run et énergie (Wh) au registre.
+- **critère de décision** : facteurs B, C, D : « gain confirmé » si la borne basse est > 0 et la différence ≥ δ = 2,0 ; « sans gain » si l'IC tient dans ±δ ; sinon « non résolu » ; facteur A : « équivalent » si l'IC tient dans ±δ (alors la vitesse mesurée peut s'utiliser) ; « dégradé » si la borne haute est sous −δ ; sinon « non résolu » ; pour A, la vitesse est rapportée telle quelle.
+- **budget** : 60 runs de 3 à 5 minutes (environ 4 h de GPU), GPU libre, après la distillation (TERMINE24) ; codes 134 et 139 seuls relancés (N25).
+- **prédiction** : (A) équivalent (probabilité 0,8), durée par run réduite d'au moins 20 % (0,6) ; (B) sans gain (0,6), gain confirmé (0,1) ; (C) sans gain (0,6), moins de variance entre graines (0,5) ; (D) sans gain (0,6), dégradé (0,2).
