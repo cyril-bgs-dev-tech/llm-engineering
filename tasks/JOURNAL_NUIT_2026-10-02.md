@@ -397,3 +397,6 @@ RM-41 (partie encodeur) et RM-55 préparés sans toucher aux fichiers du lot LoR
 
 ### 23:11Z : reprise par surveilleur
 Lecture complémentaire des 35 erreurs confiantes restantes (indicatif, hors fiche) : E 29 %, R 71 %, M 0 ; sur les 65 : E 28 %, R 69 %, M 3 % ; consigné dans RESULTATS et dans le triage. LoRA pli 3 en cours (fin vers 23:35Z).
+
+### 23:32Z : pli 3 du LoRA consigné (domino 0 aux trois quarts)
+Pli 3 fini à 23:24Z : macro-F1 0,7676 ; +6,10 [+2,15 ; +10,39] contre TF-IDF (résolu, Holm 0,0008) ; +2,45 [−1,90 ; +7,12] contre l'encodeur (non résolu) ; ECE 0,118 vers 0,043 ; conforme 90 % : 0,900 de couverture, 1,21 classe. Pli 4 démarré à 23:24Z, fin vers 03:00Z. Quatre plis LoRA : 0,7795, 0,7415, 0,7785, 0,7676.
