@@ -1,0 +1,67 @@
+{
+  "created_at": "2026-10-04T00:17:21Z",
+  "kind": "train",
+  "metrics": {
+    "accuracy": 0.809537088678193,
+    "chosen": [
+      {
+        "C": 1000.0,
+        "fold": 0,
+        "ngram": [
+          3,
+          5
+        ]
+      },
+      {
+        "C": 1000.0,
+        "fold": 1,
+        "ngram": [
+          3,
+          5
+        ]
+      },
+      {
+        "C": 1000.0,
+        "fold": 2,
+        "ngram": [
+          3,
+          5
+        ]
+      },
+      {
+        "C": 1000.0,
+        "fold": 3,
+        "ngram": [
+          3,
+          5
+        ]
+      },
+      {
+        "C": 1000.0,
+        "fold": 4,
+        "ngram": [
+          3,
+          5
+        ]
+      }
+    ],
+    "log_loss": 0.6662640311420076,
+    "macro_f1": 0.6873622365892297,
+    "seconds": 774,
+    "variant": "char"
+  },
+  "params": {
+    "analyzer": "char_wb",
+    "class_weight": null,
+    "ngram": [
+      3,
+      5
+    ],
+    "variant": "char"
+  },
+  "run_id": "20261004-001721-tfidf-variant-char",
+  "schema": "mini-1",
+  "slug": "tfidf-variant-char",
+  "status": "ok",
+  "summary": "TF-IDF variante char : macro-F1 0.6874 sur cinq plis"
+}
