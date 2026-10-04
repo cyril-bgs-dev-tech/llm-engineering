@@ -357,3 +357,9 @@ Les écarts du LoRA restent dans le bruit de mesure d'un pli (écart-type bootst
 | LoRA mûr (une graine, deux plis) | +6,4 | +5,3 | n/a | +5,9 |
 
 Le gain de l'ensemble sur l'encodeur moyenné seul : +3,0 ; −0,2 ; +3,0 (moyenne +2,0). **L'ensemble encodeur + TF-IDF est le système bon marché le plus constant : son avantage de 4,3 à 6,2 points sur le meilleur TF-IDF est résolu à chacun des trois plis**, ce que l'encodeur moyenné seul n'obtient pas (non résolu aux plis 0 et 2). Coût : 20 minutes de GPU par pli pour cinq encodeurs plus 13 minutes de CPU pour le TF-IDF. Prédictions de la fiche : l'encodeur moyenné dépasse le TF-IDF au pli 2 (0,8) : réalisé en valeur ; IC entièrement positif (0,45) : non.
+
+## Plafond d'ambiguïté (top-k) et étalonnage conditionnel par famille (brainstorm du 04/10 ; pli 0, 717 patients, EXPLORE ; calculs de contrôle sans run enregistré, à rejouer par script avant toute citation externe)
+
+Exactitude top-1, top-2 et top-3 : LoRA mûr 0,858 / 0,950 / 0,975 ; encodeur moyenné 0,835 / 0,936 / 0,968 ; ensemble LoRA + encodeur + TF-IDF 0,870 / 0,958 / 0,983 ; TF-IDF 0,823 / 0,916 / 0,961. **Le bon chapitre est dans les deux premiers dans 95 % des cas** : la confusion est surtout entre deux diagnostics rivaux.
+
+Étalonnage conforme LAC 90 % du LoRA mûr, deux moitiés du pli : **marginal** couverture 0,909, 1,15 classe par ensemble, mais par famille : symptômes et lésions 0,65, nerveux 0,77, endocrinien et mental 0,80 ; **conditionnel par famille (Mondrian)** couverture 0,891, 1,59 classe par ensemble, par famille : symptômes et lésions 0,87, nerveux 0,86, endocrinien et mental 0,80, circulatoire et respiratoire 0,89. Le conditionnement par famille corrige les familles sous-couvertes pour un demi-point de taille d'ensemble en plus.
