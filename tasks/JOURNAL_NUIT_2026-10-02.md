@@ -265,3 +265,6 @@ RM-33 sur cinq plis : fichiers poolés cinq-plis-ensemble-* (build_fold_ensemble
 
 ### 16:31Z : reprise par surveilleur
 Table d'abstention à cinq plis (abstention_table.py --all --register) : ensemble 0,948 à 70 % de couverture contre 0,925 pour le TF-IDF. LoRA pli 2 en cours (GPU 94 %).
+
+### 16:35Z : reprise par surveilleur
+Carte de modèle v3 mise à jour (cinq plis, incertitude, limites) ; page wiki etat-par-composante réécrite à l'état du 04/10 (index régénéré). LoRA pli 2 en cours.
