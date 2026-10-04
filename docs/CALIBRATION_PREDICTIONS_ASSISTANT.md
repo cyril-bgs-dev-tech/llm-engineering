@@ -1,6 +1,6 @@
 # Calibration des prédictions préenregistrées de l'assistant (audit GLM v4, B-c5)
 
-Les prédictions ont été écrites avant les résultats dans les fiches hachées (`experiments/`) ; l'issue est 1 si la prédiction s'est réalisée, 0 sinon. Liste limitée aux prédictions chiffrées d'une probabilité que j'ai pu retrouver (les prédictions de la première fiche TF-IDF, sans probabilité explicite, sont exclues). Mise à jour du 04/10 à 03h35Z.
+Les prédictions ont été écrites avant les résultats dans les fiches hachées (`experiments/`) ; l'issue est 1 si la prédiction s'est réalisée, 0 sinon. Liste limitée aux prédictions chiffrées d'une probabilité que j'ai pu retrouver (les prédictions de la première fiche TF-IDF, sans probabilité explicite, sont exclues). Mise à jour du 04/10 à 07h20Z.
 
 | Fiche | Prédiction | Probabilité | Issue | Brier |
 |---|---|---|---|---|
@@ -38,13 +38,18 @@ Les prédictions ont été écrites avant les résultats dans les fiches hachée
 | Confirmation pli 1 | IC de l'ensemble entièrement positif | 0.50 | 1 | 0.250 |
 | Confirmation pli 1 | Écart au pli 1 inférieur à celui du pli 0 | 0.65 | 0 | 0.423 |
 | Confirmation pli 1 | L'ensemble dépasse l'encodeur moyenné au pli 1 | 0.75 | 0 | 0.562 |
+| LoRA 10 époques | Macro-F1 entre 0,65 et 0,80 | 0.60 | 1 | 0.160 |
+| LoRA 10 époques | Au moins égal à l'encodeur à 10 époques (IC contenant 0 ou positif) | 0.35 | 1 | 0.423 |
+| LoRA 10 époques | Supérieur au TF-IDF du pli 0, IC entièrement positif | 0.45 | 1 | 0.303 |
+| LoRA 10 époques | Un des chapitres XII, XXI, XXII quitte zéro | 0.85 | 1 | 0.023 |
+| LoRA 10 époques | L'arrêt anticipé ne se déclenche pas sur GPU libre | 0.80 | 1 | 0.040 |
 
-**Score de Brier moyen : 0.231** sur 34 prédictions (0,25 = toujours 0,5 ; 0 = parfait). Probabilité moyenne annoncée 0.59 contre fréquence réalisée 0.65.
+**Score de Brier moyen : 0.225** sur 39 prédictions (0,25 = toujours 0,5 ; 0 = parfait). Probabilité moyenne annoncée 0.59 contre fréquence réalisée 0.69.
 
 | Tranche de probabilité | n | probabilité moyenne | fréquence réalisée |
 |---|---|---|---|
-| p≥0,7 | 9 | 0.75 | 0.78 |
-| 0,5 à 0,65 | 21 | 0.57 | 0.62 |
-| p<0,5 | 4 | 0.30 | 0.50 |
+| p≥0,7 | 11 | 0.76 | 0.82 |
+| 0,5 à 0,65 | 22 | 0.57 | 0.64 |
+| p<0,5 | 6 | 0.33 | 0.67 |
 
-Lecture : le Brier proche de 0,25 dit que mes prédictions discriminent peu entre ce qui se réalise et ce qui échoue ; la calibration moyenne est correcte. Les erreurs les plus coûteuses portaient sur « le LLM bat le TF-IDF » et « l'encodeur ne bat pas le TF-IDF » (même cause : recette gelée). Méthode : chaque prédiction reçoit une probabilité avant le run ; ce tableau est mis à jour à chaque lot.
+Lecture : le Brier proche de 0,25 dit que mes prédictions discriminent peu ; la calibration moyenne est correcte et les prédictions récentes (recettes mûres) sont meilleures que celles de la première nuit. Méthode : chaque prédiction reçoit une probabilité avant le run ; ce tableau est mis à jour à chaque lot.
