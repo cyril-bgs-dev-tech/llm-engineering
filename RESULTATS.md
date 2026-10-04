@@ -197,3 +197,17 @@ Fiabilité de l'incertitude de CamemBERT-bio à 10 époques (`q5-uncertainty-cam
 | **CamemBERT-bio, 6 époques** | 0,5510 | **0,6889 (τ = 1)** | **0,6889 (+13,8)** |
 
 La conjecture de GLM (+2 à +8 points sur le 4B) **n'est pas soutenue** : la correction n'apporte que +0,65 au 4B à 2 époques et rien à la version pondérée. En revanche, elle récupère **+13,8 points** pour l'encodeur à 6 époques (0,551 → 0,689) et c'est le même mécanisme que le saut de 6 à 10 époques : un modèle qui n'a pas fini d'apprendre les chapitres rares les sous-prédit, et la correction de prévalence (gratuite) en récupère une partie ; à 10 époques le modèle a appris et la correction ne sert presque plus (+1,0). Lecture : le déficit des petits chapitres vient d'un sous-apprentissage de la queue de distribution, que l'entraînement plus long ou la correction de priorité peuvent combler ; le 4B à 2 époques n'en bénéficie pas parce que son déficit est plus général (0,59 contre 0,77).
+
+## Saturation de la durée, rejeu et quantification de l'encodeur (fiches `2026-10-04-encodeur-saturation-et-graines` et `2026-10-04-encodeur-recette-mure`, EXPLORE, pli 0, 1e-4, 508 tokens)
+
+| Run | graine | macro-F1 | exactitude | ECE | run_id |
+|---|---|---|---|---|---|
+| 10 époques (premier) | 1000 | 0,7714 | 0,833 | 0,107 | `camembert-recette-lr1e-4-ep10` |
+| 10 époques (rejeu pour sauvegarde du modèle) | 1000 | 0,7362 | 0,830 | 0,111 | `camembert-deploy-ep10-lr1e-4` |
+| 10 époques | 1001 | 0,7079 | 0,813 | 0,110 | `camembert-graine-ep10-s1` |
+| 15 époques | 1000 | 0,7425 | 0,824 | 0,140 | `camembert-saturation-ep15` |
+| 20 époques | 1000 | 0,7384 | 0,834 | 0,140 | `camembert-saturation-ep20` |
+
+**Le 0,7714 était un tirage favorable** : à graine égale, le rejeu fait 0,7362 (−3,5 points, non-déterminisme GPU) et la graine 1001 donne 0,7079. Les écarts entre runs atteignent 6 points, bien plus que le bruit d'un point mesuré sur le 4B : les chapitres rares, appris ou non selon le tirage, rendent la macro-F1 de l'encodeur très variable. La durée sature : 10, 15 et 20 époques sont équivalentes (0,74 environ). Lecture honnête : l'encodeur à 10 époques et plus vaut environ 0,71 à 0,77 contre 0,6971 pour le TF-IDF du pli 0 et 0,72 pour sa meilleure recette ; **l'avantage de l'encodeur existe en moyenne probable mais n'est pas établi par un tirage** ; les cinq graines tranchent. Prédictions de la fiche : 15 époques ≥ 10 époques (0,55) : faux de justesse selon la graine ; saturation avant 20 époques (0,65) : vrai.
+
+**Quantification INT8 dynamique de l'encodeur** (`quantization-camembert-deploy-ep10-lr1e-4`, PyTorch `quantize_dynamic` sur toutes les couches linéaires, CPU, 8 threads, pli 0) : flottant 32 bits macro-F1 0,7362, latence p50 190,8 ms et p95 210,0 ms, 443 Mo ; **INT8 : macro-F1 0,3356, exactitude 0,527 (effondrement)**, latence p50 118,4 ms, p95 137,4 ms, 25 Mo. La quantification dynamique naïve détruit la qualité (probablement les couches d'embeddings et de normalisation, ou le comportement sur-confiant de ce modèle) : **non utilisable telle quelle** ; une quantification statique avec étalonnage ou la quantification sélective des seules couches de la partie dense resterait à tester. Le TF-IDF déployable fait p50 1,9 ms : 100 fois plus rapide que l'encodeur en flottant.
