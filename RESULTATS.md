@@ -445,6 +445,6 @@ Un modèle bon marché répond quand sa probabilité maximale dépasse τ ; sino
 
 ### Gestion dynamique du contexte : ce que les mesures existantes disent déjà (lecture, sans nouveau run)
 
-- **Gain de qualité attendu faible** : seuls 9 patients sur 3 586 dépassent la fenêtre du modèle (aucun dans les chapitres rares) ; l'encodeur lisant tout le dossier par fenêtres de 510 tokens ne s'améliore pas (gain nul à 6 époques, perte à 10 époques, `encodeur-fenetres`).
+- **Gain de qualité attendu faible** : seuls 9 patients sur 3 586 dépassent la fenêtre du modèle (aucun dans les chapitres rares) ; l'encodeur lisant tout le dossier par fenêtres de 510 tokens ne s'améliore pas (gain nul à 6 époques, perte à 10 époques, `camembert-fenetres-ep6-minus-ep6-fold0`, `camembert-fenetres-ep10-minus-ep10-fold0`).
 - **Gain d'efficience possible, non mesuré** : regroupement des dossiers par longueur (bucketing) et troncature adaptative réduisent le calcul inutile à l'entraînement et au service ; ils changent le budget de la comparaison, donc à tester sur un lot jouet avant tout run préenregistré (déjà noté en C7-A5 de l'audit v3).
 - **Piste nouvelle plus rentable** : l'allocation dynamique du calcul entre modèles (cascade, section précédente), qui économise 50 à 80 % des appels au LoRA sans perte de macro-F1 sur les deux plis mesurés. Un test de longueur de contexte du LoRA (P1-15, 512 contre 1 024 tokens) reste dans le chemin complet ; il ne sera lancé que si la cascade ne suffit pas à la cible d'efficience.
