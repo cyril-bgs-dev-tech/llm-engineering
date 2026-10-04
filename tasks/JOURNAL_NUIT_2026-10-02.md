@@ -183,3 +183,6 @@ Référence des commandes générée (docs/COMMANDES.md, 61 scripts). Témoin d'
 
 ### 04:00Z : reprise par surveilleur
 Cahier d'audit GLM v5 préparé (docs/BRIEF_GLM_v5_audit_second_cycle.md ; non envoyé ; la ligne du 4B à 10 époques sera complétée au résultat). 4B en cours.
+
+### 04:04Z : reprise par surveilleur
+Page wiki des conclusions corrigées ajoutée (wiki 19 pages, vérifications vertes). 4B à 10 époques en cours.
