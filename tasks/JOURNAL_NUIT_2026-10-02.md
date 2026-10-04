@@ -162,3 +162,6 @@ Partitions répétées terminées : écart patient moins auteur 5,06 points en m
 
 ### 02:59Z : reprise par surveilleur
 LOAO terminé : 0,6185 ; signature d'auteur pure environ 2 points (écart des plis groupés surtout dû au rétrécissement de l'entraînement) ; ADR-013 et triage mis à jour. Reste en file : 4B à 10 époques (fin vers 06h30Z), puis synthétique ciblé.
+
+### 03:03Z : reprise par surveilleur
+Ensemble encodeur (5 graines) + TF-IDF : 0,7626 au pli 0, +4,5 points résolu contre le meilleur TF-IDF ; confirmation au pli 1 lancée (fiche hachée, poids 0,5 fixé avant, cinq encodeurs en parallèle du 4B). Choix : confirmer avant d'annoncer.
