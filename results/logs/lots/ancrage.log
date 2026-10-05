@@ -1,0 +1,12 @@
+2026-10-05T02:58:11Z DEBUT bench-lora-serving-llm-mur2-qwen3-5-4b-ep10-lr1e-4 essai=1
+2026-10-05T03:00:49Z FIN bench-lora-serving-llm-mur2-qwen3-5-4b-ep10-lr1e-4 essai=1 code=1
+2026-10-05T03:00:49Z DEBUT bench-lora-serving-llm-mur2-qwen3-5-4b-ep10-lr1e-4 essai=2
+2026-10-05T03:03:18Z FIN bench-lora-serving-llm-mur2-qwen3-5-4b-ep10-lr1e-4 essai=2 code=1
+2026-10-05T03:03:18Z DEBUT bench-lora-serving-llm-mur2-qwen3-5-4b-ep10-lr1e-4 essai=3
+2026-10-05T03:05:34Z FIN bench-lora-serving-llm-mur2-qwen3-5-4b-ep10-lr1e-4 essai=3 code=1
+2026-10-05T03:05:34Z ECHEC bench-lora-serving-llm-mur2-qwen3-5-4b-ep10-lr1e-4 après 3 essais, dernier code=1 (défaut à corriger, pas une panne aléatoire)
+2026-10-05T03:05:34Z DEBUT zero-shot-qwen3-5-4b-pli0 essai=1
+2026-10-05T03:09:54Z FIN zero-shot-qwen3-5-4b-pli0 essai=1 code=0
+2026-10-05T03:09:54Z DEBUT zero-shot-qwen3-5-9b-pli0 essai=1
+2026-10-05T03:17:53Z FIN zero-shot-qwen3-5-9b-pli0 essai=1 code=0
+2026-10-05T03:17:53Z TERMINE22
