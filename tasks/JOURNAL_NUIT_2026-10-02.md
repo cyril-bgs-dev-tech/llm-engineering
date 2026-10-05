@@ -439,3 +439,6 @@ Encodeur sur GPU : p50 6,0 ms (fp32), 4,5 ms (bf16) contre 191 ms sur processeur
 
 ### 03:31Z : reprise par surveilleur
 Distillation en cours (2 runs sur 30 faits, environ 5 minutes chacun, fin vers 05:50Z).
+
+### 03:53Z : reprise par surveilleur (distillation : lecture partielle)
+Analyse de la distillation préparée (scripts/distill_analysis.py, lot post_distillation.sh détaché, TERMINE30). Lecture partielle sur les plis 0 et 1 (LoRA professeur) : élève 0,7125 contre encodeur non distillé 0,7603 : −4,78 [−8,06 ; −1,67] en macro-F1, mais exactitude 0,862 contre 0,852 et log loss 0,547 contre 0,598 ; après correction de priorité l'écart tombe à −0,7 (0,7627 contre 0,7693) : la distillation telle que préenregistrée (alpha 0,5, T 2) transfère la calibration et l'exactitude mais déplace la décision vers les classes majoritaires. Verdict attendu à la fin des 30 runs ; piste de suite : professeur corrigé de la priorité (nouvelle fiche, non lancée).

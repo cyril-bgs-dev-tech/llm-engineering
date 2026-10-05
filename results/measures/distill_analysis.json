@@ -1,0 +1,38 @@
+{
+ "lora": {
+  "plis": [
+   0,
+   1
+  ],
+  "n": 1435,
+  "macro_f1_distille": 0.7125,
+  "macro_f1_non_distille": 0.7603,
+  "macro_f1_professeur": 0.7629,
+  "distille_moins_non_distille": [
+   -4.78,
+   -8.06,
+   -1.67
+  ],
+  "distille_moins_professeur": [
+   -5.04,
+   -8.96,
+   -1.18
+  ],
+  "verdict_fiche": "non résolu",
+  "exactitude": {
+   "distille": 0.862,
+   "non_distille": 0.8516,
+   "professeur": 0.8564
+  },
+  "log_loss": {
+   "distille": 0.5473,
+   "non_distille": 0.5977,
+   "professeur": 0.8151
+  },
+  "macro_f1_apres_correction_de_priorite": {
+   "distille": 0.7627,
+   "non_distille": 0.7693,
+   "professeur": 0.7798
+  }
+ }
+}
