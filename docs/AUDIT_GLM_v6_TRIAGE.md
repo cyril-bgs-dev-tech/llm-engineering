@@ -24,14 +24,14 @@ Source : `audit_GLM_v6.md` (05/10/2026, 30 leviers classés, 12 conclusions atta
 | # | Levier | Décision | Où |
 |---|---|---|---|
 | 1 | Bootstrap par blocs d'auteurs | **fait** | run `glm-v6-blocs-auteurs` ; protocole v2 : règle par blocs, question primaire unique à 95 % (RM-29) |
-| 2 | Cascade validée hors pli | planifié | RM-40, fiche `cascade-cinq-plis`, `cascade_cv.py` |
+| 2 | Cascade validée hors pli | **fait** : encodeur puis LoRA non-inférieur (+0,12 [−1,74 ; +1,90]), 93 % sans LoRA ; TF-IDF puis LoRA non-inférieur non atteint | RM-40, `cascade_cv.py` |
 | 3 | Audit des 65 erreurs confiantes | **fait sur les 65 cas** (30 préenregistrés : E 27 %, R 67 %, M 7 % ; 65 : E 28 %, R 69 %, M 3 % : ambiguïté de codage établie, bruit d'étiquette non établi) ; reste la contre-expertise par un codeur | P2-06, fiche `2026-10-05-audit-erreurs-confiantes`, run `sensibilite-xviii-xxi` |
 | 4 | Empilement appris par chapitre | **fait, réfuté** | run `glm-v6-empilement` |
 | 5 | Mondrian par défaut | fait à cinq plis ; à rejouer avec le LoRA | RM-33, post-traitement du LoRA |
 | 6 | Zéro-shot 4B et 9B | en file | RM-30 |
 | 7 | Figer la référence-2 | inclus dans le gel | RM-50 (candidat D) |
 | 8 | Synthétique ciblé | planifié | P2-10, domino 4 |
-| 9 | LoRA aux plis 3 et 4 et comparaison regroupée | en cours | RM-28 |
+| 9 | LoRA aux plis 3 et 4 et comparaison regroupée | **fait** : LoRA regroupé 0,7673, +4,71 contre le TF-IDF, +1,45 non résolu contre l'encodeur, −0,49 contre l'ensemble | RM-28 |
 | 10 | Piscine hors distribution | **écarté** (champ mal décrit) ; remplacé par la mesure par sous-ensemble, faite | run `glm-v6-par-pool` |
 | 11 | Décomposition de variance | **fait** | run `glm-v6-variance` |
 | 12 | Pseudo-étiquettes sur la piscine | **écarté** (pas de piscine) | : |

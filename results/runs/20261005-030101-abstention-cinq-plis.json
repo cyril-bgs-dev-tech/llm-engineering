@@ -1,0 +1,61 @@
+{
+  "created_at": "2026-10-05T03:01:01Z",
+  "kind": "measure",
+  "metrics": {
+    "llm": {
+      "0.5": {
+        "exactitude": 0.977,
+        "n_traites": 1793,
+        "taux_de_renvoi": 0.5,
+        "wilson95": [
+          0.969,
+          0.983
+        ]
+      },
+      "0.7": {
+        "exactitude": 0.953,
+        "n_traites": 2510,
+        "taux_de_renvoi": 0.3,
+        "wilson95": [
+          0.944,
+          0.96
+        ]
+      },
+      "0.8": {
+        "exactitude": 0.932,
+        "n_traites": 2869,
+        "taux_de_renvoi": 0.2,
+        "wilson95": [
+          0.922,
+          0.94
+        ]
+      },
+      "0.9": {
+        "exactitude": 0.896,
+        "n_traites": 3227,
+        "taux_de_renvoi": 0.1,
+        "wilson95": [
+          0.885,
+          0.906
+        ]
+      },
+      "1.0": {
+        "exactitude": 0.851,
+        "n_traites": 3586,
+        "taux_de_renvoi": 0.0,
+        "wilson95": [
+          0.839,
+          0.863
+        ]
+      }
+    }
+  },
+  "params": {
+    "all": true
+  },
+  "run_id": "20261005-030101-abstention-cinq-plis",
+  "schema": "mini-1",
+  "slug": "abstention-cinq-plis",
+  "status": "ok",
+  "summary": "Table d'abstention (exactitude conditionnelle à la couverture, Wilson 95 %)"
+}

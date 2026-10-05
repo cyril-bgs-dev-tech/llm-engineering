@@ -254,7 +254,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P1-25 (doc) : Page d'analyse V0 dans le wiki et premier `RESULTATS.md` (positifs et négatifs)
   - Preuve de fin : Chaque chiffre cite un run_id ; `wiki-lint` vert
   - Skills : wiki-ingest, claim-gate ; dépendances : P1-23, RM-14
-- [ ] RM-28 (GPU) : LoRA mûr aux plis 2, 3 et 4 (une graine chacun) : évaluation du candidat sur les cinq plis et professeur strictement hors pli pour la distillation (environ 10,5 h de GPU)
+- [x] RM-28 (GPU) : LoRA mûr aux plis 2, 3 et 4 (une graine chacun) : évaluation du candidat sur les cinq plis et professeur strictement hors pli pour la distillation (environ 10,5 h de GPU)
   - Preuve de fin : Probabilités hors pli des 3 586 patients ; manifeste ; contrôle strictement hors pli
   - Skills : lora-classifier-recipe, leakage-guard, vram-preflight ; dépendances : RM-27
 - [ ] RM-29 (mesure) : Règle de puissance v2 : largeur de l'IC de la différence appariée entre deux systèmes sur les prédictions regroupées de cinq plis, **bootstrap par blocs d'auteurs, une question primaire unique à 95 %** (seuil 4,0 points ; mesuré le 05/10 : 3,39 à 95 %, 4,24 à 98,33 %) ; plis 3 et 4 de l'encodeur

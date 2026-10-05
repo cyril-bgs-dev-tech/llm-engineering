@@ -313,7 +313,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P1-26 | Rejeu à la même graine, déterminisme | |
 | P1-23 | Analyse d'erreurs initiale | |
 | P1-25 | Page d'analyse et premier `RESULTATS.md` | Résultats négatifs au même rang |
-| RM-28 | LoRA mûr aux plis 2, 3 et 4 : évaluation à cinq plis et professeur strictement hors pli (environ 10,5 h de GPU) | Porte de la distillation et de l'évaluation à cinq plis |
+| RM-28 | LoRA mûr aux plis 2, 3 et 4 : évaluation à cinq plis et professeur strictement hors pli (environ 10,5 h de GPU) | **Fait le 05/10/2026** : LoRA regroupé 0,7673, +4,71 contre le TF-IDF (résolu), +1,45 contre l'encodeur (non résolu), −0,49 contre l'ensemble ; bifurcation (b) non remplie |
 | RM-29 | Règle de puissance v2 : largeur de la différence entre deux systèmes sur cinq plis, seuil 4,0 | Fait en partie : 3,09 par patients, **3,39 par blocs d'auteurs à 95 %** (question primaire unique), 4,24 à 98,33 % ; reste à refaire avec le LoRA |
 | RM-52 | Rubrique de notation vérifiable par composante, correspondance Q1 à Q12, chaîne de dominos | Fait le 05/10/2026 (section 4.1) ; écart note estimée contre scorecard à chaque porte |
 | RM-41 | Débit d'entraînement à résultat équivalent (checkpointing, noyaux linéaires, bf16 de l'encodeur) | Jamais pendant un lot en cours ; équivalence statistique d'abord |
@@ -477,7 +477,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | RM-38 | Encodeur quantifié correctement (statique, sélectif, ONNX) | Fait en partie le 04/10/2026 : INT8 dynamique sélectif, l'effondrement vient du feed-forward ; attention seule −1,3 point, +11 % de vitesse, non retenue ; reste la quantification statique |
 | RM-44 | Export ONNX Runtime et quantification statique étalonnée de l'encodeur | Dépendance au verrou seulement si retenue |
 | RM-39 | Robustesse des modèles appris : perturbations, ablations de contenu, leave-one-author-out | Le TF-IDF à caractères est déjà insensible |
-| RM-40 | Cascade par seuil de confiance (TF-IDF, encodeur, LoRA) : calcul alloué selon la difficulté du cas | Aperçu hors ligne : 50 à 80 % des cas sans le LoRA, sans perte de macro-F1 ; seuil à valider sur plis distincts |
+| RM-40 | Cascade par seuil de confiance (TF-IDF, encodeur, LoRA) (cascade_cv à cinq plis fait : encodeur puis LoRA non-inférieur, 93 % sans LoRA ; TF-IDF puis LoRA non) : calcul alloué selon la difficulté du cas | Aperçu hors ligne : 50 à 80 % des cas sans le LoRA, sans perte de macro-F1 ; seuil à valider sur plis distincts |
 | RM-43 | Routage de la cascade par taille de l'ensemble conforme | Compare au seuil de probabilité |
 
 ### Étape R15 : industrialisation

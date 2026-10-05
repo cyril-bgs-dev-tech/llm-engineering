@@ -1,47 +1,47 @@
 {
- "souple": {
+ "llm": {
   "1.0": {
    "n_traites": 3586,
-   "exactitude": 0.827,
+   "exactitude": 0.851,
    "wilson95": [
-    0.814,
-    0.839
+    0.839,
+    0.863
    ],
    "taux_de_renvoi": 0.0
   },
   "0.9": {
    "n_traites": 3227,
-   "exactitude": 0.87,
+   "exactitude": 0.896,
    "wilson95": [
-    0.858,
-    0.881
+    0.885,
+    0.906
    ],
    "taux_de_renvoi": 0.1
   },
   "0.8": {
    "n_traites": 2869,
-   "exactitude": 0.903,
+   "exactitude": 0.932,
    "wilson95": [
-    0.891,
-    0.913
+    0.922,
+    0.94
    ],
    "taux_de_renvoi": 0.2
   },
   "0.7": {
    "n_traites": 2510,
-   "exactitude": 0.934,
+   "exactitude": 0.953,
    "wilson95": [
-    0.924,
-    0.943
+    0.944,
+    0.96
    ],
    "taux_de_renvoi": 0.3
   },
   "0.5": {
    "n_traites": 1793,
-   "exactitude": 0.967,
+   "exactitude": 0.977,
    "wilson95": [
-    0.957,
-    0.974
+    0.969,
+    0.983
    ],
    "taux_de_renvoi": 0.5
   }

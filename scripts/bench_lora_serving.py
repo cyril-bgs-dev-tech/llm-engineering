@@ -44,6 +44,8 @@ def main() -> int:
     t0 = time.perf_counter()
     base = AutoModelForSequenceClassification.from_pretrained(base_name, num_labels=len(labels), torch_dtype=torch.bfloat16)
     base.config.pad_token_id = pad_id
+    if hasattr(base.config, "text_config"):  # Qwen3.5 : le jeton de remplissage se lit dans la configuration du texte (lots de plus d'un patient)
+        base.config.text_config.pad_token_id = pad_id
     model = PeftModel.from_pretrained(base, ROOT / "artifacts/adapters" / slug).merge_and_unload().to("cuda").eval()
     load_s = time.perf_counter() - t0
     x = p1_finetune.build_inputs(tok, sample, 4096)

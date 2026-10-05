@@ -1,0 +1,30 @@
+{
+  "created_at": "2026-10-05T02:59:31Z",
+  "kind": "measure",
+  "metrics": {
+    "comparaisons": [
+      {
+        "delta_points": -0.32,
+        "ic95_points": [
+          -3.96,
+          3.34
+        ],
+        "macro_f1": 0.7636,
+        "p_bootstrap": 0.8704,
+        "p_holm": 0.8704,
+        "variante": "llm-mur-pli4-qwen3-5-4b-ep10-lr1e-4.probs.npz"
+      }
+    ],
+    "macro_f1_reference": 0.7684,
+    "n": 717,
+    "reference": "pli4-ensemble-encodeur5.probs.npz"
+  },
+  "params": {
+    "ref": "pli4-ensemble-encodeur5.probs.npz"
+  },
+  "run_id": "20261005-025931-pli4-llm-mur-vs-encodeur",
+  "schema": "mini-1",
+  "slug": "pli4-llm-mur-vs-encodeur",
+  "status": "ok",
+  "summary": "Comparaison appariée de 1 variantes contre pli4-ensemble-encodeur5.probs.npz"
+}

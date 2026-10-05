@@ -1,6 +1,6 @@
 # Tableaux générés depuis le registre (ne pas éditer à la main)
 
-58 runs d'entraînement terminés avec une macro-F1 au registre. Regénérer : `.venv/bin/python scripts/make_tables.py`.
+62 runs d'entraînement terminés avec une macro-F1 au registre. Regénérer : `.venv/bin/python scripts/make_tables.py`.
 
 ## Tous les runs d'entraînement (pli, modèle, taux, époques, graine)
 
@@ -9,6 +9,7 @@
 | `tfidf-hier-balanced` |  |  |  |  |  | 0,6740 | 0,8054 | 0,8621 |  |  |
 | `tfidf-hier-plain` |  |  |  |  |  | 0,6448 | 0,7984 | 0,7963 |  |  |
 | `tfidf-loao` |  |  |  |  |  | 0,6185 | 0,8036 | 0,6746 |  |  |
+| `tfidf-souple-ens` |  |  |  |  |  | 0,7271 | 0,8268 | 0,5687 |  |  |
 | `tfidf-variant-balanced` |  |  |  |  |  | 0,6805 | 0,8104 | 0,6675 |  |  |
 | `tfidf-variant-char` |  |  |  |  |  | 0,6874 | 0,8095 | 0,6663 |  |  |
 | `tfidf-variant-char-balanced` |  |  |  |  |  | 0,7202 | 0,8221 | 0,6152 |  |  |
@@ -22,6 +23,9 @@
 | `llm-mur-s1001-qwen3-5-4b-ep10-lr1e-4` | 0 | Qwen3.5-4B | 0.0001 | 10 | 1001 | 0,7893 | 0,8633 | 0,7697 | 0,1072 | 12665.2 |
 | `llm-mur2-qwen3-5-4b-ep10-lr1e-4` | 0 | Qwen3.5-4B | 0.0001 | 10 | 1000 | 0,7795 | 0,8577 | 0,8166 | 0,1078 | 12466.6 |
 | `llm-mur-pli1-qwen3-5-4b-ep10-lr1e-4` | 1 | Qwen3.5-4B | 0.0001 | 10 | 1000 | 0,7415 | 0,8552 | 0,8135 | 0,1099 | 12420.9 |
+| `llm-mur-pli2-qwen3-5-4b-ep10-lr1e-4` | 2 | Qwen3.5-4B | 0.0001 | 10 | 1000 | 0,7785 | 0,8536 | 0,9130 | 0,1097 | 13329.1 |
+| `llm-mur-pli3-qwen3-5-4b-ep10-lr1e-4` | 3 | Qwen3.5-4B | 0.0001 | 10 | 1000 | 0,7676 | 0,8480 | 0,9428 | 0,1177 | 12790.9 |
+| `llm-mur-pli4-qwen3-5-4b-ep10-lr1e-4` | 4 | Qwen3.5-4B | 0.0001 | 10 | 1000 | 0,7636 | 0,8424 | 0,9878 | 0,1179 | 12535.8 |
 | `p1-11-qwen3-5-9b-lr1e-4` | 0 | Qwen3.5-9B | 0.0001 | 2 | 1000 | 0,5650 | 0,7880 | 0,7234 | 0,0544 | 3622.7 |
 | `p1-11-qwen3-5-9b-lr1e-5` | 0 | Qwen3.5-9B | 1e-05 | 2 | 1000 | 0,2128 | 0,4477 | 1,8558 | 0,0795 | 3690.1 |
 | `p1-07-camembert-bio-lr1e-4` | 0 | camembert-bio-base | 0.0001 | 2 | 1000 | 0,4484 | 0,7699 | 1,0145 | 0,1755 | 42.9 |
@@ -84,3 +88,4 @@
 | TF-IDF caractères équilibré | 0,7184 | 0,6886 | 0,7483 | 0,7073 | 0,7248 | 0,7202 |
 | Encodeur moyenné (5 graines) | 0,7331 | 0,7532 | 0,7613 | 0,7428 | 0,7684 | 0,7528 |
 | Ensemble encodeur + TF-IDF | 0,7626 | 0,7512 | 0,7923 | 0,7746 | 0,7735 | 0,7721 |
+| LoRA Qwen3.5-4B (une graine par pli) | 0,7795 | 0,7415 | 0,7785 | 0,7676 | 0,7636 | 0,7673 |

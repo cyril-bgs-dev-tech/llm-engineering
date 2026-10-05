@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs/TABLEAUX_GENERES.md"
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-SYSTEMS = {"TF-IDF caractères équilibré": "tfidf-variant-char-balanced", "Encodeur moyenné (5 graines)": "cinq-plis-ensemble-encodeur5", "Ensemble encodeur + TF-IDF": "cinq-plis-ensemble-encodeur5-tfidf-charbal"}
+SYSTEMS = {"TF-IDF caractères équilibré": "tfidf-variant-char-balanced", "Encodeur moyenné (5 graines)": "cinq-plis-ensemble-encodeur5", "Ensemble encodeur + TF-IDF": "cinq-plis-ensemble-encodeur5-tfidf-charbal", "LoRA Qwen3.5-4B (une graine par pli)": "cinq-plis-llm-mur"}
 
 
 def five_fold_section() -> list[str]:
