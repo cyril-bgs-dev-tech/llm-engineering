@@ -5,7 +5,7 @@ summary: Pour chacune des huit composantes de la grille de notation (performance
 tags: [composantes, notation, etat, audit]
 sources: [audit-glm-v3, audit-glm-v4, resultats]
 created: 2026-10-03
-updated: 2026-10-04
+updated: 2026-10-05
 ---
 
 # État du projet par composante de qualité
@@ -13,13 +13,13 @@ updated: 2026-10-04
 Notes de la présentation : estimations de l'assistante, non mesurées ; elles ne remplacent pas une scorecard.[^1] Les actions viennent du triage de l'audit GLM v3.[^2]
 
 ## Performance
-À recette mûre (10 époques), l'ordre s'est inversé : TF-IDF caractères équilibré 0,720, encodeur moyenné 0,73 à 0,76 selon le pli, LoRA du 4B 0,78 (pli 0) et 0,74 (pli 1), ensemble encodeur + TF-IDF 0,75 à 0,79 aux cinq plis, soit **+5,20 points [+3,69 ; +6,78] sur le TF-IDF** (3 586 patients).[^3][^7] Le LoRA sur les plis 2 à 4 (professeur hors pli) est en cours ; l'ancrage zéro-shot est préparé.[^8]
+À recette mûre (10 époques), l'ordre s'est inversé : TF-IDF caractères équilibré 0,720, encodeur moyenné 0,73 à 0,76 selon le pli, LoRA du 4B 0,78 (pli 0) et 0,74 (pli 1), ensemble encodeur + TF-IDF 0,75 à 0,79 aux cinq plis, soit **+5,20 points [+3,69 ; +6,78] sur le TF-IDF** (3 586 patients).[^3][^7] Le LoRA aux cinq plis donne 0,7673 (+4,71 sur le TF-IDF, non distinct de l'encodeur ni de l'ensemble), le zéro-shot 4B 0,49 ; **la distillation vers un encodeur, apparemment +3,47, ne résiste pas au contrôle de fuite de second ordre (élève imbriqué 0,7528, −4,24 contre l'élève non imbriqué)** ; la règle de sélection retient l'ensemble LoRA + encodeur + TF-IDF (0,7799).[^8][^10]
 
 ## Rigueur statistique et protocole
 Protocole v1 gelé, premier cycle EXPLORE ; règle de puissance v1 échouée (12,2 contre 4,0), **règle v2 réussie pour l'ensemble contre le TF-IDF sur cinq plis à 95 % (3,09 par patients, 3,39 par blocs d'auteurs), non à 98,33 % par blocs d'auteurs (4,24)** ; l'acceptation du protocole v2 est une décision de Cyril.[^4][^7]
 
 ## Données et anti-fuite
-Auteur identifiable par le style (0,917) ; effet d'auteur pur d'environ 2 points ; plis par patient et par auteur côte à côte ; leave-one-author-out mesuré ; réserve de second ordre de la distillation consignée.[^3][^9]
+Auteur identifiable par le style (0,917) ; effet d'auteur pur d'environ 2 points ; plis par patient et par auteur côte à côte ; leave-one-author-out mesuré ; la fuite de second ordre de la distillation a été **mesurée** (significative, RM-56) et le gain correspondant retiré.[^3][^10]
 
 ## Fiabilité de l'incertitude
 Température, conforme marginal et par famille, Wilson, abstention : sur cinq plis, l'ensemble garde une couverture minimale par famille de 0,89 avec 1,89 classes par ensemble (TF-IDF : 2,69), et 0,948 d'exactitude à 70 % de couverture.[^7] Le LoRA mûr a une ECE de 0,03 après température (plis 0 et 1).[^3]
@@ -31,7 +31,7 @@ Taxonomie des erreurs (96 % hors famille), perturbations et ablations de contenu
 Registre, protocole haché, fiches hachées, contrôle des références de runs, fonction de lancement partagée testée (`scripts/lib/lot.sh`), ensembles reconstruits par script, déterminisme GPU mesuré (même graine : 0,7714 vers 0,7362).[^3]
 
 ## Efficience et déploiement
-TF-IDF 1,9 ms et 20 Mo ; encodeur 191 ms sur processeur ; LoRA 117 ms sur GPU ; INT8 dynamique naïf effondré ; cascade encodeur vers LoRA à seuil 0,8 : 77 à 79 % des patients sans appel au LoRA, sans perte de macro-F1 (plis 0 et 1, non validé).[^3][^8] Mesure de service du LoRA fusionné, énergie par 1 000 patients et zéro-shot : préparées, après le LoRA.[^8]
+TF-IDF 1,9 ms et 20 Mo ; encodeur 191 ms sur processeur ; LoRA fusionné 61 ms et 8,6 Wh pour 1 000 patients ; encodeur sur GPU en bf16 4,3 ms et 0,31 Wh (28 fois moins que le LoRA) ; INT8 dynamique naïf effondré ; cascade encodeur vers LoRA validée hors pli : 93,4 % sans LoRA, non-infériorité à 2 points, environ 26 à 34 ms contre 61 ms ; fiche de déploiement par contrainte écrite ; recette d'encodeur v2 : bf16 équivalent et 2,25 fois plus rapide, lissage, EMA et curriculum sans gain.[^3][^8][^11]
 
 ## Sûreté, conformité, honnêteté
 Résultats négatifs publiés, claim-gate, carte de modèle v3 mise à jour, gabarit de rapport, journal des accès au test scellé.[^6]
@@ -44,3 +44,5 @@ Résultats négatifs publiés, claim-gate, carte de modèle v3 mise à jour, gab
 [^7]: RESULTATS.md [synthesis] — plis 3 et 4, règle v2 à cinq plis, conforme par famille, abstention à cinq plis
 [^8]: roadmap_unifié.md [synthesis] — tâches RM-28 à RM-40 et fiches associées
 [^9]: src/llmft/distill.py [synthesis] — réserve de second ordre dans l'en-tête
+[^10]: RESULTATS.md [synthesis] — section « Distillation à professeur imbriqué »
+[^11]: docs/FICHE_DE_DEPLOIEMENT.md [synthesis] — arbre de décision par contrainte

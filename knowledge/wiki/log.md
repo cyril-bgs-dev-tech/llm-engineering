@@ -69,3 +69,6 @@ Pages créées : contrats-des-modules-du-chemin-court.
 
 ## [2026-10-04] ingest | Conclusions corrigées (recette, tirage, discrétisation)
 Pages créées : conclusions-corrigees-recette-et-tirage. Source : RESULTATS.md.
+
+## [2026-10-05] update | etat-par-composante
+Reason: verdict RM-56 (gain de distillation non préservé, fuite significative), LoRA aux cinq plis, mesures de service, cascade validée. Source: RESULTATS.md, docs/FICHE_DE_DEPLOIEMENT.md.
