@@ -563,7 +563,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-40 (mesure) : Allocation dynamique du calcul : cascade TF-IDF, encodeur, LoRA par seuil de confiance ; seuil choisi sur un pli et rapporté sur les autres ; latence moyenne et part de cas escaladés ; abstention conforme comme garde-fou
   - Preuve de fin : Run `cascade-eval` ; seuil préenregistré avant le pli de contrôle ; coût moyen par patient
   - Skills : performance-optimization, paired-comparison ; dépendances : RM-28, RM-34
-- [ ] RM-43 (mesure) : Routage de la cascade par taille de l'ensemble conforme (escalade quand l'ensemble contient plusieurs classes) en plus du seuil de probabilité ; **couverture conforme mesurée par région de la cascade (système appelé)** ; comparaison appariée avec le seuil, couverture et coût
+- [x] RM-43 (mesure) : Routage de la cascade par taille de l'ensemble conforme (escalade quand l'ensemble contient plusieurs classes) en plus du seuil de probabilité ; **couverture conforme mesurée par région de la cascade (système appelé)** ; comparaison appariée avec le seuil, couverture et coût
   - Preuve de fin : Run `cascade-conforme-cinq-plis` ; part des cas escaladés contre macro-F1
   - Skills : model-card-calibration, paired-comparison ; dépendances : RM-40, RM-33
 

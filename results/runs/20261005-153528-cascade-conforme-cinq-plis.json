@@ -1,0 +1,71 @@
+{
+  "created_at": "2026-10-05T15:35:28Z",
+  "kind": "measure",
+  "metrics": {
+    "cascade_conforme_moins_cascade_seuil_points": 0.11,
+    "cascade_conforme_moins_lora_points": 0.23,
+    "couverture_globale": {
+      "couverture": 0.9267,
+      "n": 3586,
+      "wilson95": [
+        0.9177,
+        0.9347
+      ]
+    },
+    "couverture_region_lora": {
+      "couverture": 0.9074,
+      "n": 1955,
+      "wilson95": [
+        0.8938,
+        0.9195
+      ]
+    },
+    "couverture_region_premier": {
+      "couverture": 0.9497,
+      "n": 1631,
+      "wilson95": [
+        0.938,
+        0.9593
+      ]
+    },
+    "economie_50": false,
+    "ic95_vs_lora": [
+      -0.09,
+      0.59
+    ],
+    "ic95_vs_seuil": [
+      -1.65,
+      1.96
+    ],
+    "latence_moyenne_ms_modelisee": {
+      "cascade_conforme": 54.9,
+      "lora_seul": 61.3
+    },
+    "macro_f1_cascade_conforme": 0.7696,
+    "macro_f1_cascade_seuil": 0.7685,
+    "macro_f1_lora_seul": 0.7673,
+    "n": 3586,
+    "niveau_cible": 0.9,
+    "non_inferiorite": true,
+    "part_traitee_par_le_premier": 0.455,
+    "part_traitee_par_le_premier_cascade_seuil": 0.934
+  },
+  "params": {
+    "alpha": 0.1,
+    "grid": [
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      0.95,
+      0.99
+    ],
+    "tolerance": 0.01
+  },
+  "run_id": "20261005-153528-cascade-conforme-cinq-plis",
+  "schema": "mini-1",
+  "slug": "cascade-conforme-cinq-plis",
+  "status": "ok",
+  "summary": "cascade-conforme-cinq-plis : cascade conforme moins LoRA 0.23 points [-0.09, 0.59], 45% des cas sans LoRA"
+}

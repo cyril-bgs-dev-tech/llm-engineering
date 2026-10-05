@@ -21,3 +21,14 @@ def test_threshold_is_the_smallest_one_within_tolerance_of_the_second_model() ->
     assert choose_threshold(first, second, accuracy, [0.5, 0.7, 0.99], tolerance=0.0) == 0.99
     assert choose_threshold(first, second, accuracy, [0.5, 0.7], tolerance=0.0) is None
     assert choose_threshold(first, second, accuracy, [0.5, 0.7], tolerance=0.3) == 0.5
+
+
+def test_conformal_routing_keeps_only_singleton_sets_for_the_first_model() -> None:
+    from llmft.cascade import route_by_set_size
+
+    first = np.array([[0.9, 0.1], [0.5, 0.5], [0.6, 0.4]])
+    second = np.array([[0.1, 0.9], [0.2, 0.8], [0.3, 0.7]])
+    sets = [{0}, {0, 1}, set()]  # singleton, deux classes, ensemble vide
+    probs, keep = route_by_set_size(sets, first, second)
+    assert keep.tolist() == [True, False, False]
+    assert np.allclose(probs, [[0.9, 0.1], [0.2, 0.8], [0.3, 0.7]])

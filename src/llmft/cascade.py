@@ -1,4 +1,5 @@
-"""Cascade par seuil de confiance (RM-40) : le premier modèle répond quand sa probabilité maximale atteint le seuil, sinon le cas passe au second ; choix du seuil hors du pli évalué."""
+"""Cascade par seuil de confiance (RM-40) : le premier modèle répond quand sa probabilité maximale atteint le seuil, sinon le cas passe au second ; choix du seuil hors du pli évalué.
+Routage par la taille de l'ensemble conforme du premier modèle (RM-43) : il répond seul si son ensemble contient exactement une classe."""
 from collections.abc import Callable, Sequence
 
 import numpy as np
@@ -24,3 +25,11 @@ def choose_threshold(
         if score(probs) >= reference - tolerance:
             return float(tau)
     return None
+
+
+def route_by_set_size(
+    sets: Sequence[set[int]], first: NDArray[np.floating], second: NDArray[np.floating],
+) -> tuple[NDArray[np.floating], NDArray[np.bool_]]:
+    """Probabilités de la cascade et masque des cas traités par le premier modèle : seul un ensemble conforme réduit à une classe garde le cas (ensemble vide ou multiple : escalade)."""
+    keep = np.array([len(s) == 1 for s in sets], dtype=bool)
+    return np.where(keep[:, None], first, second), keep

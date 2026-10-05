@@ -529,3 +529,6 @@ G : ECE 0,016 (température inutile), conforme par famille 0,901 couverture, 1,8
 
 ### 15:31Z : LoRA final échoué (panique du tokenizer, code 1), repris
 Le lot des modèles finaux a perdu le LoRA final en une minute (PanicException du tokenizer, code 1, non relançable dans ce lot) ; TERMINE37 est donc un faux positif et le temps A du LoRA échouera. Reprise : run_lora_final_reprise.sh (attend TERMINE38 ; relance avec RETRY_CODES 1 134 139, trois essais, puis temps A du LoRA ; TERMINE42). L'élagage (RM-45) est remplacé par run_encodeur_elague_apres_lora.sh (attend TERMINE42 : un seul gros calcul GPU à la fois) ; l'ancien lot d'attente est arrêté par PID. À vérifier : le fichier de l'adaptateur final et son empreinte, pas le code de sortie seul.
+
+### 15:36Z : RM-43 fait
+Fiche 2026-10-05-cascade-conforme (hachée avant le run), fonction route_by_set_size testée, run cascade-conforme-cinq-plis : non-infériorité (+0,23 [−0,09 ; +0,59]), 45,5 % sans LoRA (économie à 50 % non atteinte), couverture 0,9497 région encodeur, 0,9074 région LoRA, 0,9267 globale ; latence modélisée 54,9 ms contre 26 ms pour le seuil. Couverture de la cascade à seuil par région : non mesurée, à faire. LoRA final de G en cours.
