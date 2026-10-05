@@ -52,3 +52,20 @@ class PowerSampler:
         if n_items and price_eur_per_kwh is not None:
             out.update(servicecost.per_1000(float(out["energie_wh"] or 0.0), n_items, price_eur_per_kwh))
         return out
+
+
+def measure_repeated(fn: Callable[[], int], min_seconds: float = 15.0, interval_s: float = 1.0, reader: Callable[[], float | None] = read_gpu_power_w) -> dict[str, float | None]:
+    """Répète `fn` (qui renvoie le nombre d'éléments traités) pendant au moins `min_seconds` sous échantillonnage de puissance : une mesure de moins d'une seconde ne contient pas assez d'échantillons.
+
+    Renvoie secondes écoulées, éléments traités, débit par seconde, énergie en Wh et Wh pour 1 000 éléments."""
+    import time
+
+    done = 0
+    with PowerSampler(interval_s=interval_s, reader=reader) as ps:
+        t0 = time.perf_counter()
+        while time.perf_counter() - t0 < min_seconds:
+            done += fn()
+        elapsed = time.perf_counter() - t0
+    wh = ps.summary()["energie_wh"]
+    return {"secondes": round(elapsed, 2), "elements": float(done), "debit_par_s": round(done / elapsed, 2), "echantillons_puissance": float(len(ps.samples)),
+            "energie_wh": wh, "wh_pour_1000": None if wh is None else round(float(wh) / done * 1000.0, 3)}

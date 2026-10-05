@@ -1,0 +1,36 @@
+{
+ "modele": "camembert-deploy-ep10-lr1e-4",
+ "n_patients": 200,
+ "taille_lot": 16,
+ "prix_eur_kwh_parametre": 0.25,
+ "fp32": {
+  "p50_ms": 6.0,
+  "p95_ms": 6.8,
+  "moyenne_ms": 6.1,
+  "debit_lot_patients_par_s": 323.0,
+  "memoire_pic_gib": 0.68,
+  "energie_lot": {
+   "wh_pour_1000_patients": 0.57,
+   "euros_pour_1000_patients": 0.0001
+  },
+  "energie_lot_de_1": {
+   "wh_pour_1000_patients": 0.64,
+   "euros_pour_1000_patients": 0.0002
+  }
+ },
+ "bf16": {
+  "p50_ms": 4.5,
+  "p95_ms": 5.9,
+  "moyenne_ms": 4.7,
+  "debit_lot_patients_par_s": 1325.2,
+  "memoire_pic_gib": 0.35,
+  "energie_lot": {
+   "wh_pour_1000_patients": 0.27,
+   "euros_pour_1000_patients": 0.0001
+  },
+  "energie_lot_de_1": {
+   "wh_pour_1000_patients": 0.15,
+   "euros_pour_1000_patients": 0.0
+  }
+ }
+}

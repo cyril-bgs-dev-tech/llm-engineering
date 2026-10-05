@@ -59,4 +59,6 @@ Terminés cette nuit : criblage, grille du 4B, encodeur (recette, fenêtres, sat
 
 **Chaîne GPU étendue (05/10)** : après TERMINE24 : `run_encodeur_v2.sh` (fiche `2026-10-05-encodeur-recette-v2`, RM-41 encodeur et RM-55, 60 runs, environ 4 h ; TERMINE26 ; journal `encodeur_v2.log`). Code : `llmft.train_v2`, `scripts/p1_encoder_v2.py`. À consigner à la fin : un tableau par facteur (macro-F1 regroupée de la moyenne des trois graines, différence avec la référence par blocs d'auteurs, vitesse et énergie pour bf16).
 
+**Reprises de mesures de service (05/10)** : `run_service_lora_reprise.sh` (attend TERMINE26 ; banc du LoRA fusionné après correction du jeton de remplissage ; TERMINE28) puis `run_encodeur_gpu_reprise.sh` (attend TERMINE28 ; énergie de l'encodeur sur 15 secondes de charge, `llmft.energy.measure_repeated` ; TERMINE29). Les latences de l'encodeur sur GPU (6,0 ms fp32, 4,5 ms bf16) sont consignées ; l'énergie du premier banc est non fiable.
+
 **Réservé à Cyril** : acceptation du protocole v2 (RM-37) ; ouverture du test scellé (RM-20) ; push ; envoi du brief GLM v5 ; location de GPU et API payante.

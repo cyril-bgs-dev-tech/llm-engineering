@@ -1,0 +1,49 @@
+{
+  "created_at": "2026-10-05T03:19:28Z",
+  "kind": "measure",
+  "metrics": {
+    "bf16": {
+      "debit_lot_patients_par_s": 1325.2,
+      "energie_lot": {
+        "euros_pour_1000_patients": 0.0001,
+        "wh_pour_1000_patients": 0.27
+      },
+      "energie_lot_de_1": {
+        "euros_pour_1000_patients": 0.0,
+        "wh_pour_1000_patients": 0.15
+      },
+      "memoire_pic_gib": 0.35,
+      "moyenne_ms": 4.7,
+      "p50_ms": 4.5,
+      "p95_ms": 5.9
+    },
+    "fp32": {
+      "debit_lot_patients_par_s": 323.0,
+      "energie_lot": {
+        "euros_pour_1000_patients": 0.0001,
+        "wh_pour_1000_patients": 0.57
+      },
+      "energie_lot_de_1": {
+        "euros_pour_1000_patients": 0.0002,
+        "wh_pour_1000_patients": 0.64
+      },
+      "memoire_pic_gib": 0.68,
+      "moyenne_ms": 6.1,
+      "p50_ms": 6.0,
+      "p95_ms": 6.8
+    },
+    "modele": "camembert-deploy-ep10-lr1e-4",
+    "n_patients": 200,
+    "prix_eur_kwh_parametre": 0.25,
+    "taille_lot": 16
+  },
+  "params": {
+    "batch": 16,
+    "n": 200
+  },
+  "run_id": "20261005-031928-bench-encoder-gpu-camembert-deploy-ep10-lr1e-4",
+  "schema": "mini-1",
+  "slug": "bench-encoder-gpu-camembert-deploy-ep10-lr1e-4",
+  "status": "ok",
+  "summary": "Service de l'encodeur camembert-deploy-ep10-lr1e-4 sur GPU, fp32 et bf16"
+}

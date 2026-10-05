@@ -610,3 +610,14 @@ Invite construite depuis le contrat de tâche (nom et définition des 18 chapitr
 | *Pour mémoire* : LoRA 4B mûr (pli 0, graine 1000) | 0,7795 | 0,858 | 0,91 | : |
 
 **L'affinage apporte +28,8 points au Qwen3.5-4B** (zéro-shot moins LoRA mûr : −28,79 [−35,0 ; −22,5], Holm < 0,001) ; le 9B zéro-shot est à −30,7 [−36,8 ; −24,3] du même LoRA du 4B ; le zéro-shot est environ 22 points sous le meilleur TF-IDF. Le 9B n'est pas meilleur que le 4B en zéro-shot (−1,96 [−6,6 ; +2,85], non résolu). **Lecture** : un LLM de 4 à 9 milliards de paramètres sans affinage ne sait pas faire ce choix de diagnostic principal selon la convention du corpus ; la valeur de l'affinage n'est pas un effet de recette. Prédictions de la fiche : zéro-shot du 4B entre 0,15 et 0,45 (**non réalisée**, 0,49) ; du 9B entre 0,25 et 0,55 (réalisée, 0,47) ; le 9B dépasse le 4B (**non réalisée**) ; aucun n'atteint le meilleur TF-IDF (réalisée). Réserve : l'invite est un choix d'auteur, une seule invite a été essayée ; ce n'est pas un état de l'art du zéro-shot mais un repère.
+
+## Service de l'encodeur sur GPU (RM-34, run `bench-encoder-gpu-camembert-deploy-ep10-lr1e-4`, `scripts/bench_encoder_gpu.py`, 200 patients du pli 0, RTX 5090, lot de 16 ; mesure descriptive hors hypothèse)
+
+| Précision | latence p50 / p95 (lot de 1) | débit en lot de 16 | mémoire de pointe |
+|---|---|---|---|
+| fp32 | **6,0 ms** / 6,8 ms | 323 patients par seconde | 0,68 Gio |
+| bf16 | **4,5 ms** / 5,9 ms | **1 325 patients par seconde** | 0,35 Gio |
+
+**Contre 191 ms sur processeur (8 threads) : un facteur 32 en latence (fp32) et 42 (bf16)**. Cinq encodeurs en série sur GPU coûtent environ 30 ms (fp32) ou 22 ms (bf16) par patient, **moins que le LoRA seul (117 ms)** : le modèle de coût de la cascade change (voir ci-dessous). Précisions : (1) l'énergie rapportée par le script (0,57 Wh pour 1 000 patients en fp32, 0,27 en bf16) est **non fiable** : la mesure de puissance échantillonne une fois par seconde et le calcul dure moins d'une seconde (200 patients à 1 325 par seconde) ; à refaire sur au moins 10 secondes de charge (RM-42) ; (2) la qualité en bf16 n'est pas mesurée par ce banc (équivalence à établir, facteur A de la fiche `2026-10-05-encodeur-recette-v2`) ; (3) latence mesurée hors tokenisation.
+
+**Conséquence pour la cascade encodeur puis LoRA** (RM-40, estimation arithmétique à partir des mesures) : latence moyenne ≈ 5 × 6,0 ms + (1 − 0,934) × 117 ms ≈ **38 ms par patient** contre 117 ms pour le LoRA seul, soit environ 3 fois moins, à macro-F1 non inférieure (+0,12 [−1,74 ; +1,90]) ; l'économie n'est donc plus seulement une économie d'appels au GPU : **c'est une économie de latence si l'encodeur est servi sur GPU**. La précision de la section « ce que l'économie mesure et ne mesure pas » plus haut vaut pour un encodeur servi sur processeur.

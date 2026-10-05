@@ -22,3 +22,18 @@ def test_cost_per_1000_items_uses_the_given_price() -> None:
     ps.samples = [1000.0]  # 1 000 W pendant 3 600 s = 1 000 Wh
     s = ps.summary(n_items=500, price_eur_per_kwh=0.2)
     assert s["energie_wh"] == 1000.0 and s["wh_pour_1000_patients"] == 2000.0 and s["euros_pour_1000_patients"] == 0.4
+
+
+def test_measure_repeated_runs_for_at_least_the_minimum_duration_and_counts_items() -> None:
+    from llmft.energy import measure_repeated
+
+    calls = []
+
+    def work() -> int:
+        calls.append(1)
+        time.sleep(0.01)
+        return 5
+
+    r = measure_repeated(work, min_seconds=0.2, interval_s=0.02, reader=lambda: 50.0)
+    assert r["secondes"] >= 0.2 and r["elements"] == 5 * len(calls) and r["echantillons_puissance"] >= 3
+    assert r["wh_pour_1000"] is not None and r["wh_pour_1000"] > 0

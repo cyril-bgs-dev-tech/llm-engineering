@@ -4,9 +4,8 @@ Développement seulement (pli 0). À lancer GPU libre. Usage : bench_encoder_gpu
 import json
 import sys
 import time
+from functools import partial
 from pathlib import Path
-
-import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -14,11 +13,27 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import bench_lora_serving
 import p1_04_06_tfidf
 import p1_finetune
-from llmft import servicecost
-from llmft.energy import PowerSampler
+from llmft import energy, servicecost
 from llmft.mini_registry import register_run
 
 arg = bench_lora_serving.arg
+
+
+def batch_pass(model: object, pad_id: int, x: list[list[int]], batch: int, n_labels: int) -> int:
+    import torch
+
+    p1_finetune.predict(model, x, pad_id, "cuda", batch, n_labels)
+    torch.cuda.synchronize()
+    return len(x)
+
+
+def single_pass(model: object, pad_id: int, x: list[list[int]], n_labels: int) -> int:
+    import torch
+
+    for xi in x[:50]:
+        p1_finetune.predict(model, [xi], pad_id, "cuda", 1, n_labels)
+    torch.cuda.synchronize()
+    return min(50, len(x))
 
 
 def main() -> int:
@@ -39,26 +54,26 @@ def main() -> int:
         p1_finetune.predict(model, x[:4], tok.pad_token_id, "cuda", 1, len(labels))
         torch.cuda.reset_peak_memory_stats()
         single: list[float] = []
-        with PowerSampler() as ps1:
-            for xi in x:
-                s = time.perf_counter()
-                p1_finetune.predict(model, [xi], tok.pad_token_id, "cuda", 1, len(labels))
-                torch.cuda.synchronize()
-                single.append(1000 * (time.perf_counter() - s))
-        with PowerSampler() as psb:
+        for xi in x:
             s = time.perf_counter()
-            p1_finetune.predict(model, x, tok.pad_token_id, "cuda", batch, len(labels))
+            p1_finetune.predict(model, [xi], tok.pad_token_id, "cuda", 1, len(labels))
             torch.cuda.synchronize()
-            batch_s = time.perf_counter() - s
-        out[name] = {**servicecost.latency_summary(single), "debit_lot_patients_par_s": round(len(x) / batch_s, 1), "memoire_pic_gib": round(torch.cuda.max_memory_allocated() / 2**30, 2),
-                     "energie_lot": servicecost.per_1000(servicecost.energy_wh(np.array(psb.samples), 1.0), len(x), price),
-                     "energie_lot_de_1": servicecost.per_1000(servicecost.energy_wh(np.array(ps1.samples), 1.0), len(x), price)}
+            single.append(1000 * (time.perf_counter() - s))
+        batch_s_probe = time.perf_counter()
+        p1_finetune.predict(model, x, tok.pad_token_id, "cuda", batch, len(labels))
+        torch.cuda.synchronize()
+        batch_probe = time.perf_counter() - batch_s_probe
+
+        e_batch = energy.measure_repeated(partial(batch_pass, model, tok.pad_token_id, x, batch, len(labels)), 15.0)
+        e_single = energy.measure_repeated(partial(single_pass, model, tok.pad_token_id, x, len(labels)), 15.0)
+        out[name] = {**servicecost.latency_summary(single), "debit_lot_patients_par_s": round(len(x) / batch_probe, 1), "memoire_pic_gib": round(torch.cuda.max_memory_allocated() / 2**30, 2),
+                     "energie_lot_15s": e_batch, "energie_lot_de_1_15s": e_single}
         print(name, out[name], flush=True)
         del model
         torch.cuda.empty_cache()
-    (ROOT / "results/measures" / f"bench_encoder_gpu_{slug}.json").write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8")
+    (ROOT / "results/measures" / f"bench_encoder_gpu_{slug}{arg('--tag', '')}.json").write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8")
     if "--register" in sys.argv:
-        print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": f"bench-encoder-gpu-{slug}", "status": "ok", "summary": f"Service de l'encodeur {slug} sur GPU, fp32 et bf16", "params": {"n": n, "batch": batch}, "metrics": out}))
+        print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": f"bench-encoder-gpu-{slug}{arg('--tag', '')}", "status": "ok", "summary": f"Service de l'encodeur {slug} sur GPU, fp32 et bf16", "params": {"n": n, "batch": batch}, "metrics": out}))
     return 0
 
 
