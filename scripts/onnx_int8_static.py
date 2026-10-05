@@ -19,7 +19,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.append(str(ROOT / "artifacts/spikes/onnx_pkgs"))
 import onnx
 import onnxruntime as ort
-from onnxruntime.quantization import CalibrationDataReader, CalibrationMethod, QuantFormat, QuantType, quantize_static
+from onnxruntime.quantization import (
+    CalibrationDataReader,
+    CalibrationMethod,
+    QuantFormat,
+    QuantType,
+    quantize_static,
+)
 from onnxruntime.quantization.shape_inference import quant_pre_process
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
@@ -32,7 +38,7 @@ N_CALIBRATION = 128
 WORK = ROOT / "artifacts/spikes/onnx_work"
 
 
-class Reader(CalibrationDataReader):  # type: ignore[misc]
+class Reader(CalibrationDataReader):
     def __init__(self, sequences: list[list[int]]) -> None:
         self.items = iter(sequences)
 
