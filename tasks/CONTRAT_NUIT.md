@@ -47,7 +47,7 @@
 - modifier une règle, une valeur ou un instantané de `PROTOCOLE.md` gelé (δ, K, B, N, graines, grille) ; une nouvelle version exige une ADR et Cyril ;
 - **push, création de dépôt, changement de visibilité, tag**, sauf délégation écrite dans le journal ;
 - envoi de contenu hors machine (**GLM, Codex, Gemini**, tout service), publication d'artifact ou de vitrine ;
-- location de GPU, API payante, tout achat ; téléchargement de données de patients, de modèles gated (MedGemma sans accord) ou de poids qui ne tiennent pas dans le disque libre (garde : 15 Go de marge) ;
+- location de GPU, API payante, tout achat, stockage payant (**précision de Cyril du 05/10/2026 : la location de GPU distant et le stockage restent des options prévues au plan, mais aucun test n'entraîne de coût : tous les tests se font en local**) ; téléchargement de données de patients, de modèles gated (MedGemma sans accord) ou de poids qui ne tiennent pas dans le disque libre (garde : 15 Go de marge) ;
 - tuer ou perturber un processus que je n'ai pas lancé (Ollama), lire `~/.cache`, `~/`, `.ssh`, jetons, `.env`, ou un autre projet ;
 - affaiblir `CONSTRAINTS.md`, un test, une règle de `ruff` ou un contrôle pour obtenir du vert ;
 - inventer une décision de la section 10 du plan (δ, K, B, N, jalons, périmètre) : ouvrir une question en file, ne rien appliquer.

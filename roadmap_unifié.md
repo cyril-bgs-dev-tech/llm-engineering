@@ -504,7 +504,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 
 ### Étape R16 : options (sur décision de Cyril)
 
-**Objectif** : piste générative et location de GPU, chacune avec sa spécification propre.
+**Objectif** : piste générative et location de GPU, chacune avec sa spécification propre. **Règle de Cyril (05/10/2026)** : la location de GPU distant et le stockage payant restent prévus comme options possibles, mais **aucun test ne les utilise : tous les tests se font en local** (RTX 5090 et disque de la machine) ; aucune tâche des étapes R0 à R15 ne dépend d'un coût.
 **Skills à charger** : experiment-preregistration, distillation-pipeline, doubt-driven-development, dataset-intake, security-and-hardening.
 **Porte de sortie** : selon l'option ouverte.
 **Arrêt ou repli si** : la décision de Cyril manque, l'option reste fermée.

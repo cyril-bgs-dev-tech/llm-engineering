@@ -484,3 +484,6 @@ llmft.prune (3 tests), scripts/p1_encoder_pruned.py (68 millions de paramètres 
 
 ### 07:32Z : reprise par surveilleur
 Analyse de l'encodeur élagué préparée (scripts/prune_analysis.py, lot post_prune.sh détaché, TERMINE34 après TERMINE33) ; exécution à vide correcte (aucun run élagué encore). Encodeur v2 : 26 runs sur 60.
+
+### 07:39Z : précision de Cyril sur les coûts (message direct)
+La location de GPU distant et le stockage payant restent des options prévues, mais aucun test n'entraîne de coût : tout se teste en local. Consigné dans le contrat de nuit (exclusions), la feuille de route (R16) et la mémoire. Rien dans la chaîne en cours n'utilise de ressource payante (RTX 5090 locale, disque local).
