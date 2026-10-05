@@ -8,6 +8,7 @@ check-fast:        ## types, lint, plancher, secrets : à chaque édition
 	$(PY) -m ruff check .
 	$(PY) -m mypy src
 	$(PY) scripts/floor_guard.py
+	$(PY) scripts/check_exec_bits.py
 	$(GITLEAKS)
 
 test:
