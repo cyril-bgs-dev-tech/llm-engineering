@@ -463,3 +463,6 @@ Facteur bf16 : 94 s d'entraînement par run contre 214 s en fp32 (×2,3), pic m�
 
 ### 05:58Z : reprise par surveilleur
 Analyse de l'encodeur v2 préparée (scripts/enc2_analysis.py, lot post_enc2.sh détaché, TERMINE32 après TERMINE26) ; essai sur le seul pli 0 de bf16 : non résolu à ce stade (+1,26 [−3,76 ; +6,89]), 94 s par run, 11,8 Wh.
+
+### 06:26Z : mise à jour de la présentation et du dépôt GitHub (demande explicite de Cyril)
+Présentation à jour (363 tests, 252 runs, 45 fiches hachées, 34,4 h sur 90, bf16, chaîne en cours) ; make check vert (test de dérive du plan rendu indépendant du nombre de tâches, assertion conservée) ; pip-audit : torch non auditable sur PyPI (inchangé) ; make check-full non lancé (GPU occupé par le lot : test-gpu et smoke fausseraient les mesures). Push vers origin/main (dépôt GitHub privé), sans changement de visibilité.

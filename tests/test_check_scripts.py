@@ -58,7 +58,12 @@ def test_backlog_rejects_a_skill_that_does_not_exist(box):
 
 
 def test_backlog_rejects_a_star_count_that_drifted_from_the_plan(box):
-    edit(box, "PLAN_PROJET_V6.md", "92 des 159 micro-tâches", "91 des 159 micro-tâches")
+    import re
+
+    path = box / "PLAN_PROJET_V6.md"
+    text = path.read_text(encoding="utf-8")
+    assert re.search(r"\d+ des \d+ micro-tâches", text), "le plan annonce le nombre de tâches sur le chemin court"
+    path.write_text(re.sub(r"\d+ des \d+ micro-tâches", "91 des 159 micro-tâches", text, count=1), encoding="utf-8")  # annonce volontairement fausse
     r = run(box, "check_microtasks.py")
     assert r.returncode == 1 and "annonce 91" in r.stdout
 
