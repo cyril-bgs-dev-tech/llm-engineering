@@ -621,3 +621,22 @@ Invite construite depuis le contrat de tâche (nom et définition des 18 chapitr
 **Contre 191 ms sur processeur (8 threads) : un facteur 32 en latence (fp32) et 42 (bf16)**. Cinq encodeurs en série sur GPU coûtent environ 30 ms (fp32) ou 22 ms (bf16) par patient, **moins que le LoRA seul (117 ms)** : le modèle de coût de la cascade change (voir ci-dessous). Précisions : (1) l'énergie rapportée par le script (0,57 Wh pour 1 000 patients en fp32, 0,27 en bf16) est **non fiable** : la mesure de puissance échantillonne une fois par seconde et le calcul dure moins d'une seconde (200 patients à 1 325 par seconde) ; à refaire sur au moins 10 secondes de charge (RM-42) ; (2) la qualité en bf16 n'est pas mesurée par ce banc (équivalence à établir, facteur A de la fiche `2026-10-05-encodeur-recette-v2`) ; (3) latence mesurée hors tokenisation.
 
 **Conséquence pour la cascade encodeur puis LoRA** (RM-40, estimation arithmétique à partir des mesures) : latence moyenne ≈ 5 × 6,0 ms + (1 − 0,934) × 117 ms ≈ **38 ms par patient** contre 117 ms pour le LoRA seul, soit environ 3 fois moins, à macro-F1 non inférieure (+0,12 [−1,74 ; +1,90]) ; l'économie n'est donc plus seulement une économie d'appels au GPU : **c'est une économie de latence si l'encodeur est servi sur GPU**. La précision de la section « ce que l'économie mesure et ne mesure pas » plus haut vaut pour un encodeur servi sur processeur.
+
+## Distillation vers l'encodeur : verdict à cinq plis (RM-32, fiche `2026-10-04-distillation-vers-encodeur` ; runs `distill-lora-pli0-s0` à `distill-lora-pli4-s2`, `distill-ens-pli0-s0` à `distill-ens-pli4-s2`, `distillation-analyse-cinq-plis` ; EXPLORE, 30 runs, alpha 0,5 et T = 2 fixés, non réglés)
+
+Moyenne de trois graines par pli, prédictions regroupées (3 586 patients), différence par **bootstrap d'auteurs**. Référence : encodeur non distillé, mêmes graines 1000 à 1002.
+
+| Bras (professeur) | élève distillé (macro-F1) | encodeur non distillé | professeur | élève moins non distillé [IC 95 %] | élève moins professeur [IC 95 %] | verdict de la fiche |
+|---|---|---|---|---|---|---|
+| **Ensemble encodeur + TF-IDF** | **0,7952** | 0,7605 | 0,7721 | **+3,47 [+2,25 ; +5,08]** | **+2,31 [+0,46 ; +4,48]** | **gain confirmé** |
+| LoRA 4B | 0,7350 | 0,7605 | 0,7673 | −2,55 [−4,78 ; +0,02] | −3,22 [−6,52 ; −0,03] | non résolu |
+
+| Mesures complémentaires | élève (ensemble) | élève (LoRA) | non distillé | professeur ensemble | professeur LoRA |
+|---|---|---|---|---|---|
+| exactitude | **0,8714** | 0,8625 | 0,8469 | 0,8575 | 0,8514 |
+| log loss | **0,433** | 0,589 | 0,609 | 0,497 | 0,895 |
+| macro-F1 après correction de priorité | **0,7868** | 0,7533 | 0,7519 | 0,7558 | 0,7679 |
+
+**Un élève isolé** (par run, quinze runs par bras) : macro-F1 moyenne **0,7876** (écart-type 0,012) pour l'élève distillé de l'ensemble contre 0,7446 (0,027) pour l'encodeur non distillé, soit +4,3 points et une variabilité entre graines divisée par plus de deux ; élève distillé du LoRA : 0,722 (0,023).
+
+**Lecture** : (1) **distiller l'ensemble encodeur + TF-IDF dans un seul encodeur est un gain confirmé et dépasse même le professeur** (+2,31 [+0,46 ; +4,48]) ; l'élève (6 ms sur GPU, 1 modèle de 443 Mo) remplace un ensemble de cinq encodeurs et d'un TF-IDF, en mieux sur la macro-F1, l'exactitude et la calibration. (2) **Distiller le LoRA dégrade la macro-F1** (−2,55) : l'élève hérite de l'exactitude et de la calibration mais décale la décision vers les classes majoritaires (après correction de priorité l'écart disparaît : 0,7533 contre 0,7519). (3) Prédictions de la fiche : gain ≥ 2,0 contre l'encodeur non distillé (probabilité 0,35) : réalisé pour le bras ensemble seulement ; élève à plus de 2 points sous le LoRA (0,6) : réalisé ; bras ensemble n'apportant pas plus que le bras LoRA (0,6) : **non réalisé** (écart de 6 points entre bras). **Réserve majeure, déclarée dans la fiche** : chaque professeur a vu, pour entraîner ses prédictions hors pli, le pli de validation de l'élève (fuite de second ordre) ; le fait que le bras LoRA ne profite pas du même effet plaide contre une fuite dominante, mais **seul un professeur imbriqué (entraîné sans le pli évalué) ou le test scellé lèvera le doute** : RM-56.

@@ -22,6 +22,8 @@ P = ROOT / "results/predictions"
 CANDIDATES = [  # (nom, rang de coût, fichier de probabilités regroupées ou liste de fichiers à moyenner)
     ("A TF-IDF caractères équilibré", 0, ["tfidf-variant-char-balanced"]),
     ("B TF-IDF souple (professeur ensemble)", 0, ["tfidf-souple-ens"]),
+    ("C1 élève encodeur distillé du LoRA (3 graines)", 1, ["cinq-plis-distill-lora-3graines"]),
+    ("C2 élève encodeur distillé de l'ensemble (3 graines)", 1, ["cinq-plis-distill-ens-3graines"]),
     ("D encodeur moyenné (5 graines)", 2, ["cinq-plis-ensemble-encodeur5"]),
     ("E ensemble encodeur + TF-IDF", 3, ["cinq-plis-ensemble-encodeur5-tfidf-charbal"]),
     ("F LoRA 4B", 4, ["cinq-plis-llm-mur"]),

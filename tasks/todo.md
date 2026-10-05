@@ -290,6 +290,9 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-32 (GPU) : Élève distillé de la LoRA mûre vers l'encodeur (ou un élève plus léger), professeur strictement hors pli (RM-28), perte `alpha·CE + (1 - alpha)·T²·KL`
   - Preuve de fin : Runs au registre ; écart avec le professeur et avec l'encodeur non distillé ; coût d'inférence mesuré
   - Skills : distillation-pipeline, leakage-guard, paired-comparison, vram-preflight ; dépendances : RM-28, P3-01, RM-19
+- [ ] RM-56 (GPU) : Distillation à professeur imbriqué : le professeur de chaque pli d'entraînement de l'élève est entraîné sans le pli évalué (contrôle de la fuite de second ordre) ; 40 encodeurs, 20 TF-IDF, 15 élèves ; gain de l'élève distillé de l'ensemble préservé ou non
+  - Preuve de fin : Fiche hachée ; runs au registre ; différence par blocs d'auteurs avec l'élève non imbriqué et l'encodeur non distillé ; verdict en quatre valeurs de la fiche
+  - Skills : leakage-guard, distillation-pipeline, vram-preflight, paired-comparison ; dépendances : RM-32
 
 ## Étape R9 : expérience confirmatoire de distillation
 

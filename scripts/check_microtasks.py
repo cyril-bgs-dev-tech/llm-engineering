@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 MT = ROOT / "MICROTACHES.md"
 PLAN = ROOT / "PLAN_PROJET_V6.md"
-EXPECTED = {"P0": 47, "P1": 26, "P2": 12, "P3": 15, "P4": 10, "P5": 12, "P6": 8, "R": 5, "RM": 55}
+EXPECTED = {"P0": 47, "P1": 26, "P2": 12, "P3": 15, "P4": 10, "P5": 12, "P6": 8, "R": 5, "RM": 56}
 GATES = ["P0", "P1", "P2", "P3", "P4", "P5"]
 ROW = re.compile(r"^\| ((?:P\d|RM|R)-\d+|G-P\d) \|(.*)\|\s*$")
 

@@ -40,37 +40,41 @@
  },
  "ens": {
   "plis": [
-   0
+   0,
+   1,
+   2,
+   3,
+   4
   ],
-  "n": 717,
-  "macro_f1_distille": 0.7861,
-  "macro_f1_non_distille": 0.7548,
-  "macro_f1_professeur": 0.7626,
+  "n": 3586,
+  "macro_f1_distille": 0.7952,
+  "macro_f1_non_distille": 0.7605,
+  "macro_f1_professeur": 0.7721,
   "distille_moins_non_distille": [
-   3.13,
-   -2.49,
-   9.79
+   3.47,
+   2.25,
+   5.08
   ],
   "distille_moins_professeur": [
-   2.35,
-   -2.52,
-   8.51
+   2.31,
+   0.46,
+   4.48
   ],
-  "verdict_fiche": "non résolu",
+  "verdict_fiche": "gain confirmé",
   "exactitude": {
-   "distille": 0.8619,
-   "non_distille": 0.8368,
-   "professeur": 0.8494
+   "distille": 0.8714,
+   "non_distille": 0.8469,
+   "professeur": 0.8575
   },
   "log_loss": {
-   "distille": 0.4322,
-   "non_distille": 0.6318,
-   "professeur": 0.4737
+   "distille": 0.4328,
+   "non_distille": 0.609,
+   "professeur": 0.4974
   },
   "macro_f1_apres_correction_de_priorite": {
-   "distille": 0.798,
-   "non_distille": 0.7669,
-   "professeur": 0.7798
+   "distille": 0.7868,
+   "non_distille": 0.7519,
+   "professeur": 0.7558
   }
  }
 }

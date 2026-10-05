@@ -61,4 +61,6 @@ Terminés cette nuit : criblage, grille du 4B, encodeur (recette, fenêtres, sat
 
 **Reprises de mesures de service (05/10)** : `run_service_lora_reprise.sh` (attend TERMINE26 ; banc du LoRA fusionné après correction du jeton de remplissage ; TERMINE28) puis `run_encodeur_gpu_reprise.sh` (attend TERMINE28 ; énergie de l'encodeur sur 15 secondes de charge, `llmft.energy.measure_repeated` ; TERMINE29). Les latences de l'encodeur sur GPU (6,0 ms fp32, 4,5 ms bf16) sont consignées ; l'énergie du premier banc est non fiable.
 
+**Distillation imbriquée (RM-56, 05/10)** : `run_distillation_imbriquee.sh` (attend TERMINE29 ; fiche `2026-10-05-distillation-imbriquee` ; 40 encodeurs, 20 TF-IDF, 15 élèves, environ 3,5 h ; TERMINE31 ; analyse automatique `post_distillation_imbriquee.out`). À consigner : les deux différences par blocs d'auteurs et le verdict en quatre valeurs ; si le gain est préservé, l'élève distillé de l'ensemble devient candidat C2 du gel (RM-50).
+
 **Réservé à Cyril** : acceptation du protocole v2 (RM-37) ; ouverture du test scellé (RM-20) ; push ; envoi du brief GLM v5 ; location de GPU et API payante.

@@ -333,7 +333,8 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P2-01 | Professeur 1 : réglage minimal du taux (QLoRA) | |
 | P3-01 | Perte de distillation et ses tests | Ne dépend plus des logits hors pli |
 | RM-19 | **Spike de distillation et décision go/no-go** | Règle préenregistrée |
-| RM-32 | Élève distillé de la LoRA mûr vers l'encodeur, professeur strictement hors pli | Thèse du projet : qualité du LoRA à coût d'encodeur ; fiche hachée et lot en attente (04/10/2026), 30 runs |
+| RM-32 | Élève distillé de la LoRA mûr vers l'encodeur, professeur strictement hors pli | Thèse du projet : qualité du LoRA à coût d'encodeur ; fiche hachée et lot en attente (04/10/2026), 30 runs ; bras ensemble : gain confirmé (+3,47 [+2,25 ; +5,08], au-dessus du professeur) ; bras LoRA : non (−2,55) |
+| RM-56 | **Distillation à professeur imbriqué (contrôle de la fuite de second ordre)** | À lever avant de s'appuyer sur le gain de l'élève ; sinon le test scellé tranche |
 
 ### Étape R9 : expérience confirmatoire de distillation
 
@@ -570,6 +571,7 @@ Appliqués dans `MICROTACHES.md`, sans renuméroter :
 - **RM-49 ajoutée le 05/10/2026** (benchmark public à résultats publiés) : sans repère publié, aucun écart avec l'état de l'art n'est vérifiable ; chemin court : 107 ★ sur 184.
 - **Chaîne de dominos (05/10/2026)** : section 4.1 ajoutée (chemin critique, correspondance Q1 à Q12 et huit composantes, règles d'ordonnancement) ; règles de bifurcation écrites d'avance en section 6 ; **RM-50, RM-51, RM-52 ajoutées** (gel du système final avant l'ouverture, lecture confirmatoire de l'incertitude, rubrique de notation) ; RM-20 dépend désormais de RM-50 ; chemin court : 110 ★ sur 187.
 - **Audit GLM v6 (05/10/2026)** : triage dans `docs/AUDIT_GLM_v6_TRIAGE.md` ; RM-53 à RM-55 ajoutées (encodeurs alternatifs, représentations gelées d'un LLM, recette d'encodeur v2) ; RM-29 réécrite (bootstrap par blocs d'auteurs, question primaire unique à 95 %) ; RM-43 complétée (couverture par région de la cascade) ; chemin court inchangé : 110 ★ sur 190.
+- **RM-56 ajoutée le 05/10/2026** (distillation à professeur imbriqué) après le verdict de RM-32 : l'élève distillé de l'ensemble bat son professeur de +2,3 ; une fuite de second ordre est possible et doit être contrôlée ; chemin court : 111 ★ sur 191.
 - **Règle d'exécution** : aucune de ces tâches ne modifie un fichier qu'un lot en cours importe ; RM-41 attend la fin du lot RM-28 et se valide par équivalence statistique avant tout usage dans une fiche préenregistrée.
 
 ---

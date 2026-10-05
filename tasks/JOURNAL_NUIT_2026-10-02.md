@@ -454,3 +454,6 @@ Bras professeur LoRA terminé (15 runs, cinq plis, trois graines) : élève 0,73
 
 ### 05:11Z : reprise par surveilleur
 Distillation : 22 runs sur 30 (bras ensemble, pli 2), aucun échec ; fin vers 05:50Z.
+
+### 05:53Z : DISTILLATION : verdict à cinq plis (RM-32 terminé)
+Bras ensemble : élève 0,7952 contre 0,7605 non distillé : +3,47 [+2,25 ; +5,08] gain confirmé, et +2,31 [+0,46 ; +4,48] au-dessus du professeur (0,7721) ; élève isolé 0,7876 (écart-type 0,012) contre 0,7446 (0,027) ; exactitude 0,8714, log loss 0,433. Bras LoRA : 0,7350, −2,55 [−4,78 ; +0,02] non résolu (la macro-F1 se dégrade, exactitude et calibration s'améliorent ; après correction de priorité égalité). Aperçu de sélection : le meilleur et retenu est C2 (élève distillé de l'ensemble). Réserve : fuite de second ordre : RM-56 (professeur imbriqué, fiche hachée 2026-10-05-distillation-imbriquee, lot en attente de TERMINE29, environ 3,5 h). Recette d'encodeur v2 en cours.

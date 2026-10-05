@@ -59,3 +59,6 @@ Source : `audit_GLM_v6.md` (05/10/2026, 30 leviers classés, 12 conclusions atta
 - Domino 4 (P2-06, P2-10) : l'audit d'étiquettes précède le synthétique ; il est le prochain objectif sans GPU.
 - La trajectoire de gain : l'assemblage est épuisé (S1 +0,4) ; les gains restants sont dans les étiquettes, les données de la queue (synthétique) et le coût ; GLM situe un lecteur extérieur « convaincu jusqu'à environ 0,80 » (conjecture).
 - L'audit n'a pas fait changer le système final candidat (ensemble 50/50), ce qui est lui-même un résultat.
+
+## 5. Complément du 05/10 : distillation
+Le bras ensemble de la distillation (RM-32) a donné un gain confirmé (+3,47 contre l'encodeur non distillé, +2,31 contre son professeur) que l'audit n'avait pas anticipé (levier « distillation » hors des 30). Le contrôle de la fuite de second ordre (RM-56, professeur imbriqué) est en file ; le bras LoRA dégrade la macro-F1 (−2,55).

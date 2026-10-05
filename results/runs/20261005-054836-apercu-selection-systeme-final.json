@@ -1,0 +1,60 @@
+{
+  "created_at": "2026-10-05T05:48:36Z",
+  "kind": "measure",
+  "metrics": {
+    "candidats": {
+      "A TF-IDF caractères équilibré": {
+        "admissible": false,
+        "borne_basse_contre_meilleur_points": -10.34,
+        "macro_f1": 0.7202
+      },
+      "B TF-IDF souple (professeur ensemble)": {
+        "admissible": false,
+        "borne_basse_contre_meilleur_points": -10.01,
+        "macro_f1": 0.7271
+      },
+      "C1 élève encodeur distillé du LoRA (3 graines)": {
+        "admissible": false,
+        "borne_basse_contre_meilleur_points": -8.42,
+        "macro_f1": 0.735
+      },
+      "C2 élève encodeur distillé de l'ensemble (3 graines)": {
+        "admissible": true,
+        "borne_basse_contre_meilleur_points": 0.0,
+        "macro_f1": 0.7952
+      },
+      "D encodeur moyenné (5 graines)": {
+        "admissible": false,
+        "borne_basse_contre_meilleur_points": -6.14,
+        "macro_f1": 0.7528
+      },
+      "E ensemble encodeur + TF-IDF": {
+        "admissible": false,
+        "borne_basse_contre_meilleur_points": -4.48,
+        "macro_f1": 0.7721
+      },
+      "F LoRA 4B": {
+        "admissible": false,
+        "borne_basse_contre_meilleur_points": -5.86,
+        "macro_f1": 0.7673
+      },
+      "G ensemble LoRA + encodeur + TF-IDF": {
+        "admissible": false,
+        "borne_basse_contre_meilleur_points": -3.96,
+        "macro_f1": 0.7799
+      }
+    },
+    "delta_points": 2.0,
+    "meilleur": "C2 élève encodeur distillé de l'ensemble (3 graines)",
+    "n": 3586,
+    "retenu_par_la_regle": "C2 élève encodeur distillé de l'ensemble (3 graines)"
+  },
+  "params": {
+    "delta": 2.0
+  },
+  "run_id": "20261005-054836-apercu-selection-systeme-final",
+  "schema": "mini-1",
+  "slug": "apercu-selection-systeme-final",
+  "status": "ok",
+  "summary": "Aperçu de la règle de sélection : meilleur C2 élève encodeur distillé de l'ensemble (3 graines), retenu C2 élève encodeur distillé de l'ensemble (3 graines)"
+}
