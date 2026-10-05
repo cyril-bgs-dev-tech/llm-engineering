@@ -436,3 +436,6 @@ Pli 4 fini à 02:58Z (0,7636). LoRA regroupé 0,7673 : +4,71 [+2,40 ; +7,18] con
 
 ### 03:23Z : service de l'encodeur sur GPU consigné (RM-34)
 Encodeur sur GPU : p50 6,0 ms (fp32), 4,5 ms (bf16) contre 191 ms sur processeur ; 323 et 1 325 patients par seconde en lot ; cascade encodeur puis LoRA estimée à 38 ms contre 117 ms. Énergie du premier banc non fiable (calcul sous une seconde, échantillonnage à 1 Hz) : llmft.energy.measure_repeated ajouté (test), banc de l'encodeur corrigé, reprise en file (run_encodeur_gpu_reprise.sh après TERMINE28). Distillation en cours (30 runs).
+
+### 03:31Z : reprise par surveilleur
+Distillation en cours (2 runs sur 30 faits, environ 5 minutes chacun, fin vers 05:50Z).
