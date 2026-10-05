@@ -502,3 +502,6 @@ scripts/final_models.py (TF-IDF, encodeur, élève distillé, LoRA, entraînés 
 
 ### 08:21Z : chaîne du test scellé prête côté code
 scripts/sealed_evaluation.py (seul script autorisé ; nom arrêté dans l'index avant son écriture, ALLOWED étendu) : commandes inputs (temps A), rehearsal, check, open ; llmft.final_report (verdict en trois valeurs, comparaisons par blocs d'auteurs et par patients, conforme par famille, abstention, sensibilité ; 4 tests) ; répétition générale du temps B RÉUSSIE sur le développement (run repetition-generale-temps-b : élève distillé moins TF-IDF +7,51 [+5,45 ; +10,34], gain confirmé en développement) ; lot run_temps_a.sh (attend TERMINE37) ; élagage réarmé derrière TERMINE38. Préconditions restantes affichées par « check » : temps A (dix modèles), gel RM-50 (fichier, ADR-016, prédiction hachée), verdict RM-56.
+
+### 08:23Z : reprise par surveilleur
+Encodeur v2 : 37 runs sur 60. Lissage d'étiquettes terminé : −0,70 [−2,19 ; +0,73] contre le non distillé fp32 (non résolu, pas de gain) ; énergie 33,9 Wh par run en fp32 contre 11,9 Wh en bf16. EMA en cours (2 plis : −2,5 [−6,6 ; +1,1], partiel). Seul ECHEC des journaux : banc LoRA du 05/10 03h (corrigé, repris en file).

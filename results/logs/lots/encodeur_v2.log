@@ -35,3 +35,41 @@
 2026-10-05T06:43:10Z DEBUT enc2-ls01-pli0-s2 essai=1
 2026-10-05T06:47:51Z FIN enc2-ls01-pli0-s2 essai=1 code=0
 2026-10-05T06:47:51Z DEBUT enc2-ls01-pli1-s0 essai=1
+2026-10-05T06:52:44Z FIN enc2-ls01-pli1-s0 essai=1 code=0
+2026-10-05T06:52:44Z DEBUT enc2-ls01-pli1-s1 essai=1
+2026-10-05T06:57:40Z FIN enc2-ls01-pli1-s1 essai=1 code=0
+2026-10-05T06:57:40Z DEBUT enc2-ls01-pli1-s2 essai=1
+2026-10-05T07:02:25Z FIN enc2-ls01-pli1-s2 essai=1 code=0
+2026-10-05T07:02:25Z DEBUT enc2-ls01-pli2-s0 essai=1
+2026-10-05T07:07:05Z FIN enc2-ls01-pli2-s0 essai=1 code=0
+2026-10-05T07:07:05Z DEBUT enc2-ls01-pli2-s1 essai=1
+2026-10-05T07:11:51Z FIN enc2-ls01-pli2-s1 essai=1 code=0
+2026-10-05T07:11:51Z DEBUT enc2-ls01-pli2-s2 essai=1
+2026-10-05T07:17:03Z FIN enc2-ls01-pli2-s2 essai=1 code=0
+2026-10-05T07:17:03Z DEBUT enc2-ls01-pli3-s0 essai=1
+2026-10-05T07:22:05Z FIN enc2-ls01-pli3-s0 essai=1 code=0
+2026-10-05T07:22:05Z DEBUT enc2-ls01-pli3-s1 essai=1
+2026-10-05T07:26:56Z FIN enc2-ls01-pli3-s1 essai=1 code=0
+2026-10-05T07:26:56Z DEBUT enc2-ls01-pli3-s2 essai=1
+2026-10-05T07:31:42Z FIN enc2-ls01-pli3-s2 essai=1 code=0
+2026-10-05T07:31:42Z DEBUT enc2-ls01-pli4-s0 essai=1
+2026-10-05T07:37:03Z FIN enc2-ls01-pli4-s0 essai=1 code=0
+2026-10-05T07:37:03Z DEBUT enc2-ls01-pli4-s1 essai=1
+2026-10-05T07:41:41Z FIN enc2-ls01-pli4-s1 essai=1 code=0
+2026-10-05T07:41:41Z DEBUT enc2-ls01-pli4-s2 essai=1
+2026-10-05T07:46:21Z FIN enc2-ls01-pli4-s2 essai=1 code=0
+2026-10-05T07:46:21Z DEBUT enc2-ema99-pli0-s0 essai=1
+2026-10-05T07:51:12Z FIN enc2-ema99-pli0-s0 essai=1 code=0
+2026-10-05T07:51:12Z DEBUT enc2-ema99-pli0-s1 essai=1
+2026-10-05T07:56:26Z FIN enc2-ema99-pli0-s1 essai=1 code=0
+2026-10-05T07:56:26Z DEBUT enc2-ema99-pli0-s2 essai=1
+2026-10-05T08:01:50Z FIN enc2-ema99-pli0-s2 essai=1 code=0
+2026-10-05T08:01:50Z DEBUT enc2-ema99-pli1-s0 essai=1
+2026-10-05T08:06:46Z FIN enc2-ema99-pli1-s0 essai=1 code=0
+2026-10-05T08:06:46Z DEBUT enc2-ema99-pli1-s1 essai=1
+2026-10-05T08:11:44Z FIN enc2-ema99-pli1-s1 essai=1 code=0
+2026-10-05T08:11:44Z DEBUT enc2-ema99-pli1-s2 essai=1
+2026-10-05T08:17:05Z FIN enc2-ema99-pli1-s2 essai=1 code=0
+2026-10-05T08:17:05Z DEBUT enc2-ema99-pli2-s0 essai=1
+2026-10-05T08:22:21Z FIN enc2-ema99-pli2-s0 essai=1 code=0
+2026-10-05T08:22:21Z DEBUT enc2-ema99-pli2-s1 essai=1
