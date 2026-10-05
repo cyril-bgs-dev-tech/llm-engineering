@@ -481,3 +481,6 @@ Encodeur v2 : 18 runs sur 60 (facteur lissage au pli 1), aucun échec ; fin vers
 
 ### 07:16Z : RM-45 préparé
 llmft.prune (3 tests), scripts/p1_encoder_pruned.py (68 millions de paramètres contre 111, vérifié sur le vrai modèle), scripts/bench_pruned_latency.py, fiche hachée 2026-10-05-encodeur-elague (30 runs, avec et sans distillation ; règle : retenu si équivalent et au moins 1,5 fois plus rapide), lot run_encodeur_elague.sh en détaché (attend TERMINE31). Modes exécutables corrigés dans l'index. Encodeur v2 : 22 runs sur 60.
+
+### 07:32Z : reprise par surveilleur
+Analyse de l'encodeur élagué préparée (scripts/prune_analysis.py, lot post_prune.sh détaché, TERMINE34 après TERMINE33) ; exécution à vide correcte (aucun run élagué encore). Encodeur v2 : 26 runs sur 60.
