@@ -469,3 +469,6 @@ Présentation à jour (363 tests, 252 runs, 45 fiches hachées, 34,4 h sur 90, b
 
 ### 06:28Z : push effectué (origin/main, 281 commits, dépôt privé inchangé)
 gitleaks sur les 281 commits : aucune fuite ; make check vert avant le push. Dernier commit publié : e3869e8.
+
+### 06:37Z : CI GitHub
+Premier push : CI en échec (EXE001 : scripts à shebang en mode 100644 dans l'index ; invisible en local sur /mnt/d) ; corrigé (103 modes, garde check_exec_bits.py dans check-fast, test) ; second push 15b980e : CI verte (3 min 23). Encodeur v2 en cours.
