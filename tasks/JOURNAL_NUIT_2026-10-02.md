@@ -403,3 +403,6 @@ Pli 3 fini à 23:24Z : macro-F1 0,7676 ; +6,10 [+2,15 ; +10,39] contre TF-IDF (r
 
 ### 23:53Z : reprise par surveilleur (domino 5 préparé)
 llmft.selection (règle de non-infériorité puis coût, 5 tests) et scripts/final_selection_preview.py (aperçu sur les candidats disponibles : meilleur et retenu actuels = ensemble encodeur + TF-IDF ; encodeur seul non admissible, borne basse −3,85) ; scripts/post_dominos.sh lancé en détaché (attend TERMINE25 : aperçu avec le LoRA et cascade validée hors pli). Pli 4 du LoRA en cours (fin vers 03:00Z).
+
+### 00:11Z : reprise par surveilleur
+Rien à consigner (LoRA pli 4 en cours, GPU 88 %, fin vers 03:00Z).
