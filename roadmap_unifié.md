@@ -479,7 +479,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | RM-44 | Export ONNX Runtime et quantification statique étalonnée de l'encodeur | Dépendance au verrou seulement si retenue |
 | RM-39 | Robustesse des modèles appris : perturbations, ablations de contenu, leave-one-author-out | Le TF-IDF à caractères est déjà insensible |
 | RM-40 | Cascade par seuil de confiance (TF-IDF, encodeur, LoRA) (cascade_cv à cinq plis fait : encodeur puis LoRA non-inférieur, 93 % sans LoRA ; TF-IDF puis LoRA non) : calcul alloué selon la difficulté du cas | Aperçu hors ligne : 50 à 80 % des cas sans le LoRA, sans perte de macro-F1 ; seuil à valider sur plis distincts |
-| RM-43 | Routage de la cascade par taille de l'ensemble conforme | Compare au seuil de probabilité |
+| RM-43 | Routage de la cascade par taille de l'ensemble conforme | Compare au seuil de probabilité ; **fait le 05/10/2026** : non-infériorité, 45,5 % sans LoRA, couverture par région mesurée (0,95 et 0,91) ; la cascade à seuil, plus économe, n'a pas sa couverture par région mesurée |
 
 ### Étape R15 : industrialisation
 
