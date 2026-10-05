@@ -1,4 +1,4 @@
-# Protocole v2 (BROUILLON du 04/10/2026, non appliqué, protocole v1 gelé inchangé)
+# Protocole v2 (BROUILLON du 04/10/2026 ; REMPLACÉ le 05/10/2026 par `PROTOCOLE_V2.md`, accepté ; conservé pour l'historique)
 
 À accepter par Cyril avant tout run du second cycle et avant toute ouverture du test scellé. Il met en œuvre l'ADR-015 ; il ne modifie aucun fichier de `experiments/frozen/`.
 

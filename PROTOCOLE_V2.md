@@ -1,0 +1,47 @@
+# Protocole v2 (accepté le 05/10/2026)
+
+**Statut** : accepté par Cyril le 05/10/2026 (message : « débloque les autres actions en attente qui attendaient ma validation, sauf les actions générant un surcoût ou un coût de facturation externe ») ; met en œuvre l'ADR-015. **Le protocole v1 (`PROTOCOLE.md`, instantané `experiments/frozen/PROTOCOLE-2026-10-03.md`) reste gelé et inchangé** ; ce document est une nouvelle version qui s'applique au **second cycle** et à l'**ouverture confirmatoire du test scellé**. L'acceptation vaut pour l'ensemble des points ci-dessous ; Cyril peut en réviser un par une ligne (nouvelle version et ADR si une valeur de cap change).
+
+Reste en vigueur sans changement : la macro-F1 sur 17 chapitres (AUTRE exclue), δ = 2,0 point, le verdict en trois valeurs d'ADR-007 (**gain confirmé** si L > δ, **absence de gain utile** si U < δ, **non résolu** sinon, avec L et U les bornes de l'IC à 95 %), les fiches préenregistrées hachées avant tout run, le registre en ajout seul, la règle « un chiffre sans `run_id` n'existe pas », la procédure d'ouverture du test scellé en deux temps de `PROTOCOLE.md` 6.8 (marqueur à chemin fixe, répétition générale, écriture atomique, « consommé sans résultat »), le cap de calcul B = 90 h (34,6 h enregistrées le 05/10/2026), et la règle de Cyril du 05/10/2026 : **aucun test n'entraîne de coût** (location de GPU distant, stockage payant, API payante) ; tout se fait en local.
+
+## 1. Ce que les mesures du premier cycle imposent
+- La recette gelée à 2 époques sous-estimait les modèles appris (encodeur 0,448 contre 0,73 ; LoRA 0,587 contre 0,78) : **recettes mûres obligatoires**.
+- Cinq classes de 27 à 63 patients portent 85 % de la variance de la macro-F1 ; un run isolé a un écart-type d'environ 2,3 points (interaction pli × graine et non-déterminisme du GPU).
+- Les erreurs confiantes sont surtout des conventions de choix du diagnostic principal (relecture exploratoire de 65 cas : 28 % d'étiquettes contestables, 69 % de rivales défendables, 3 % d'erreurs du modèle) : le plafond de macro-F1 est celui de l'accord avec une convention de codage.
+- La distillation de l'ensemble encodeur + TF-IDF vers un seul encodeur a donné un gain confirmé en développement (+3,47 [+2,25 ; +5,08], au-dessus de son professeur), avec une **fuite de second ordre possible** à contrôler (RM-56) ; le LoRA à 10 époques n'est pas distinct de l'encodeur moyenné (+1,45 [−1,10 ; +4,09]).
+
+## 2. Ce qui change par rapport à la v1
+| Élément | v1 gelé | v2 |
+|---|---|---|
+| Recettes | 4 taux, 2 époques | recettes mûres par famille (encodeur et LoRA 10 époques ; TF-IDF caractères 3 à 5, poids équilibrés) ; **budget de réglage égal par famille** (mêmes nombre de runs, heures, critère et pli de sélection), grilles préenregistrées avant les runs de la famille |
+| Développement | un pli, cinq graines | **cinq plis** regroupés (3 586 prédictions hors pli) et au moins trois graines pour les familles bon marché ; **intervalles par bootstrap de blocs d'auteurs** (`llmft.cluster_bootstrap`), jamais par patients seuls |
+| Systèmes | LoRA de référence, H1 à H3 | liste fermée des candidats (section 4) ; H1 (distillation) mesurée en développement (RM-32), H2 et H3 reportées |
+| Question primaire (unique) | trois comparaisons (Bonferroni) | **« le système final, désigné par la règle de la section 4 et figé avant l'ouverture, dépasse-t-il le meilleur TF-IDF de plus de δ ? »**, IC 95 % non ajusté (une seule comparaison primaire), verdict en trois valeurs |
+| Comparaisons secondaires | : | système final contre l'ensemble encodeur + TF-IDF et contre le LoRA : rapportées avec IC 95 %, **sans verdict** |
+| Règle de puissance | largeur moyenne entre graines d'un pli ≤ 4,0 (échec : 12,2) | deux niveaux, section 3 |
+| Incertitude | LAC marginal | LAC marginal **et** conditionnel par famille (Mondrian) ; abstention ; rapportés avec Wilson |
+| Rapports | : | analyses de sensibilité (sans les chapitres XVIII et XXI), exactitude par sous-ensemble d'usage, leave-one-author-out de développement (« nouveaux auteurs ») |
+
+## 3. Règle de puissance v2 (deux niveaux, et ce qu'elle ne garantit pas)
+**Niveau 1, développement** (condition d'usage des comparaisons de développement pour la sélection) : largeur de l'IC à 95 % de la différence appariée entre deux systèmes, bootstrap de blocs d'auteurs, 5 000 répliques, sur les 3 586 prédictions hors pli. Seuil 4,0. **Mesuré le 05/10/2026** : ensemble moins TF-IDF 3,39 (atteint) ; encodeur moyenné moins TF-IDF 4,70 ; LoRA moins TF-IDF 4,78 ; LoRA moins ensemble 4,26 (non atteint pour ces trois dernières paires). À 98,33 %, l'ensemble moins TF-IDF est à 4,24 : **la règle ne vaut que pour une comparaison primaire unique** (runs `glm-v6-blocs-auteurs`, `glm-v6-blocs-auteurs-niveaux`).
+
+**Niveau 2, au format du test scellé (633 patients)** : largeur attendue de l'IC à 95 %, bootstrap de patients stratifié par classe aux effectifs du test scellé (méthode de `PROTOCOLE.md` 6.3, effectifs `test_class_counts` ; aucune étiquette du test lue) sur les prédictions de développement (run `puissance-au-format-du-test-scelle`) : **ensemble moins TF-IDF 7,65 ; élève distillé (ensemble) moins TF-IDF 10,24 ; LoRA moins TF-IDF 9,65 ; élève moins ensemble 7,97 ; élève moins LoRA 9,85 points**. **Aucune paire n'atteint 4,0** : avec 633 patients dont des classes de 4 à 9, la v1 aurait classé tout le test en EXPLORE. La v2 le déclare d'avance et en tire les conséquences suivantes, **écrites avant toute ouverture** :
+1. Le test scellé fournit une **estimation non biaisée** du système final et de ses comparaisons, avec leur IC, quelle que soit la largeur.
+2. Un « gain confirmé » (L > δ = 2,0) pour la question primaire exige un écart observé supérieur à environ 6 à 7 points ; **un résultat « non résolu » est le résultat attendu pour une partie des scénarios** et n'est pas un échec du protocole. Puissance approximative (approximation normale, vrai gain égal à l'estimation de développement, qui est optimiste) : environ 56 % si le système final est l'élève distillé (gain de développement +7,5), environ 38 % s'il est l'ensemble (+5,2).
+3. Les comparaisons secondaires sont rapportées sans verdict.
+4. Si le résultat est « non résolu », le rapport dit combien de patients ou de graines il faudrait et ne le reformule pas.
+
+## 4. Candidats, règle de sélection et gel du système final (RM-50)
+**Liste fermée, par coût d'inférence croissant** : A TF-IDF caractères équilibré ; B TF-IDF à étiquettes souples ; C1 élève encodeur distillé du LoRA ; C2 élève encodeur distillé de l'ensemble (graines 1000 à 1002) ; D encodeur moyenné (5 graines) ; E ensemble encodeur + TF-IDF 50/50 ; F LoRA 4B ; G ensemble LoRA + encodeur + TF-IDF à parts égales. **Aucun candidat n'est ajouté après lecture des résultats.**
+**Règle** (`llmft.selection`) : sur les 3 586 prédictions hors pli, un candidat est admissible si la borne basse de (candidat moins meilleur candidat), IC 95 % par blocs d'auteurs, est > −δ ; le système final est l'admissible le moins coûteux, à coût égal le plus haut en macro-F1. **Aperçu du 05/10/2026** (run `apercu-selection-systeme-final`) : le meilleur et le retenu sont C2 (0,7952) ; aucun autre n'est admissible.
+**Condition de maintien de C2** : le contrôle de la fuite de second ordre (RM-56, fiche `2026-10-05-distillation-imbriquee`) donne « gain préservé » ou « gain partiel » ; sinon (« gain non préservé » ou « fuite significative ») C1 et C2 sortent de la liste et la règle est rejouée sur A, B, D, E, F, G.
+**Gel (RM-50)** : avant l'ouverture, ADR de gel datée avec la composition exacte (graines, poids, hyperparamètres de distillation, seuils de température, niveaux conformes, familles de Mondrian, seuil d'abstention, empreintes des modèles), **prédiction chiffrée du test scellé et de son intervalle écrite et hachée** (brouillon : `docs/BROUILLON_GEL_SYSTEME_FINAL.md`).
+
+## 5. Ouverture du test scellé : préconditions et contenu
+Préconditions, toutes vérifiées par écrit avant l'ouverture : (1) verdict de RM-56 ; (2) gel RM-50 et prédiction hachée ; (3) modèles de la liste **entraînés sur la totalité des 3 586 patients de développement** (une exécution par candidat retenu : TF-IDF, encodeurs à 5 graines, élève à 3 graines, ensemble, et LoRA à une graine) avec leurs empreintes ; (4) **temps A** : prédictions sur les textes du test, sans aucune étiquette, écriture unique par modèle avec empreinte ; (5) répétition générale du temps B réussie ; (6) cap B respecté. **Temps B** : une seule ouverture ; métriques du système final et de tous les candidats, IC par blocs d'auteurs et par patients, verdict de la question primaire, couverture conforme marginale et par famille (RM-51), abstention, sensibilité aux chapitres XVIII et XXI. Aucun réglage, aucun seuil, aucun choix de candidat sur le test. Le benchmark public (RM-49) se lit **après** l'ouverture.
+
+## 6. Réserves déclarées
+- La fuite de second ordre de la distillation n'atteint pas le test scellé (aucun professeur ni élève n'y est entraîné), mais elle a pu influencer le **choix** du système final en développement ; d'où RM-56.
+- La relecture des erreurs confiantes est un jugement non expert, à contre-expertiser par un codeur avant citation externe.
+- Le corpus est fictif et l'étiquette vient d'un scénario : aucun chiffre ne se transpose à des textes réels.
+- Les notes de la présentation sont des estimations de l'assistante, non des mesures.

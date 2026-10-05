@@ -487,3 +487,6 @@ Analyse de l'encodeur élagué préparée (scripts/prune_analysis.py, lot post_p
 
 ### 07:39Z : précision de Cyril sur les coûts (message direct)
 La location de GPU distant et le stockage payant restent des options prévues, mais aucun test n'entraîne de coût : tout se teste en local. Consigné dans le contrat de nuit (exclusions), la feuille de route (R16) et la mémoire. Rien dans la chaîne en cours n'utilise de ressource payante (RTX 5090 locale, disque local).
+
+### 07:52Z : actions en attente débloquées par Cyril (hors coût externe)
+Message de Cyril : « débloque les autres actions en attente qui attendaient ma validation (sauf celles générant un surcoût ou une facturation externe) ». Fait : PROTOCOLE_V2.md accepté (instantané gelé haché, ADR-015 acceptée, RM-37 coché), avec la puissance au format du test scellé mesurée (largeurs 7,7 à 10,2 : déclaré d'avance, puissance approximative 56 % ou 38 %). À faire dans l'ordre : tag de release, RM-49 (jeu public sans coût), modèles à entraîner sur les 3 586 patients, gel RM-50 après RM-56, temps A, répétition générale, ouverture unique du test scellé. Non faisable par moi : accepter les conditions MedGemma à ta place, envoyer un courriel aux auteurs de PARHAF, coller des pages Kaggle.

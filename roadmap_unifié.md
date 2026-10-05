@@ -353,7 +353,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | G-P2 | Scorecard G-P2 | |
 | P3-02 | Élève distillé | |
 | P3-07 | Entraîner les 20 modèles gelés ; l'évaluation est celle de RM-20 (ADR-010) | Pas de verdict avant RM-20 |
-| RM-37 | **Acceptation du protocole v2 par Cyril** | Avant tout run du second cycle et avant l'ouverture |
+| RM-37 | **Acceptation du protocole v2 par Cyril** | **Acceptée le 05/10/2026** : `PROTOCOLE_V2.md` (instantané gelé) ; la règle de puissance v2 ne passe pas au format du test scellé (largeur 7,7 à 10,2 contre 4,0), déclaré d'avance |
 | RM-50 | **Gel du système final et prédiction chiffrée du test scellé** | Règle de sélection écrite avant lecture ; rien ne change après ; brouillon : `docs/BROUILLON_GEL_SYSTEME_FINAL.md` |
 | RM-20 | Ouverture unique du test scellé | Un seul accès journalisé |
 | RM-21 | **Porte go/no-go après le verdict de distillation** | |

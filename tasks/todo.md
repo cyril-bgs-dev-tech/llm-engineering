@@ -320,7 +320,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P3-07 (mesure) : Entraîner les 20 modèles gelés (4 recettes × 5 graines : référence, distillation, tâche voisine, les deux), sans les évaluer ; l'évaluation est celle de RM-20
   - Preuve de fin : 20 runs au registre (`ok` ou `failed` classés) avec adaptateurs sauvegardés et leur empreinte ; les prédictions sur le texte du test relèvent du temps A de RM-20
   - Skills : paired-comparison ; dépendances : P3-02, P2-08
-- [ ] RM-37 (décision) : Acceptation du protocole v2 (ADR-015) par Cyril avant tout run du second cycle et avant l'ouverture du test scellé
+- [x] RM-37 (décision) : Acceptation du protocole v2 (ADR-015) par Cyril avant tout run du second cycle et avant l'ouverture du test scellé
   - Preuve de fin : Décision datée de Cyril, ADR mise à jour ; protocole v1 gelé inchangé
   - Skills : doubt-driven-development ; dépendances : RM-29
 - [ ] RM-50 (décision) : Gel du système final avant l'ouverture du test scellé : règle de sélection écrite avant lecture des prédictions complètes (cinq plis du LoRA, élèves distillés, ensemble) ; candidat unique, composition de l'ensemble, seuils conformes et d'abstention figés ; prédiction chiffrée de la macro-F1 du test scellé et de son intervalle écrite et hachée

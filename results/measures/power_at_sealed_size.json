@@ -1,0 +1,87 @@
+{
+ "ensemble moins TF-IDF": {
+  "95": {
+   "largeur_points": 7.65,
+   "ic": [
+    1.4,
+    9.04
+   ]
+  },
+  "98_33": {
+   "largeur_points": 9.55,
+   "ic": [
+    0.63,
+    10.18
+   ]
+  },
+  "difference_observee_developpement_points": 5.2
+ },
+ "élève distillé (ensemble) moins TF-IDF": {
+  "95": {
+   "largeur_points": 10.24,
+   "ic": [
+    2.55,
+    12.8
+   ]
+  },
+  "98_33": {
+   "largeur_points": 12.61,
+   "ic": [
+    1.38,
+    13.99
+   ]
+  },
+  "difference_observee_developpement_points": 7.51
+ },
+ "LoRA moins TF-IDF": {
+  "95": {
+   "largeur_points": 9.65,
+   "ic": [
+    0.23,
+    9.89
+   ]
+  },
+  "98_33": {
+   "largeur_points": 11.91,
+   "ic": [
+    -0.82,
+    11.09
+   ]
+  },
+  "difference_observee_developpement_points": 4.71
+ },
+ "élève distillé (ensemble) moins ensemble": {
+  "95": {
+   "largeur_points": 7.97,
+   "ic": [
+    -1.47,
+    6.5
+   ]
+  },
+  "98_33": {
+   "largeur_points": 9.79,
+   "ic": [
+    -2.3,
+    7.5
+   ]
+  },
+  "difference_observee_developpement_points": 2.31
+ },
+ "élève distillé (ensemble) moins LoRA": {
+  "95": {
+   "largeur_points": 9.85,
+   "ic": [
+    -2.27,
+    7.59
+   ]
+  },
+  "98_33": {
+   "largeur_points": 12.0,
+   "ic": [
+    -3.39,
+    8.61
+   ]
+  },
+  "difference_observee_developpement_points": 2.8
+ }
+}

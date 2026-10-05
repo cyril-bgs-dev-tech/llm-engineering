@@ -1,6 +1,6 @@
-# ADR-015 : second cycle, recettes mûres et budget de réglage égal par famille (PROPOSÉE, non appliquée)
+# ADR-015 : second cycle, recettes mûres et budget de réglage égal par famille (ACCEPTÉE le 05/10/2026)
 
-Statut : **proposée** le 04/10/2026 (audit GLM v4, décision déléguée Q20 et Q21). **Le protocole gelé n'est pas modifié** : cette ADR décrit la version suivante, à accepter par Cyril avant tout run du second cycle.
+Statut : **acceptée par Cyril le 05/10/2026** (message : « débloque les autres actions en attente qui attendaient ma validation, sauf celles générant un surcoût ou une facturation externe ») ; mise en œuvre par `PROTOCOLE_V2.md` (instantané `experiments/frozen/PROTOCOLE-V2-2026-10-05.md`). Historique : proposée le 04/10/2026 (audit GLM v4, décision déléguée Q20 et Q21). **Le protocole gelé n'est pas modifié** : cette ADR décrit la version suivante, à accepter par Cyril avant tout run du second cycle.
 
 ## Contexte (mesures du 04/10/2026, pli 0 sauf mention, EXPLORE)
 - La recette gelée (4 taux, 2 époques) sous-estime fortement les modèles appris : CamemBERT-bio passe de 0,448 (2 époques) à 0,553 (6) puis à 0,73 environ (10 à 20 époques, cinq graines 0,7293 ± 0,0256) ; le meilleur taux de chaque famille est toujours au bord supérieur de la grille ; le 4B LoRA croît strictement avec le taux.
