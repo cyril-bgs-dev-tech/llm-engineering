@@ -445,3 +445,6 @@ Analyse de la distillation préparée (scripts/distill_analysis.py, lot post_dis
 
 ### 04:11Z : reprise par surveilleur
 Distillation : 10 runs sur 30, aucun échec (fin vers 05:50Z).
+
+### 04:31Z : reprise par surveilleur
+Distillation : 14 runs sur 30, aucun échec. Pas de modification de p3_distill.py pendant le lot (règle du lot en cours).
