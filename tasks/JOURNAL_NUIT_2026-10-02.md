@@ -505,3 +505,6 @@ scripts/sealed_evaluation.py (seul script autorisé ; nom arrêté dans l'index 
 
 ### 08:23Z : reprise par surveilleur
 Encodeur v2 : 37 runs sur 60. Lissage d'étiquettes terminé : −0,70 [−2,19 ; +0,73] contre le non distillé fp32 (non résolu, pas de gain) ; énergie 33,9 Wh par run en fp32 contre 11,9 Wh en bf16. EMA en cours (2 plis : −2,5 [−6,6 ; +1,1], partiel). Seul ECHEC des journaux : banc LoRA du 05/10 03h (corrigé, repris en file).
+
+### 09:11Z : reprise par surveilleur
+Encodeur v2 : 46 runs sur 60 (facteur curriculum) ; une relance de tokenizer consignée par run_lot (essai 2), sans conséquence.
