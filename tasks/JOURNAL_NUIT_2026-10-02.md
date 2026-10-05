@@ -472,3 +472,6 @@ gitleaks sur les 281 commits : aucune fuite ; make check vert avant le push. Der
 
 ### 06:37Z : CI GitHub
 Premier push : CI en échec (EXE001 : scripts à shebang en mode 100644 dans l'index ; invisible en local sur /mnt/d) ; corrigé (103 modes, garde check_exec_bits.py dans check-fast, test) ; second push 15b980e : CI verte (3 min 23). Encodeur v2 en cours.
+
+### 06:39Z : facteur bf16 consigné (RM-41 encodeur)
+bf16 : équivalent (−0,07 [−1,67 ; +1,69]), 95 s par run contre 214 s (×2,25), 11,9 Wh par run ; adopté pour le développement de l'encodeur. Lissage d'étiquettes en cours.

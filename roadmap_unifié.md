@@ -316,7 +316,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | RM-28 | LoRA mûr aux plis 2, 3 et 4 : évaluation à cinq plis et professeur strictement hors pli (environ 10,5 h de GPU) | **Fait le 05/10/2026** : LoRA regroupé 0,7673, +4,71 contre le TF-IDF (résolu), +1,45 contre l'encodeur (non résolu), −0,49 contre l'ensemble ; bifurcation (b) non remplie |
 | RM-29 | Règle de puissance v2 : largeur de la différence entre deux systèmes sur cinq plis, seuil 4,0 | Fait en partie : 3,09 par patients, **3,39 par blocs d'auteurs à 95 %** (question primaire unique), 4,24 à 98,33 % ; reste à refaire avec le LoRA |
 | RM-52 | Rubrique de notation vérifiable par composante, correspondance Q1 à Q12, chaîne de dominos | Fait le 05/10/2026 (section 4.1) ; écart note estimée contre scorecard à chaque porte |
-| RM-41 | Débit d'entraînement à résultat équivalent (checkpointing, noyaux linéaires, bf16 de l'encodeur) | Jamais pendant un lot en cours ; équivalence statistique d'abord |
+| RM-41 | Débit d'entraînement à résultat équivalent (checkpointing, noyaux linéaires, bf16 de l'encodeur) | Jamais pendant un lot en cours ; équivalence statistique d'abord ; **bf16 de l'encodeur fait le 05/10/2026 : équivalent (−0,07 [−1,67 ; +1,69]), ×2,25 plus rapide** ; reste le LoRA (checkpointing, noyaux) |
 | RM-17 | **Porte go/no-go après la LoRA de référence** | |
 | G-P1 | Scorecard G-P1 | **Jalon A** |
 
