@@ -448,3 +448,6 @@ Distillation : 10 runs sur 30, aucun échec (fin vers 05:50Z).
 
 ### 04:31Z : reprise par surveilleur
 Distillation : 14 runs sur 30, aucun échec. Pas de modification de p3_distill.py pendant le lot (règle du lot en cours).
+
+### 04:51Z : reprise par surveilleur (distillation : bras LoRA complet)
+Bras professeur LoRA terminé (15 runs, cinq plis, trois graines) : élève 0,7350 contre encodeur non distillé 0,7605 : −2,55 [−4,78 ; +0,02] non résolu ; exactitude 0,8625 (supérieure à celle du professeur, 0,8514, et du non distillé, 0,8469), log loss 0,589 (professeur 0,895) ; macro-F1 après correction de priorité 0,7533 contre 0,7519 (égalité). Bras ensemble : pli 0 seulement, élève 0,7861 contre 0,7548 (+3,13 non résolu). Verdict final à TERMINE30.
