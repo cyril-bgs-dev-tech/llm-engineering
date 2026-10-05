@@ -19,3 +19,43 @@
 2026-10-05T04:03:51Z DEBUT distill-lora-pli3-s0 essai=1
 2026-10-05T04:08:43Z FIN distill-lora-pli3-s0 essai=1 code=0
 2026-10-05T04:08:43Z DEBUT distill-lora-pli3-s1 essai=1
+2026-10-05T04:13:32Z FIN distill-lora-pli3-s1 essai=1 code=0
+2026-10-05T04:13:32Z DEBUT distill-lora-pli3-s2 essai=1
+2026-10-05T04:18:19Z FIN distill-lora-pli3-s2 essai=1 code=0
+2026-10-05T04:18:19Z DEBUT distill-lora-pli4-s0 essai=1
+2026-10-05T04:23:11Z FIN distill-lora-pli4-s0 essai=1 code=0
+2026-10-05T04:23:11Z DEBUT distill-lora-pli4-s1 essai=1
+2026-10-05T04:28:04Z FIN distill-lora-pli4-s1 essai=1 code=0
+2026-10-05T04:28:04Z DEBUT distill-lora-pli4-s2 essai=1
+2026-10-05T04:33:02Z FIN distill-lora-pli4-s2 essai=1 code=0
+2026-10-05T04:33:02Z DEBUT distill-ens-pli0-s0 essai=1
+2026-10-05T04:37:58Z FIN distill-ens-pli0-s0 essai=1 code=0
+2026-10-05T04:37:58Z DEBUT distill-ens-pli0-s1 essai=1
+2026-10-05T04:42:48Z FIN distill-ens-pli0-s1 essai=1 code=0
+2026-10-05T04:42:48Z DEBUT distill-ens-pli0-s2 essai=1
+2026-10-05T04:47:36Z FIN distill-ens-pli0-s2 essai=1 code=0
+2026-10-05T04:47:36Z DEBUT distill-ens-pli1-s0 essai=1
+2026-10-05T04:52:23Z FIN distill-ens-pli1-s0 essai=1 code=0
+2026-10-05T04:52:23Z DEBUT distill-ens-pli1-s1 essai=1
+2026-10-05T04:57:15Z FIN distill-ens-pli1-s1 essai=1 code=0
+2026-10-05T04:57:15Z DEBUT distill-ens-pli1-s2 essai=1
+2026-10-05T05:02:02Z FIN distill-ens-pli1-s2 essai=1 code=0
+2026-10-05T05:02:02Z DEBUT distill-ens-pli2-s0 essai=1
+2026-10-05T05:06:50Z FIN distill-ens-pli2-s0 essai=1 code=0
+2026-10-05T05:06:50Z DEBUT distill-ens-pli2-s1 essai=1
+2026-10-05T05:11:36Z FIN distill-ens-pli2-s1 essai=1 code=0
+2026-10-05T05:11:36Z DEBUT distill-ens-pli2-s2 essai=1
+2026-10-05T05:16:36Z FIN distill-ens-pli2-s2 essai=1 code=0
+2026-10-05T05:16:36Z DEBUT distill-ens-pli3-s0 essai=1
+2026-10-05T05:21:33Z FIN distill-ens-pli3-s0 essai=1 code=0
+2026-10-05T05:21:33Z DEBUT distill-ens-pli3-s1 essai=1
+2026-10-05T05:26:35Z FIN distill-ens-pli3-s1 essai=1 code=0
+2026-10-05T05:26:35Z DEBUT distill-ens-pli3-s2 essai=1
+2026-10-05T05:31:28Z FIN distill-ens-pli3-s2 essai=1 code=0
+2026-10-05T05:31:28Z DEBUT distill-ens-pli4-s0 essai=1
+2026-10-05T05:36:23Z FIN distill-ens-pli4-s0 essai=1 code=0
+2026-10-05T05:36:23Z DEBUT distill-ens-pli4-s1 essai=1
+2026-10-05T05:41:17Z FIN distill-ens-pli4-s1 essai=1 code=0
+2026-10-05T05:41:17Z DEBUT distill-ens-pli4-s2 essai=1
+2026-10-05T05:46:06Z FIN distill-ens-pli4-s2 essai=1 code=0
+2026-10-05T05:46:06Z TERMINE24

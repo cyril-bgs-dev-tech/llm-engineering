@@ -457,3 +457,6 @@ Distillation : 22 runs sur 30 (bras ensemble, pli 2), aucun échec ; fin vers 05
 
 ### 05:53Z : DISTILLATION : verdict à cinq plis (RM-32 terminé)
 Bras ensemble : élève 0,7952 contre 0,7605 non distillé : +3,47 [+2,25 ; +5,08] gain confirmé, et +2,31 [+0,46 ; +4,48] au-dessus du professeur (0,7721) ; élève isolé 0,7876 (écart-type 0,012) contre 0,7446 (0,027) ; exactitude 0,8714, log loss 0,433. Bras LoRA : 0,7350, −2,55 [−4,78 ; +0,02] non résolu (la macro-F1 se dégrade, exactitude et calibration s'améliorent ; après correction de priorité égalité). Aperçu de sélection : le meilleur et retenu est C2 (élève distillé de l'ensemble). Réserve : fuite de second ordre : RM-56 (professeur imbriqué, fiche hachée 2026-10-05-distillation-imbriquee, lot en attente de TERMINE29, environ 3,5 h). Recette d'encodeur v2 en cours.
+
+### 05:56Z : reprise par surveilleur (encodeur v2 : premiers runs bf16)
+Facteur bf16 : 94 s d'entraînement par run contre 214 s en fp32 (×2,3), pic mémoire 5,3 Gio, 11,8 Wh par run (énergie mesurée sur toute la durée d'entraînement) ; macro-F1 du pli 0 : 0,7546 et 0,7598 (fp32 : 0,7714 et 0,7079 pour les mêmes graines). Verdict d'équivalence à la fin des 15 runs du facteur.
