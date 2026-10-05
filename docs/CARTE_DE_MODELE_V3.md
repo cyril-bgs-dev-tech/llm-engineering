@@ -14,7 +14,7 @@ PARHAF (4 254 comptes rendus fictifs, 4 219 utilisés, 104 auteurs, 17 chapitres
 | TF-IDF caractères 3 à 5, poids équilibrés (service) | 0,7202 | 5 plis | p50 1,9 ms, p95 4,0 ms (CPU) | 20,4 Mo |
 | Encodeur CamemBERT-bio, 10 époques, moyenne de 5 graines | 0,7331 ; 0,7532 ; 0,7613 ; 0,7428 ; 0,7684 | plis 0 à 4 | 191 ms par modèle (CPU 8 threads) | 443 Mo par modèle |
 | Ensemble 50/50 encodeur (5) + TF-IDF | 0,7626 ; 0,7512 ; 0,7923 ; 0,7746 ; 0,7735 | plis 0 à 4 | environ 1 s (CPU) | environ 2,2 Go |
-| Qwen3.5-4B LoRA, 10 époques (pli 0 : deux graines 0,7795 et 0,7893 ; pli 1 : une graine) | 0,7844 (moyenne) ; 0,7415 | plis 0, 1 | p50 117 ms (GPU) | adaptateur 196 Mo |
+| Qwen3.5-4B LoRA, 10 époques (pli 0 : deux graines 0,7795 et 0,7893 ; pli 1 : une graine) | 0,7844 (moyenne) ; 0,7415 | plis 0, 1 | p50 117 ms (GPU, adaptateur non fusionné) ; **61 ms fusionné en bf16**, 8,6 Wh pour 1 000 patients | adaptateur 196 Mo |
 Écarts contre le meilleur TF-IDF : ensemble +4,5, +6,2, +4,3, +6,7, +4,7 (résolu aux plis 1 à 4) ; **agrégat des cinq plis (3 586 patients) : ensemble +5,20 [+3,69 ; +6,78], encodeur moyenné +3,27 [+1,00 ; +5,55] (runs `v2-power-preview-5-plis`, `pli3-encodeur-ensembles`, `pli4-encodeur-ensembles`)** ; LoRA +6,4, +5,3 (résolu aux deux plis) ; encodeur moyenné seul +1,5, +6,4, +1,2 (non résolu à deux plis). LoRA et encodeur moyenné : +4,9 (graine 1000, non résolu), +5,75 (graine 1001, résolu) au pli 0, −1,1 au pli 1 : le LoRA est au moins équivalent et plutôt meilleur. La recette gelée (2 époques) sous-estimait fortement les modèles appris (encodeur 0,448 ; LoRA 0,587).
 
 ## Incertitude (étalonnage croisé ; jamais sur le test)

@@ -1,0 +1,22 @@
+{
+ "adaptateur": "llm-mur2-qwen3-5-4b-ep10-lr1e-4",
+ "fusionne_bf16": true,
+ "n_patients": 200,
+ "chargement_s": 54.9,
+ "p50_ms": 61.3,
+ "p95_ms": 113.9,
+ "moyenne_ms": 70.7,
+ "debit_lot_patients_par_s": 6.42,
+ "taille_lot": 8,
+ "memoire_pic_gib": 14.11,
+ "puissance_moyenne_w": 344.4,
+ "energie_lot": {
+  "wh_pour_1000_patients": 14.83,
+  "euros_pour_1000_patients": 0.0037
+ },
+ "energie_lot_de_1": {
+  "wh_pour_1000_patients": 8.61,
+  "euros_pour_1000_patients": 0.0022
+ },
+ "prix_eur_kwh_parametre": 0.25
+}

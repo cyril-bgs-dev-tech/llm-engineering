@@ -1,0 +1,52 @@
+{
+ "modele": "camembert-deploy-ep10-lr1e-4",
+ "n_patients": 200,
+ "taille_lot": 16,
+ "prix_eur_kwh_parametre": 0.25,
+ "fp32": {
+  "p50_ms": 6.0,
+  "p95_ms": 6.8,
+  "moyenne_ms": 6.1,
+  "debit_lot_patients_par_s": 295.1,
+  "memoire_pic_gib": 0.68,
+  "energie_lot_15s": {
+   "secondes": 15.37,
+   "elements": 6200.0,
+   "debit_par_s": 403.39,
+   "echantillons_puissance": 15.0,
+   "energie_wh": 2.305,
+   "wh_pour_1000": 0.372
+  },
+  "energie_lot_de_1_15s": {
+   "secondes": 15.35,
+   "elements": 2200.0,
+   "debit_par_s": 143.37,
+   "echantillons_puissance": 16.0,
+   "energie_wh": 1.695,
+   "wh_pour_1000": 0.77
+  }
+ },
+ "bf16": {
+  "p50_ms": 4.3,
+  "p95_ms": 5.8,
+  "moyenne_ms": 4.5,
+  "debit_lot_patients_par_s": 1294.2,
+  "memoire_pic_gib": 0.35,
+  "energie_lot_15s": {
+   "secondes": 15.08,
+   "elements": 21200.0,
+   "debit_par_s": 1406.25,
+   "echantillons_puissance": 15.0,
+   "energie_wh": 2.055,
+   "wh_pour_1000": 0.097
+  },
+  "energie_lot_de_1_15s": {
+   "secondes": 15.07,
+   "elements": 3150.0,
+   "debit_par_s": 209.0,
+   "echantillons_puissance": 15.0,
+   "energie_wh": 0.979,
+   "wh_pour_1000": 0.311
+  }
+ }
+}

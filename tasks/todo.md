@@ -368,7 +368,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 
 ## Étape R11 : livraison ciblée (jalon B)
 
-- [ ] RM-34 (mesure) : Mesures de service par profil (CPU seul, GPU modeste, GPU 32 Go) : latence p50 et p95, débit, mémoire, énergie par patient, LoRA fusionné en bf16 et par lots, encodeur sur GPU
+- [x] RM-34 (mesure) : Mesures de service par profil (CPU seul, GPU modeste, GPU 32 Go) : latence p50 et p95, débit, mémoire, énergie par patient, LoRA fusionné en bf16 et par lots, encodeur sur GPU
   - Preuve de fin : Runs au registre ; tableau de coût par 1 000 patients ; échec de l'INT8 naïf consigné
   - Skills : performance-optimization, vram-preflight ; dépendances : RM-27
 - [ ] RM-35 (code) : Service multi-modèles (ensemble, ensembles conformes, abstention et renvoi à l'humain) avec tests, banc de latence et conteneur vérifié par un build local

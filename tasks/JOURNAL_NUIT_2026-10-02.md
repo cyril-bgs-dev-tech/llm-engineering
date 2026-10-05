@@ -511,3 +511,6 @@ Encodeur v2 : 46 runs sur 60 (facteur curriculum) ; une relance de tokenizer con
 
 ### 10:20Z : encodeur v2 terminé (59 runs sur 60), consigné
 bf16 équivalent (−0,07 [−1,67 ; +1,69]), ×2,25 en vitesse, ×2,85 en énergie ; lissage −0,70, EMA −1,20, curriculum −0,13 (quatre plis) : aucun gain, négatifs publiés. Le run enc2-curr2-pli3-s0 a échoué par une panique du tokenizer (code 1, non relançable dans ce lot) : reprise en file (run_encodeur_v2_reprise.sh après TERMINE33) avec nouvelle analyse. Reprise du banc LoRA démarrée.
+
+### 10:31Z : reprises de service consignées (RM-34)
+LoRA fusionné bf16 : p50 61,3 ms (au lieu de 117 non fusionné), p95 113,9, 14,1 Gio, 8,6 Wh pour 1 000 patients, lot inefficace (6,4 patients par seconde en lot de 8) ; encodeur sur GPU bf16 : 4,3 ms, 1 406 patients par seconde, 0,31 et 0,097 Wh pour 1 000 patients (énergie sur 15 s de charge) ; cascade corrigée : 26 à 34 ms contre 61 ms (1,8 à 2,3 fois, et non 3). Présentation, carte de modèle, PREUVES et feuille de route à jour. Distillation imbriquée en cours.

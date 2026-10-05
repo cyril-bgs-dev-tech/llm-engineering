@@ -387,7 +387,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 
 | ID | Rôle dans l'étape | Point d'attention |
 |---|---|---|
-| RM-34 | Mesures de service par profil : latence, débit, mémoire, énergie ; LoRA fusionné ; encodeur sur GPU | Échec de l'INT8 naïf déjà consigné |
+| RM-34 | Mesures de service par profil : latence, débit, mémoire, énergie ; LoRA fusionné ; encodeur sur GPU | **Fait le 05/10/2026** : LoRA fusionné 61 ms et 8,6 Wh pour 1 000 patients ; encodeur bf16 4,3 ms et 0,31 Wh ; TF-IDF 1,9 ms ; INT8 naïf écarté |
 | RM-35 | Service multi-modèles avec ensembles conformes, abstention et conteneur vérifié | Tests et banc de latence |
 | RM-36 | Rapport préliminaire, carte v3, fiche de données, protocole v2, tableaux regénérés, contrôle des références | Fait le 04/10/2026 ; à tenir à jour |
 | RM-48 | **Fiche de déploiement par contrainte et règle de décision** | Dit quels systèmes deviennent inutiles à servir |
