@@ -597,3 +597,16 @@ Incertitude (étalonnage croisé sur deux moitiés du pli, exploratoire) : ECE d
 **Cascade validée hors pli** (fiche `cascade-cinq-plis`, seuil choisi sur les quatre autres plis) : **encodeur puis LoRA** : seuil 0,5 à chaque pli, 93,4 % des patients traités par l'encodeur, macro-F1 0,7685 contre 0,7673 pour le LoRA seul : +0,12 [−1,74 ; +1,90] : **non-infériorité atteinte, économie d'appels au LoRA de 93 % atteinte** (prédiction « part entre 50 et 85 % » non réalisée : 93,4 %). La latence modélisée reste défavorable (963 ms contre 117 ms) tant que l'encodeur est servi sur processeur ; l'économie est une économie de GPU. **TF-IDF puis LoRA** : seuils 0,6 à 0,8, 67,2 % traités, macro-F1 0,7558 : −1,14 [−2,40 ; −0,04] : **non-infériorité non atteinte**.
 
 Prédictions de la fiche RM-28 : macro-F1 de chaque pli entre 0,68 et 0,82 (réalisée aux trois plis) ; LoRA au-dessus du TF-IDF à IC entièrement positif à au moins deux plis sur trois (réalisée : plis 3 et 4, pas le pli 2) ; LoRA au moins équivalent à l'encodeur sur l'agrégat (réalisée au sens du point estimé, +1,45, non résolu) ; moyenne à cinq plis entre 0,73 et 0,79 (réalisée : 0,766).
+
+## Ancrage externe : zéro-shot de Qwen3.5-4B et 9B sans affinage, pli 0 (RM-30, fiche `2026-10-04-ancrage-zero-shot-et-service-lora`, EXPLORE ; runs `zero-shot-qwen3-5-4b-pli0`, `zero-shot-qwen3-5-9b-pli0`, `zero-shot-contre-lora-pli0`, `zero-shot-9b-contre-4b`)
+
+Invite construite depuis le contrat de tâche (nom et définition des 18 chapitres, lettres A à R, document tronqué tête et fin à 3 500 tokens, gabarit de conversation sans réflexion), aucune étiquette ni exemple ; probabilités lues sur les lettres de réponse ; 717 patients du pli 0.
+
+| Modèle (aucun affinage) | macro-F1 | exactitude | log loss | durée d'inférence |
+|---|---|---|---|---|
+| Qwen3.5-4B zéro-shot | **0,4929** | 0,6625 | 1,457 | 117 s |
+| Qwen3.5-9B zéro-shot | 0,4725 | 0,6234 | 1,614 | 229 s |
+| *Pour mémoire* : meilleur TF-IDF (pli 0) | 0,7184 | : | : | : |
+| *Pour mémoire* : LoRA 4B mûr (pli 0, graine 1000) | 0,7795 | 0,858 | 0,91 | : |
+
+**L'affinage apporte +28,8 points au Qwen3.5-4B** (zéro-shot moins LoRA mûr : −28,79 [−35,0 ; −22,5], Holm < 0,001) ; le 9B zéro-shot est à −30,7 [−36,8 ; −24,3] du même LoRA du 4B ; le zéro-shot est environ 22 points sous le meilleur TF-IDF. Le 9B n'est pas meilleur que le 4B en zéro-shot (−1,96 [−6,6 ; +2,85], non résolu). **Lecture** : un LLM de 4 à 9 milliards de paramètres sans affinage ne sait pas faire ce choix de diagnostic principal selon la convention du corpus ; la valeur de l'affinage n'est pas un effet de recette. Prédictions de la fiche : zéro-shot du 4B entre 0,15 et 0,45 (**non réalisée**, 0,49) ; du 9B entre 0,25 et 0,55 (réalisée, 0,47) ; le 9B dépasse le 4B (**non réalisée**) ; aucun n'atteint le meilleur TF-IDF (réalisée). Réserve : l'invite est un choix d'auteur, une seule invite a été essayée ; ce n'est pas un état de l'art du zéro-shot mais un repère.

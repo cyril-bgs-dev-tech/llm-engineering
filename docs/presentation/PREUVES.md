@@ -76,3 +76,4 @@ Moyennes : projet 52 / 8 = 6,5 ; open source 61 / 8 = 7,6 ; absolu 75 / 8 = 9,4.
 | 38 | Cascade validée hors pli : encodeur puis LoRA : 93,4 % sans LoRA, +0,12 [−1,74 ; +1,90] contre le LoRA seul ; TF-IDF puis LoRA : −1,14 [−2,40 ; −0,04] | runs `cascade-cinq-plis-encodeur-lora`, `cascade-cinq-plis-tfidf-lora` | prouvé (EXPLORE) ; **remplace la ligne 30 pour la cascade** |
 
 **Compteurs du 05/10 à 05h10 (heure locale)** : 362 tests collectés, 209 runs, 44 fiches et instantanés hachés, 32,5 h sur 90 enregistrées ; domino 0 de la chaîne terminé (LoRA aux cinq plis). Notes de composantes inchangées (6,9).
+| 39 | Zéro-shot sans affinage au pli 0 : Qwen3.5-4B 0,4929 (exactitude 0,6625), 9B 0,4725 ; affinage contre zéro-shot : +28,79 [+22,5 ; +35,0] pour le 4B ; 9B contre 4B en zéro-shot −1,96 [−6,6 ; +2,85] | runs `zero-shot-qwen3-5-4b-pli0`, `zero-shot-qwen3-5-9b-pli0`, `zero-shot-contre-lora-pli0`, `zero-shot-9b-contre-4b` | prouvé (EXPLORE, une invite, un pli) |

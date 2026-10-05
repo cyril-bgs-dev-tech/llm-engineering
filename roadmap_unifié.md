@@ -304,7 +304,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P1-11 | Criblage de 2 à 3 candidats fixés par RM-13 | Un pli, réglages identiques |
 | P1-12 | Choix de l'élève par la règle écrite avant | |
 | RM-27 | LoRA de l'élève retenu à recette mûre (10 époques), pli 0 en deux graines, pli 1 en une graine | Fait le 04/10/2026 : 0,7795 et 0,7893 (pli 0), 0,7415 (pli 1) |
-| RM-30 | Ancrage externe : LLM ouvert local en zéro-shot et quelques exemples sur le pli 0, piscine hors distribution à part | Réalise P1-09 et P1-10 pour ce pli ; sans affinage, référence de lecteur extérieur |
+| RM-30 | Ancrage externe : LLM ouvert local en zéro-shot et quelques exemples sur le pli 0, sous-ensembles d'usage à part | Zéro-shot fait le 05/10/2026 (4B 0,493, 9B 0,473) ; quelques exemples (P1-10) restent au chemin complet |
 | RM-16 | Mesure pilote du débit : recaler budgets et calendrier | Première durée annoncée, sur mesure |
 | RM-42 | Énergie et coût par run au registre, Pareto généré | Rend l'efficience mesurable à chaque run, pas seulement au service |
 | P1-13 | Balayage du taux d'apprentissage, une graine par taux (ADR-010) | |

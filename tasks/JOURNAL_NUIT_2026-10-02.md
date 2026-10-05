@@ -430,3 +430,6 @@ Rien à consigner (LoRA pli 4 en cours, GPU 94 %, fin vers 03:00Z).
 
 ### 03:08Z : DOMINO 0 TERMINÉ : LoRA mûr aux cinq plis consigné
 Pli 4 fini à 02:58Z (0,7636). LoRA regroupé 0,7673 : +4,71 [+2,40 ; +7,18] contre TF-IDF (résolu), +1,45 [−1,10 ; +4,09] contre l'encodeur (non résolu), −0,49 [−2,51 ; +1,74] contre l'ensemble. Bifurcation (b) non remplie : le LoRA reste professeur. Incertitude : conforme par famille 0,894 avec 2,17 classes (ensemble 1,89, TF-IDF 2,69), abstention 0,953 à 70 %. Aperçu de la règle de sélection : meilleur G (ensemble des trois, 0,7799), aucun autre admissible (IC trop larges) : règle à arbitrer avant le gel. Cascade encodeur puis LoRA : non-inférieure, 93 % sans LoRA ; TF-IDF puis LoRA non. ÉCHEC du banc de service du LoRA (jeton de remplissage pour les lots) : corrigé, reprise en file (run_service_lora_reprise.sh, après TERMINE26) ; zéro-shot du 4B en cours.
+
+### 03:19Z : zéro-shot consigné (RM-30)
+4B 0,4929 (exactitude 0,6625), 9B 0,4725 en 2 et 4 minutes d'inférence ; l'affinage apporte +28,8 points ; 9B non meilleur que 4B en zéro-shot ; prédictions de la fiche : 2 sur 4 réalisées. Présentation et PREUVES mis à jour (ligne 39). Chaîne : service encodeur GPU en cours.

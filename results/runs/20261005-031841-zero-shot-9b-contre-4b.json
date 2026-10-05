@@ -1,0 +1,30 @@
+{
+  "created_at": "2026-10-05T03:18:41Z",
+  "kind": "measure",
+  "metrics": {
+    "comparaisons": [
+      {
+        "delta_points": -1.96,
+        "ic95_points": [
+          -6.6,
+          2.85
+        ],
+        "macro_f1": 0.4725,
+        "p_bootstrap": 0.4408,
+        "p_holm": 0.4408,
+        "variante": "zero-shot-qwen3-5-9b-pli0.probs.npz"
+      }
+    ],
+    "macro_f1_reference": 0.4929,
+    "n": 717,
+    "reference": "zero-shot-qwen3-5-4b-pli0.probs.npz"
+  },
+  "params": {
+    "ref": "zero-shot-qwen3-5-4b-pli0.probs.npz"
+  },
+  "run_id": "20261005-031841-zero-shot-9b-contre-4b",
+  "schema": "mini-1",
+  "slug": "zero-shot-9b-contre-4b",
+  "status": "ok",
+  "summary": "Comparaison appariée de 1 variantes contre zero-shot-qwen3-5-4b-pli0.probs.npz"
+}

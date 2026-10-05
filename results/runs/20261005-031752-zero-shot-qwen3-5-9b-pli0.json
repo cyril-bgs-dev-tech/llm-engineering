@@ -1,0 +1,24 @@
+{
+  "created_at": "2026-10-05T03:17:52Z",
+  "kind": "train",
+  "metrics": {
+    "accuracy": 0.6234,
+    "fiche_sha256": "55e19d343aec46077fb76420f2de652205bd3b7cd3a238f264f418b670924979",
+    "log_loss": 1.6138,
+    "macro_f1": 0.4725,
+    "n_eval": 717,
+    "prompt_sha256": "30ecae941d3267ad3499776ecb7f078d4d1da8080a017cb23cbfabdcdfd47c44",
+    "seconds_inference": 229.4
+  },
+  "params": {
+    "fold": 0,
+    "max_doc_tokens": 3500,
+    "mode": "zero-shot par lettres",
+    "model": "Qwen/Qwen3.5-9B"
+  },
+  "run_id": "20261005-031752-zero-shot-qwen3-5-9b-pli0",
+  "schema": "mini-1",
+  "slug": "zero-shot-qwen3-5-9b-pli0",
+  "status": "ok",
+  "summary": "zero-shot-qwen3-5-9b-pli0 : macro-F1 0.4725 en zéro-shot sur le pli 0 (717 patients, aucun affinage)"
+}
