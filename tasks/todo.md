@@ -227,7 +227,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] RM-27 (GPU) : LoRA de l'élève retenu à recette mûre (10 époques, taux 1e-4) : pli 0 en deux graines, pli 1 en une graine ; probabilités et adaptateur conservés
   - Preuve de fin : Runs `llm-mur2-*`, `llm-mur-pli1-*`, `llm-mur-s1001-*` ; comparaison appariée avec TF-IDF et encodeur
   - Skills : lora-classifier-recipe, vram-preflight, run-registry ; dépendances : P1-12, RM-25
-- [ ] RM-30 (mesure) : Ancrage externe sur le pli 0 : LLM ouvert local en zéro-shot et en quelques exemples sans affinage (réalise P1-09 et P1-10 pour ce pli) ; piscine hors distribution de PARHAF rapportée à part
+- [x] RM-30 (mesure) : Ancrage externe sur le pli 0 : LLM ouvert local en zéro-shot et en quelques exemples sans affinage (réalise P1-09 et P1-10 pour ce pli) ; piscine hors distribution de PARHAF rapportée à part
   - Preuve de fin : Fiche hachée ; runs au registre ; écart avec le LoRA mûr
   - Skills : experiment-preregistration, leakage-guard ; dépendances : P1-12
 - [ ] RM-16 (GPU) : Mesure pilote de débit : un pli, une configuration LoRA, 100 pas ; recaler budgets et calendrier (hypothèse, mesure, marge)
@@ -287,7 +287,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-19 (GPU) : Spike de distillation miniature : un pli ou un sous-échantillon, une paire professeur élève, perte CE et KL ; écart avec la recette LMSYS exacte documenté (CE, deux KL, deux pertes cosinus) ; coût du run complet estimé ; règle go/no-go préenregistrée
   - Preuve de fin : Run au registre ; coût mesuré ; décision écrite
   - Skills : distillation-pipeline, vram-preflight ; dépendances : P2-01, P3-01, P1-20, RM-18
-- [ ] RM-32 (GPU) : Élève distillé de la LoRA mûre vers l'encodeur (ou un élève plus léger), professeur strictement hors pli (RM-28), perte `alpha·CE + (1 - alpha)·T²·KL`
+- [x] RM-32 (GPU) : Élève distillé de la LoRA mûre vers l'encodeur (ou un élève plus léger), professeur strictement hors pli (RM-28), perte `alpha·CE + (1 - alpha)·T²·KL`
   - Preuve de fin : Runs au registre ; écart avec le professeur et avec l'encodeur non distillé ; coût d'inférence mesuré
   - Skills : distillation-pipeline, leakage-guard, paired-comparison, vram-preflight ; dépendances : RM-28, P3-01, RM-19
 - [ ] RM-56 (GPU) : Distillation à professeur imbriqué : le professeur de chaque pli d'entraînement de l'élève est entraîné sans le pli évalué (contrôle de la fuite de second ordre) ; 40 encodeurs, 20 TF-IDF, 15 élèves ; gain de l'élève distillé de l'ensemble préservé ou non
@@ -350,7 +350,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-22 (code) : Valider la prédiction conforme au-delà de la proximité des trois outils : cas jouets analytiques, invariants, couverture conditionnelle (par classe, par spécialité), test sous rupture d'échangeabilité
   - Preuve de fin : Tests verts ; couverture conditionnelle rapportée avec ses limites
   - Skills : test-driven-development ; dépendances : P4-05
-- [ ] RM-33 (code) : Prédiction conforme conditionnelle par famille de chapitres (Mondrian) en plus du marginal ; couverture par famille avec Wilson ; coût en taille d'ensemble
+- [x] RM-33 (code) : Prédiction conforme conditionnelle par famille de chapitres (Mondrian) en plus du marginal ; couverture par famille avec Wilson ; coût en taille d'ensemble
   - Preuve de fin : Fonctions testées ; run `conformal-by-family` ; arbitrage taille contre couverture consigné
   - Skills : model-card-calibration, test-driven-development ; dépendances : P4-05, RM-22
 - [ ] RM-51 (mesure) : Lecture confirmatoire de l'incertitude et de la robustesse sur le test scellé (second temps de RM-20) : couverture conforme par famille, abstention, nouveaux auteurs ; seuils, familles et niveaux figés avant l'ouverture ; aucune recalibration après lecture
