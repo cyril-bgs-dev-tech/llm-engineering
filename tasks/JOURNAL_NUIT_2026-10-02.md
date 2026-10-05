@@ -478,3 +478,6 @@ bf16 : équivalent (−0,07 [−1,67 ; +1,69]), 95 s par run contre 214 s (×2,2
 
 ### 06:51Z : reprise par surveilleur
 Encodeur v2 : 18 runs sur 60 (facteur lissage au pli 1), aucun échec ; fin vers 09:45Z.
+
+### 07:16Z : RM-45 préparé
+llmft.prune (3 tests), scripts/p1_encoder_pruned.py (68 millions de paramètres contre 111, vérifié sur le vrai modèle), scripts/bench_pruned_latency.py, fiche hachée 2026-10-05-encodeur-elague (30 runs, avec et sans distillation ; règle : retenu si équivalent et au moins 1,5 fois plus rapide), lot run_encodeur_elague.sh en détaché (attend TERMINE31). Modes exécutables corrigés dans l'index. Encodeur v2 : 22 runs sur 60.

@@ -1,0 +1,12 @@
+# Fiche préenregistrée : encodeur élagué à six couches, avec et sans distillation (RM-45, EXPLORE, cinq plis)
+
+Écrite avant les runs. Suite de la distillation (bras ensemble : l'élève dépasse son professeur) et de l'objectif d'efficience (latence et énergie divisées par deux). Code : `llmft.prune`, `scripts/p1_encoder_pruned.py`, `scripts/bench_pruned_latency.py`.
+
+- **question** : (a) un CamemBERT-bio dont on garde une couche sur deux (6 couches, 68 millions de paramètres au lieu de 111) garde-t-il la macro-F1 de l'encodeur complet à la recette gelée ? (b) la distillation du même professeur (ensemble encodeur + TF-IDF, hors pli) lui fait-elle retrouver ou dépasser l'encodeur complet distillé ? (c) quelle latence gagne-t-on sur GPU et sur processeur ?
+- **références** : encodeur complet non distillé (graines 1000 à 1002, déjà au registre) et encodeur complet distillé du même professeur (`distill-ens-pliK-sS`).
+- **variantes** : (A) élagué, recette gelée sans professeur ; (B) élagué distillé (alpha 0,5, T = 2, non réglés, même professeur que le bras ensemble) ; cinq plis, graines 1000 à 1002 : 30 runs, slugs `prune-plain-pliK-sS` et `prune-distill-pliK-sS`.
+- **jeux et découpage** : développement, plis 0 à 4 ; test scellé jamais lu. Réserve de second ordre de la distillation déclarée (voir fiches de distillation).
+- **métrique principale** : macro-F1 regroupée de la moyenne de trois graines ; différence avec la référence correspondante par bootstrap d'auteurs ; secondaires : exactitude, log loss, secondes et énergie par run ; latence (`bench_pruned_latency.py`) : p50 et p95 sur GPU (fp32 et bf16) et processeur.
+- **critère de décision** : (a) « équivalent » si l'IC de (A moins complet non distillé) tient dans ±δ = 2,0 ; « dégradé » si sa borne haute est sous −δ ; sinon « non résolu » ; (b) idem pour (B moins complet distillé) ; (c) rapporté tel quel, avec la règle : un élagué n'est retenu pour le service que s'il est « équivalent » à l'encodeur complet correspondant et au moins 1,5 fois plus rapide sur l'une des deux cibles.
+- **budget** : 30 runs de 2 à 3 minutes (environ 1,2 h de GPU) et 5 minutes de mesure de latence ; GPU libre, après la distillation imbriquée (TERMINE31) ; codes 134 et 139 seuls relancés (N25).
+- **prédiction** : (A) équivalent (probabilité 0,5), dégradé (0,2) ; (B) équivalent (0,6), supérieur à l'encodeur complet non distillé (0,5) ; latence : processeur au moins 1,7 fois plus rapide (0,8), GPU au moins 1,3 fois plus rapide (0,6).

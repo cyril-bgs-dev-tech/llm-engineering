@@ -444,7 +444,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P2-11 | Multi-étiquettes et paires de bout en bout | |
 | RM-49 | Ancrage sur un benchmark public à résultats publiés (MorFITT) avec le même code | Seul moyen vérifiable de se situer face à l'état de l'art ; chiffres publiés cités avec source |
 | P2-12 | Pages wiki des professeurs et de la qualité des étiquettes | |
-| RM-45 | Encodeur élagué (six couches), avec et sans distillation | Latence divisée par deux visée |
+| RM-45 | Encodeur élagué (six couches), avec et sans distillation | Latence divisée par deux visée ; fiche hachée et lot en file (05/10/2026) |
 | RM-46 | Élève TF-IDF à étiquettes souples | Latence de 2 ms conservée ; bras ensemble fait le 04/10/2026 : +0,69 [−1,03 ; +2,29], non résolu, 15 % de l'écart au professeur ; bras LoRA à faire |
 | P3-03 | Balayage d'alpha et de T | |
 | P3-04 | Plusieurs professeurs : moyenne ou pondération | |

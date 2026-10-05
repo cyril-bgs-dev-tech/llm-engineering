@@ -63,4 +63,6 @@ Terminés cette nuit : criblage, grille du 4B, encodeur (recette, fenêtres, sat
 
 **Distillation imbriquée (RM-56, 05/10)** : `run_distillation_imbriquee.sh` (attend TERMINE29 ; fiche `2026-10-05-distillation-imbriquee` ; 40 encodeurs, 20 TF-IDF, 15 élèves, environ 3,5 h ; TERMINE31 ; analyse automatique `post_distillation_imbriquee.out`). À consigner : les deux différences par blocs d'auteurs et le verdict en quatre valeurs ; si le gain est préservé, l'élève distillé de l'ensemble devient candidat C2 du gel (RM-50).
 
+**Encodeur élagué (RM-45, 05/10)** : `run_encodeur_elague.sh` (attend TERMINE31 ; fiche `2026-10-05-encodeur-elague` ; 30 runs puis `bench_pruned_latency.py` ; TERMINE33 ; journal `encodeur_elague.log`) ; analyse à écrire d'ici là (même gabarit que `distill_analysis.py`, références `camembert-*` et `distill-ens-*`).
+
 **Réservé à Cyril** : acceptation du protocole v2 (RM-37) ; ouverture du test scellé (RM-20) ; push ; envoi du brief GLM v5 ; location de GPU et API payante.
