@@ -532,3 +532,6 @@ Le lot des modèles finaux a perdu le LoRA final en une minute (PanicException d
 
 ### 15:36Z : RM-43 fait
 Fiche 2026-10-05-cascade-conforme (hachée avant le run), fonction route_by_set_size testée, run cascade-conforme-cinq-plis : non-infériorité (+0,23 [−0,09 ; +0,59]), 45,5 % sans LoRA (économie à 50 % non atteinte), couverture 0,9497 région encodeur, 0,9074 région LoRA, 0,9267 globale ; latence modélisée 54,9 ms contre 26 ms pour le seuil. Couverture de la cascade à seuil par région : non mesurée, à faire. LoRA final de G en cours.
+
+### 15:39Z : couverture par région de la cascade à seuil
+Fiche hachée avant run ; couverture 0,899 région encodeur, 0,923 région LoRA, 0,901 globale, mais ensembles larges (3,48 classes). Consigné dans RESULTATS (suite RM-43).
