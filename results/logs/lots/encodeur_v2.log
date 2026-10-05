@@ -3,3 +3,35 @@
 2026-10-05T05:49:30Z DEBUT enc2-bf16-pli0-s1 essai=1
 2026-10-05T05:52:55Z FIN enc2-bf16-pli0-s1 essai=1 code=0
 2026-10-05T05:52:55Z DEBUT enc2-bf16-pli0-s2 essai=1
+2026-10-05T05:56:21Z FIN enc2-bf16-pli0-s2 essai=1 code=0
+2026-10-05T05:56:21Z DEBUT enc2-bf16-pli1-s0 essai=1
+2026-10-05T05:59:44Z FIN enc2-bf16-pli1-s0 essai=1 code=0
+2026-10-05T05:59:44Z DEBUT enc2-bf16-pli1-s1 essai=1
+2026-10-05T06:02:45Z FIN enc2-bf16-pli1-s1 essai=1 code=0
+2026-10-05T06:02:45Z DEBUT enc2-bf16-pli1-s2 essai=1
+2026-10-05T06:05:37Z FIN enc2-bf16-pli1-s2 essai=1 code=0
+2026-10-05T06:05:37Z DEBUT enc2-bf16-pli2-s0 essai=1
+2026-10-05T06:08:35Z FIN enc2-bf16-pli2-s0 essai=1 code=0
+2026-10-05T06:08:35Z DEBUT enc2-bf16-pli2-s1 essai=1
+2026-10-05T06:11:54Z FIN enc2-bf16-pli2-s1 essai=1 code=0
+2026-10-05T06:11:54Z DEBUT enc2-bf16-pli2-s2 essai=1
+2026-10-05T06:15:03Z FIN enc2-bf16-pli2-s2 essai=1 code=0
+2026-10-05T06:15:03Z DEBUT enc2-bf16-pli3-s0 essai=1
+2026-10-05T06:17:51Z FIN enc2-bf16-pli3-s0 essai=1 code=0
+2026-10-05T06:17:51Z DEBUT enc2-bf16-pli3-s1 essai=1
+2026-10-05T06:20:35Z FIN enc2-bf16-pli3-s1 essai=1 code=0
+2026-10-05T06:20:35Z DEBUT enc2-bf16-pli3-s2 essai=1
+2026-10-05T06:23:53Z FIN enc2-bf16-pli3-s2 essai=1 code=0
+2026-10-05T06:23:53Z DEBUT enc2-bf16-pli4-s0 essai=1
+2026-10-05T06:27:04Z FIN enc2-bf16-pli4-s0 essai=1 code=0
+2026-10-05T06:27:04Z DEBUT enc2-bf16-pli4-s1 essai=1
+2026-10-05T06:30:15Z FIN enc2-bf16-pli4-s1 essai=1 code=0
+2026-10-05T06:30:15Z DEBUT enc2-bf16-pli4-s2 essai=1
+2026-10-05T06:33:08Z FIN enc2-bf16-pli4-s2 essai=1 code=0
+2026-10-05T06:33:08Z DEBUT enc2-ls01-pli0-s0 essai=1
+2026-10-05T06:38:08Z FIN enc2-ls01-pli0-s0 essai=1 code=0
+2026-10-05T06:38:08Z DEBUT enc2-ls01-pli0-s1 essai=1
+2026-10-05T06:43:10Z FIN enc2-ls01-pli0-s1 essai=1 code=0
+2026-10-05T06:43:10Z DEBUT enc2-ls01-pli0-s2 essai=1
+2026-10-05T06:47:51Z FIN enc2-ls01-pli0-s2 essai=1 code=0
+2026-10-05T06:47:51Z DEBUT enc2-ls01-pli1-s0 essai=1

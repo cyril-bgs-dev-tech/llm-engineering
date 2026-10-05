@@ -475,3 +475,6 @@ Premier push : CI en échec (EXE001 : scripts à shebang en mode 100644 dans l'i
 
 ### 06:39Z : facteur bf16 consigné (RM-41 encodeur)
 bf16 : équivalent (−0,07 [−1,67 ; +1,69]), 95 s par run contre 214 s (×2,25), 11,9 Wh par run ; adopté pour le développement de l'encodeur. Lissage d'étiquettes en cours.
+
+### 06:51Z : reprise par surveilleur
+Encodeur v2 : 18 runs sur 60 (facteur lissage au pli 1), aucun échec ; fin vers 09:45Z.
