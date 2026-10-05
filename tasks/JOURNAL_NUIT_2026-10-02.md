@@ -460,3 +460,6 @@ Bras ensemble : élève 0,7952 contre 0,7605 non distillé : +3,47 [+2,25 ; +5,0
 
 ### 05:56Z : reprise par surveilleur (encodeur v2 : premiers runs bf16)
 Facteur bf16 : 94 s d'entraînement par run contre 214 s en fp32 (×2,3), pic mémoire 5,3 Gio, 11,8 Wh par run (énergie mesurée sur toute la durée d'entraînement) ; macro-F1 du pli 0 : 0,7546 et 0,7598 (fp32 : 0,7714 et 0,7079 pour les mêmes graines). Verdict d'équivalence à la fin des 15 runs du facteur.
+
+### 05:58Z : reprise par surveilleur
+Analyse de l'encodeur v2 préparée (scripts/enc2_analysis.py, lot post_enc2.sh détaché, TERMINE32 après TERMINE26) ; essai sur le seul pli 0 de bf16 : non résolu à ce stade (+1,26 [−3,76 ; +6,89]), 94 s par run, 11,8 Wh.

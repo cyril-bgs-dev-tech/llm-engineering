@@ -1,0 +1,17 @@
+{
+ "bf16": {
+  "plis": 1,
+  "macro_f1_variante": 0.7674,
+  "macro_f1_reference": 0.7548,
+  "difference_points": [
+   1.26,
+   -3.76,
+   6.89
+  ],
+  "verdict": "non résolu",
+  "macro_f1_par_run_moyenne": 0.7509,
+  "ecart_type_par_run": 0.0112,
+  "secondes_par_run": 93.9,
+  "wh_par_run": 11.79
+ }
+}
