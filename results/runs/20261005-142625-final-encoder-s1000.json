@@ -1,0 +1,45 @@
+{
+  "created_at": "2026-10-05T14:26:25Z",
+  "kind": "train",
+  "metrics": {
+    "seconds_total": 552.4,
+    "sha256": "4e342178a8bbf091c76df702b9b4613b1865df3824a92d01806f8ae1e309aabd"
+  },
+  "params": {
+    "artifact": "artifacts/final/final-encoder-s1000",
+    "excluded": "AUTRE",
+    "fiche_sha256": "6ff64517a85852e6bebe503e6739cdecd86f3c93832f0d7a88006bbb295cb52c",
+    "labels": [
+      "AUTRE",
+      "I",
+      "II",
+      "III",
+      "IV",
+      "IX",
+      "V",
+      "VI",
+      "X",
+      "XI",
+      "XII",
+      "XIII",
+      "XIV",
+      "XIX",
+      "XV",
+      "XVIII",
+      "XXI",
+      "XXII"
+    ],
+    "loss_last": 0.009955260902643204,
+    "n_train": 3586,
+    "peak_reserved_gib": 6.97,
+    "seconds_total": 552.4,
+    "seconds_train": 489.8,
+    "seed": 1000,
+    "sha256": "4e342178a8bbf091c76df702b9b4613b1865df3824a92d01806f8ae1e309aabd"
+  },
+  "run_id": "20261005-142625-final-encoder-s1000",
+  "schema": "mini-1",
+  "slug": "final-encoder-s1000",
+  "status": "ok",
+  "summary": "final-encoder-s1000 : modèle final entraîné sur les 3 586 patients de développement, empreinte 4e342178a8bb"
+}

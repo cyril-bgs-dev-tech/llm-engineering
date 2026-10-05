@@ -76,5 +76,49 @@
    "non_distille": 0.7519,
    "professeur": 0.7558
   }
- }
+ },
+ "nested": {
+  "plis": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "n": 3586,
+  "macro_f1_distille": 0.7528,
+  "macro_f1_non_distille": 0.7605,
+  "macro_f1_professeur": 0.7721,
+  "distille_moins_non_distille": [
+   -0.77,
+   -2.46,
+   0.96
+  ],
+  "distille_moins_professeur": [
+   -1.93,
+   -4.0,
+   -0.13
+  ],
+  "verdict_fiche": "non résolu",
+  "exactitude": {
+   "distille": 0.8491,
+   "non_distille": 0.8469,
+   "professeur": 0.8575
+  },
+  "log_loss": {
+   "distille": 0.5064,
+   "non_distille": 0.609,
+   "professeur": 0.4974
+  },
+  "macro_f1_apres_correction_de_priorite": {
+   "distille": 0.7663,
+   "non_distille": 0.7519,
+   "professeur": 0.7558
+  }
+ },
+ "nested_moins_ens_non_imbrique_points": [
+  -4.24,
+  -6.0,
+  -2.9
+ ]
 }

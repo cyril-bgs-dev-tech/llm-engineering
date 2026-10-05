@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Aperçu de la règle de sélection du système final (RM-50, brouillon) sur les prédictions hors pli regroupées : macro-F1 de chaque candidat disponible, borne basse de
 (candidat moins meilleur) par bootstrap d'auteurs, admissibilité (delta = 2,0) et système retenu par la règle. N'engage rien : le gel est une décision séparée (RM-37 puis RM-50).
-Usage : final_selection_preview.py [--register]"""
+Usage : final_selection_preview.py [--sans-eleves] [--register]
+--sans-eleves : écarte C1 et C2 (PROTOCOLE_V2.md section 4, condition de maintien non remplie après RM-56) ; slug du run : selection-systeme-final-apres-rm56."""
 import json
 import sys
 from pathlib import Path
@@ -52,7 +53,10 @@ def main() -> int:
     scored = [labels.index(c) for c in labels if c != other]
     groups = [author_of[i] for i in ids]
     preds: dict[str, tuple[int, np.ndarray]] = {}
+    sans_eleves = "--sans-eleves" in sys.argv
     for name, rank, files in CANDIDATES:
+        if sans_eleves and name[:2] in ("C1", "C2"):
+            continue
         if all((P / f"{f}.probs.npz").exists() for f in files):
             preds[name] = (rank, np.mean([aligned(f, ids) for f in files], axis=0))
     scores = {n: float(_macro_f1(truth[None, :], p.argmax(1)[None, :], scored)[0]) for n, (_, p) in preds.items()}
@@ -70,7 +74,7 @@ def main() -> int:
     out = {"meilleur": best, "candidats": rows, "retenu_par_la_regle": chosen.name, "delta_points": 2.0, "n": len(ids)}
     print(json.dumps(out, indent=1, ensure_ascii=False))
     if "--register" in sys.argv:
-        print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": "apercu-selection-systeme-final", "status": "ok", "summary": f"Aperçu de la règle de sélection : meilleur {best}, retenu {chosen.name}", "params": {"delta": 2.0}, "metrics": out}))
+        print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": "selection-systeme-final-apres-rm56" if sans_eleves else "apercu-selection-systeme-final", "status": "ok", "summary": f"Règle de sélection{' sans les élèves (RM-56)' if sans_eleves else ' (aperçu)'} : meilleur {best}, retenu {chosen.name}", "params": {"delta": 2.0}, "metrics": out}))
     return 0
 
 

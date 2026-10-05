@@ -520,3 +520,6 @@ Le lot imbriqué a perdu cinq TF-IDF (TypeError aléatoire de sklearn), un encod
 
 ### 13:52Z : fiche de déploiement RM-48 (version provisoire)
 docs/FICHE_DE_DEPLOIEMENT.md : cinq systèmes servables, coût mesuré, arbre de décision par contrainte, ce qui devient inutile, limites. RM-48 reste ouverte jusqu'au verdict RM-56 et au gel (C2 conditionnel). TF-IDF imbriqués manquants repris en une minute chacun (panne aléatoire confirmée), professeurs reconstruits, élèves du pli 0 en cours.
+
+### 14:53Z : VERDICT RM-56 consigné
+Gain de l'élève non préservé (−0,77 [−2,46 ; +0,96]), fuite de second ordre significative (−4,24 [−6,00 ; −2,90]) : le +3,47 de la distillation était pour l'essentiel un artefact. C1 et C2 sortent (PROTOCOLE_V2 section 4). Règle rejouée (run selection-systeme-final-apres-rm56) : G (ensemble LoRA + encodeur + TF-IDF, 0,7799) seul admissible. Puissance au format du test pour G moins TF-IDF : largeur 8,23, probabilité de gain confirmé environ 47 %. RESULTATS, PREUVES (lignes 41 rétractée et 44), présentation, feuille de route, todo, fiche de déploiement mis à jour. À faire : brouillon de gel RM-50 pour G (LoRA final en file, temps A), contrôle d'un éventuel lien de G avec le LoRA (une seule graine), wiki et mémoire.

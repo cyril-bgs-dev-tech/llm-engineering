@@ -334,7 +334,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P3-01 | Perte de distillation et ses tests | Ne dépend plus des logits hors pli |
 | RM-19 | **Spike de distillation et décision go/no-go** | Règle préenregistrée |
 | RM-32 | Élève distillé de la LoRA mûr vers l'encodeur, professeur strictement hors pli | Thèse du projet : qualité du LoRA à coût d'encodeur ; fiche hachée et lot en attente (04/10/2026), 30 runs ; bras ensemble : gain confirmé (+3,47 [+2,25 ; +5,08], au-dessus du professeur) ; bras LoRA : non (−2,55) |
-| RM-56 | **Distillation à professeur imbriqué (contrôle de la fuite de second ordre)** | À lever avant de s'appuyer sur le gain de l'élève ; sinon le test scellé tranche |
+| RM-56 | **Distillation à professeur imbriqué (contrôle de la fuite de second ordre)** | À lever avant de s'appuyer sur le gain de l'élève ; sinon le test scellé tranche ; **fait le 05/10/2026 : gain non préservé (−0,77 [−2,46 ; +0,96]), fuite significative (−4,24 [−6,00 ; −2,90]) ; C1 et C2 sortent ; la règle retient G (ensemble des trois familles)** |
 
 ### Étape R9 : expérience confirmatoire de distillation
 

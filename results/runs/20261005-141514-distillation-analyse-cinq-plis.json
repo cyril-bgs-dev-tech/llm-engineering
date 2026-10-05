@@ -1,0 +1,129 @@
+{
+  "created_at": "2026-10-05T14:15:14Z",
+  "kind": "measure",
+  "metrics": {
+    "ens": {
+      "distille_moins_non_distille": [
+        3.47,
+        2.25,
+        5.08
+      ],
+      "distille_moins_professeur": [
+        2.31,
+        0.46,
+        4.48
+      ],
+      "exactitude": {
+        "distille": 0.8714,
+        "non_distille": 0.8469,
+        "professeur": 0.8575
+      },
+      "log_loss": {
+        "distille": 0.4328,
+        "non_distille": 0.609,
+        "professeur": 0.4974
+      },
+      "macro_f1_apres_correction_de_priorite": {
+        "distille": 0.7868,
+        "non_distille": 0.7519,
+        "professeur": 0.7558
+      },
+      "macro_f1_distille": 0.7952,
+      "macro_f1_non_distille": 0.7605,
+      "macro_f1_professeur": 0.7721,
+      "n": 3586,
+      "plis": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "verdict_fiche": "gain confirmé"
+    },
+    "lora": {
+      "distille_moins_non_distille": [
+        -2.55,
+        -4.78,
+        0.02
+      ],
+      "distille_moins_professeur": [
+        -3.22,
+        -6.52,
+        -0.03
+      ],
+      "exactitude": {
+        "distille": 0.8625,
+        "non_distille": 0.8469,
+        "professeur": 0.8514
+      },
+      "log_loss": {
+        "distille": 0.5892,
+        "non_distille": 0.609,
+        "professeur": 0.8947
+      },
+      "macro_f1_apres_correction_de_priorite": {
+        "distille": 0.7533,
+        "non_distille": 0.7519,
+        "professeur": 0.7679
+      },
+      "macro_f1_distille": 0.735,
+      "macro_f1_non_distille": 0.7605,
+      "macro_f1_professeur": 0.7673,
+      "n": 3586,
+      "plis": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "verdict_fiche": "non résolu"
+    },
+    "nested": {
+      "distille_moins_non_distille": [
+        -1.01,
+        -4.05,
+        1.3
+      ],
+      "distille_moins_professeur": [
+        -1.15,
+        -4.1,
+        1.21
+      ],
+      "exactitude": {
+        "distille": 0.8453,
+        "non_distille": 0.8485,
+        "professeur": 0.8513
+      },
+      "log_loss": {
+        "distille": 0.5161,
+        "non_distille": 0.6212,
+        "professeur": 0.5052
+      },
+      "macro_f1_apres_correction_de_priorite": {
+        "distille": 0.7687,
+        "non_distille": 0.7608,
+        "professeur": 0.7608
+      },
+      "macro_f1_distille": 0.7518,
+      "macro_f1_non_distille": 0.7619,
+      "macro_f1_professeur": 0.7633,
+      "n": 2152,
+      "plis": [
+        0,
+        1,
+        4
+      ],
+      "verdict_fiche": "non résolu"
+    }
+  },
+  "params": {
+    "delta": 2.0
+  },
+  "run_id": "20261005-141514-distillation-analyse-cinq-plis",
+  "schema": "mini-1",
+  "slug": "distillation-analyse-cinq-plis",
+  "status": "ok",
+  "summary": "Distillation vers l'encodeur : moyenne de trois graines, regroupée, blocs d'auteurs"
+}

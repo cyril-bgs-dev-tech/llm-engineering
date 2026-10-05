@@ -1,0 +1,45 @@
+{
+  "created_at": "2026-10-05T14:51:06Z",
+  "kind": "train",
+  "metrics": {
+    "seconds_total": 325.5,
+    "sha256": "2703e46127f0ae45791725906b90f1e6564b6840ca4e2d8a88b7f9e64f9ec8a4"
+  },
+  "params": {
+    "artifact": "artifacts/final/final-encoder-s1003",
+    "excluded": "AUTRE",
+    "fiche_sha256": "6ff64517a85852e6bebe503e6739cdecd86f3c93832f0d7a88006bbb295cb52c",
+    "labels": [
+      "AUTRE",
+      "I",
+      "II",
+      "III",
+      "IV",
+      "IX",
+      "V",
+      "VI",
+      "X",
+      "XI",
+      "XII",
+      "XIII",
+      "XIV",
+      "XIX",
+      "XV",
+      "XVIII",
+      "XXI",
+      "XXII"
+    ],
+    "loss_last": 0.22512593865394592,
+    "n_train": 3586,
+    "peak_reserved_gib": 7.04,
+    "seconds_total": 325.5,
+    "seconds_train": 265.3,
+    "seed": 1003,
+    "sha256": "2703e46127f0ae45791725906b90f1e6564b6840ca4e2d8a88b7f9e64f9ec8a4"
+  },
+  "run_id": "20261005-145106-final-encoder-s1003",
+  "schema": "mini-1",
+  "slug": "final-encoder-s1003",
+  "status": "ok",
+  "summary": "final-encoder-s1003 : modèle final entraîné sur les 3 586 patients de développement, empreinte 2703e46127f0"
+}
