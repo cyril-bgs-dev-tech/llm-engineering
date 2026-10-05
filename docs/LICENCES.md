@@ -51,3 +51,6 @@ Non vérifiés à ce jour : Hydra, Optuna, DVC, distilabel, xgrammar, llguidance
 | google/medgemma-4b-it | non lue (accès conditionné ; Q6 : conditions non acceptées) | non utilisé | exclu du chemin court |
 
 Les licences se relisent à chaque nouveau modèle ajouté au chemin court.
+
+## MorFITT (05/10/2026)
+Données : CC BY-SA 4.0 ; code du dépôt d'origine : Apache-2.0 ; source lue : dépôt GitHub `qanastek/MORFITT` ; usage : ancrage externe (RM-49), copie locale non redistribuée. Fiche : `docs/FICHE_DE_DONNEES_MORFITT.md`.

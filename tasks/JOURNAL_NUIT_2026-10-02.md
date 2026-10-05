@@ -493,3 +493,6 @@ Message de Cyril : « débloque les autres actions en attente qui attendaient ma
 
 ### 08:01Z : release v0.2.0 et push (autorisés par Cyril : actions débloquées, sans coût externe)
 make check vert ; tag annoté v0.2.0 (premier cycle exploratoire, protocole v2 accepté) ; push de main et du tag vers le dépôt GitHub privé (visibilité inchangée).
+
+### 08:07Z : RM-49 préparé (MorFITT)
+Jeu téléchargé en local (3,4 Mo, CC BY-SA 4.0 lue sur le dépôt d'origine, aucun coût), fiche de données et licence, llmft.multilabel (F1 pondéré, perte binaire croisée ; 3 tests), scripts/morfitt_run.py (chemins de données et TF-IDF vérifiés), fiche hachée 2026-10-05-ancrage-morfitt, lot run_morfitt.sh en attente du marqueur d'ouverture du test scellé. Résultats publiés cités (CamemBERT-bio 67,53, DrBERT 68,70, DrLongformer-CP 71,95) : lus par résumé automatique, à vérifier dans le papier. Release v0.2.0 poussée avec le tag.

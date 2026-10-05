@@ -65,4 +65,6 @@ Terminés cette nuit : criblage, grille du 4B, encodeur (recette, fenêtres, sat
 
 **Encodeur élagué (RM-45, 05/10)** : `run_encodeur_elague.sh` (attend TERMINE31 ; fiche `2026-10-05-encodeur-elague` ; 30 runs puis `bench_pruned_latency.py` ; TERMINE33 ; journal `encodeur_elague.log`) ; analyse à écrire d'ici là (même gabarit que `distill_analysis.py`, références `camembert-*` et `distill-ens-*`).
 
+**Ancrage MorFITT (RM-49, 05/10)** : `run_morfitt.sh` (attend le marqueur `data/splits/sealed_opened.marker` et TERMINE33 ; fiche `2026-10-05-ancrage-morfitt` ; réglage sur validation puis cinq graines évaluées une fois sur le test public ; TERMINE35). **Chaîne du test scellé (PROTOCOLE_V2.md section 5)** : (1) verdict RM-56 ; (2) règle de sélection rejouée et gel RM-50 avec prédiction hachée ; (3) modèles entraînés sur les 3 586 patients ; (4) temps A ; (5) répétition générale du temps B ; (6) ouverture unique.
+
 **Réservé à Cyril** : acceptation du protocole v2 (RM-37) ; ouverture du test scellé (RM-20) ; push ; envoi du brief GLM v5 ; location de GPU et API payante.
