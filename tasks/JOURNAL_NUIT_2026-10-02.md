@@ -499,3 +499,6 @@ Jeu téléchargé en local (3,4 Mo, CC BY-SA 4.0 lue sur le dépôt d'origine, a
 
 ### 08:10Z : modèles finaux préparés (chaîne du test scellé)
 scripts/final_models.py (TF-IDF, encodeur, élève distillé, LoRA, entraînés sur les 3 586 patients, empreintes au registre, aucune lecture du test), fiche hachée 2026-10-05-modeles-finaux, lot run_modeles_finaux.sh en détaché (attend TERMINE31) ; lot de l'élagage réarmé derrière TERMINE37 (j'avais tué par erreur son processus avec pkill -f, qui a aussi tué mon shell : relancé proprement). Chaîne vérifiée : sept lots en attente ou en cours.
+
+### 08:21Z : chaîne du test scellé prête côté code
+scripts/sealed_evaluation.py (seul script autorisé ; nom arrêté dans l'index avant son écriture, ALLOWED étendu) : commandes inputs (temps A), rehearsal, check, open ; llmft.final_report (verdict en trois valeurs, comparaisons par blocs d'auteurs et par patients, conforme par famille, abstention, sensibilité ; 4 tests) ; répétition générale du temps B RÉUSSIE sur le développement (run repetition-generale-temps-b : élève distillé moins TF-IDF +7,51 [+5,45 ; +10,34], gain confirmé en développement) ; lot run_temps_a.sh (attend TERMINE37) ; élagage réarmé derrière TERMINE38. Préconditions restantes affichées par « check » : temps A (dix modèles), gel RM-50 (fichier, ADR-016, prédiction hachée), verdict RM-56.

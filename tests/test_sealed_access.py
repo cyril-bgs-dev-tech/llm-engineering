@@ -11,6 +11,7 @@ ALLOWED = {
     ROOT / "src/llmft/sealed.py",  # la porte
     ROOT / "src/llmft/splits.py",  # fabrique les partitions
     ROOT / "scripts/make_splits.py",  # les écrit
+    ROOT / "scripts/sealed_evaluation.py",  # seul script d'évaluation autorisé (PROTOCOLE.md 6.8) ; nom arrêté le 05/10/2026 avant son écriture
 }
 READS_TEST_PARTITION = re.compile(r"""\[\s*["']test["']\s*\]|\.test\b|sealed""")
 

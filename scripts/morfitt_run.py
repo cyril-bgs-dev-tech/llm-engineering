@@ -85,7 +85,7 @@ def main() -> int:
     tr_x, tr_y = load_split("train")
     va_x, va_y = load_split("validation")
     te_x, te_y = load_split("test")
-    enc = {n: p1_finetune.build_inputs(tok, x, 508) for n, x in (("train", tr_x), ("validation", va_x), ("test", te_x))}
+    enc = {n: p1_finetune.build_inputs(tok, x, 508) for n, x in (("train", tr_x), ("validation", va_x), ("public_test", te_x))}
     if mode == "tune":
         rows: list[dict[str, Any]] = []
         for lr in LRS:
@@ -109,7 +109,7 @@ def main() -> int:
     best_enc, best_tf = tuning["encodeur_retenu"], tuning["tfidf_retenu"]
     seed_probs, seed_scores = [], []
     for seed in SEEDS:
-        probs, secs = train_encoder(enc["train"], tr_y, enc["test"], pad_id, best_enc["lr"], best_enc["epochs"], seed)
+        probs, secs = train_encoder(enc["train"], tr_y, enc["public_test"], pad_id, best_enc["lr"], best_enc["epochs"], seed)
         pred = multilabel.predict_labels(probs)
         s = multilabel.f1_scores(te_y.astype(int), pred)
         seed_probs.append(probs)
