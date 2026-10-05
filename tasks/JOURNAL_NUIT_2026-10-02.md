@@ -406,3 +406,6 @@ llmft.selection (règle de non-infériorité puis coût, 5 tests) et scripts/fin
 
 ### 00:11Z : reprise par surveilleur
 Rien à consigner (LoRA pli 4 en cours, GPU 88 %, fin vers 03:00Z).
+
+### 00:31Z : reprise par surveilleur
+Rien à consigner (LoRA pli 4 en cours, fin vers 03:00Z). Journaux archivés.
