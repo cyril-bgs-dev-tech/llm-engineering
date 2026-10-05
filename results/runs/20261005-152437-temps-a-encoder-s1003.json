@@ -1,0 +1,15 @@
+{
+  "created_at": "2026-10-05T15:24:37Z",
+  "kind": "measure",
+  "metrics": {
+    "sha256": "7e4905272ebe40c3712ba299ea2440df7966d93956fe17e81f7c999d31a65f09"
+  },
+  "params": {
+    "n": 633
+  },
+  "run_id": "20261005-152437-temps-a-encoder-s1003",
+  "schema": "mini-1",
+  "slug": "temps-a-encoder-s1003",
+  "status": "ok",
+  "summary": "Temps A : prédictions du modèle final encoder-s1003 sur les textes du test (aucune étiquette), empreinte 7e4905272ebe"
+}

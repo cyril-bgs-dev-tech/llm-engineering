@@ -526,3 +526,6 @@ Gain de l'élève non préservé (−0,77 [−2,46 ; +0,96]), fuite de second or
 
 ### 15:12Z : incertitude de G et ADR-015 complétée
 G : ECE 0,016 (température inutile), conforme par famille 0,901 couverture, 1,82 classes, minimum de famille 0,891 ; exactitude à 70 % de couverture 0,951. ADR-015 complétée (suite RM-56). Modèles finaux : élèves s1000 à s1002 faits ou en cours, LoRA final ensuite (7 h).
+
+### 15:31Z : LoRA final échoué (panique du tokenizer, code 1), repris
+Le lot des modèles finaux a perdu le LoRA final en une minute (PanicException du tokenizer, code 1, non relançable dans ce lot) ; TERMINE37 est donc un faux positif et le temps A du LoRA échouera. Reprise : run_lora_final_reprise.sh (attend TERMINE38 ; relance avec RETRY_CODES 1 134 139, trois essais, puis temps A du LoRA ; TERMINE42). L'élagage (RM-45) est remplacé par run_encodeur_elague_apres_lora.sh (attend TERMINE42 : un seul gros calcul GPU à la fois) ; l'ancien lot d'attente est arrêté par PID. À vérifier : le fichier de l'adaptateur final et son empreinte, pas le code de sortie seul.

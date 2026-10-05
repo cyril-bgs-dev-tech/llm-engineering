@@ -1,0 +1,15 @@
+{
+  "created_at": "2026-10-05T15:28:52Z",
+  "kind": "measure",
+  "metrics": {
+    "sha256": "03f57a093cf0fe5ed74fcb833b929e58a8fa9d1572867eeb33af1c4c5c3a0744"
+  },
+  "params": {
+    "n": 633
+  },
+  "run_id": "20261005-152852-temps-a-student-s1001",
+  "schema": "mini-1",
+  "slug": "temps-a-student-s1001",
+  "status": "ok",
+  "summary": "Temps A : prédictions du modèle final student-s1001 sur les textes du test (aucune étiquette), empreinte 03f57a093cf0"
+}
