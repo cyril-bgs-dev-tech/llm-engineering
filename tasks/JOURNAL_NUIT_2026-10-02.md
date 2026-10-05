@@ -466,3 +466,6 @@ Analyse de l'encodeur v2 préparée (scripts/enc2_analysis.py, lot post_enc2.sh 
 
 ### 06:26Z : mise à jour de la présentation et du dépôt GitHub (demande explicite de Cyril)
 Présentation à jour (363 tests, 252 runs, 45 fiches hachées, 34,4 h sur 90, bf16, chaîne en cours) ; make check vert (test de dérive du plan rendu indépendant du nombre de tâches, assertion conservée) ; pip-audit : torch non auditable sur PyPI (inchangé) ; make check-full non lancé (GPU occupé par le lot : test-gpu et smoke fausseraient les mesures). Push vers origin/main (dépôt GitHub privé), sans changement de visibilité.
+
+### 06:28Z : push effectué (origin/main, 281 commits, dépôt privé inchangé)
+gitleaks sur les 281 commits : aucune fuite ; make check vert avant le push. Dernier commit publié : e3869e8.
