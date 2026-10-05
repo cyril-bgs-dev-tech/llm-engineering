@@ -421,7 +421,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | RM-31 | Capacité à recette mûre : 9B LoRA 10 époques au pli 0 | Arrêt de l'exploration de taille si le gain est sous δ |
 | RM-53 | Encodeurs français alternatifs (DrBERT, ModernBERT-fr) à recette mûre | Licence d'abord ; deux fois moins cher qu'un pli de LoRA |
 | RM-54 | Représentations gelées d'un LLM et régression logistique | Embeddings de 0,5 h contre 3,7 h d'affinage |
-| RM-55 | Recette d'encodeur v2 : lissage, EMA, curriculum, un facteur à la fois | Environ 1,2 h par facteur (trois graines, cinq plis) |
+| RM-55 | Recette d'encodeur v2 : lissage, EMA, curriculum, un facteur à la fois | Environ 1,2 h par facteur (trois graines, cinq plis) ; **fait le 05/10/2026 : aucun des trois ne gagne** (−0,70, −1,20, −0,13), résultats négatifs publiés |
 
 ### Étape R13 : leviers de données et de distillation
 

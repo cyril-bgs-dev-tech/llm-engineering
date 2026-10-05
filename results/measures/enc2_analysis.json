@@ -30,18 +30,33 @@
   "wh_par_run": 33.88
  },
  "ema99": {
-  "plis": 2,
-  "macro_f1_variante": 0.735,
-  "macro_f1_reference": 0.7603,
+  "plis": 5,
+  "macro_f1_variante": 0.7486,
+  "macro_f1_reference": 0.7605,
   "difference_points": [
-   -2.52,
-   -6.64,
-   1.12
+   -1.2,
+   -2.99,
+   0.46
   ],
   "verdict": "non résolu",
-  "macro_f1_par_run_moyenne": 0.73,
-  "ecart_type_par_run": 0.0214,
-  "secondes_par_run": 217.4,
-  "wh_par_run": 34.02
+  "macro_f1_par_run_moyenne": 0.7362,
+  "ecart_type_par_run": 0.0183,
+  "secondes_par_run": 216.7,
+  "wh_par_run": 33.96
+ },
+ "curr2": {
+  "plis": 4,
+  "macro_f1_variante": 0.7654,
+  "macro_f1_reference": 0.7667,
+  "difference_points": [
+   -0.13,
+   -1.78,
+   1.81
+  ],
+  "verdict": "sans gain",
+  "macro_f1_par_run_moyenne": 0.7516,
+  "ecart_type_par_run": 0.0197,
+  "secondes_par_run": 214.9,
+  "wh_par_run": 33.8
  }
 }

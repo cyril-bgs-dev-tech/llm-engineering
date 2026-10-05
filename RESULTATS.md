@@ -644,3 +644,16 @@ Moyenne de trois graines par pli, prédictions regroupées (3 586 patients), dif
 ## Recette d'encodeur v2, facteur A : bf16 par autocast (RM-41 partie encodeur ; fiche `2026-10-05-encodeur-recette-v2`, EXPLORE ; runs `enc2-bf16-pli0-s0` à `enc2-bf16-pli4-s2`)
 
 Quinze runs (cinq plis, graines 1000 à 1002), moyenne de trois graines par pli, prédictions regroupées, différence avec l'encodeur fp32 de référence par bootstrap d'auteurs : macro-F1 regroupée **0,7598 contre 0,7605** : **−0,07 [−1,67 ; +1,69]** : **équivalent** (l'IC tient dans ±δ = 2,0). Par run isolé : moyenne 0,7476, écart-type 0,017 (référence fp32 : 0,7446 et 0,027). **Vitesse : 95 s par run contre 214 s (×2,25, −55 %)**, pic mémoire 5,3 Gio, **11,9 Wh par run**. Prédictions de la fiche : équivalent (probabilité 0,8, réalisée) ; durée réduite d'au moins 20 % (0,6, réalisée). **Conséquence** : l'entraînement de l'encodeur en bf16 est adopté pour les expériences de développement du second cycle (même qualité, deux fois et quart moins de temps et d'énergie) ; pour le service, la qualité en bf16 à l'inférence (déjà 4,5 ms) reste à mesurer séparément. Les trois autres facteurs (lissage, EMA, curriculum) sont en cours.
+
+## Recette d'encodeur v2 : verdict par facteur (RM-41 encodeur, RM-55 ; fiche `2026-10-05-encodeur-recette-v2`, EXPLORE ; runs `enc2-bf16-pli0-s0` à `enc2-curr2-pli4-s2`, `encodeur-v2-analyse-cinq-plis`)
+
+Moyenne de trois graines par pli, prédictions regroupées, différence avec l'encodeur fp32 de référence (mêmes graines 1000 à 1002) par bootstrap d'auteurs ; 59 runs sur 60 (le run `enc2-curr2-pli3-s0` a échoué par une panique du tokenizer, code 1 non relancé : reprise en file ; l'analyse du curriculum porte sur quatre plis).
+
+| Facteur | macro-F1 regroupée | référence | différence [IC 95 %] | verdict de la fiche | durée par run | énergie par run |
+|---|---|---|---|---|---|---|
+| A bf16 (autocast) | 0,7598 | 0,7605 | −0,07 [−1,67 ; +1,69] | **équivalent** | **95 s** (fp32 : 215 s) | **11,9 Wh** (fp32 : 33,9 Wh) |
+| B lissage d'étiquettes 0,1 | 0,7535 | 0,7605 | −0,70 [−2,19 ; +0,73] | non résolu (point estimé négatif) | 216 s | 33,9 Wh |
+| C moyenne de poids (EMA 0,99) | 0,7486 | 0,7605 | −1,20 [−2,99 ; +0,46] | non résolu (point estimé négatif) | 217 s | 34,0 Wh |
+| D curriculum pondéré (quatre plis) | 0,7654 | 0,7667 | −0,13 [−1,78 ; +1,81] | sans gain | 215 s | 33,8 Wh |
+
+**Aucun des trois facteurs de recette (lissage, EMA, curriculum) n'améliore la macro-F1** ; les résultats sont négatifs ou nuls, publiés comme tels : la recette gelée de l'encodeur n'a pas d'amélioration bon marché de ce type à gagner. **Le bf16 est équivalent et divise le temps d'entraînement par 2,25 et l'énergie par 2,85** : il est adopté pour le développement de l'encodeur. Prédictions de la fiche : (A) équivalent et durée réduite d'au moins 20 % (réalisées) ; (B) sans gain (0,6) : réalisée au sens du point estimé, verdict strict « non résolu » ; (C) sans gain (0,6) réalisée, moins de variance entre graines (0,5) : écart-type par run 0,018 contre 0,027 pour la référence (réalisée, à lire avec prudence) ; (D) sans gain (0,6) réalisée. Levier 17 de l'audit GLM v6 (EMA), levier 16 (lissage) et levier 25 (curriculum) : **réfutés dans nos limites**.

@@ -508,3 +508,6 @@ Encodeur v2 : 37 runs sur 60. Lissage d'étiquettes terminé : −0,70 [−2,19 
 
 ### 09:11Z : reprise par surveilleur
 Encodeur v2 : 46 runs sur 60 (facteur curriculum) ; une relance de tokenizer consignée par run_lot (essai 2), sans conséquence.
+
+### 10:20Z : encodeur v2 terminé (59 runs sur 60), consigné
+bf16 équivalent (−0,07 [−1,67 ; +1,69]), ×2,25 en vitesse, ×2,85 en énergie ; lissage −0,70, EMA −1,20, curriculum −0,13 (quatre plis) : aucun gain, négatifs publiés. Le run enc2-curr2-pli3-s0 a échoué par une panique du tokenizer (code 1, non relançable dans ce lot) : reprise en file (run_encodeur_v2_reprise.sh après TERMINE33) avec nouvelle analyse. Reprise du banc LoRA démarrée.
