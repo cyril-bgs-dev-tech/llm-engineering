@@ -490,3 +490,6 @@ La location de GPU distant et le stockage payant restent des options prévues, m
 
 ### 07:52Z : actions en attente débloquées par Cyril (hors coût externe)
 Message de Cyril : « débloque les autres actions en attente qui attendaient ma validation (sauf celles générant un surcoût ou une facturation externe) ». Fait : PROTOCOLE_V2.md accepté (instantané gelé haché, ADR-015 acceptée, RM-37 coché), avec la puissance au format du test scellé mesurée (largeurs 7,7 à 10,2 : déclaré d'avance, puissance approximative 56 % ou 38 %). À faire dans l'ordre : tag de release, RM-49 (jeu public sans coût), modèles à entraîner sur les 3 586 patients, gel RM-50 après RM-56, temps A, répétition générale, ouverture unique du test scellé. Non faisable par moi : accepter les conditions MedGemma à ta place, envoyer un courriel aux auteurs de PARHAF, coller des pages Kaggle.
+
+### 08:01Z : release v0.2.0 et push (autorisés par Cyril : actions débloquées, sans coût externe)
+make check vert ; tag annoté v0.2.0 (premier cycle exploratoire, protocole v2 accepté) ; push de main et du tag vers le dépôt GitHub privé (visibilité inchangée).

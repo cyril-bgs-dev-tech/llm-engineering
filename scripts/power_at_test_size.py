@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Puissance au format du test scellé (633 patients) : largeur de l'IC de la différence de macro-F1 entre deux systèmes, bootstrap de patients stratifié par classe avec pour tailles de strate
 les effectifs du test scellé (`test_class_counts`, aucun identifiant ni étiquette du test lus), tirage dans le pool hors pli des cinq plis (3 586 prédictions), R = 10 000, graine 20261002,
-niveaux 95 % et 98,33 % ; même méthode que la règle de puissance v1 (PROTOCOLE.md 6.3) mais pour des paires de systèmes. Développement seulement. Usage : power_at_sealed_size.py [--register]"""
+niveaux 95 % et 98,33 % ; même méthode que la règle de puissance v1 (PROTOCOLE.md 6.3) mais pour des paires de systèmes. Développement seulement. Usage : power_at_test_size.py [--register]"""
 import json
 import sys
 from pathlib import Path
@@ -54,7 +54,7 @@ def main() -> int:
         row["difference_observee_developpement_points"] = round(100 * float(full), 2)
         out[f"{a} moins {b}"] = row
         print(a, "moins", b, row, flush=True)
-    (ROOT / "results/measures/power_at_sealed_size.json").write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8")
+    (ROOT / "results/measures/power_at_test_size.json").write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8")
     if "--register" in sys.argv:
         print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": "puissance-au-format-du-test-scelle", "status": "ok", "summary": "Largeur attendue des IC au format du test scellé (633), paires de systèmes", "params": {"R": R, "seed": SEED}, "metrics": out}))
     return 0
