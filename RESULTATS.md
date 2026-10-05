@@ -647,7 +647,7 @@ Quinze runs (cinq plis, graines 1000 à 1002), moyenne de trois graines par pli,
 
 ## Recette d'encodeur v2 : verdict par facteur (RM-41 encodeur, RM-55 ; fiche `2026-10-05-encodeur-recette-v2`, EXPLORE ; runs `enc2-bf16-pli0-s0` à `enc2-curr2-pli4-s2`, `encodeur-v2-analyse-cinq-plis`)
 
-Moyenne de trois graines par pli, prédictions regroupées, différence avec l'encodeur fp32 de référence (mêmes graines 1000 à 1002) par bootstrap d'auteurs ; 59 runs sur 60 (le run `enc2-curr2-pli3-s0` a échoué par une panique du tokenizer, code 1 non relancé : reprise en file ; l'analyse du curriculum porte sur quatre plis).
+Moyenne de trois graines par pli, prédictions regroupées, différence avec l'encodeur fp32 de référence (mêmes graines 1000 à 1002) par bootstrap d'auteurs ; 59 runs sur 60 (le run du curriculum au pli 3 pour la graine 1000 a échoué par une panique du tokenizer, code 1 non relancé : reprise en file ; l'analyse du curriculum porte sur quatre plis).
 
 | Facteur | macro-F1 regroupée | référence | différence [IC 95 %] | verdict de la fiche | durée par run | énergie par run |
 |---|---|---|---|---|---|---|
