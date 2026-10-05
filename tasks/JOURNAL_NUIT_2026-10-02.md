@@ -514,3 +514,6 @@ bf16 équivalent (−0,07 [−1,67 ; +1,69]), ×2,25 en vitesse, ×2,85 en éner
 
 ### 10:31Z : reprises de service consignées (RM-34)
 LoRA fusionné bf16 : p50 61,3 ms (au lieu de 117 non fusionné), p95 113,9, 14,1 Gio, 8,6 Wh pour 1 000 patients, lot inefficace (6,4 patients par seconde en lot de 8) ; encodeur sur GPU bf16 : 4,3 ms, 1 406 patients par seconde, 0,31 et 0,097 Wh pour 1 000 patients (énergie sur 15 s de charge) ; cascade corrigée : 26 à 34 ms contre 61 ms (1,8 à 2,3 fois, et non 3). Présentation, carte de modèle, PREUVES et feuille de route à jour. Distillation imbriquée en cours.
+
+### 13:32Z : reprise par surveilleur, RM-56 réparée
+Le lot imbriqué a perdu cinq TF-IDF (TypeError aléatoire de sklearn), un encodeur de professeur (panique du tokenizer, code 1 non relancé) et par ricochet les élèves des plis 0, 2, 3, 4 (professeur absent). Journal « code=0 » trompeur pour les TF-IDF (la commande consigne le code après la boucle, le fichier manquait). Reprise run_distillation_imbriquee_reprise.sh lancée (TF-IDF manquants trois à la fois, encodeur manquant, professeurs, élèves du pli 0 ; phase B après TERMINE31 : plis 1 à 4, analyse ; TERMINE40, TERMINE41). Le lot des modèles finaux démarrera à TERMINE31 en parallèle de la phase B (GPU partagé, sans effet sur les résultats). Le verdict RM-56 est donc attendu vers 15h Z.
