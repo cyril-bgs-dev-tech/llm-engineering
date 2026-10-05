@@ -496,3 +496,6 @@ make check vert ; tag annoté v0.2.0 (premier cycle exploratoire, protocole v2 a
 
 ### 08:07Z : RM-49 préparé (MorFITT)
 Jeu téléchargé en local (3,4 Mo, CC BY-SA 4.0 lue sur le dépôt d'origine, aucun coût), fiche de données et licence, llmft.multilabel (F1 pondéré, perte binaire croisée ; 3 tests), scripts/morfitt_run.py (chemins de données et TF-IDF vérifiés), fiche hachée 2026-10-05-ancrage-morfitt, lot run_morfitt.sh en attente du marqueur d'ouverture du test scellé. Résultats publiés cités (CamemBERT-bio 67,53, DrBERT 68,70, DrLongformer-CP 71,95) : lus par résumé automatique, à vérifier dans le papier. Release v0.2.0 poussée avec le tag.
+
+### 08:10Z : modèles finaux préparés (chaîne du test scellé)
+scripts/final_models.py (TF-IDF, encodeur, élève distillé, LoRA, entraînés sur les 3 586 patients, empreintes au registre, aucune lecture du test), fiche hachée 2026-10-05-modeles-finaux, lot run_modeles_finaux.sh en détaché (attend TERMINE31) ; lot de l'élagage réarmé derrière TERMINE37 (j'avais tué par erreur son processus avec pkill -f, qui a aussi tué mon shell : relancé proprement). Chaîne vérifiée : sept lots en attente ou en cours.

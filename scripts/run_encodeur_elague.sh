@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Encodeur élagué (RM-45, fiche 2026-10-05-encodeur-elague) : 30 runs puis latence. Attend TERMINE31 (fin de la distillation imbriquée). run_lot (N25), codes 134 et 139 seuls relancés.
+# Encodeur élagué (RM-45, fiche 2026-10-05-encodeur-elague) : 30 runs puis latence. Attend TERMINE37 (fin des modèles finaux). run_lot (N25), codes 134 et 139 seuls relancés.
 set -u
 cd "$(dirname "$0")/.."
 export HF_HOME="$PWD/artifacts/hf_cache" HF_HUB_OFFLINE=1 PYTHONPATH=artifacts/fla_pkgs TOKENIZERS_PARALLELISM=false RAYON_NUM_THREADS=2 RETRY_CODES="134 139"
 LOGDIR="${LOGDIR:?LOGDIR requis}"
 source scripts/lib/lot.sh
-until grep -q TERMINE31 "$LOGDIR/distillation_imbriquee.log" 2>/dev/null; do sleep 30; done
+until grep -q TERMINE37 "$LOGDIR/modeles_finaux.log" 2>/dev/null; do sleep 30; done
 FICHE=experiments/2026-10-05-encodeur-elague.md
 ENS="0=ensemble-encodeur5-tfidf-charbal,1=pli1-ensemble-encodeur5-tfidf-charbal,2=pli2-ensemble-encodeur5-tfidf-charbal,3=pli3-ensemble-encodeur5-tfidf-charbal,4=pli4-ensemble-encodeur5-tfidf-charbal"
 for arm in plain distill; do

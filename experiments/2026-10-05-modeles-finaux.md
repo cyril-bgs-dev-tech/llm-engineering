@@ -1,0 +1,9 @@
+# Fiche préenregistrée : modèles finaux entraînés sur la totalité du développement, pour l'ouverture du test scellé (PROTOCOLE_V2.md section 5)
+
+Écrite avant les entraînements. Aucune évaluation n'est faite ici : il n'existe pas de pli tenu à l'écart (les 3 586 patients de développement servent à l'entraînement) ; la seule évaluation de ces modèles sera celle du temps B de l'ouverture du test scellé.
+
+- **modèles** : (T) TF-IDF caractères 3 à 5, poids équilibrés, C = 100 (valeur la plus fréquente des plis du développement, non réglée) ; (D) CamemBERT-bio, recette gelée (10 époques, taux 1e-4, 508 tokens, lot effectif 32), graines 1000 à 1004 ; (C2) élève encodeur distillé de l'ensemble encodeur + TF-IDF (alpha 0,5, T = 2, mêmes paramètres que RM-32), professeur = probabilités hors pli des cinq plis de l'ensemble, graines 1000 à 1002 ; (F) Qwen3.5-4B LoRA r = 16, alpha 32, 10 époques, taux 1e-4, 4 096 tokens, lot effectif 32, graine 1000. L'ensemble E (D + T à parts égales) et G (F + D + T à parts égales) sont des moyennes de probabilités calculées au temps A, sans entraînement.
+- **sorties** : `artifacts/final/<modèle>` (ignoré par git), empreinte SHA-256 de chaque dossier ou fichier au registre (`final-tfidf`, `final-encoder-s*`, `final-student-s*`, `final-lora-s1000`).
+- **budget** : environ 5,5 h de GPU (cinq encodeurs 20 minutes, trois élèves 15 minutes, LoRA 4,7 h) ; local, sans coût externe ; après la distillation imbriquée (TERMINE31) ; codes 134 et 139 seuls relancés (N25).
+- **critère** : un modèle est valide s'il est sauvegardé, rechargeable et son empreinte au registre ; aucun critère de performance (pas de pli tenu à l'écart).
+- **prédiction** : aucune sur la performance (non mesurable ici) ; les prédictions chiffrées du test scellé sont celles de la fiche de gel RM-50.
