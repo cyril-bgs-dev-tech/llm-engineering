@@ -1,0 +1,46 @@
+{
+  "created_at": "2026-10-05T15:10:33Z",
+  "kind": "train",
+  "metrics": {
+    "seconds_total": 332.1,
+    "sha256": "de77a31604a79ed9f718b314f056f1279287ebc5d5adad4867a14b0243f34481"
+  },
+  "params": {
+    "artifact": "artifacts/final/final-student-s1001",
+    "excluded": "AUTRE",
+    "fiche_sha256": "6ff64517a85852e6bebe503e6739cdecd86f3c93832f0d7a88006bbb295cb52c",
+    "labels": [
+      "AUTRE",
+      "I",
+      "II",
+      "III",
+      "IV",
+      "IX",
+      "V",
+      "VI",
+      "X",
+      "XI",
+      "XII",
+      "XIII",
+      "XIV",
+      "XIX",
+      "XV",
+      "XVIII",
+      "XXI",
+      "XXII"
+    ],
+    "loss_last": 0.10938798636198044,
+    "n_train": 3586,
+    "peak_reserved_gib": 7.04,
+    "seconds_total": 332.1,
+    "seconds_train": 266.2,
+    "seed": 1001,
+    "sha256": "de77a31604a79ed9f718b314f056f1279287ebc5d5adad4867a14b0243f34481",
+    "teacher": "ensemble encodeur + TF-IDF, probabilités hors pli des cinq plis"
+  },
+  "run_id": "20261005-151033-final-student-s1001",
+  "schema": "mini-1",
+  "slug": "final-student-s1001",
+  "status": "ok",
+  "summary": "final-student-s1001 : modèle final entraîné sur les 3 586 patients de développement, empreinte de77a31604a7"
+}

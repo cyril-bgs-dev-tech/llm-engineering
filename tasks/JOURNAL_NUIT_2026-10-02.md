@@ -523,3 +523,6 @@ docs/FICHE_DE_DEPLOIEMENT.md : cinq systèmes servables, coût mesuré, arbre de
 
 ### 14:53Z : VERDICT RM-56 consigné
 Gain de l'élève non préservé (−0,77 [−2,46 ; +0,96]), fuite de second ordre significative (−4,24 [−6,00 ; −2,90]) : le +3,47 de la distillation était pour l'essentiel un artefact. C1 et C2 sortent (PROTOCOLE_V2 section 4). Règle rejouée (run selection-systeme-final-apres-rm56) : G (ensemble LoRA + encodeur + TF-IDF, 0,7799) seul admissible. Puissance au format du test pour G moins TF-IDF : largeur 8,23, probabilité de gain confirmé environ 47 %. RESULTATS, PREUVES (lignes 41 rétractée et 44), présentation, feuille de route, todo, fiche de déploiement mis à jour. À faire : brouillon de gel RM-50 pour G (LoRA final en file, temps A), contrôle d'un éventuel lien de G avec le LoRA (une seule graine), wiki et mémoire.
+
+### 15:12Z : incertitude de G et ADR-015 complétée
+G : ECE 0,016 (température inutile), conforme par famille 0,901 couverture, 1,82 classes, minimum de famille 0,891 ; exactitude à 70 % de couverture 0,951. ADR-015 complétée (suite RM-56). Modèles finaux : élèves s1000 à s1002 faits ou en cours, LoRA final ensuite (7 h).

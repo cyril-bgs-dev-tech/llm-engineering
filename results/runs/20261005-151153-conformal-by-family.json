@@ -1,0 +1,158 @@
+{
+  "created_at": "2026-10-05T15:11:53Z",
+  "kind": "measure",
+  "metrics": {
+    "G": {
+      "famille": {
+        "couverture": 0.901,
+        "couverture_minimale_famille": 0.891,
+        "par_famille": {
+          "circulatoire et respiratoire": {
+            "couverture": 0.902,
+            "n": 704,
+            "wilson95": [
+              0.878,
+              0.922
+            ]
+          },
+          "digestif": {
+            "couverture": 0.901,
+            "n": 312,
+            "wilson95": [
+              0.862,
+              0.929
+            ]
+          },
+          "endocrinien et mental": {
+            "couverture": 0.891,
+            "n": 101,
+            "wilson95": [
+              0.815,
+              0.938
+            ]
+          },
+          "grossesse": {
+            "couverture": 0.905,
+            "n": 148,
+            "wilson95": [
+              0.847,
+              0.943
+            ]
+          },
+          "infectieux, tumeurs, sang": {
+            "couverture": 0.9,
+            "n": 1254,
+            "wilson95": [
+              0.882,
+              0.916
+            ]
+          },
+          "nerveux": {
+            "couverture": 0.898,
+            "n": 108,
+            "wilson95": [
+              0.827,
+              0.942
+            ]
+          },
+          "peau, muscle, urinaire": {
+            "couverture": 0.901,
+            "n": 513,
+            "wilson95": [
+              0.872,
+              0.924
+            ]
+          },
+          "symptômes, lésions, facteurs": {
+            "couverture": 0.9,
+            "n": 432,
+            "wilson95": [
+              0.869,
+              0.925
+            ]
+          }
+        },
+        "taille_moyenne": 1.82
+      },
+      "marginal": {
+        "couverture": 0.9,
+        "couverture_minimale_famille": 0.623,
+        "par_famille": {
+          "circulatoire et respiratoire": {
+            "couverture": 0.962,
+            "n": 704,
+            "wilson95": [
+              0.945,
+              0.974
+            ]
+          },
+          "digestif": {
+            "couverture": 0.978,
+            "n": 312,
+            "wilson95": [
+              0.954,
+              0.989
+            ]
+          },
+          "endocrinien et mental": {
+            "couverture": 0.723,
+            "n": 101,
+            "wilson95": [
+              0.629,
+              0.801
+            ]
+          },
+          "grossesse": {
+            "couverture": 1.0,
+            "n": 148,
+            "wilson95": [
+              0.975,
+              1.0
+            ]
+          },
+          "infectieux, tumeurs, sang": {
+            "couverture": 0.951,
+            "n": 1254,
+            "wilson95": [
+              0.938,
+              0.962
+            ]
+          },
+          "nerveux": {
+            "couverture": 0.769,
+            "n": 108,
+            "wilson95": [
+              0.681,
+              0.838
+            ]
+          },
+          "peau, muscle, urinaire": {
+            "couverture": 0.934,
+            "n": 513,
+            "wilson95": [
+              0.909,
+              0.952
+            ]
+          },
+          "symptômes, lésions, facteurs": {
+            "couverture": 0.623,
+            "n": 432,
+            "wilson95": [
+              0.576,
+              0.667
+            ]
+          }
+        },
+        "taille_moyenne": 1.12
+      }
+    }
+  },
+  "params": {
+    "alpha": 0.1
+  },
+  "run_id": "20261005-151153-conformal-by-family",
+  "schema": "mini-1",
+  "slug": "conformal-by-family",
+  "status": "ok",
+  "summary": "Conforme marginal contre conditionnel par famille (sans étiquette de test)"
+}

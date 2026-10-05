@@ -33,3 +33,5 @@ Le coût estimé du second cycle tombe à quelques heures de GPU pour les famill
 
 ## Ce qui reste à décider par Cyril
 Accepter la version suivante du protocole (sections 1, 3 et 4 du protocole gelé touchées : époques, grille, plis d'évaluation) et dire si δ reste à 2,0.
+
+**Suite du 05/10/2026 (RM-56)** : la décision 5 (professeur de distillation) a reçu sa réponse : le contrôle à professeur imbriqué montre que le gain de la distillation de l'ensemble vers l'encodeur n'est pas préservé (−0,77 [−2,46 ; +0,96]) et qu'une fuite de second ordre est significative (−4,24 [−6,00 ; −2,90]) ; les élèves distillés sortent de la liste fermée du protocole v2 et le système final retenu par la règle est l'ensemble LoRA + encodeur + TF-IDF (voir RESULTATS.md). Cette décision n'est pas modifiée par le présent ajout : elle est complétée par un résultat négatif.

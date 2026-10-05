@@ -1,0 +1,45 @@
+{
+  "created_at": "2026-10-05T14:57:11Z",
+  "kind": "train",
+  "metrics": {
+    "seconds_total": 333.4,
+    "sha256": "bab852c5bd2893808043df6ebe0a71d9523b50d3e49f08aaa68ba0505845fe14"
+  },
+  "params": {
+    "artifact": "artifacts/final/final-encoder-s1004",
+    "excluded": "AUTRE",
+    "fiche_sha256": "6ff64517a85852e6bebe503e6739cdecd86f3c93832f0d7a88006bbb295cb52c",
+    "labels": [
+      "AUTRE",
+      "I",
+      "II",
+      "III",
+      "IV",
+      "IX",
+      "V",
+      "VI",
+      "X",
+      "XI",
+      "XII",
+      "XIII",
+      "XIV",
+      "XIX",
+      "XV",
+      "XVIII",
+      "XXI",
+      "XXII"
+    ],
+    "loss_last": 0.1020340844988823,
+    "n_train": 3586,
+    "peak_reserved_gib": 6.97,
+    "seconds_total": 333.4,
+    "seconds_train": 266.0,
+    "seed": 1004,
+    "sha256": "bab852c5bd2893808043df6ebe0a71d9523b50d3e49f08aaa68ba0505845fe14"
+  },
+  "run_id": "20261005-145711-final-encoder-s1004",
+  "schema": "mini-1",
+  "slug": "final-encoder-s1004",
+  "status": "ok",
+  "summary": "final-encoder-s1004 : modèle final entraîné sur les 3 586 patients de développement, empreinte bab852c5bd28"
+}

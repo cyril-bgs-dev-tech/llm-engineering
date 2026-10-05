@@ -1,47 +1,47 @@
 {
- "llm5": {
+ "G": {
   "marginal": {
    "couverture": 0.9,
-   "taille_moyenne": 1.16,
+   "taille_moyenne": 1.12,
    "par_famille": {
     "infectieux, tumeurs, sang": {
      "n": 1254,
-     "couverture": 0.947,
+     "couverture": 0.951,
      "wilson95": [
-      0.934,
-      0.958
+      0.938,
+      0.962
      ]
     },
     "endocrinien et mental": {
      "n": 101,
-     "couverture": 0.752,
+     "couverture": 0.723,
      "wilson95": [
-      0.66,
-      0.826
+      0.629,
+      0.801
      ]
     },
     "nerveux": {
      "n": 108,
-     "couverture": 0.796,
+     "couverture": 0.769,
      "wilson95": [
-      0.711,
-      0.861
+      0.681,
+      0.838
      ]
     },
     "circulatoire et respiratoire": {
      "n": 704,
-     "couverture": 0.96,
+     "couverture": 0.962,
      "wilson95": [
-      0.943,
-      0.972
+      0.945,
+      0.974
      ]
     },
     "digestif": {
      "n": 312,
-     "couverture": 0.971,
+     "couverture": 0.978,
      "wilson95": [
-      0.946,
-      0.985
+      0.954,
+      0.989
      ]
     },
     "peau, muscle, urinaire": {
@@ -62,73 +62,73 @@
     },
     "symptômes, lésions, facteurs": {
      "n": 432,
-     "couverture": 0.62,
+     "couverture": 0.623,
      "wilson95": [
-      0.574,
-      0.665
+      0.576,
+      0.667
      ]
     }
    },
-   "couverture_minimale_famille": 0.62
+   "couverture_minimale_famille": 0.623
   },
   "famille": {
-   "couverture": 0.9,
-   "taille_moyenne": 2.17,
+   "couverture": 0.901,
+   "taille_moyenne": 1.82,
    "par_famille": {
     "infectieux, tumeurs, sang": {
      "n": 1254,
-     "couverture": 0.899,
+     "couverture": 0.9,
      "wilson95": [
-      0.881,
-      0.914
+      0.882,
+      0.916
      ]
     },
     "endocrinien et mental": {
      "n": 101,
-     "couverture": 0.911,
+     "couverture": 0.891,
      "wilson95": [
-      0.839,
-      0.952
+      0.815,
+      0.938
      ]
     },
     "nerveux": {
      "n": 108,
-     "couverture": 0.917,
+     "couverture": 0.898,
      "wilson95": [
-      0.849,
-      0.956
+      0.827,
+      0.942
      ]
     },
     "circulatoire et respiratoire": {
      "n": 704,
-     "couverture": 0.901,
+     "couverture": 0.902,
      "wilson95": [
-      0.876,
-      0.921
+      0.878,
+      0.922
      ]
     },
     "digestif": {
      "n": 312,
-     "couverture": 0.894,
+     "couverture": 0.901,
      "wilson95": [
-      0.855,
-      0.924
+      0.862,
+      0.929
      ]
     },
     "peau, muscle, urinaire": {
      "n": 513,
-     "couverture": 0.897,
+     "couverture": 0.901,
      "wilson95": [
-      0.867,
-      0.92
+      0.872,
+      0.924
      ]
     },
     "grossesse": {
      "n": 148,
-     "couverture": 0.899,
+     "couverture": 0.905,
      "wilson95": [
-      0.84,
-      0.938
+      0.847,
+      0.943
      ]
     },
     "symptômes, lésions, facteurs": {
@@ -140,7 +140,7 @@
      ]
     }
    },
-   "couverture_minimale_famille": 0.894
+   "couverture_minimale_famille": 0.891
   }
  }
 }
