@@ -323,7 +323,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] RM-37 (décision) : Acceptation du protocole v2 (ADR-015) par Cyril avant tout run du second cycle et avant l'ouverture du test scellé
   - Preuve de fin : Décision datée de Cyril, ADR mise à jour ; protocole v1 gelé inchangé
   - Skills : doubt-driven-development ; dépendances : RM-29
-- [ ] RM-50 (décision) : Gel du système final avant l'ouverture du test scellé : règle de sélection écrite avant lecture des prédictions complètes (cinq plis du LoRA, élèves distillés, ensemble) ; candidat unique, composition de l'ensemble, seuils conformes et d'abstention figés ; prédiction chiffrée de la macro-F1 du test scellé et de son intervalle écrite et hachée
+- [x] RM-50 (décision) : Gel du système final avant l'ouverture du test scellé : règle de sélection écrite avant lecture des prédictions complètes (cinq plis du LoRA, élèves distillés, ensemble) ; candidat unique, composition de l'ensemble, seuils conformes et d'abstention figés ; prédiction chiffrée de la macro-F1 du test scellé et de son intervalle écrite et hachée
   - Preuve de fin : ADR de gel datée avec empreinte ; prédiction hachée avant l'ouverture ; aucune modification après
   - Skills : experiment-preregistration, doubt-driven-development ; dépendances : RM-28, RM-32, RM-37
 - [ ] RM-20 (mesure) : Ouverture unique du test scellé pour la comparaison confirmatoire, via le seul script autorisé
@@ -443,7 +443,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-54 (GPU) : Représentations gelées d'un LLM (Qwen3.5-4B de base, moyenne des états cachés) et régression logistique : coût de 0,5 h d'inférence contre 3,7 h d'affinage par pli ; comparaison à l'encodeur et au LoRA
   - Preuve de fin : Fiche hachée ; runs au registre ; régression entraînée hors pli ; verdict en trois valeurs
   - Skills : experiment-preregistration, vram-preflight, leakage-guard ; dépendances : RM-27
-- [ ] RM-55 (GPU) : Recette d'encodeur v2 : lissage d'étiquettes, moyenne de poids (EMA), curriculum pondéré, un facteur à la fois, trois graines et cinq plis par facteur (environ 1,2 h chacun)
+- [x] RM-55 (GPU) : Recette d'encodeur v2 : lissage d'étiquettes, moyenne de poids (EMA), curriculum pondéré, un facteur à la fois, trois graines et cinq plis par facteur (environ 1,2 h chacun)
   - Preuve de fin : Fiche hachée ; trois facteurs mesurés ; verdict par facteur ; pas de combinaison avant résultat individuel
   - Skills : experiment-preregistration, paired-comparison, vram-preflight ; dépendances : RM-25, RM-41
 
@@ -485,7 +485,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P2-12 (doc) : Pages wiki des professeurs, de la qualité des étiquettes et de la tâche voisine
   - Preuve de fin : Pages et `wiki-lint` vert
   - Skills : wiki-update ; dépendances : P2-08
-- [ ] RM-45 (GPU) : Encodeur élagué (six couches sur douze) affiné, avec et sans distillation depuis l'encodeur complet ; latence divisée par environ deux, perte de macro-F1 mesurée
+- [x] RM-45 (GPU) : Encodeur élagué (six couches sur douze) affiné, avec et sans distillation depuis l'encodeur complet ; latence divisée par environ deux, perte de macro-F1 mesurée
   - Preuve de fin : Runs au registre ; différence appariée avec l'encodeur complet ; latence sur processeur
   - Skills : distillation-pipeline, vram-preflight, paired-comparison ; dépendances : RM-32
 - [ ] RM-46 (mesure) : Élève TF-IDF à étiquettes souples : régression logistique entraînée sur les probabilités hors pli du professeur (réplication pondérée par classe), latence 2 ms conservée ; écart avec le TF-IDF dur et avec le professeur
@@ -554,7 +554,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] RM-38 (mesure) : Encodeur quantifié correctement (quantification statique avec étalonnage ou sélective, ONNX si utile) ; perte de macro-F1 inférieure à 1 point sinon abandon
   - Preuve de fin : Run `quantization-*` ; tableau qualité contre latence contre taille
   - Skills : performance-optimization, paired-comparison ; dépendances : RM-25
-- [ ] RM-44 (mesure) : Export ONNX Runtime de l'encodeur et quantification statique avec étalonnage des activations ; perte de macro-F1 inférieure à 1 point et gain de latence mesuré, sinon abandon et service sur GPU
+- [x] RM-44 (mesure) : Export ONNX Runtime de l'encodeur et quantification statique avec étalonnage des activations ; perte de macro-F1 inférieure à 1 point et gain de latence mesuré, sinon abandon et service sur GPU
   - Preuve de fin : Run `onnx-int8-statique-*` ; tableau qualité, latence, taille ; dépendance ajoutée au verrou seulement si retenue
   - Skills : performance-optimization, paired-comparison ; dépendances : RM-38
 - [ ] RM-39 (mesure) : Robustesse des modèles appris : perturbations de forme, ablations de contenu (fin ou début retirés), leave-one-author-out de l'encodeur ; adaptateur ou poids sauvegardés
@@ -602,6 +602,12 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [ ] P5-11 (code) : Démo locale avec bannière « données fictives, pas d'usage clinique »
   - Preuve de fin : Script de démo
   - Skills : shipping-and-launch ; dépendances : P5-01, P0-20
+- [x] RM-57 (code) : Contournement des plantages du tokenizer Rust (tokenisation dans un sous-processus épinglé sur un cœur, avec relance) et garde-fous mémoire des calculs lourds (témoin de mémoire, garde par PID)
+  - Preuve de fin : Run de mesure au registre avec décomptes par condition ; tests verts ; LoRA final entraîné sans plantage de tokenisation ; make check vert
+  - Skills : debugging-and-error-recovery, test-driven-development ; dépendances : RM-05
+- [x] RM-58 (code) : Fiabilité des lots : cache disque des identifiants tokenisés, redirections guillemetées dans tous les scripts `run_*.sh` avec contrôle statique, identité des identifiants du sous-processus vérifiée contre le calcul local sur Qwen3.5 et CamemBERT-bio
+  - Preuve de fin : Test statique vert sur tous les scripts ; identité vérifiée et consignée au registre ; durée de `build_inputs` mesurée avant et après
+  - Skills : debugging-and-error-recovery, test-driven-development, ci-cd-and-automation ; dépendances : RM-57
 
 ## Étape R16 : options (sur décision de Cyril)
 

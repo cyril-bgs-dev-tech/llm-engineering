@@ -354,7 +354,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P3-02 | Élève distillé | |
 | P3-07 | Entraîner les 20 modèles gelés ; l'évaluation est celle de RM-20 (ADR-010) | Pas de verdict avant RM-20 |
 | RM-37 | **Acceptation du protocole v2 par Cyril** | **Acceptée le 05/10/2026** : `PROTOCOLE_V2.md` (instantané gelé) ; la règle de puissance v2 ne passe pas au format du test scellé (largeur 7,7 à 10,2 contre 4,0), déclaré d'avance |
-| RM-50 | **Gel du système final et prédiction chiffrée du test scellé** | Règle de sélection écrite avant lecture ; rien ne change après ; brouillon : `docs/BROUILLON_GEL_SYSTEME_FINAL.md` |
+| RM-50 | **Gel du système final et prédiction chiffrée du test scellé** | Règle de sélection écrite avant lecture ; rien ne change après ; brouillon : `docs/BROUILLON_GEL_SYSTEME_FINAL.md` ; **prérequis faits le 06/10/2026** : LoRA final (run `20261006-022716-final-lora-s1000`) et son temps A (`20261006-023402-temps-a-lora-s1000`), empreintes des sept composants de G au registre (section 8 du brouillon), RM-37 acceptée ; **gel exécuté le 06/10/2026 (Q22 validée)** : `docs/decisions/ADR-016-gel-du-systeme-final.md`, `results/frozen_final.json` (sha256 `8cb2382c…`), prédiction chiffrée hachée dans `experiments/INDEX.md`, répétition générale du temps B avec G (run `20261006-182842-repetition-generale-temps-b`), `sealed_evaluation.py check` : préconditions toutes remplies, **test scellé non ouvert** ; l'ouverture (RM-20) reste une décision séparée de Cyril |
 | RM-20 | Ouverture unique du test scellé | Un seul accès journalisé |
 | RM-21 | **Porte go/no-go après le verdict de distillation** | |
 | G-P3 | Scorecard G-P3 | Contre-lecture adversariale des verdicts exigée par le tableau « qui prouve quoi » |
@@ -375,7 +375,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | RM-33 | Conforme conditionnel par famille (Mondrian) et couverture par famille avec Wilson | La couverture marginale cache des familles à 0,56 |
 | RM-51 | Lecture confirmatoire de l'incertitude et de la robustesse sur le test scellé | Second temps de RM-20 ; seuils figés avant l'ouverture |
 | P4-08 | Politique d'abstention, courbe automatisation contre exactitude | |
-| P4-10 | Carte de modèle et checklist TRIPOD-LLM | |
+| P4-10 | Carte de modèle et checklist TRIPOD-LLM | **Carte v4 du candidat G écrite le 06/10/2026** (`docs/CARTE_DE_MODELE_V4.md` : composition, performance, incertitude, abstention, coûts par composante, résultats négatifs, limites ; chaque chiffre cite un run) ; **non close** : checklist des 19 items et chiffres confirmatoires à rejouer après le gel et RM-51 |
 | G-P4 | Scorecard G-P4 | |
 
 ### Étape R11 : livraison ciblée (jalon B)
@@ -444,7 +444,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P2-11 | Multi-étiquettes et paires de bout en bout | |
 | RM-49 | Ancrage sur un benchmark public à résultats publiés (MorFITT) avec le même code | Seul moyen vérifiable de se situer face à l'état de l'art ; chiffres publiés cités avec source ; **préparé le 05/10/2026** : jeu téléchargé (CC BY-SA 4.0), fiche hachée, code et lot en attente du marqueur d'ouverture du test scellé |
 | P2-12 | Pages wiki des professeurs et de la qualité des étiquettes | |
-| RM-45 | Encodeur élagué (six couches), avec et sans distillation | Latence divisée par deux visée ; fiche hachée et lot en file (05/10/2026) |
+| RM-45 | Encodeur élagué (six couches), avec et sans distillation | Latence divisée par deux visée ; fiche hachée (05/10/2026) ; **fait le 06/10/2026** (30 runs, après correction du quoting de `$LOGDIR` qui le faisait sortir en code 2) : **dégradé** dans les trois comparaisons de la fiche (élagué contre complet −13,08 [−15,88 ; −10,14] ; distillé contre complet distillé −12,37 [−14,80 ; −9,74] ; distillé contre complet −8,89 [−10,78 ; −6,42]), latence ×1,99 sur processeur, ×1,28 (fp32) et ×1,63 (bf16) sur GPU ; **non retenu pour le service** ; run `20261006-121213-encodeur-elague-analyse-cinq-plis` |
 | RM-46 | Élève TF-IDF à étiquettes souples | Latence de 2 ms conservée ; bras ensemble fait le 04/10/2026 : +0,69 [−1,03 ; +2,29], non résolu, 15 % de l'écart au professeur ; bras LoRA à faire |
 | P3-03 | Balayage d'alpha et de T | |
 | P3-04 | Plusieurs professeurs : moyenne ou pondération | |
@@ -476,8 +476,8 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P4-07 | Robustesse : perturbations et spécialité exclue | |
 | P4-09 | Front de Pareto | |
 | RM-38 | Encodeur quantifié correctement (statique, sélectif, ONNX) | Fait en partie le 04/10/2026 : INT8 dynamique sélectif, l'effondrement vient du feed-forward ; attention seule −1,3 point, +11 % de vitesse, non retenue ; reste la quantification statique |
-| RM-44 | Export ONNX Runtime et quantification statique étalonnée de l'encodeur | Dépendance au verrou seulement si retenue |
-| RM-39 | Robustesse des modèles appris : perturbations, ablations de contenu, leave-one-author-out | Le TF-IDF à caractères est déjà insensible |
+| RM-44 | Export ONNX Runtime et quantification statique étalonnée de l'encodeur | Dépendance au verrou seulement si retenue ; **partiel et négatif le 06/10/2026** : ONNX 32 bits identique (0,7362, latence p50 +8 %), INT8 statique min-max effondré à 0,0227 et plus lent (+39 %) ; variantes par centiles non mesurées (calibration de 128 textes à plus de 40 Go de RAM, coupée par `scripts/mem_guard.sh`) ; run `20261006-091535-onnx-int8-statique-partiel-camembert-deploy-ep10-lr1e-4` (statut `aborted`) ; **clos sur le résultat partiel le 06/10/2026 (Q25 validée)** : INT8 statique non retenu |
+| RM-39 | Robustesse des modèles appris : perturbations, ablations de contenu, leave-one-author-out | Le TF-IDF à caractères est déjà insensible ; **partie inférence faite le 06/10/2026** (encodeur et LoRA, pli 0, cinq variantes, runs `20261006-171647-robustesse-modeles-appris-encoder` et `20261006-173250-robustesse-modeles-appris-lora`) : aucune perturbation de forme dégradée de façon résolue ; encodeur dégradé sans le début (−7,46), **LoRA effondré sans la fin (−64,0, cause non établie)** ; **diagnostic fait le 06/10/2026** (runs `20261006-181026-robustesse-lora-diagnostic-fin-retiree`, `20261006-182233-robustesse-lora-saut-de-ligne`) : palier dès 10 % de fin retirée, pas de collapse, le LoRA classe sur la fin de séquence ; le saut de ligne final explique une grande part sans tout expliquer ; **reste** un entraînement avec fin aléatoire (correction possible) et le leave-one-author-out des modèles appris (réentraînements) |
 | RM-40 | Cascade par seuil de confiance (TF-IDF, encodeur, LoRA) (cascade_cv à cinq plis fait : encodeur puis LoRA non-inférieur, 93 % sans LoRA ; TF-IDF puis LoRA non) : calcul alloué selon la difficulté du cas | Aperçu hors ligne : 50 à 80 % des cas sans le LoRA, sans perte de macro-F1 ; seuil à valider sur plis distincts |
 | RM-43 | Routage de la cascade par taille de l'ensemble conforme | Compare au seuil de probabilité ; **fait le 05/10/2026** : non-infériorité, 45,5 % sans LoRA, couverture par région mesurée (0,95 et 0,91) ; la cascade à seuil, plus économe, n'a pas sa couverture par région mesurée |
 
@@ -501,6 +501,8 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P5-08 | Dérive, maintenance, retour arrière | |
 | P5-10 | Revue indépendante | Aucun envoi externe sans accord de Cyril |
 | P5-11 | Démo locale avec bannière « données fictives » | |
+| RM-57 | Contournement des plantages du tokenizer et garde-fous mémoire | **Fait le 06/10/2026** : sous-processus épinglé (`src/llmft/tokenizer_guard.py`, `tokenizer_child.py`, 5 tests), run `20261005-224632-tokenizers-course-threads-qwen35` (25 échecs sur 31 runs sans épinglage, 0 sur 78 épinglés), `scripts/mem_watch.sh`, `scripts/mem_guard.sh`, page du wiki `incidents-et-audits-externes` ; `make check` vert |
+| RM-58 | Fiabilité des lots : cache des identifiants, guillemetage des `run_*.sh`, identité vérifiée | **Guillemetage fait le 06/10/2026** (cause du code 2 de RM-45 : chemin du dépôt avec espaces) : 20 redirections dans 13 scripts plus les 3 corrigés avant, contrôle statique `tests/test_lot_scripts_quoting.py` (rouge avant, vert après) ; **identité vérifiée le 06/10/2026** : identifiants du sous-processus épinglé identiques au calcul non épinglé sur les 3 586 textes (CamemBERT-bio à 508 : 1 796 069 identifiants ; Qwen3.5-4B à 4096 : 4 754 872), run `20261006-105551-tokenizer-identite-sous-processus-epingle` (exploratoire ; coût mesuré du sous-processus : 75 s et 132 s par appel, sous charge GPU) ; **cache disque des identifiants fait le 06/10/2026** (`src/llmft/tokenizer_guard.py`, `artifacts/token_cache`, clé : nom, longueur, versions de `tokenizers` et `transformers`, empreinte de chaque texte ; 5 tests dans `tests/test_token_cache.py`, rouge avant) : CamemBERT-bio, 44,7 s au premier appel puis 0,07 s, identifiants identiques ; limite : la clé ne contient pas l'empreinte des fichiers du tokenizer ; **RM-58 faite** (Q24 : décision de garder le sous-processus pour tous les modèles) |
 
 ### Étape R16 : options (sur décision de Cyril)
 
@@ -619,3 +621,4 @@ python3 scripts/check_roadmap.py --export     # régénère tasks/plan.md et tas
 ```
 
 Les deux vérificateurs forcent la sortie en UTF-8 et ne dépendent d'aucune bibliothèque tierce. Une modification de cette feuille de route ou du backlog se termine par leur relance.
+- **Mise à jour du 06/10/2026** : LoRA final et temps A faits (RM-50 n'attend plus que la décision de Cyril) ; RM-44 partiel et négatif ; RM-45 lancé ; **RM-57 et RM-58 ajoutées** sans renuméroter (contournement du tokenizer et garde-fous mémoire, fait ; fiabilité des lots, à faire) ; état croisé des notes et des leviers dans `docs/SUIVI_NOTES_ET_LEVIERS.md` ; chemin court inchangé : 111 ★ sur 193.
