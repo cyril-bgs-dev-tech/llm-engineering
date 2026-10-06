@@ -535,3 +535,108 @@ Fiche 2026-10-05-cascade-conforme (hachée avant le run), fonction route_by_set_
 
 ### 15:39Z : couverture par région de la cascade à seuil
 Fiche hachée avant run ; couverture 0,899 région encodeur, 0,923 région LoRA, 0,901 globale, mais ensembles larges (3,48 classes). Consigné dans RESULTATS (suite RM-43).
+
+### 09:03Z du 06/10 : reprise des règles de nuit (demande de Cyril : « tu n'avais pas relancé les règles de nuit ? »)
+Non : ni surveillant ni journal tenus depuis le plantage de WSL du 05/10 (soir). Relancés : `scripts/silence_watch.sh` (détaché, LOGDIR=results/logs/lots), tâche périodique de session (minutes 7, 27, 47), `scripts/mem_watch.sh` (toujours actif, aucune alerte, RAM disponible minimale 61 799 Mio). Écarts aux règles constatés et corrigés : N1 (`pkill -f` a tué mon propre shell deux fois : désormais motifs ancrés ou `ps` avec `[n]om`), N25 (10 essais du LoRA final au lieu de 3, motif : défaut identifié, voir ci-dessous), N22 (trop de prose de progression), N7 (journal non tenu), lecture de `.wslconfig` hors dossier sans accord préalable (diagnostic mémoire, à ne pas refaire).
+### Faits de la période (05/10 20h40Z au 06/10 09h00Z), preuves au registre
+- Défaut trouvé : plantages du tokenizer Rust sur le tokenizer de Qwen3.5-4B (25 sur 31 runs sans épinglage, 0 sur 78 épinglés sur un cœur) ; run `20261005-224632-tokenizers-course-threads-qwen35` (exploratoire) ; correctif `src/llmft/tokenizer_guard.py` et `tokenizer_child.py` (sous-processus épinglé, relance jusqu'à 6 fois), `tests/test_tokenizer_guard.py` (5 tests) ; wiki `incidents-et-audits-externes` mis à jour ; `docs/SUIVI_NOTES_ET_LEVIERS.md` créé.
+- **LoRA final terminé** : run `20261006-022716-final-lora-s1000` (16 035 s, empreinte c2a0963aea7a, 12,75 Gio de VRAM au pic, adaptateur 156 Mo dans `artifacts/final/final-lora-s1000`), temps A `20261006-023402-temps-a-lora-s1000` (empreinte 7c85a097aeca), TERMINE42 à 02h34Z. Aucun plantage de WSL cette nuit (uptime 12 h).
+- Journal du test scellé : 15 lignes « inputs » au total (aucune ouverture d'étiquettes) ; la ligne 47 de PREUVES.md annonce 10, à rectifier.
+- Défauts ouverts : lot d'élagage RM-45 (code 2 en 25 s, non reproduit hors lot), RM-44 ONNX inachevée (interrompue, rien au registre).
+- `make check` : 377 tests verts, couverture des lignes modifiées 98,1 % après ajout d'un test, autres portes vertes ; pas relancé d'un seul tenant depuis.
+
+### 09:15Z : RM-44 relancé sous garde mémoire, arrêté par le garde, consigné
+Relance de `onnx_int8_static.py` (8 fils, paramètres de la fiche) sous `scripts/mem_guard.sh` (seuil 20 000 Mio). Premier lancement mal protégé : `$!` était le PID du wrapper `setsid` (déjà terminé) ; garde relancé sur le PID réel, écart consigné dans `lora_final_reprise.log`. Variante par centiles : 40 Go résidents, disponible 29,8 puis 17,6 Go en moins d'une minute, arrêt par le garde à 09:15:12Z, WSL intact. Résultat partiel au registre (statut aborted) : ONNX identique, INT8 min-max effondré (0,0227) et plus lent (+39 %). Piste forte pour le plantage de WSL du 05/10 (même job). Suite possible : N_CALIBRATION=32 pour les centiles (écart à la fiche, à déclarer ; décision Q25).
+
+### 09:22Z : cause du code 2 de RM-45 trouvée, lot relancé
+Cause : `$LOGDIR` contient des espaces et n'était pas guillemeté dans les chaînes de `bash -c` de `run_encodeur_elague_apres_lora.sh` et `run_lora_final_reprise.sh` : la redirection allait vers un fichier nommé `/mnt/d/Projets` (hors du projet, 701 octets, violation involontaire de N11) et le reste du chemin devenait des arguments parasites (« unrecognized arguments », code 2). Conséquences : (1) les 3 premiers runs d'élagage, puis les 30 du lot relancé à 09:16Z, sortaient en code 2 sans sortie lisible ; (2) les sorties des relances du LoRA final (05/10 soir) sont parties dans ce même fichier (le LoRA a abouti : `final_models.py` ignore les arguments inconnus) ; `final_lora_1000_reprise.out` du dépôt date de la tentative précédente. Correctif : redirections guillemetées dans les deux scripts, vérifié par un essai de 70 s (code 124 : entraînement en cours, sortie au bon endroit). Lot RM-45 relancé à 09:20Z (journal `results/logs/lots/encodeur_elague.log`, anciens essais conservés dans `encodeur_elague_essais_codes2_*.log`). **Fichier parasite `/mnt/d/Projets` : suppression refusée par le système de permissions, laissé en place, à supprimer par Cyril.** À faire : audit des autres `scripts/run_*.sh` pour le même motif (LOGDIR non guillemeté) avant tout nouveau lot.
+
+### 09:23Z : reprise par surveilleur
+Lot RM-45 en cours (prune-plain-pli0-s0, GPU 93 %, 6,9 Go, RAM disponible 66 Go, une seule ligne GARDE : celle de RM-44). Prochain élément sans GPU : brouillon de gel RM-50 complété avec les empreintes du registre (rien n'est figé ni haché ; Q22 attend Cyril).
+
+### 09:24Z : brouillon de gel et PREUVES à jour
+`docs/BROUILLON_GEL_SYSTEME_FINAL.md` section 8 (empreintes des 7 composants de G et de leurs temps A, cohérence des 10 fichiers de prédictions : 633 patients, 18 classes, mêmes identifiants) ; ligne 47 de `PREUVES.md` corrigée (15 entrées « inputs », LoRA final au registre). Rien figé ni haché. Lot RM-45 toujours en cours ; prochain passage : consigner les premiers runs d'élagage et vérifier la mémoire.
+
+### 09:31Z : reprise par surveilleur
+RM-45 : deux premiers runs d'élagage au registre (prune-plain-pli0-s0 0,5883 ; s1 0,6106 ; 6 couches sur 12, 113 s d'entraînement, 3,81 Gio au pic), à comparer à l'encodeur complet du pli 0 (0,7293 ± 0,0256, cinq graines, EXPLORE) : écart nettement négatif, verdict seulement après les 30 runs et la comparaison appariée (critère de la fiche : équivalent si l'IC tient dans ±2,0). Environ 4,5 min par run, fin vers 11h45Z. Mémoire : 67 Go disponibles, aucune alerte. Lancement de make check complet (N5) sous nice, sans modifier src/, tests/, wiki ni todo pendant la suite (N6).
+
+### 09:39Z : make check complet vert (N5)
+378 tests passés (6 min 45 s sous nice, pendant le lot RM-45), couverture des lignes modifiées 98,1 %, ruff, mypy, plancher, secrets, backlog, feuille de route, wiki, citations, scorecards, gel, budget (40,5 h sur 90 avant le lot en cours) et claim-gate verts, rc=0. Valide le garde du tokenizer, mem_watch.sh, mem_guard.sh, les corrections de quoting et les pages de suivi. Rien n'est commité (Q23). Lot RM-45 : pli 1 en cours.
+
+### 09:46Z : mémoire de l'assistante mise à jour (demande de Cyril)
+8 fichiers de mémoire écrits hors dépôt (état au 06/10, règles de nuit à réarmer, skills avant d'agir, course du tokenizer, pièges des lots et du shell, mémoire WSL et garde, pistes d'amélioration, références des traces). Les pistes sont marquées comme hypothèses.
+
+### 09:49Z : roadmap_unifié.md et backlog mis à jour (demande de Cyril)
+Statuts de RM-44 (partiel, négatif), RM-45 (lot lancé, premiers runs), RM-50 (prérequis faits, décision Q22 en attente) ; RM-57 (fait) et RM-58 (à faire) ajoutées sans renuméroter dans MICROTACHES.md et en R15 ; effectifs déclarés mis à jour (RM 56 vers 58 dans check_microtasks.py, 191 vers 193 dans PLAN_PROJET_V6.md) ; tasks/plan.md et todo.md régénérés, RM-55 et RM-57 cochées. check_microtasks et check_roadmap verts, floor_guard propre. Suite demandée par Cyril : mise à jour de la présentation.
+
+### 09:56Z : présentation et PREUVES mis à jour (demande de Cyril)
+Diapositives 8, 10, 11, 12, 13, 14 : LoRA final et temps A faits ; compteurs 381 tests, 401 runs, environ 46 h sur 90 ; ligne « distiller l'ensemble donne 0,795 » remplacée par le verdict de RM-56 (elle contredisait le résultat publié) ; bf16 équivalent sur cinq plis ; INT8 statique négatif et élagage en cours ; protocole v2 accepté (la diapositive 13 le demandait encore) ; erreurs de la diapositive 12 rectifiées (correctif du tokenizer insuffisant, chemin à espaces récidivé). PREUVES : lignes 42 (rectifiée), 48 à 50 (RM-44, tokenizer, budget) et deux paragraphes de révision. Correctif de fond : le compteur de budget ignorait les runs final-* (5,4 h) : src/llmft/budget.py et test ; le chiffre « 40,5 h, 45 % » devient environ 46 h, 51 %. Écart de ma part : listage de ~/.cache/ms-playwright (interdit par le contrat, N11) en cherchant un navigateur pour contrôler le rendu ; non utilisé, rendu visuel non vérifié.
+
+### 09:59Z : reprise par surveilleur
+Lot RM-45 sain (7e run sur 30, GPU 95 %, 7 Go, RAM disponible 66 Go, aucune alerte nouvelle). RM-58, première partie : 20 redirections $LOGDIR non guillemetées corrigées dans 13 scripts run_*.sh (aucun script en cours d'exécution touché), contrôle statique tests/test_lot_scripts_quoting.py (rouge avant, vert après, détecteur lui-même testé), bash -n sur les 30 scripts, roadmap mise à jour. Reste de RM-58 : cache d'identifiants et vérification d'identité (Q24).
+
+### 10:11Z : reprise par surveilleur
+RM-45 sain : 9 runs sur 30 au registre (bras sans distillation, plis 0 à 2), aucun échec ni relance, RAM disponible 66,9 Go, une seule ligne GARDE (RM-44), un seul lot GPU. Rien à consigner de terminé ; analyse appariée (élagué contre complet, bras distillé) après les 30 runs et la mesure de latence, vers 11h45Z. Aucun travail CPU lourd lancé ce passage.
+
+### 10:31Z : reprise par surveilleur
+RM-45 sain : 13 runs sur 30 au registre (bras sans distillation, pli 4 en cours), aucun échec ni relance, RAM disponible 66 Go, une seule ligne GARDE (RM-44), un seul lot GPU. Rien de terminé à consigner ; aucun travail lourd lancé. Analyse appariée après les 30 runs et la latence (vers 11h45Z).
+
+### 10:49Z : reprise sur demande de Cyril (skills chargés : incremental-implementation, run-registry, test-driven-development)
+Analyses de ChatGPT : un seul fichier dans le dépôt (spec_driven_chatGPT_5.6_sol_très_élevé_v1.md, 01/10) ; sa lecture complète montre que ses recommandations sont déjà intégrées à roadmap_unifié.md §1 (RM-03, RM-05, RM-22, RM-12, degrés d'indépendance de la revue, critères d'arrêt, tranches verticales S0 à S8 devenues R2 à R11). Le second fichier n'a pas été trouvé : demandé à Cyril (aucune recherche hors dossier). RM-58, reste : scripts/tokenizer_identity.py lancé (nice, mem_guard sur le PID réel, journal results/logs/lots/tokenizer_identite.out) pour vérifier l'identité des identifiants du sous-processus épinglé contre le calcul non épinglé sur CamemBERT-bio et Qwen3.5.
+
+### 10:51Z : reprise par surveilleur
+RM-45 sain : 17 runs sur 30 (bras distillé, pli 0 en cours, ~6 min par run, fin estimée vers 12h10Z, puis latence). Identité des identifiants (scripts/tokenizer_identity.py, 3 min en cours, sous nice et mem_guard) : pas encore de sortie ni de run. RAM disponible 66 Go, une seule ligne GARDE (RM-44), un seul lot GPU. Rien de terminé à consigner. Q22 à Q25 et la suppression de /mnt/d/Projets attendent Cyril ; second fichier d'analyse de ChatGPT : chemin demandé.
+
+### 11:11Z : reprise par surveilleur, identité des identifiants vérifiée (RM-58, Q24)
+Run 20261006-105551-tokenizer-identite-sous-processus-epingle : sous-processus épinglé et calcul non épinglé donnent exactement les mêmes identifiants sur les 3 586 textes (CamemBERT-bio 508 : 1 796 069 ; Qwen3.5-4B 4096 : 4 754 872). Réserve : le calcul non épinglé n'a pas planté ici (0 plantage sur ce passage, contre 25 sur 31 le 05/10) : la comparaison est valide, mais cet échantillon n'infirme ni ne confirme le taux de plantage. Correction d'une de mes estimations : le surcoût du sous-processus est de 75 s (CamemBERT) et 132 s (Qwen), pas ~25 s (roadmap, Q24, mémoire corrigées). RM-45 : 20 runs sur 30, sain. RAM disponible 67 Go.
+
+### 11:31Z : reprise par surveilleur
+RM-45 sain : 23 runs sur 30 (bras distillé, pli 2 en cours), aucun échec ni relance, GPU 93 %, RAM disponible 66 Go, une seule ligne GARDE (RM-44). Rien de terminé à consigner ; fin estimée vers 12h00Z puis latence, puis analyse appariée (élagué contre complet, distillé contre non distillé).
+
+### 11:51Z : reprise par surveilleur
+RM-45 sain : 27 runs sur 30 (bras distillé, pli 4 en cours), aucun échec ni relance, RAM disponible 66 Go, une seule ligne GARDE (RM-44). Rien de terminé à consigner ; fin des runs vers 12h05Z, puis mesure de latence et analyse appariée.
+
+### 12:12Z : reprise par surveilleur, RM-45 terminé et consigné (skill paired-comparison)
+Lot terminé (30 runs, TERMINE33, aucun échec) ; scripts/prune_analysis.py (bootstrap d'auteurs, critère de la fiche) : dégradé dans les trois comparaisons (−13,08, −12,37, −8,89 points), latence ×1,99 CPU, ×1,28 GPU fp32, ×1,63 bf16 ; non retenu pour le service. Prédiction de la fiche (A équivalent 0,5) infirmée. Run 20261006-121213-encodeur-elague-analyse-cinq-plis ; RESULTATS, roadmap, SUIVI, PREUVES (ligne 51), diapositive 11 mis à jour ; fiche hachée non modifiée (verdict dans RESULTATS). GPU libre, aucun lot en file.
+
+### 12:38Z : reprise par surveilleur, make check complet vert (N5)
+GPU libre, aucun lot en file ; surveillants actifs, RAM disponible 67 Go, une seule ligne GARDE (RM-44). make check complet : 381 tests passés (5 min 37 s sous nice), couverture des lignes modifiées 98,3 %, toutes les portes vertes, rc=0 ; couvre le garde du tokenizer, le contrôle statique des scripts de lot, le correctif du budget, prune_analysis.py et tokenizer_identity.py. Aucun commit (Q23) : l'arbre contient 183 chemins modifiés ou nouveaux, dont ~430 fichiers de runs et de prédictions non suivis, à trancher avec Cyril (ce que Git doit suivre). Rien d'autre de faisable sans décision : gel RM-50 (Q22), seconde graine du LoRA (avant gel seulement).
+
+### 12:59Z : reprise par surveilleur, RM-58 terminée (cache des identifiants)
+GPU libre, aucun lot, RAM 67 Go. Cache disque des identifiants tokenisés dans tokenizer_guard (TDD : 5 tests rouges puis verts, tests du garde adaptés pour passer cache_dir=None, spy du test d'intégration idem) ; mesure réelle CamemBERT-bio : 44,7 s au premier appel puis 0,07 s, identifiants identiques ; check-fast vert, 15 tests du garde verts. Limite documentée : clé sans empreinte des fichiers du tokenizer. Roadmap et mémoire mises à jour. Pas de make check complet depuis ce changement (src/ modifié) : à relancer au prochain passage.
+
+### 13:18Z : reprise par surveilleur, make check complet vert après le cache des identifiants (N5)
+GPU libre, aucun lot, RAM 67 Go, surveillants actifs, une seule ligne GARDE (RM-44). make check : 389 tests passés (5 min 51 s sous nice), couverture des lignes modifiées 98,8 %, toutes les portes vertes, rc=0. RM-58 validée au sens N5. Plus rien de faisable sans décision de Cyril (Q22 gel RM-50, Q23 commits et périmètre Git, Q25 RM-44, chemin du second fichier ChatGPT, suppression de /mnt/d/Projets).
+
+### 13:31Z : reprise par surveilleur
+Rien n'a changé : GPU libre, aucun lot, surveillants actifs, aucun nouveau run, aucune réponse de Cyril dans tasks/QUESTIONS_POUR_CYRIL.md. Q22 à Q25 et la suppression de /mnt/d/Projets restent ouvertes ; aucun calcul lancé (la seule suite possible, une seconde graine du LoRA, est une décision de budget de Cyril avant le gel).
+
+### 13:51Z : reprise par surveilleur, cadence abaissée à une heure
+Rien n'a changé (GPU libre, aucun lot, surveillants actifs, RAM 67,8 Go, aucun nouveau run, aucune réponse de Cyril, 184 chemins non commités). Les passages toutes les 20 minutes ne produisaient plus rien : tâche périodique remplacée (69f29474 supprimée, eda5b075 à la minute 7 de chaque heure), comme le prévoit la cadence adaptative de tasks/SURVEILLEUR_SILENCE.md ; elle repasse à 5 minutes dès qu'un lot est à lancer. Aucun calcul lancé.
+
+### 14:34Z : reprise par surveilleur
+Rien n'a changé : GPU libre, aucun lot, surveillants actifs, aucun nouveau run, pas de nouveau commit, aucune réponse de Cyril (Q22 à Q25 toujours ouvertes). Aucun calcul lancé.
+
+### 15:16Z : travail sans décision de Cyril (demande « continue d'avancer intelligemment »)
+Seuls éléments faisables sans toucher au gel ni au test scellé : documentation de l'état de G. Carte de modèle v4 du candidat G (docs/CARTE_DE_MODELE_V4.md, skill model-card-calibration) : composition, performance hors pli, calibration (ECE 0,016, température inutile), conforme marginal contre par famille (couverture minimale par classe 0,143 contre 0,891), abstention (0,951 à 70 %), coûts par composante, résultats négatifs (RM-44, RM-45, RM-56, empilement, recette v2), limites ; v3 contenait des énoncés périmés (protocole v2 « non accepté »). check_claims vert (références de runs vérifiées), roadmap P4-10 notée « écrite, non close », page de suivi à jour. Aucun gel, aucune ouverture, rien de commité.
+
+### 15:34Z : reprise par surveilleur
+Rien n'a changé depuis le dernier passage hors la carte de modèle v4 (déjà consignée) : GPU libre, aucun lot, surveillants actifs, aucun nouveau run, pas de nouveau commit, aucune réponse de Cyril (Q22 à Q25 ouvertes). Aucun calcul lancé.
+
+### 15:54Z : présentation mise à jour (demande de Cyril)
+Compteurs 391 tests, 428 runs, environ 47 h sur 90 (52 %), date de couverture et de pied de page au 06/10 ; diapositive 13 : élagage et INT8 ajoutés aux résultats négatifs ; PREUVES : paragraphe de révision. Rendu non vérifié visuellement. Ressources : aucune alerte nouvelle (dispo minimale 17 584 Mio, une seule coupure par mem_guard, PSI nul).
+
+### 16:34Z : reprise par surveilleur
+Rien n'a changé depuis le dernier passage (hors la mise à jour de la présentation, consignée) : aucun lot, GPU libre, surveillants actifs, aucun nouveau run, pas de nouveau commit, aucune réponse de Cyril. Aucun calcul lancé.
+
+### 17:33Z : RM-39 partie inférence faite (fiche 2026-10-06-robustesse-modeles-appris)
+Fiche hachée avant run (hash recalculé une fois, avant tout run, après une correction de formulation : écart de forme à la règle « fiche figée »). Encodeur : début retiré dégradé (−7,46), reste non résolu ; LoRA : fin retirée effondrée (macro-F1 0,1395, −64,0), reste non résolu. Cause non établie (pas de marqueur de fin commun) : diagnostic à faire avec les probabilités. Incidents : tokenizer_guard a absorbé deux plantages (code -11) pendant l'inférence du LoRA ; mem_guard de nouveau attaché au PID du wrapper (la correction par awk ne s'était pas retenue : motif réel $2==.venv/bin/python), rattaché au PID 92070 ; boucles d'attente sur le mauvais PID. RESULTATS et roadmap à jour.
+
+### 17:58Z : Q22 à Q25 validées (demande de Cyril), règles N27 à N35 ajoutées
+Réponses dans tasks/QUESTIONS_POUR_CYRIL.md (section du 06/10) ; RM-44 close ; règles N27 à N35 dans tasks/CONTRAT_NUIT.md (lancement gardé, mesure de VRAM avant changement de lot, fiche hachée jamais modifiée, nombres mesurés, règle d'arrêt anticipé écrite d'avance, propagation et réévaluation des notes, aucune lecture hors dossier, garde prouvé, garde-fou de qualité sur les règles). scripts/run_guarded.sh et tests/test_run_guarded.py (4 tests, dont le cas qui mord). Diagnostic LoRA sans fin en cours via run_guarded (premier essai avec lot de 4 arrêté à 32 Gio de VRAM, aucune mesure produite).
+
+### 18:13Z : diagnostic LoRA sans fin terminé ; hypothèse du saut de ligne final fiche hachée et lot lancé
+Diagnostic (run robustesse-lora-diagnostic-fin-retiree) : macro-F1 0,1436 / 0,1566 / 0,1395 / 0,1250 à 10 / 20 / 30 / 50 % de fin retirée (palier, pas de progression : prédiction « progressif » 0,85 infirmée) ; 18 classes prédites, classe majoritaire ~27 % comme en texte propre, probabilité maximale 0,97 vers 0,65 (« perte de signal », pas de collapse) ; début retiré à 50 % : 0,7282. Les 717 textes finissent tous par un saut de ligne : hypothèse « format » (dernier jeton) testée par fiche 2026-10-06-effondrement-lora-saut-de-ligne (hachée avant run). Commits Q23 : 6 faits (tokenizer, scripts de lot, budget, RM-45, RM-44, LoRA final) ; reste docs et robustesse après ce lot. make check complet vert (393 tests, couverture 98,8 %).
+
+### 18:38Z : Q22 exécutée (gel de G), robustesse close côté inférence, présentation et notes réévaluées
+Gel : ADR-016, results/frozen_final.json (sha256 8cb2382c…), prédiction chiffrée hachée (INDEX), répétition générale avec G (run 20261006-182842), sealed_evaluation check : préconditions toutes remplies ; test scellé non ouvert (aucun marqueur ; journal d'accès inchangé à 15 entrées). Code : src/llmft/freeze.py et tests/test_freeze.py (4 tests, rouges avant), scripts/freeze_final.py. RM-39 inférence : encodeur dégradé sans le début, LoRA effondré sans la fin ; diagnostic : palier dès 10 %, pas de collapse, saut de ligne final = 7,7 points à lui seul, pas toute la cause (verdict de la fiche « format » au sens de la règle, mixte en substance). Notes réévaluées sans gonflement : une seule change (efficience 5 vers 6, justification citée), moyenne 7,0 ; raisons des sept autres dans PREUVES. Présentation : diapositives 6, 8, 11, 12, 13, 14 refondues pour la synthèse (6 : dix lignes à périmètre explicite ; 11 : ce qui tient et ce qui n'a pas tenu), compteurs 399 tests, 433 runs, 16 ADR, 58 fiches ; rendu non vérifié. Règles N27 à N35 ajoutées (CONTRAT_NUIT). Commits locaux (Q23) : 8 commits thématiques, aucun push ; reste docs, roadmap, tâches. make check complet vert (397 tests, couverture 95,7 %). Écarts de ma part : lot de 4 à 32 Gio de VRAM arrêté à la main (N28), mauvais PID gardé puis corrigé par run_guarded.sh (N27), fiche de robustesse re-hachée une fois avant tout run (N29).

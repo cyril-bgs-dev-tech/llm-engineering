@@ -24,3 +24,6 @@ Pendant le LoRA des plis 2 à 4 (fin du pli 2 vers 19h30Z, pli 3 vers 23h00Z, pl
 
 ## Limites connues
 Les tâches périodiques vivent dans la session (perdues à sa fermeture) et expirent après 7 jours. Le témoin d'activité détaché ne peut pas relancer l'assistant : il ne fait que mesurer.
+
+## Cadence du 06/10/2026 à 13h50Z
+File vide et GPU libre, en attente des réponses de Cyril (Q22 à Q25) : la tâche périodique passe à une fois par heure (id eda5b075, minute 7, remplace 69f29474). Elle repasse à 5 minutes dès qu'un lot est à lancer sans attente.
