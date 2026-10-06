@@ -13,8 +13,10 @@ def _seconds(value: object) -> float:
 def consumed_hours(runs_dir: Path) -> float:
     total = 0.0
     for path in sorted(runs_dir.glob("*.json")):
-        metrics = json.loads(path.read_text(encoding="utf-8")).get("metrics", {})
-        total += _seconds(metrics.get("seconds_train")) + _seconds(metrics.get("seconds_tokenize"))
+        record = json.loads(path.read_text(encoding="utf-8"))
+        metrics = record.get("metrics", {})
+        train = _seconds(metrics.get("seconds_train")) or _seconds(record.get("params", {}).get("seconds_train"))  # runs final-* : durée dans params
+        total += train + _seconds(metrics.get("seconds_tokenize"))
     return total / 3600.0
 
 
