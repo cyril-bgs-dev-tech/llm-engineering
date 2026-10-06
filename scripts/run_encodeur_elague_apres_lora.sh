@@ -13,9 +13,9 @@ for arm in plain distill; do
     for k in 0 1 2; do
       slug="prune-$arm-pli$fold-s$k"
       if [ "$arm" = distill ]; then OPT="--teacher '$ENS'"; else OPT=""; fi
-      run_lot "$LOGDIR/encodeur_elague.log" "$slug" 3 bash -c "timeout 3600 .venv/bin/python scripts/p1_encoder_pruned.py almanach/camembert-bio-base --lr 1e-4 --every 2 $OPT --fold $fold --epochs 10 --seed $((1000 + k)) --fiche $FICHE --slug $slug --register > $LOGDIR/$slug.out 2>&1"
+      run_lot "$LOGDIR/encodeur_elague.log" "$slug" 3 bash -c "timeout 3600 .venv/bin/python scripts/p1_encoder_pruned.py almanach/camembert-bio-base --lr 1e-4 --every 2 $OPT --fold $fold --epochs 10 --seed $((1000 + k)) --fiche $FICHE --slug $slug --register > \"$LOGDIR/$slug.out\" 2>&1"
     done
   done
 done
-run_lot "$LOGDIR/encodeur_elague.log" latence-encodeur-elague 2 bash -c "timeout 1800 .venv/bin/python scripts/bench_pruned_latency.py --register > $LOGDIR/latence_elague.out 2>&1"
+run_lot "$LOGDIR/encodeur_elague.log" latence-encodeur-elague 2 bash -c "timeout 1800 .venv/bin/python scripts/bench_pruned_latency.py --register > \"$LOGDIR/latence_elague.out\" 2>&1"
 echo "$(date -u +%FT%TZ) TERMINE33" >> "$LOGDIR/encodeur_elague.log"

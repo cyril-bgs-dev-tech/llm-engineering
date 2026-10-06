@@ -17,7 +17,7 @@ for factor in bf16 ls01 ema99 curr2; do
   for fold in 0 1 2 3 4; do
     for k in 0 1 2; do
       slug="enc2-$factor-pli$fold-s$k"
-      run_lot "$LOGDIR/encodeur_v2.log" "$slug" 3 bash -c "timeout 3600 .venv/bin/python scripts/p1_encoder_v2.py almanach/camembert-bio-base --lr 1e-4 --fold $fold --epochs 10 --seed $((1000 + k)) $OPT --fiche $FICHE --slug $slug --register > $LOGDIR/$slug.out 2>&1"
+      run_lot "$LOGDIR/encodeur_v2.log" "$slug" 3 bash -c "timeout 3600 .venv/bin/python scripts/p1_encoder_v2.py almanach/camembert-bio-base --lr 1e-4 --fold $fold --epochs 10 --seed $((1000 + k)) $OPT --fiche $FICHE --slug $slug --register > \"$LOGDIR/$slug.out\" 2>&1"
     done
   done
 done

@@ -8,6 +8,6 @@ LOGDIR="${LOGDIR:?LOGDIR requis}"
 source scripts/lib/lot.sh
 until [ -f data/splits/sealed_opened.marker ] && grep -q TERMINE33 "$LOGDIR/encodeur_elague.log" 2>/dev/null; do sleep 60; done
 FICHE=experiments/2026-10-05-ancrage-morfitt.md
-run_lot "$LOGDIR/morfitt.log" morfitt-reglage-validation 2 bash -c ".venv/bin/python scripts/morfitt_run.py tune --register --fiche $FICHE > $LOGDIR/morfitt_tune.out 2>&1"
-run_lot "$LOGDIR/morfitt.log" morfitt-final-resume 2 bash -c ".venv/bin/python scripts/morfitt_run.py final --register --fiche $FICHE > $LOGDIR/morfitt_final.out 2>&1"
+run_lot "$LOGDIR/morfitt.log" morfitt-reglage-validation 2 bash -c ".venv/bin/python scripts/morfitt_run.py tune --register --fiche $FICHE > \"$LOGDIR/morfitt_tune.out\" 2>&1"
+run_lot "$LOGDIR/morfitt.log" morfitt-final-resume 2 bash -c ".venv/bin/python scripts/morfitt_run.py final --register --fiche $FICHE > \"$LOGDIR/morfitt_final.out\" 2>&1"
 echo "$(date -u +%FT%TZ) TERMINE35" >> "$LOGDIR/morfitt.log"

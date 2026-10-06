@@ -12,7 +12,7 @@ for k in 0 1 2 3 4; do
     [ "$j" = "$k" ] && continue
     for s in 0 1; do
       slug="nested-enc-k$k-j$j-s$s"
-      run_lot "$LOGDIR/distillation_imbriquee.log" "$slug" 3 bash -c "timeout 3600 .venv/bin/python scripts/p1_encoder_nested.py almanach/camembert-bio-base --lr 1e-4 --fold $j --exclude-fold $k --epochs 10 --seed $((1000 + s)) --fiche $FICHE --slug $slug --register > $LOGDIR/$slug.out 2>&1"
+      run_lot "$LOGDIR/distillation_imbriquee.log" "$slug" 3 bash -c "timeout 3600 .venv/bin/python scripts/p1_encoder_nested.py almanach/camembert-bio-base --lr 1e-4 --fold $j --exclude-fold $k --epochs 10 --seed $((1000 + s)) --fiche $FICHE --slug $slug --register > \"$LOGDIR/$slug.out\" 2>&1"
     done
     if ! ls results/predictions | grep -q "^nested-tfidf-k$k-j$j.probs.npz$"; then
       nice -n 10 .venv/bin/python scripts/nested_tfidf.py "$j" "$k" >> "$LOGDIR/distillation_imbriquee.out" 2>&1
@@ -27,7 +27,7 @@ for k in 0 1 2 3 4; do
   for j in 0 1 2 3 4; do [ "$j" = "$k" ] && continue; T="$T${T:+,}$j=nested-teacher-k$k-j$j"; done
   for s in 0 1 2; do
     slug="distill-nested-pli$k-s$s"
-    run_lot "$LOGDIR/distillation_imbriquee.log" "$slug" 3 bash -c "timeout 3600 .venv/bin/python scripts/p3_distill.py almanach/camembert-bio-base --teacher '$T' --lr 1e-4 --alpha-kd 0.5 --temperature 2 --fold $k --epochs 10 --seed $((1000 + s)) --fiche $FICHE --slug $slug --register > $LOGDIR/$slug.out 2>&1"
+    run_lot "$LOGDIR/distillation_imbriquee.log" "$slug" 3 bash -c "timeout 3600 .venv/bin/python scripts/p3_distill.py almanach/camembert-bio-base --teacher '$T' --lr 1e-4 --alpha-kd 0.5 --temperature 2 --fold $k --epochs 10 --seed $((1000 + s)) --fiche $FICHE --slug $slug --register > \"$LOGDIR/$slug.out\" 2>&1"
   done
 done
 nice -n 15 .venv/bin/python scripts/distill_analysis.py --register > "$LOGDIR/post_distillation_imbriquee.out" 2>&1

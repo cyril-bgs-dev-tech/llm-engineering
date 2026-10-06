@@ -8,6 +8,6 @@ LOGDIR="${LOGDIR:?LOGDIR requis}"
 source scripts/lib/lot.sh
 until grep -q TERMINE37 "$LOGDIR/modeles_finaux.log" 2>/dev/null; do sleep 30; done
 for m in tfidf encoder-s1000 encoder-s1001 encoder-s1002 encoder-s1003 encoder-s1004 student-s1000 student-s1001 student-s1002 lora-s1000; do
-  run_lot "$LOGDIR/temps_a.log" "temps-a-$m" 2 bash -c "timeout 3600 .venv/bin/python scripts/sealed_evaluation.py inputs $m > $LOGDIR/temps_a_$m.out 2>&1"
+  run_lot "$LOGDIR/temps_a.log" "temps-a-$m" 2 bash -c "timeout 3600 .venv/bin/python scripts/sealed_evaluation.py inputs $m > \"$LOGDIR/temps_a_$m.out\" 2>&1"
 done
 echo "$(date -u +%FT%TZ) TERMINE38" >> "$LOGDIR/temps_a.log"

@@ -14,7 +14,7 @@ for arm in lora ens; do
   for fold in 0 1 2 3 4; do
     for k in 0 1 2; do
       slug="distill-$arm-pli$fold-s$k"
-      run_lot "$LOGDIR/distillation.log" "$slug" 3 bash -c "timeout 3600 .venv/bin/python scripts/p3_distill.py almanach/camembert-bio-base --teacher '$T' --lr 1e-4 --alpha-kd 0.5 --temperature 2 --fold $fold --epochs 10 --seed $((1000 + k)) --fiche $FICHE --slug $slug --register > $LOGDIR/$slug.out 2>&1"
+      run_lot "$LOGDIR/distillation.log" "$slug" 3 bash -c "timeout 3600 .venv/bin/python scripts/p3_distill.py almanach/camembert-bio-base --teacher '$T' --lr 1e-4 --alpha-kd 0.5 --temperature 2 --fold $fold --epochs 10 --seed $((1000 + k)) --fiche $FICHE --slug $slug --register > \"$LOGDIR/$slug.out\" 2>&1"
     done
   done
 done
