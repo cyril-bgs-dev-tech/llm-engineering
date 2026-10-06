@@ -326,7 +326,7 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] RM-50 (décision) : Gel du système final avant l'ouverture du test scellé : règle de sélection écrite avant lecture des prédictions complètes (cinq plis du LoRA, élèves distillés, ensemble) ; candidat unique, composition de l'ensemble, seuils conformes et d'abstention figés ; prédiction chiffrée de la macro-F1 du test scellé et de son intervalle écrite et hachée
   - Preuve de fin : ADR de gel datée avec empreinte ; prédiction hachée avant l'ouverture ; aucune modification après
   - Skills : experiment-preregistration, doubt-driven-development ; dépendances : RM-28, RM-32, RM-37
-- [ ] RM-20 (mesure) : Ouverture unique du test scellé pour la comparaison confirmatoire, via le seul script autorisé
+- [x] RM-20 (mesure) : Ouverture unique du test scellé pour la comparaison confirmatoire, via le seul script autorisé
   - Preuve de fin : Un seul accès journalisé ; verdict confirmatoire en trois valeurs seulement si la règle de puissance de PROTOCOLE.md 6.3 a réussi, sinon évaluation du candidat final sans verdict ; procédure en deux temps de 6.8 : code `sealed.py` à deux fonctions écrit avant, répétition générale du temps B réussie avant l'ouverture, marqueur à chemin fixe
   - Skills : leakage-guard ; dépendances : P3-07, P0-34, RM-50
 - [ ] RM-21 (décision) : Porte go/no-go après le verdict de distillation : le meilleur candidat mérite-t-il calibration et robustesse, ou le budget manque-t-il pour lever l'incertitude

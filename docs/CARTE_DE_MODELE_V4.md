@@ -1,6 +1,6 @@
-# Carte de modèle v4 (06/10/2026) : système final G (gelé), classifieur du chapitre CIM-10, comptes rendus cliniques fictifs français
+# Carte de modèle v4 (06/10/2026, mise à jour après l'ouverture du test scellé) : système final G (gelé), classifieur du chapitre CIM-10, comptes rendus cliniques fictifs français
 
-Remplace `docs/CARTE_DE_MODELE_V3.md` pour le système retenu par la règle de sélection (G). Statut : **EXPLORE, développement seulement** ; le test scellé n'est ni ouvert ni lu (aucune étiquette) ; **aucun verdict confirmatoire**. Le système est **gelé depuis le 06/10/2026** (ADR-016, `results/frozen_final.json`, prédiction chiffrée hachée) ; le test scellé reste fermé. Chaque chiffre renvoie à un `run_id` ; la checklist TRIPOD-LLM reste celle de `docs/CARTE_DE_MODELE_PROVISOIRE.md` et sera rejouée au gel (P4-10 n'est pas close).
+Remplace `docs/CARTE_DE_MODELE_V3.md` pour le système retenu par la règle de sélection (G). Statut : développement **et lecture confirmatoire sur le test scellé, ouvert une seule fois le 06/10/2026** (section « Test scellé » ci-dessous) ; avant cette ouverture le test n'était ni ouvert ni lu (aucune étiquette) ; **aucun verdict confirmatoire**. Le système est **gelé depuis le 06/10/2026** (ADR-016, `results/frozen_final.json`, prédiction chiffrée hachée) ; le test scellé reste fermé. Chaque chiffre renvoie à un `run_id` ; la checklist TRIPOD-LLM reste celle de `docs/CARTE_DE_MODELE_PROVISOIRE.md` et sera rejouée au gel (P4-10 n'est pas close).
 
 ## Usage prévu et hors usage
 **Prévu** : démonstration méthodologique de l'évaluation de techniques d'adaptation sur un corpus **fictif**. **Hors usage** : tout usage clinique, toute décision sur des patients réels, toute généralisation à un autre corpus ou à des textes réels. Supervision humaine requise ; le renvoi à l'humain est prévu par la politique d'abstention ci-dessous.
@@ -22,7 +22,17 @@ Moyenne à parts égales (un tiers chacune) de trois composantes : LoRA Qwen3.5-
 - **Calibration** : ECE 0,016 avant température, 0,020 après ; la température n'améliore pas G (perte logarithmique 0,465, Brier 0,207).
 - **Conforme (LAC, cible 90 %)** : marginal, couverture 0,900 avec 1,12 classe par ensemble **mais couverture minimale par classe 0,143** : garantie marginale seulement. Par famille de chapitres (Mondrian) : couverture 0,901, 1,82 classe par ensemble, minimum par famille 0,891.
 - **Abstention** (« un seul candidat dans l'ensemble : décision automatique, sinon renvoi à l'humain ») : exactitude 0,866 à couverture complète, 0,906 à 90 %, 0,931 à 80 %, 0,951 à 70 %.
-- Hypothèse d'échangeabilité : des patients tirés du même corpus avec les mêmes auteurs ; sous décalage d'auteur, la garantie n'est pas démontrée pour G (un étalonnage par plis d'auteurs a été mesuré pour d'autres systèmes : `docs/CARTE_DE_MODELE_V3.md`). Aucune couverture n'est encore mesurée sur le test (RM-51, après RM-20).
+- Hypothèse d'échangeabilité : des patients tirés du même corpus avec les mêmes auteurs ; sous décalage d'auteur, la garantie n'est pas démontrée pour G (un étalonnage par plis d'auteurs a été mesuré pour d'autres systèmes : `docs/CARTE_DE_MODELE_V3.md`). La couverture sur le test scellé est rapportée dans la section suivante (RM-51 en partie).
+
+## Test scellé (ouvert une seule fois le 06/10/2026, 633 patients ; run `20261006-210015-ouverture-test-scelle-g`)
+| Système | macro-F1 test | exactitude |
+|---|---|---|
+| **G** | **0,8131** | 0,8910 |
+| LoRA seul (F) | 0,8033 | 0,8847 |
+| Ensemble encodeur + TF-IDF (E) | 0,8031 | 0,8799 |
+| Encodeur moyenné (D) | 0,7737 | 0,8657 |
+| TF-IDF (A) | 0,7402 | 0,8483 |
+**Question primaire (G moins TF-IDF)** : +7,28 points, IC 95 % par blocs d'auteurs [+1,55 ; +12,62] : **« non résolu »** à δ = 2,0 (la borne basse est sous 2,0). G moins E : +0,99 [−3,71 ; +5,00] ; G moins F : +0,98 [−1,39 ; +3,76] (sans verdict). **Incertitude** : conforme LAC à 90 %, couverture marginale 0,924 (1,10 classe par ensemble), par famille 0,916 (1,58 classe), **minimum 0,821** (une famille de 56 patients) ; abstention : exactitude 0,962 à 70 % de couverture (443 patients), 0,932 à 90 %. **Prédiction préenregistrée** (ADR-016) : quatre réussites sur six (macro-F1 de G au-dessus de l'intervalle prévu ; couverture minimale par famille sous le seuil prévu). Le test compte 633 patients et quatre chapitres de moins de 10 patients : les intervalles sont larges ; la robustesse aux nouveaux auteurs n'est pas mesurée sur le test.
 
 ## Coûts mesurés (composantes ; pas de mesure de bout en bout de G)
 LoRA fusionné bf16 : p50 61,3 ms, 8,6 Wh pour 1 000 patients (`bench-lora-serving-llm-mur2-qwen3-5-4b-ep10-lr1e-4`) ; encodeur sur GPU bf16 : p50 4,3 ms (`bench-encoder-gpu-camembert-deploy-ep10-lr1e-4`) ; TF-IDF : p50 1,9 ms sur processeur (`bench-serving-tfidf-charbal-v1`). Cascade routée par l'ensemble conforme : non-infériorité (+0,23 [−0,09 ; +0,59]), 45,5 % des patients sans LoRA (`cascade-conforme-cinq-plis`) ; cascade à seuil : 93,4 % sans LoRA, couverture par région 0,899 et 0,923 avec 3,48 classes par ensemble (`cascade-seuil-couverture-cinq-plis`).

@@ -355,7 +355,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P3-07 | Entraîner les 20 modèles gelés ; l'évaluation est celle de RM-20 (ADR-010) | Pas de verdict avant RM-20 |
 | RM-37 | **Acceptation du protocole v2 par Cyril** | **Acceptée le 05/10/2026** : `PROTOCOLE_V2.md` (instantané gelé) ; la règle de puissance v2 ne passe pas au format du test scellé (largeur 7,7 à 10,2 contre 4,0), déclaré d'avance |
 | RM-50 | **Gel du système final et prédiction chiffrée du test scellé** | Règle de sélection écrite avant lecture ; rien ne change après ; brouillon : `docs/BROUILLON_GEL_SYSTEME_FINAL.md` ; **prérequis faits le 06/10/2026** : LoRA final (run `20261006-022716-final-lora-s1000`) et son temps A (`20261006-023402-temps-a-lora-s1000`), empreintes des sept composants de G au registre (section 8 du brouillon), RM-37 acceptée ; **gel exécuté le 06/10/2026 (Q22 validée)** : `docs/decisions/ADR-016-gel-du-systeme-final.md`, `results/frozen_final.json` (sha256 `8cb2382c…`), prédiction chiffrée hachée dans `experiments/INDEX.md`, répétition générale du temps B avec G (run `20261006-182842-repetition-generale-temps-b`), `sealed_evaluation.py check` : préconditions toutes remplies, **test scellé non ouvert** ; l'ouverture (RM-20) reste une décision séparée de Cyril |
-| RM-20 | Ouverture unique du test scellé | Un seul accès journalisé |
+| RM-20 | Ouverture unique du test scellé | Un seul accès journalisé ; **fait le 06/10/2026 à 20h59Z** (autorisée par Cyril) : G 0,8131 contre 0,7402 pour le TF-IDF, **+7,28 [+1,55 ; +12,62] par blocs d'auteurs : non résolu à δ = 2,0** ; prédiction préenregistrée notée (quatre réussites sur six) ; run `20261006-210015-ouverture-test-scelle-g`, `results/sealed_result.json` |
 | RM-21 | **Porte go/no-go après le verdict de distillation** | |
 | G-P3 | Scorecard G-P3 | Contre-lecture adversariale des verdicts exigée par le tableau « qui prouve quoi » |
 
@@ -373,7 +373,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | P4-05 | Prédiction conforme MAPIE, couverture empirique | Hypothèse d'échangeabilité énoncée |
 | RM-22 | Validation conforme : cas analytiques, invariants, couverture conditionnelle, rupture d'échangeabilité | |
 | RM-33 | Conforme conditionnel par famille (Mondrian) et couverture par famille avec Wilson | La couverture marginale cache des familles à 0,56 |
-| RM-51 | Lecture confirmatoire de l'incertitude et de la robustesse sur le test scellé | Second temps de RM-20 ; seuils figés avant l'ouverture |
+| RM-51 | Lecture confirmatoire de l'incertitude et de la robustesse sur le test scellé | Second temps de RM-20 ; seuils figés avant l'ouverture ; **incertitude lue le 06/10/2026** (couverture marginale 0,924, par famille 0,916, minimum 0,821 sur une famille de 56 patients ; exactitude 0,962 à 70 % de couverture) ; **reste** la robustesse aux nouveaux auteurs sur le test et l'ablation de contenu (aucune seconde lecture) |
 | P4-08 | Politique d'abstention, courbe automatisation contre exactitude | |
 | P4-10 | Carte de modèle et checklist TRIPOD-LLM | **Carte v4 du candidat G écrite le 06/10/2026** (`docs/CARTE_DE_MODELE_V4.md` : composition, performance, incertitude, abstention, coûts par composante, résultats négatifs, limites ; chaque chiffre cite un run) ; **non close** : checklist des 19 items et chiffres confirmatoires à rejouer après le gel et RM-51 |
 | G-P4 | Scorecard G-P4 | |
