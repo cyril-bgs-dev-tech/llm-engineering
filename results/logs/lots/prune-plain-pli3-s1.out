@@ -1,0 +1,41 @@
+[tokenizer_guard] essai 1/6 : code -11 : [transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (681 > 512). Running this sequence through the model will result in indexing errors
+[tokenizer_guard] essai 2/6 : code -6 : [transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (681 > 512). Running this sequence through the model will result in indexing errors
+free(): invalid pointer
+[tokenizer_guard] essai 3/6 : code -11 : [transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (681 > 512). Running this sequence through the model will result in indexing errors
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 2532.91it/s]
+[transformers] [1mCamembertForSequenceClassification LOAD REPORT[0m from: almanach/camembert-bio-base
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+{
+ "summary": "prune-plain-pli3-s1 : macro-F1 0.6192 sur le pli 3 (encodeur à 6 couches), 109.0 s d'entraînement",
+ "metrics": {
+  "steps": 900,
+  "seconds_train": 109.0,
+  "peak_reserved_gib": 3.88,
+  "energie": {
+   "energie_wh": 16.996,
+   "puissance_moyenne_w": 571.8,
+   "puissance_max_w": 587.7
+  },
+  "macro_f1": 0.6192,
+  "accuracy": 0.8103,
+  "log_loss": 0.7488,
+  "ece": 0.0815,
+  "predictions_sha256": "fe314f28a19ad548109029204d4f814ef679fc38f345c3bfb47f365f475a9ba8"
+ }
+}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-102028-prune-plain-pli3-s1.json

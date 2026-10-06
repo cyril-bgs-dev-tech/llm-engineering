@@ -1,0 +1,38 @@
+{
+ "12 couches gpu_fp32": {
+  "p50_ms": 6.0,
+  "p95_ms": 8.6,
+  "moyenne_ms": 6.2,
+  "parametres_millions": 110.6
+ },
+ "12 couches gpu_bf16": {
+  "p50_ms": 4.4,
+  "p95_ms": 8.6,
+  "moyenne_ms": 5.0,
+  "parametres_millions": 110.6
+ },
+ "12 couches cpu_fp32": {
+  "p50_ms": 117.5,
+  "p95_ms": 167.4,
+  "moyenne_ms": 121.2,
+  "parametres_millions": 110.6
+ },
+ "6 couches gpu_fp32": {
+  "p50_ms": 4.7,
+  "p95_ms": 8.8,
+  "moyenne_ms": 4.9,
+  "parametres_millions": 68.1
+ },
+ "6 couches gpu_bf16": {
+  "p50_ms": 2.7,
+  "p95_ms": 5.9,
+  "moyenne_ms": 3.4,
+  "parametres_millions": 68.1
+ },
+ "6 couches cpu_fp32": {
+  "p50_ms": 59.0,
+  "p95_ms": 85.6,
+  "moyenne_ms": 60.6,
+  "parametres_millions": 68.1
+ }
+}

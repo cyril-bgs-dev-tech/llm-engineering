@@ -1,0 +1,46 @@
+{
+  "created_at": "2026-10-06T12:12:13Z",
+  "kind": "measure",
+  "metrics": {
+    "a_elague_contre_complet": {
+      "difference_points": [
+        -13.08,
+        -15.88,
+        -10.14
+      ],
+      "verdict": "dégradé"
+    },
+    "b_elague_distille_contre_complet_distille": {
+      "difference_points": [
+        -12.37,
+        -14.8,
+        -9.74
+      ],
+      "verdict": "dégradé"
+    },
+    "c_elague_distille_contre_complet": {
+      "difference_points": [
+        -8.89,
+        -10.78,
+        -6.42
+      ],
+      "verdict": "dégradé"
+    },
+    "macro_f1_regroupee": {
+      "distill": 0.6716,
+      "full": 0.7605,
+      "full_distill": 0.7952,
+      "plain": 0.6297
+    },
+    "n_patients": 3586
+  },
+  "params": {
+    "delta": 2.0,
+    "fiche": "experiments/2026-10-05-encodeur-elague.md"
+  },
+  "run_id": "20261006-121213-encodeur-elague-analyse-cinq-plis",
+  "schema": "mini-1",
+  "slug": "encodeur-elague-analyse-cinq-plis",
+  "status": "ok",
+  "summary": "Encodeur élagué à six couches : différences par blocs d'auteurs avec l'encodeur complet, cinq plis"
+}

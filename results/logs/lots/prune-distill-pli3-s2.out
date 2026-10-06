@@ -1,0 +1,38 @@
+[tokenizer_guard] essai 1/6 : code -11 : [transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (681 > 512). Running this sequence through the model will result in indexing errors
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 2411.05it/s]
+[transformers] [1mCamembertForSequenceClassification LOAD REPORT[0m from: almanach/camembert-bio-base
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+{
+ "summary": "prune-distill-pli3-s2 : macro-F1 0.6628 sur le pli 3 (encodeur à 6 couches), 111.8 s d'entraînement",
+ "metrics": {
+  "steps": 900,
+  "seconds_train": 111.8,
+  "peak_reserved_gib": 3.89,
+  "energie": {
+   "energie_wh": 16.966,
+   "puissance_moyenne_w": 560.3,
+   "puissance_max_w": 580.8
+  },
+  "macro_f1": 0.6628,
+  "accuracy": 0.8243,
+  "log_loss": 0.5756,
+  "ece": 0.0416,
+  "predictions_sha256": "76d8d32b6870eb2b115b68b733a1b033ee4839a379b280ca3ecc36ee4210466b"
+ }
+}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-114842-prune-distill-pli3-s2.json

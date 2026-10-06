@@ -1,0 +1,37 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 2533.73it/s]
+[transformers] [1mCamembertForSequenceClassification LOAD REPORT[0m from: almanach/camembert-bio-base
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+{
+ "summary": "prune-plain-pli2-s2 : macro-F1 0.661 sur le pli 2 (encodeur à 6 couches), 111.0 s d'entraînement",
+ "metrics": {
+  "steps": 900,
+  "seconds_train": 111.0,
+  "peak_reserved_gib": 3.89,
+  "energie": {
+   "energie_wh": 16.928,
+   "puissance_moyenne_w": 564.3,
+   "puissance_max_w": 585.7
+  },
+  "macro_f1": 0.661,
+  "accuracy": 0.8033,
+  "log_loss": 0.8277,
+  "ece": 0.0917,
+  "predictions_sha256": "27ba0d09c3a14e87a7d17d3b38dc89fb540fed87433949ce5894508c31d88169"
+ }
+}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-100853-prune-plain-pli2-s2.json

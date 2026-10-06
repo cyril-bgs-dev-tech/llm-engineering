@@ -1,0 +1,64 @@
+2026-10-06T09:20:17Z cause du code 2 : LOGDIR avec espaces non guillemeté dans bash -c (redirection vers /mnt/d/Projets) ; scripts corrigés ; relance du lot
+2026-10-06T09:20:17Z DEBUT prune-plain-pli0-s0 essai=1
+2026-10-06T09:25:09Z FIN prune-plain-pli0-s0 essai=1 code=0
+2026-10-06T09:25:09Z DEBUT prune-plain-pli0-s1 essai=1
+2026-10-06T09:29:42Z FIN prune-plain-pli0-s1 essai=1 code=0
+2026-10-06T09:29:42Z DEBUT prune-plain-pli0-s2 essai=1
+2026-10-06T09:34:52Z FIN prune-plain-pli0-s2 essai=1 code=0
+2026-10-06T09:34:52Z DEBUT prune-plain-pli1-s0 essai=1
+2026-10-06T09:41:07Z FIN prune-plain-pli1-s0 essai=1 code=0
+2026-10-06T09:41:07Z DEBUT prune-plain-pli1-s1 essai=1
+2026-10-06T09:46:57Z FIN prune-plain-pli1-s1 essai=1 code=0
+2026-10-06T09:46:57Z DEBUT prune-plain-pli1-s2 essai=1
+2026-10-06T09:53:21Z FIN prune-plain-pli1-s2 essai=1 code=0
+2026-10-06T09:53:21Z DEBUT prune-plain-pli2-s0 essai=1
+2026-10-06T09:59:05Z FIN prune-plain-pli2-s0 essai=1 code=0
+2026-10-06T09:59:05Z DEBUT prune-plain-pli2-s1 essai=1
+2026-10-06T10:04:45Z FIN prune-plain-pli2-s1 essai=1 code=0
+2026-10-06T10:04:45Z DEBUT prune-plain-pli2-s2 essai=1
+2026-10-06T10:08:54Z FIN prune-plain-pli2-s2 essai=1 code=0
+2026-10-06T10:08:54Z DEBUT prune-plain-pli3-s0 essai=1
+2026-10-06T10:14:25Z FIN prune-plain-pli3-s0 essai=1 code=0
+2026-10-06T10:14:25Z DEBUT prune-plain-pli3-s1 essai=1
+2026-10-06T10:20:28Z FIN prune-plain-pli3-s1 essai=1 code=0
+2026-10-06T10:20:28Z DEBUT prune-plain-pli3-s2 essai=1
+2026-10-06T10:24:26Z FIN prune-plain-pli3-s2 essai=1 code=0
+2026-10-06T10:24:26Z DEBUT prune-plain-pli4-s0 essai=1
+2026-10-06T10:29:06Z FIN prune-plain-pli4-s0 essai=1 code=0
+2026-10-06T10:29:06Z DEBUT prune-plain-pli4-s1 essai=1
+2026-10-06T10:32:58Z FIN prune-plain-pli4-s1 essai=1 code=0
+2026-10-06T10:32:58Z DEBUT prune-plain-pli4-s2 essai=1
+2026-10-06T10:37:50Z FIN prune-plain-pli4-s2 essai=1 code=0
+2026-10-06T10:37:50Z DEBUT prune-distill-pli0-s0 essai=1
+2026-10-06T10:43:54Z FIN prune-distill-pli0-s0 essai=1 code=0
+2026-10-06T10:43:54Z DEBUT prune-distill-pli0-s1 essai=1
+2026-10-06T10:50:05Z FIN prune-distill-pli0-s1 essai=1 code=0
+2026-10-06T10:50:05Z DEBUT prune-distill-pli0-s2 essai=1
+2026-10-06T10:57:49Z FIN prune-distill-pli0-s2 essai=1 code=0
+2026-10-06T10:57:49Z DEBUT prune-distill-pli1-s0 essai=1
+2026-10-06T11:03:40Z FIN prune-distill-pli1-s0 essai=1 code=0
+2026-10-06T11:03:40Z DEBUT prune-distill-pli1-s1 essai=1
+2026-10-06T11:09:56Z FIN prune-distill-pli1-s1 essai=1 code=0
+2026-10-06T11:09:56Z DEBUT prune-distill-pli1-s2 essai=1
+2026-10-06T11:14:32Z FIN prune-distill-pli1-s2 essai=1 code=0
+2026-10-06T11:14:32Z DEBUT prune-distill-pli2-s0 essai=1
+2026-10-06T11:20:10Z FIN prune-distill-pli2-s0 essai=1 code=0
+2026-10-06T11:20:10Z DEBUT prune-distill-pli2-s1 essai=1
+2026-10-06T11:26:47Z FIN prune-distill-pli2-s1 essai=1 code=0
+2026-10-06T11:26:47Z DEBUT prune-distill-pli2-s2 essai=1
+2026-10-06T11:32:21Z FIN prune-distill-pli2-s2 essai=1 code=0
+2026-10-06T11:32:21Z DEBUT prune-distill-pli3-s0 essai=1
+2026-10-06T11:38:03Z FIN prune-distill-pli3-s0 essai=1 code=0
+2026-10-06T11:38:03Z DEBUT prune-distill-pli3-s1 essai=1
+2026-10-06T11:43:00Z FIN prune-distill-pli3-s1 essai=1 code=0
+2026-10-06T11:43:00Z DEBUT prune-distill-pli3-s2 essai=1
+2026-10-06T11:48:43Z FIN prune-distill-pli3-s2 essai=1 code=0
+2026-10-06T11:48:43Z DEBUT prune-distill-pli4-s0 essai=1
+2026-10-06T11:54:55Z FIN prune-distill-pli4-s0 essai=1 code=0
+2026-10-06T11:54:55Z DEBUT prune-distill-pli4-s1 essai=1
+2026-10-06T11:59:18Z FIN prune-distill-pli4-s1 essai=1 code=0
+2026-10-06T11:59:18Z DEBUT prune-distill-pli4-s2 essai=1
+2026-10-06T12:03:34Z FIN prune-distill-pli4-s2 essai=1 code=0
+2026-10-06T12:03:34Z DEBUT latence-encodeur-elague essai=1
+2026-10-06T12:06:22Z FIN latence-encodeur-elague essai=1 code=0
+2026-10-06T12:06:22Z TERMINE33

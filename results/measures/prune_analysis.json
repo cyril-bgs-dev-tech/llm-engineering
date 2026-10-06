@@ -1,1 +1,33 @@
-{}
+{
+ "n_patients": 3586,
+ "macro_f1_regroupee": {
+  "plain": 0.6297,
+  "distill": 0.6716,
+  "full": 0.7605,
+  "full_distill": 0.7952
+ },
+ "a_elague_contre_complet": {
+  "difference_points": [
+   -13.08,
+   -15.88,
+   -10.14
+  ],
+  "verdict": "dégradé"
+ },
+ "b_elague_distille_contre_complet_distille": {
+  "difference_points": [
+   -12.37,
+   -14.8,
+   -9.74
+  ],
+  "verdict": "dégradé"
+ },
+ "c_elague_distille_contre_complet": {
+  "difference_points": [
+   -8.89,
+   -10.78,
+   -6.42
+  ],
+  "verdict": "dégradé"
+ }
+}

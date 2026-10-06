@@ -1,0 +1,50 @@
+{
+  "created_at": "2026-10-06T12:06:21Z",
+  "kind": "measure",
+  "metrics": {
+    "12 couches cpu_fp32": {
+      "moyenne_ms": 121.2,
+      "p50_ms": 117.5,
+      "p95_ms": 167.4,
+      "parametres_millions": 110.6
+    },
+    "12 couches gpu_bf16": {
+      "moyenne_ms": 5.0,
+      "p50_ms": 4.4,
+      "p95_ms": 8.6,
+      "parametres_millions": 110.6
+    },
+    "12 couches gpu_fp32": {
+      "moyenne_ms": 6.2,
+      "p50_ms": 6.0,
+      "p95_ms": 8.6,
+      "parametres_millions": 110.6
+    },
+    "6 couches cpu_fp32": {
+      "moyenne_ms": 60.6,
+      "p50_ms": 59.0,
+      "p95_ms": 85.6,
+      "parametres_millions": 68.1
+    },
+    "6 couches gpu_bf16": {
+      "moyenne_ms": 3.4,
+      "p50_ms": 2.7,
+      "p95_ms": 5.9,
+      "parametres_millions": 68.1
+    },
+    "6 couches gpu_fp32": {
+      "moyenne_ms": 4.9,
+      "p50_ms": 4.7,
+      "p95_ms": 8.8,
+      "parametres_millions": 68.1
+    }
+  },
+  "params": {
+    "n": 100
+  },
+  "run_id": "20261006-120621-latence-encodeur-elague",
+  "schema": "mini-1",
+  "slug": "latence-encodeur-elague",
+  "status": "ok",
+  "summary": "Latence de l'encodeur à 6 et 12 couches, GPU et processeur"
+}
