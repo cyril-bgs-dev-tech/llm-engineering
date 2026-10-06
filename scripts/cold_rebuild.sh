@@ -4,7 +4,8 @@
 set -u
 dest="${1:-/tmp/llmft-cold}"
 src="$(cd "$(dirname "$0")/.." && pwd)"
-rm -rf "$dest"
+case "$(basename "$dest")" in llmft-cold*|cold*) ;; *) echo "dossier refusé : le nom doit commencer par llmft-cold ou cold (garde contre rm -rf sur un chemin imprévu) : $dest" >&2; exit 2;; esac
+rm -rf -- "$dest"
 t0=$(date +%s)
 step() { local name="$1"; shift; local s; s=$(date +%s); "$@" > "$dest.$name.log" 2>&1; local code=$?; echo "$name code=$code $(( $(date +%s) - s )) s"; return $code; }
 git clone -q "$src" "$dest" || exit 1

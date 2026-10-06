@@ -6,7 +6,7 @@ set -u
 cd "$(dirname "$0")/.."
 SEUIL_MIO="${SEUIL_MIO:-20000}"
 PLAFOND_VRAM_MIO="${PLAFOND_VRAM_MIO:-30000}"
-nice -n "${NICE:-5}" "$@" &
+setsid nice -n "${NICE:-5}" "$@" &  # nouveau groupe de processus : le garde arrête la commande et tous ses descendants
 pid=$!
 trop=0
 while kill -0 "$pid" 2>/dev/null; do
@@ -16,7 +16,7 @@ while kill -0 "$pid" 2>/dev/null; do
   if [ "$dispo" -lt "$SEUIL_MIO" ]; then raison="RAM disponible ${dispo} Mio sous ${SEUIL_MIO}"; elif [ "$vram" -gt "$PLAFOND_VRAM_MIO" ]; then trop=$((trop + 2)); raison="VRAM ${vram} Mio au-dessus de ${PLAFOND_VRAM_MIO}"; else trop=0; raison=""; fi
   if [ -n "$raison" ] && { [ "$dispo" -lt "$SEUIL_MIO" ] || [ "$trop" -ge 20 ]; }; then
     echo "$(date -u +%FT%TZ) GARDE ${raison} : arrêt de ${pid} ($1)" | tee -a "${MEM_LOG:-results/logs/memoire.log}"
-    kill -TERM "$pid" 2>/dev/null; sleep 5; kill -KILL "$pid" 2>/dev/null
+    kill -TERM -- "-$pid" 2>/dev/null || kill -TERM "$pid" 2>/dev/null; sleep 5; kill -KILL -- "-$pid" 2>/dev/null || kill -KILL "$pid" 2>/dev/null
     wait "$pid" 2>/dev/null
     exit 3
   fi

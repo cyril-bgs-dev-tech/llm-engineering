@@ -24,7 +24,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import glm_v3_families
 import p1_04_06_tfidf
 import p1_finetune
-from llmft import cim10, final_report, loader, sealed, splits
+from llmft import cim10, final_report, freeze, loader, sealed, splits
 from llmft.mini_registry import register_run
 
 P = ROOT / "results/predictions"
@@ -117,8 +117,8 @@ def preconditions() -> list[str]:
     nested = ROOT / "results/measures/distill_analysis.json"
     if not nested.exists() or "nested" not in json.loads(nested.read_text(encoding="utf-8")):
         problems.append("verdict de RM-56 absent (distill_analysis.json sans bras imbriqué)")
-    if not list((ROOT / "results/runs").glob("*-repetition-generale-temps-b.json")):
-        problems.append("répétition générale du temps B non enregistrée")
+    if FROZEN.exists() and not freeze.rehearsal_matches_freeze(ROOT / "results/runs", hashlib.sha256(FROZEN.read_bytes()).hexdigest()):
+        problems.append("répétition générale du temps B absente ou antérieure au gel (empreinte du gel absente des paramètres du run)")
     return problems
 
 
@@ -152,7 +152,7 @@ def main() -> int:
         with tempfile.TemporaryDirectory() as tmp:
             rep = sealed.sealed_labels_and_score(fake_split, frame_dev, "label", {i: None for i in ids}, compute, marker=Path(tmp) / "m", reason="répétition générale du temps B sur le développement", out_path=Path(tmp) / "r.json", rehearsal=True)
         print(json.dumps({k: rep[k] for k in ("n", "question_primaire", "sensibilite")}, ensure_ascii=False, indent=1)[:1800])
-        print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": "repetition-generale-temps-b", "status": "ok", "summary": "Répétition générale du temps B réussie sur les prédictions hors pli du développement (aucune écriture de marqueur)", "params": {"n": rep["n"]},
+        print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": "repetition-generale-temps-b", "status": "ok", "params": {"n": rep["n"], "final": frozen["final"], "reference": frozen["reference"], "frozen_sha256": hashlib.sha256(FROZEN.read_bytes()).hexdigest()}, "summary": "Répétition générale du temps B réussie sur les prédictions hors pli du développement (aucune écriture de marqueur)", 
                                                     "metrics": {"verdict_question_primaire": rep["question_primaire"]["verdict"], "ids_sha256": rep["ids_sha256"]}}))
         return 0
     if cmd == "check":
