@@ -671,3 +671,12 @@ Réglage sur validation (encodeur 5e-5, 20 époques ; TF-IDF C = 10), cinq grain
 
 ### 23:09Z 07/10 : reconstruction à froid du chiffre clé (identique à 1e-9), rapport final (claim-gate), checklist TRIPOD-LLM ; notes à 8,0
 Reconstruction : clone 7741ebe, PARHAF et CIM-10 par scripts vérifiés, macro-F1 0,7201565961621372 identique, 834 s ; manque comblé (download_cim10.py) ; troisième TypeError impossible de scikit-learn vu, essais bornés. Rapport final docs/RAPPORT_FINAL_2026-10-07.md avec tableau de preuve (3 reformulations ou retraits). Checklist TRIPOD-LLM : 27 remplies, 10 partielles, 4 non applicables, 2 à compléter par l'auteur. Notes : reproductibilité 9, honnêteté 9, moyenne 8,0 (justifications dans PREUVES). Lot GPU : LoRA avec fin aléatoire (fiche 2026-10-07-lora-fin-aleatoire hachée avant run) en cours, environ 3,5 h puis 50 min d'inférence.
+
+### 23:35Z : reprise par surveilleur
+LoRA avec fin aléatoire (fiche 2026-10-07-lora-fin-aleatoire) en cours depuis 45 min sur environ 3,5 h (GPU 98 %, 15,7 Go de VRAM, RAM 49,7 Go, une seule ligne GARDE : RM-44) ; test scellé fermé depuis l'ouverture du 06/10 (un marqueur, 16 lignes au journal d'accès dont une seule « open »), aucun nouveau commit ni réponse de Cyril. Aucun autre calcul lancé : un seul lot GPU à la fois.
+
+### 23:39Z : question de Cyril sur le TypeError de scikit-learn
+Analyse : les lignes en échec (offset = 0 puis offset + n avec offset à None ; dictionnaire dont les valeurs seraient un itérateur) ne peuvent pas échouer en Python correct : ce n'est pas un défaut de version de scikit-learn (1.9.1 verrouillé, numpy 2.5.3, Python 3.12.13 conda-forge). Processeur : i9-13900KF (13e génération), famille connue pour l'instabilité de tension. Hypothèse non prouvée ; pas de test de charge pendant le lot GPU de 3,5 h (risque de plantage de WSL).
+
+### 23:45Z : tolérance aux pannes internes (question de Cyril : gérer un TypeError de scikit-learn autrement)
+src/llmft/resilience.py (retry_transient sur signatures connues, agree_twice), 7 tests écrits d'abord, branché sur les appels fit_transform et transform du TF-IDF (llmft.tfidf et morfitt_run.py) ; règle N36. Rust ou Polars écartés : le tokenizer Rust a lui-même segfaulté, un code compilé ne lève pas d'erreur claire sur une corruption et pourrait rendre un résultat faux sans signal.

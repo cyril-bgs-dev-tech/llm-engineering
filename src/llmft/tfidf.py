@@ -8,7 +8,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 
-from llmft import metrics
+from llmft import metrics, resilience
 
 _Vectorizer: Any = cast(Any, TfidfVectorizer)  # sklearn n'est pas typé assez finement pour le mode strict
 _Logistic: Any = cast(Any, LogisticRegression)
@@ -24,7 +24,7 @@ def fit_model(
 ) -> tuple[Any, Any]:
     """Vectoriseur et modèle ajustés (réutilisés par le service d'inférence)."""
     vec = _Vectorizer(sublinear_tf=True, min_df=1 if len(train_texts) < 50 else 2, max_features=200000, ngram_range=ngram, analyzer=analyzer)
-    x_train = vec.fit_transform(train_texts)
+    x_train = resilience.retry_transient(lambda: vec.fit_transform(train_texts))  # panne interne sporadique de la machine : voir llmft.resilience
     model = _Logistic(C=c, max_iter=1000, class_weight=class_weight)
     model.fit(x_train, list(train_y), sample_weight=None if sample_weight is None else np.asarray(sample_weight, dtype=float))
     return vec, model
@@ -32,7 +32,7 @@ def fit_model(
 
 def predict_aligned(vec: Any, model: Any, texts: Sequence[str], labels: Sequence[str]) -> np.ndarray:
     """Probabilités alignées sur `labels` ; une classe absente de l'entraînement garde une colonne à zéro."""
-    raw = model.predict_proba(vec.transform(texts))
+    raw = model.predict_proba(resilience.retry_transient(lambda: vec.transform(texts)))
     out = np.zeros((raw.shape[0], len(labels)))
     index = {lab: i for i, lab in enumerate(labels)}
     for j, cls in enumerate(model.classes_):

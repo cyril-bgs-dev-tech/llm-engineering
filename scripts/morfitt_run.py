@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import p1_finetune
-from llmft import multilabel
+from llmft import multilabel, resilience
 from llmft.mini_registry import register_run
 
 DATA = ROOT / "data/raw/morfitt/source"
@@ -37,9 +37,9 @@ def tfidf_probs(train_x: list[str], train_y: np.ndarray, test_x: list[str], c: f
     from sklearn.multiclass import OneVsRestClassifier
 
     vec = TfidfVectorizer(sublinear_tf=True, analyzer="char_wb", ngram_range=(3, 5), min_df=2, max_features=200000)
-    xtr = vec.fit_transform(train_x)
+    xtr = resilience.retry_transient(lambda: vec.fit_transform(train_x))
     clf = OneVsRestClassifier(LogisticRegression(C=c, max_iter=1000, class_weight="balanced")).fit(xtr, train_y.astype(int))
-    return clf.predict_proba(vec.transform(test_x))
+    return clf.predict_proba(resilience.retry_transient(lambda: vec.transform(test_x)))
 
 
 def train_encoder(tr_ids: list[list[int]], tr_y: np.ndarray, te_ids: list[list[int]], pad_id: int, lr: float, epochs: int, seed: int) -> tuple[np.ndarray, float]:
