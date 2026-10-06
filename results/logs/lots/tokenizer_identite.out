@@ -1,0 +1,3 @@
+almanach/camembert-bio-base {'n_textes': 3586, 'max_len': 508, 'secondes_epingle': 74.7, 'plantages_non_epingle': 0, 'non_epingle_abouti': True, 'identiques': True, 'n_identifiants': 1796069}
+Qwen/Qwen3.5-4B {'n_textes': 3586, 'max_len': 4096, 'secondes_epingle': 131.8, 'plantages_non_epingle': 0, 'non_epingle_abouti': True, 'identiques': True, 'n_identifiants': 4754872}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-105551-tokenizer-identite-sous-processus-epingle.json

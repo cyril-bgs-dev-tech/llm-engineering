@@ -1,0 +1,33 @@
+{
+  "created_at": "2026-10-06T10:55:51Z",
+  "kind": "measure",
+  "metrics": {
+    "Qwen/Qwen3.5-4B": {
+      "identiques": true,
+      "max_len": 4096,
+      "n_identifiants": 4754872,
+      "n_textes": 3586,
+      "non_epingle_abouti": true,
+      "plantages_non_epingle": 0,
+      "secondes_epingle": 131.8
+    },
+    "almanach/camembert-bio-base": {
+      "identiques": true,
+      "max_len": 508,
+      "n_identifiants": 1796069,
+      "n_textes": 3586,
+      "non_epingle_abouti": true,
+      "plantages_non_epingle": 0,
+      "secondes_epingle": 74.7
+    }
+  },
+  "params": {
+    "exploratoire": true,
+    "textes": "développement, chapitre CIM-10"
+  },
+  "run_id": "20261006-105551-tokenizer-identite-sous-processus-epingle",
+  "schema": "mini-1",
+  "slug": "tokenizer-identite-sous-processus-epingle",
+  "status": "ok",
+  "summary": "Identifiants du sous-processus épinglé contre calcul local non épinglé, identiques (CamemBERT-bio, Qwen3.5-4B, textes de développement)"
+}

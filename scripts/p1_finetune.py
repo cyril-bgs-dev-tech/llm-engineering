@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import p1_04_06_tfidf  # chargement des étiquettes de développement, même fonction que les références TF-IDF
-from llmft import augment, evaluation, failures, last_token, lora_train
+from llmft import augment, evaluation, failures, last_token, lora_train, tokenizer_guard
 from llmft.fingerprint import dir_sha256
 from llmft.mini_registry import register_run
 from llmft.quant import load_kwargs
@@ -36,14 +36,10 @@ from llmft.windowed import WindowedClassifier
 
 def build_inputs(tok: Any, texts: list[str], max_len: int) -> list[list[int]]:
     """Tokens avec jetons spéciaux du modèle ; au-delà de `max_len` tokens de texte : `max_len`/2 de tête et de fin avec le marqueur `[...]` (la séquence dépasse donc `max_len` du marqueur et des jetons spéciaux ; pour un encodeur à 512 positions, passer 508)."""
-    marker = tok.encode("[...]", add_special_tokens=False)
-    prefix, suffix = lora_train.special_affixes(tok.encode)
-    out = []
-    for t in texts:
-        ids = tok.encode(t, add_special_tokens=False)
-        ids = lora_train.truncate_head_tail(ids, max_len, marker)  # max_len/2 tokens de tête et de fin, comme PROTOCOLE.md section 1
-        out.append([*prefix, *ids, *suffix])
-    return out
+    name = getattr(tok, "name_or_path", "")  # un tokenizer chargé par nom se tokenise dans un fils épinglé (tokenizer_guard : plantages du tokenizer Rust)
+    if name:
+        return tokenizer_guard.isolated_build_inputs(name, texts, max_len)
+    return tokenizer_guard.build_inputs_local(tok, texts, max_len)
 
 
 def load_model(name: str, mode: str, n_labels: int, pad_id: int, rank: int, alpha: int, quant: str = "none") -> tuple[Any, str]:
