@@ -392,7 +392,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | RM-36 | Rapport préliminaire, carte v3, fiche de données, protocole v2, tableaux regénérés, contrôle des références | Fait le 04/10/2026 ; à tenir à jour |
 | RM-48 | **Fiche de déploiement par contrainte et règle de décision** | Dit quels systèmes deviennent inutiles à servir |
 | P5-09 | Reconstruction à froid : clone neuf puis `make reproduce-small` | |
-| P5-12 | Rapport final et textes sortants passés par `claim-gate` | Aucune formulation au-delà de la preuve |
+| P5-12 | Rapport final et textes sortants passés par `claim-gate` | Aucune formulation au-delà de la preuve ; **rapport final écrit et passé par `claim-gate` le 07/10/2026** (`docs/RAPPORT_FINAL_2026-10-07.md`, tableau de preuve de onze lignes dont trois reformulations ou retraits) ; **reste** les textes de candidature (CV, LinkedIn, lettre), qui exigent un accord de Cyril et le même passage |
 | G-P5 | Scorecard G-P5 | **Jalon B : fin du MVP** |
 
 ### Étape R12 : compléments de références et de réglage (chemin complet)
