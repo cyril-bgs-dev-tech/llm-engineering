@@ -8,13 +8,13 @@ Sources : `docs/CHAINE_DE_DOMINOS.md` (notes, plafonds, dominos), `roadmap_unifi
 
 ## 1. Composantes : note, plafond, état
 
-Moyenne estimée : **7,5 sur 10** (60 sur 8 composantes ; réévaluations du 06/10 : efficience 5 vers 6, puis après l'ouverture du test scellé performance 6 vers 7, rigueur 8 vers 9, incertitude 7 vers 8 ; raisons de chaque note dans `docs/presentation/PREUVES.md`, dernier paragraphe). Estimation à ±1, pas une scorecard.
+Moyenne estimée : **7,8 sur 10** (62 sur 8 composantes ; réévaluations du 06/10 : efficience 5 vers 6, puis après l'ouverture du test scellé performance 6 vers 7, rigueur 8 vers 9, incertitude 7 vers 8 ; raisons de chaque note dans `docs/presentation/PREUVES.md`, dernier paragraphe). Estimation à ±1, pas une scorecard.
 
 | Composante | Note | Plafond réaliste | Ce qui a monté ou peut monter la note | État au 05/10 soir |
 |---|---|---|---|---|
-| Performance | **7** (était 6) | 8 (9 si un chiffre publié est dépassé) | LoRA regroupé 0,7673 ; système final G à 0,7799 en développement ; ouverture unique du test scellé ; ancrage MorFITT | G figé comme candidat, LoRA final en cours d'entraînement, test scellé non ouvert |
+| Performance | **8** (était 6) | 8 (9 si un chiffre publié est dépassé) | LoRA regroupé 0,7673 ; système final G à 0,7799 en développement ; ouverture unique du test scellé ; ancrage MorFITT | G figé comme candidat, LoRA final en cours d'entraînement, test scellé non ouvert |
 | Rigueur | **9** (était 8) | 10 | protocole v2 accepté (RM-37, 05/10) ; gel RM-50 ; RM-20 ; revue indépendante P5-10 | gel exécuté le 06/10 (ADR-016, prédiction chiffrée hachée) ; test scellé non ouvert, préconditions remplies |
-| Données et anti-fuite | 7 | 9 | audit d'étiquettes (P2-06) ; synthétique avec lignée (P2-10) ; ancrage public | audit fait sur 65 erreurs confiantes : ambiguïté de codage établie, bruit d'étiquette non établi ; contre-expertise par un codeur à prévoir ; P2-10 planifié |
+| Données et anti-fuite | **8** (était 7) | 9 | audit d'étiquettes (P2-06) ; synthétique avec lignée (P2-10) ; ancrage public | audit fait sur 65 erreurs confiantes : ambiguïté de codage établie, bruit d'étiquette non établi ; contre-expertise par un codeur à prévoir ; P2-10 planifié |
 | Incertitude | **8** (était 7) | 9 | couverture par famille (RM-33) ; lecture confirmatoire (RM-51) ; nouveaux auteurs (RM-39) | G : ECE 0,016, couverture 0,901 par famille (source : journal de nuit, 05/10 15h12Z) ; RM-51 après RM-20 |
 | Erreurs et robustesse | **7** (était 6) | 9 | taxonomie, audit des 65 cas, RM-39 sur les modèles appris | TF-IDF couvert ; robustesse de l'encodeur et du LoRA à mesurer (RM-39) |
 | Reproductibilité | 8 | 10 | reconstruction à froid (P5-09), release taguée, conteneur vérifié | reconstruction à froid jamais testée sur clone neuf ; release bloquée (push réservé à Cyril) |

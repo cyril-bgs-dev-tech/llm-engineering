@@ -1,0 +1,55 @@
+{
+ "publie_f1_pondere_test": {
+  "CamemBERT-bio": 67.53,
+  "DrBERT": 68.7,
+  "DrLongformer-CP": 71.95
+ },
+ "reglage": {
+  "type": "encodeur",
+  "lr": 5e-05,
+  "epochs": 20,
+  "validation_weighted_f1": 68.58,
+  "seconds": 224.0,
+  "tfidf_C": 10.0
+ },
+ "n_test": 1088,
+ "essais_tfidf": 1,
+ "encodeur_une_graine": {
+  "moyenne": 65.53,
+  "ecart_type": 0.89,
+  "par_graine": [
+   65.76,
+   64.08,
+   66.5,
+   65.57,
+   65.73
+  ]
+ },
+ "encodeur_moyenne_5_graines": {
+  "weighted_f1": 66.25,
+  "micro_f1": 68.77,
+  "macro_f1": 58.27,
+  "ic95_weighted_f1_bootstrap_patients": [
+   63.91,
+   68.48
+  ]
+ },
+ "tfidf": {
+  "weighted_f1": 69.85,
+  "micro_f1": 70.42,
+  "macro_f1": 67.51,
+  "ic95_weighted_f1_bootstrap_patients": [
+   67.94,
+   71.77
+  ]
+ },
+ "melange_50_50": {
+  "weighted_f1": 71.74,
+  "micro_f1": 72.78,
+  "macro_f1": 67.97,
+  "ic95_weighted_f1_bootstrap_patients": [
+   69.6,
+   73.71
+  ]
+ }
+}

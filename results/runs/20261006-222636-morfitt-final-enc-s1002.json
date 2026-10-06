@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-10-06T22:26:36Z",
+  "kind": "train",
+  "metrics": {
+    "macro_f1": 59.66,
+    "micro_f1": 68.32,
+    "seconds_train": 224.6,
+    "weighted_f1": 66.5
+  },
+  "params": {
+    "epochs": 20,
+    "fiche_sha256": "e780da3e13383dc9f1a419274a6e37a584c19a16b64f95cfed553b387a2beee5",
+    "lr": 5e-05,
+    "seed": 1002
+  },
+  "run_id": "20261006-222636-morfitt-final-enc-s1002",
+  "schema": "mini-1",
+  "slug": "morfitt-final-enc-s1002",
+  "status": "ok",
+  "summary": "MorFITT test : F1 pondéré 66.50 (encodeur, graine 1002)"
+}

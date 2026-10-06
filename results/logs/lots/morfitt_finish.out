@@ -1,0 +1,4 @@
+encodeur_moyenne_5_graines {'weighted_f1': 66.25, 'micro_f1': 68.77, 'macro_f1': 58.27, 'ic95_weighted_f1_bootstrap_patients': [63.91, 68.48]}
+tfidf {'weighted_f1': 69.85, 'micro_f1': 70.42, 'macro_f1': 67.51, 'ic95_weighted_f1_bootstrap_patients': [67.94, 71.77]}
+melange_50_50 {'weighted_f1': 71.74, 'micro_f1': 72.78, 'macro_f1': 67.97, 'ic95_weighted_f1_bootstrap_patients': [69.6, 73.71]}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-223731-morfitt-final-resume.json

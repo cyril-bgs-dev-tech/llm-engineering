@@ -1,0 +1,74 @@
+{
+ "grille": [
+  {
+   "type": "encodeur",
+   "lr": 3e-05,
+   "epochs": 10,
+   "validation_weighted_f1": 36.15,
+   "seconds": 112.8
+  },
+  {
+   "type": "encodeur",
+   "lr": 3e-05,
+   "epochs": 20,
+   "validation_weighted_f1": 60.11,
+   "seconds": 225.0
+  },
+  {
+   "type": "encodeur",
+   "lr": 5e-05,
+   "epochs": 10,
+   "validation_weighted_f1": 52.17,
+   "seconds": 111.7
+  },
+  {
+   "type": "encodeur",
+   "lr": 5e-05,
+   "epochs": 20,
+   "validation_weighted_f1": 68.58,
+   "seconds": 224.0
+  },
+  {
+   "type": "encodeur",
+   "lr": 0.0001,
+   "epochs": 10,
+   "validation_weighted_f1": 58.44,
+   "seconds": 111.2
+  },
+  {
+   "type": "encodeur",
+   "lr": 0.0001,
+   "epochs": 20,
+   "validation_weighted_f1": 66.8,
+   "seconds": 224.4
+  },
+  {
+   "type": "tfidf",
+   "C": 10.0,
+   "validation_weighted_f1": 71.78
+  },
+  {
+   "type": "tfidf",
+   "C": 100.0,
+   "validation_weighted_f1": 71.14
+  },
+  {
+   "type": "tfidf",
+   "C": 1000.0,
+   "validation_weighted_f1": 70.9
+  }
+ ],
+ "encodeur_retenu": {
+  "type": "encodeur",
+  "lr": 5e-05,
+  "epochs": 20,
+  "validation_weighted_f1": 68.58,
+  "seconds": 224.0
+ },
+ "tfidf_retenu": {
+  "type": "tfidf",
+  "C": 10.0,
+  "validation_weighted_f1": 71.78
+ },
+ "fiche_sha256": "e780da3e13383dc9f1a419274a6e37a584c19a16b64f95cfed553b387a2beee5"
+}

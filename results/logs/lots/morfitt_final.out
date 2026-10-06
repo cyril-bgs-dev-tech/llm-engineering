@@ -1,0 +1,115 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 2420.70it/s]
+[transformers] [1mCamembertForSequenceClassification LOAD REPORT[0m from: almanach/camembert-bio-base
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+graine 1000 65.76
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-221857-morfitt-final-enc-s1000.json
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights:  47%|████▋     | 93/197 [00:00<00:00, 921.28it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 1408.44it/s]
+[transformers] [1mCamembertForSequenceClassification LOAD REPORT[0m from: almanach/camembert-bio-base
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+graine 1001 64.08
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-222247-morfitt-final-enc-s1001.json
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 2287.41it/s]
+[transformers] [1mCamembertForSequenceClassification LOAD REPORT[0m from: almanach/camembert-bio-base
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+graine 1002 66.5
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-222636-morfitt-final-enc-s1002.json
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 2452.61it/s]
+[transformers] [1mCamembertForSequenceClassification LOAD REPORT[0m from: almanach/camembert-bio-base
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+graine 1003 65.57
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-223024-morfitt-final-enc-s1003.json
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 2474.95it/s]
+[transformers] [1mCamembertForSequenceClassification LOAD REPORT[0m from: almanach/camembert-bio-base
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+graine 1004 65.73
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-223413-morfitt-final-enc-s1004.json
+Traceback (most recent call last):
+  File "/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/scripts/morfitt_run.py", line 139, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/scripts/morfitt_run.py", line 123, in main
+    tf = tfidf_probs(tr_x, tr_y, te_x, best_tf["C"])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/scripts/morfitt_run.py", line 42, in tfidf_probs
+    return clf.predict_proba(vec.transform(test_x))
+                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/.venv/lib/python3.12/site-packages/sklearn/feature_extraction/text.py", line 2134, in transform
+    X = super().transform(raw_documents)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/.venv/lib/python3.12/site-packages/sklearn/feature_extraction/text.py", line 1432, in transform
+    _, X = self._count_vocab(raw_documents, fixed_vocab=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/.venv/lib/python3.12/site-packages/sklearn/feature_extraction/text.py", line 1286, in _count_vocab
+    values.extend(feature_counter.values())
+TypeError: 'list_iterator' object cannot be interpreted as an integer

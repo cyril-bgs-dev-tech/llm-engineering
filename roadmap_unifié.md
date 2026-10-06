@@ -144,7 +144,7 @@ Principe : un objectif n'en fait tomber un autre que si la **cause physique est 
 | 6 | RM-37 | R9 | acceptation de Cyril | rigueur |
 | 7 | RM-20, RM-51 | R9, R10 | verdict confirmatoire ; incertitude confirmée | rigueur, performance, incertitude |
 | 8 | RM-33, RM-39 | R10, R14 | couverture par famille ; nouveaux auteurs | incertitude, erreurs |
-| 9 | RM-49 | R13 | tableau chiffres publiés contre les nôtres | performance, données |
+| 9 | RM-49 | R13 | tableau chiffres publiés contre les nôtres | performance, données ; **fait le 06/10/2026** : mélange 50/50 à 71,74 [69,60 ; 73,71] de F1 pondéré contre 71,95 publié au mieux (« dans la bande du publié », pas au-dessus : performance 8 et non 9), encodeur seul 65,53 (non reproduit au sens strict de la fiche), TF-IDF 69,85 ; références publiées vérifiées à la source (tableau 3 de arXiv 2402.16689) ; run `20261006-223731-morfitt-final-resume` |
 | 10 | P5-09, P5-12, RM-48 | R11 | reconstruction à froid, rapport, fiche de déploiement | reproductibilité, honnêteté, efficience |
 | 11 | P5-10 | R15 | revue indépendante | rigueur, honnêteté |
 
