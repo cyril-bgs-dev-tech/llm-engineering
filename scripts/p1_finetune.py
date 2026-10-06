@@ -12,6 +12,7 @@ import argparse
 import hashlib
 import json
 import os
+import random
 import sys
 import time
 from pathlib import Path
@@ -112,6 +113,7 @@ def main() -> int:
     ap.add_argument("--dup-targets", default="", help="chapitres sur-échantillonnés par duplication (fiche du synthétique ciblé), séparés par des virgules")
     ap.add_argument("--dup-factor", type=int, default=1, help="nombre total d'occurrences de chaque patient d'une classe ciblée dans l'entraînement")
     ap.add_argument("--synthetic", default="", help="fichier JSONL de textes synthétiques ciblés (scripts/gen_synthetic.py) ajoutés à l'entraînement ; lignée vérifiée ; jamais en préflight")
+    ap.add_argument("--tail-aug", type=float, default=0.0, help="probabilité de retirer 5 à 50 %% des mots de la fin d'un texte d'entraînement (augmentation de robustesse, fiche 2026-10-07-lora-fin-aleatoire) ; 0 = aucune")
     ap.add_argument("--fiche", default="")
     ap.add_argument("--slug", required=True)
     ap.add_argument("--register", action="store_true")
@@ -144,7 +146,11 @@ def main() -> int:
         augment.validated_synthetic(records, train_ids, {r["label"] for r in records}, label_of)
         extra_texts = [r["text"] for r in records]
         extra_labels = [labels.index(r["label"]) for r in records]
-    x_tr = build_inputs(tok, [texts[i] for i in tr] + extra_texts, a.max_len)
+    train_texts = [texts[i] for i in tr]
+    if a.tail_aug > 0.0:
+        cut_rng = random.Random(a.seed)
+        train_texts = [augment.random_tail_cut(t, cut_rng, a.tail_aug, 0.5) for t in train_texts]
+    x_tr = build_inputs(tok, train_texts + extra_texts, a.max_len)
     x_te = build_inputs(tok, [texts[i] for i in te], a.max_len) if not a.max_steps else []
     tok_seconds = time.time() - t_tok
     if a.max_steps:  # pré-vol : le plus long exemple d'abord, le pire cas mémoire

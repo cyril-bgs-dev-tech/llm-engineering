@@ -15,7 +15,13 @@ echo "commit du clone : $(git log -1 --format=%h) ; données brutes présentes a
 step sync uv sync --frozen || exit 1
 step telechargement .venv/bin/python data/scripts/download_parhaf.py || exit 1
 step cim10 .venv/bin/python data/scripts/download_cim10.py || exit 1
-step tfidf .venv/bin/python scripts/tfidf_variants.py char-balanced --register || exit 1
+# Trois essais au plus, tous consignés : des pannes internes impossibles en Python correct (TypeError de scikit-learn) ont été vues sur cette machine les 05 et 06/10/2026 ; un échec répété serait un défaut, pas une panne isolée.
+for attempt in 1 2 3; do
+  echo "tfidf essai $attempt"
+  rm -f results/runs/*-tfidf-variant-char-balanced.json
+  step tfidf .venv/bin/python scripts/tfidf_variants.py char-balanced --register && break
+  [ "$attempt" = 3 ] && exit 1
+done
 orig=$(python3 - "$src" <<'PY'
 import glob, json, sys
 d = json.load(open(sorted(glob.glob(sys.argv[1] + "/results/runs/*-tfidf-variant-char-balanced.json"))[0]))

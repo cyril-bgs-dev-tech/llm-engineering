@@ -1,5 +1,6 @@
 """Sur-échantillonnage et données synthétiques ciblées (fiche 2026-10-04-synthetique-cible-chapitres-rares) : plan de duplication, contrôle de lignée, détection de copies de la validation.
 Les contrôles complètent `llmft.leakage` (cinq contrôles de `leakage-guard`) ; aucun texte synthétique n'est jamais admis dans la validation."""
+import random
 from collections.abc import Mapping, Sequence
 from typing import Any
 
@@ -36,3 +37,16 @@ def copies_of_validation(synthetic: Mapping[str, str], validation: Mapping[str, 
     pairs = leakage.near_duplicate_pairs({**synthetic, **validation}, threshold)
     flagged = {a for a, b, _ in pairs if a in synthetic and b in validation} | {b for a, b, _ in pairs if b in synthetic and a in validation}
     return sorted(flagged)
+
+
+def random_tail_cut(text: str, rng: random.Random, probability: float, max_fraction: float) -> str:
+    """Augmentation de robustesse à la fin du texte (RM-39, fiche 2026-10-07-lora-fin-aleatoire) : avec la `probabilité` donnée, retire entre 5 % et `max_fraction` des mots de la fin
+    (séparés par des espaces), au moins un mot gardé ; sinon rend le texte inchangé. N'ajoute jamais le saut de ligne final : c'est le défaut de fin que le modèle doit apprendre à tolérer."""
+    if rng.random() >= probability:
+        return text
+    words = text.split(" ")
+    if len(words) < 2:
+        return text
+    fraction = rng.uniform(0.05, max_fraction)
+    keep = max(1, round((1 - fraction) * len(words)))
+    return " ".join(words[:keep]) if keep < len(words) else text

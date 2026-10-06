@@ -34,3 +34,46 @@ def test_copy_of_a_validation_text_is_detected() -> None:
     val = {"v1": "le patient est hospitalisé pour une douleur thoracique avec dyspnée et fièvre depuis trois jours"}
     synth = {"g1": "le patient est hospitalisé pour une douleur thoracique avec dyspnée et fièvre depuis trois jours", "g2": "tout autre texte sans rapport avec le premier"}
     assert augment.copies_of_validation(synth, val, threshold=0.8) == ["g1"]
+
+
+def test_coupe_de_fin_aleatoire_garde_le_debut_et_retire_au_plus_la_fraction_maximale():
+    import random
+
+    from llmft.augment import random_tail_cut
+
+    text = " ".join(f"mot{i}" for i in range(100)) + "\n"
+    rng = random.Random(0)
+    cuts = [random_tail_cut(text, rng, probability=1.0, max_fraction=0.5) for _ in range(200)]
+    assert all(c != text and text.startswith(c[: len(c)]) for c in cuts)
+    kept = [len(c.split(" ")) for c in cuts]
+    assert min(kept) >= 50 and max(kept) <= 95  # entre 5 % et 50 % des mots retirés
+
+
+def test_coupe_de_fin_aleatoire_ne_touche_pas_un_texte_avec_probabilite_nulle():
+    import random
+
+    from llmft.augment import random_tail_cut
+
+    text = "a b c d e f g h\n"
+    assert random_tail_cut(text, random.Random(1), probability=0.0, max_fraction=0.5) == text
+
+
+def test_coupe_de_fin_aleatoire_respecte_la_probabilite_en_moyenne():
+    import random
+
+    from llmft.augment import random_tail_cut
+
+    text = " ".join(str(i) for i in range(40)) + "\n"
+    rng = random.Random(2)
+    changed = sum(random_tail_cut(text, rng, probability=0.3, max_fraction=0.5) != text for _ in range(2000))
+    assert 500 < changed < 700  # 0,3 sur 2 000 tirages
+
+
+def test_coupe_de_fin_aleatoire_ne_vide_jamais_un_texte_court():
+    import random
+
+    from llmft.augment import random_tail_cut
+
+    rng = random.Random(3)
+    for text in ("seul\n", "deux mots\n", ""):
+        assert random_tail_cut(text, rng, probability=1.0, max_fraction=0.5).strip() != "" or text == ""

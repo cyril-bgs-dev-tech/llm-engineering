@@ -21,7 +21,9 @@ import p1_finetune
 from llmft import evaluation
 from llmft.mini_registry import register_run
 
-BASE, ADAPTER, MAX_LEN, FOLD = "Qwen/Qwen3.5-4B", "llm-mur2-qwen3-5-4b-ep10-lr1e-4", 4096, 0
+BASE, MAX_LEN, FOLD = "Qwen/Qwen3.5-4B", 4096, 0
+ADAPTER = sys.argv[sys.argv.index("--adapter") + 1] if "--adapter" in sys.argv else "llm-mur2-qwen3-5-4b-ep10-lr1e-4"
+SUFFIX = "" if "--adapter" not in sys.argv else "-" + ADAPTER
 
 
 def drop_tail(text: str, fraction: float) -> str:
@@ -71,10 +73,10 @@ def main() -> int:
                      "classe_la_plus_predite": labels[top], "part_classe_la_plus_predite": round(float(counts[top] / counts.sum()), 4), "n_classes_predites": int((counts > 0).sum())}
         print(name, out[name], flush=True)
         if "--register" in sys.argv:
-            np.savez_compressed(ROOT / "results/predictions" / f"robustesse-lora-{name}.probs.npz", ids=np.array([ids_all[i] for i in te]), probs=probs.astype(np.float32), labels=np.array(labels))
-    (ROOT / "results/measures" / ("robustness_lora_saut_de_ligne.json" if series is VARIANTS_NEWLINE else "robustness_lora_diag.json")).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8")
+            np.savez_compressed(ROOT / "results/predictions" / f"robustesse-lora-{name}{SUFFIX}.probs.npz", ids=np.array([ids_all[i] for i in te]), probs=probs.astype(np.float32), labels=np.array(labels))
+    (ROOT / "results/measures" / (("robustness_lora_saut_de_ligne" if series is VARIANTS_NEWLINE else "robustness_lora_diag") + SUFFIX + ".json")).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8")
     if "--register" in sys.argv:
-        print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": "robustesse-lora-saut-de-ligne" if series is VARIANTS_NEWLINE else "robustesse-lora-diagnostic-fin-retiree", "status": "ok", "summary": "Effondrement du LoRA et saut de ligne final (inférence, pli 0)" if series is VARIANTS_NEWLINE else "Diagnostic de l'effondrement du LoRA sans la fin du texte (inférence, pli 0)",
+        print(register_run(ROOT / "results/runs", {"kind": "measure", "slug": ("robustesse-lora-saut-de-ligne" if series is VARIANTS_NEWLINE else "robustesse-lora-diagnostic-fin-retiree") + SUFFIX, "status": "ok", "summary": "Effondrement du LoRA et saut de ligne final (inférence, pli 0)" if series is VARIANTS_NEWLINE else "Diagnostic de l'effondrement du LoRA sans la fin du texte (inférence, pli 0)",
                                                     "params": {"fiche": "experiments/2026-10-06-effondrement-lora-saut-de-ligne.md" if series is VARIANTS_NEWLINE else "experiments/2026-10-06-diagnostic-effondrement-lora.md", "adapter": ADAPTER, "fold": FOLD, "micro_batch": 1}, "metrics": out}))
     return 0
 
