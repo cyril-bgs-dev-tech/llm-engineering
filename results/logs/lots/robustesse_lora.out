@@ -1,0 +1,19 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:  19%|█▊        | 134/723 [00:00<00:00, 1312.78it/s]Loading weights:  37%|███▋      | 266/723 [00:00<00:00, 1288.82it/s]Loading weights:  56%|█████▋    | 407/723 [00:00<00:00, 1341.99it/s]Loading weights:  80%|████████  | 580/723 [00:00<00:00, 1492.90it/s]Loading weights: 100%|██████████| 723/723 [00:00<00:00, 1542.40it/s]
+[transformers] [1mQwen3_5ForSequenceClassification LOAD REPORT[0m from: Qwen/Qwen3.5-4B
+Key          | Status  | 
+-------------+---------+-
+score.weight | MISSING | 
+
+Notes:
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+propre {'macro_f1': 0.7795, 'accuracy': 0.8577}
+accents {'macro_f1': 0.7744, 'accuracy': 0.8605, 'difference_points': [-0.5, -2.18, 1.4], 'verdict': 'non résolu'}
+[tokenizer_guard] essai 1/6 : code -11 : 
+[tokenizer_guard] essai 2/6 : code -11 : 
+typos {'macro_f1': 0.795, 'accuracy': 0.8647, 'difference_points': [1.55, -0.16, 3.6], 'verdict': 'non résolu'}
+casse {'macro_f1': 0.7663, 'accuracy': 0.848, 'difference_points': [-1.31, -3.78, 0.73], 'verdict': 'non résolu'}
+fin_retiree_30pct {'macro_f1': 0.1395, 'accuracy': 0.2524, 'difference_points': [-64.0, -68.76, -57.43], 'verdict': 'dégradé'}
+debut_retire_30pct {'macro_f1': 0.7368, 'accuracy': 0.8145, 'difference_points': [-4.27, -9.22, 0.38], 'verdict': 'non résolu'}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-173250-robustesse-modeles-appris-lora.json

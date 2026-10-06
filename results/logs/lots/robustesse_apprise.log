@@ -1,0 +1,5 @@
+2026-10-06T17:11:16Z robustesse encodeur : lancement (fiche hachée avant run, hash re-calculé avant tout run après une correction de formulation de la fiche)
+2026-10-06T17:35:34Z diagnostic LoRA sans fin : lancement (fiche hachée avant run, aucune modification depuis)
+2026-10-06T17:37:43Z diagnostic LoRA : relance (premier essai : lot > 1 refusé sans jeton de remplissage dans text_config, aucune mesure produite ; correction du script, fiche inchangée)
+2026-10-06T17:55:45Z diagnostic LoRA : arrêt manuel du lot à 17 min (lot de 4 : VRAM 32,0 Gio sur 32,6, au-dessus du plafond de 30 Gio de la règle N12, aucune variante terminée) ; relance en lot de 1 (14,8 Gio, mesuré le 06/10)
+2026-10-06T18:13:38Z saut de ligne : lancement (fiche hachée avant run)

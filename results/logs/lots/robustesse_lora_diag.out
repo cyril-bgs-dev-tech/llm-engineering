@@ -1,0 +1,17 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:  25%|██▌       | 183/723 [00:00<00:00, 1827.20it/s]Loading weights:  51%|█████     | 366/723 [00:00<00:00, 1798.10it/s]Loading weights:  76%|███████▌  | 546/723 [00:00<00:00, 1787.93it/s]Loading weights: 100%|██████████| 723/723 [00:00<00:00, 1945.01it/s]
+[transformers] [1mQwen3_5ForSequenceClassification LOAD REPORT[0m from: Qwen/Qwen3.5-4B
+Key          | Status  | 
+-------------+---------+-
+score.weight | MISSING | 
+
+Notes:
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+propre {'macro_f1': 0.7795, 'accuracy': 0.8577, 'proba_max_moyenne': 0.9656, 'entropie_moyenne': 0.0948, 'classe_la_plus_predite': 'II', 'part_classe_la_plus_predite': 0.2734, 'n_classes_predites': 18}
+fin_10 {'macro_f1': 0.1436, 'accuracy': 0.2706, 'proba_max_moyenne': 0.6747, 'entropie_moyenne': 0.9873, 'classe_la_plus_predite': 'X', 'part_classe_la_plus_predite': 0.2678, 'n_classes_predites': 18}
+fin_20 {'macro_f1': 0.1566, 'accuracy': 0.272, 'proba_max_moyenne': 0.6502, 'entropie_moyenne': 1.0439, 'classe_la_plus_predite': 'X', 'part_classe_la_plus_predite': 0.2566, 'n_classes_predites': 18}
+fin_30 {'macro_f1': 0.1395, 'accuracy': 0.2524, 'proba_max_moyenne': 0.6582, 'entropie_moyenne': 1.032, 'classe_la_plus_predite': 'II', 'part_classe_la_plus_predite': 0.2497, 'n_classes_predites': 18}
+fin_50 {'macro_f1': 0.125, 'accuracy': 0.2176, 'proba_max_moyenne': 0.6472, 'entropie_moyenne': 1.0455, 'classe_la_plus_predite': 'II', 'part_classe_la_plus_predite': 0.2287, 'n_classes_predites': 18}
+debut_50 {'macro_f1': 0.7282, 'accuracy': 0.7894, 'proba_max_moyenne': 0.9342, 'entropie_moyenne': 0.1895, 'classe_la_plus_predite': 'II', 'part_classe_la_plus_predite': 0.2706, 'n_classes_predites': 17}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-181026-robustesse-lora-diagnostic-fin-retiree.json

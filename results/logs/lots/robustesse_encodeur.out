@@ -1,0 +1,9 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:  84%|████████▍ | 169/201 [00:00<00:00, 1667.98it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 1854.57it/s]
+propre {'macro_f1': 0.7362, 'accuracy': 0.8298}
+accents {'macro_f1': 0.7177, 'accuracy': 0.8159, 'difference_points': [-1.84, -5.32, 1.47], 'verdict': 'non résolu'}
+typos {'macro_f1': 0.7424, 'accuracy': 0.8298, 'difference_points': [0.62, -0.53, 3.36], 'verdict': 'non résolu'}
+casse {'macro_f1': 0.7393, 'accuracy': 0.8243, 'difference_points': [0.32, -2.16, 2.72], 'verdict': 'non résolu'}
+fin_retiree_30pct {'macro_f1': 0.7234, 'accuracy': 0.8159, 'difference_points': [-1.28, -6.78, 3.48], 'verdict': 'non résolu'}
+debut_retire_30pct {'macro_f1': 0.6615, 'accuracy': 0.7755, 'difference_points': [-7.46, -13.34, -3.15], 'verdict': 'dégradé'}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-171647-robustesse-modeles-appris-encoder.json

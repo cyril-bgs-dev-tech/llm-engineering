@@ -1,0 +1,56 @@
+{
+ "propre": {
+  "macro_f1": 0.7795,
+  "accuracy": 0.8577
+ },
+ "accents": {
+  "macro_f1": 0.7744,
+  "accuracy": 0.8605,
+  "difference_points": [
+   -0.5,
+   -2.18,
+   1.4
+  ],
+  "verdict": "non résolu"
+ },
+ "typos": {
+  "macro_f1": 0.795,
+  "accuracy": 0.8647,
+  "difference_points": [
+   1.55,
+   -0.16,
+   3.6
+  ],
+  "verdict": "non résolu"
+ },
+ "casse": {
+  "macro_f1": 0.7663,
+  "accuracy": 0.848,
+  "difference_points": [
+   -1.31,
+   -3.78,
+   0.73
+  ],
+  "verdict": "non résolu"
+ },
+ "fin_retiree_30pct": {
+  "macro_f1": 0.1395,
+  "accuracy": 0.2524,
+  "difference_points": [
+   -64.0,
+   -68.76,
+   -57.43
+  ],
+  "verdict": "dégradé"
+ },
+ "debut_retire_30pct": {
+  "macro_f1": 0.7368,
+  "accuracy": 0.8145,
+  "difference_points": [
+   -4.27,
+   -9.22,
+   0.38
+  ],
+  "verdict": "non résolu"
+ }
+}
