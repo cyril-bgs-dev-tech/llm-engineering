@@ -705,3 +705,47 @@ Cascade conforme moins cascade à seuil : +0,11 [−1,65 ; +1,96], non résolu. 
 ### Couverture conforme par région de la cascade à seuil de probabilité (RM-43, suite ; fiche `2026-10-05-cascade-seuil-couverture` ; run `cascade-seuil-couverture-cinq-plis`, EXPLORE)
 
 Seuil de probabilité choisi hors du pli (0,5 à chaque pli, 93,4 % des patients traités par l'encodeur) ; quantiles par famille calibrés **région par région** sur les autres plis. **Couverture (cible 0,90)** : région « encodeur » (3 351 patients) **0,8991** [0,889 ; 0,909], taille moyenne des ensembles 3,24 ; région « LoRA » (235 patients) **0,9234** [0,882 ; 0,951], taille moyenne 6,86 ; **globale 0,9007** [0,891 ; 0,910], taille moyenne 3,48. **Lecture** : la garantie de couverture tient dans les deux régions et globalement (aucun écart résolu à la cible), **mais au prix d'ensembles beaucoup plus grands** (3,48 classes en moyenne, contre 1,82 pour G et 2,17 pour le LoRA seul) : le seuil de probabilité achemine vers l'encodeur des cas qui ne sont pas assez sûrs pour un ensemble conforme réduit, et la couverture se rétablit en élargissant l'ensemble ; **le routage conforme (section précédente) donne des ensembles plus petits et une couverture plus haute, pour une économie moindre (45,5 % contre 93,4 %)**. Prédictions : couverture globale à 0,03 de 0,90 (0,7) réalisée ; région « encodeur » dans [0,87 ; 0,95] (0,6) réalisée ; région « LoRA » inférieure à 0,88 (0,35) non réalisée (0,923, intervalle large). Choix de déploiement : économie maximale avec garantie par région au prix d'ensembles larges (seuil), ou garantie plus fine avec moitié moins d'économie (routage conforme) ; la décision dépend de l'usage de l'ensemble de prédiction (aide au codage : ensembles petits préférables).
+
+
+### Encodeur élagué à six couches (RM-45 ; fiche `2026-10-05-encodeur-elague` ; runs `prune-plain-pli0-s0` à `prune-distill-pli4-s2`, `20261006-121213-encodeur-elague-analyse-cinq-plis`, `latence-encodeur-elague`, EXPLORE, cinq plis)
+
+Trente runs (CamemBERT-bio dont on garde une couche sur deux : 68,1 millions de paramètres au lieu de 110,6 ; trois graines par pli), moyenne des graines, prédictions regroupées sur 3 586 patients, différence avec l'encodeur complet par bootstrap d'auteurs, critère de la fiche (δ = 2,0).
+
+| Comparaison | macro-F1 regroupée (variante ; référence) | différence [IC 95 %] | verdict de la fiche |
+|---|---|---|---|
+| (a) élagué contre complet non distillé | 0,6297 ; 0,7605 | −13,08 [−15,88 ; −10,14] | **dégradé** |
+| (b) élagué distillé contre complet distillé | 0,6716 ; 0,7952 | −12,37 [−14,80 ; −9,74] | **dégradé** |
+| (c) élagué distillé contre complet non distillé | 0,6716 ; 0,7605 | −8,89 [−10,78 ; −6,42] | **dégradé** |
+
+Par run isolé : 0,6094 (écart-type 0,040) sans distillation, 0,6584 (0,027) avec ; 111 s et environ 17 Wh par run (complet : 215 s et 33,9 Wh). **Latence** (p50) : processeur 59,0 ms contre 117,5 ms (×1,99), GPU fp32 4,7 ms contre 6,0 ms (×1,28), GPU bf16 2,7 ms contre 4,4 ms (×1,63). **Règle de service de la fiche** : un élagué n'est retenu que s'il est équivalent à l'encodeur complet correspondant et au moins 1,5 fois plus rapide ; il est « dégradé » dans les trois comparaisons : **non retenu**, la vitesse gagnée (×2 sur processeur) ne compense pas 8,9 à 13,1 points de macro-F1. La distillation récupère environ 4 points sur l'élagué mais n'en referme pas l'écart. **Prédictions de la fiche** : (A) équivalent (0,5) faux, dégradé (0,2) réalisé ; (B) équivalent (0,6) faux ; latence processeur au moins ×1,7 (0,8) vraie, GPU au moins ×1,3 (0,6) vraie en bf16 (×1,63) mais pas en fp32 (×1,28). Réserve : les bras distillés (b, c) partagent la fuite de second ordre établie par RM-56 (professeur non imbriqué) : leurs valeurs absolues sont optimistes, ce qui ne change pas le verdict (« dégradé » malgré l'avantage). Résultat négatif publié ; la compression ne passe donc ni par la quantification statique (RM-44), ni par la distillation (RM-56), ni par l'élagage à six couches : l'efficience repose sur la cascade et la fiche de déploiement (RM-48).
+
+
+### Robustesse de l'encodeur et du LoRA aux perturbations et ablations de texte (RM-39, partie inférence ; fiche `2026-10-06-robustesse-modeles-appris` ; runs `20261006-171647-robustesse-modeles-appris-encoder`, `20261006-173250-robustesse-modeles-appris-lora`, EXPLORE, pli 0, 717 patients)
+
+Inférence seule, texte propre contre cinq variantes, différence de macro-F1 avec le texte propre par bootstrap d'auteurs, critère de la fiche (±2,0 ; réserve déclarée d'avance : un seul pli, IC larges).
+
+| Variante | Encodeur (propre 0,7362) | LoRA 4B (propre 0,7795) |
+|---|---|---|
+| accents retirés | −1,84 [−5,32 ; +1,47] non résolu | −0,50 [−2,18 ; +1,40] non résolu |
+| fautes de frappe (5 % des mots) | +0,62 [−0,53 ; +3,36] non résolu | +1,55 [−0,16 ; +3,60] non résolu |
+| majuscules (5 % des mots) | +0,32 [−2,16 ; +2,72] non résolu | −1,31 [−3,78 ; +0,73] non résolu |
+| fin retirée (30 % des mots) | −1,28 [−6,78 ; +3,48] non résolu | **−64,0 [−68,76 ; −57,43] dégradé** (macro-F1 0,1395, exactitude 0,2524) |
+| début retiré (30 % des mots) | **−7,46 [−13,34 ; −3,15] dégradé** (0,6615) | −4,27 [−9,22 ; +0,38] non résolu |
+
+**Lectures** : (1) aucune perturbation de forme (accents, fautes, casse) ne dégrade un modèle de façon résolue, mais les IC de 4 à 6 points ne l'excluent pas non plus. (2) Les deux modèles dépendent du contenu, pas de la même partie : l'encodeur perd 7,5 points quand le début du compte rendu disparaît, le LoRA **s'effondre quand la fin disparaît** (0,14 de macro-F1). (3) **Cause de l'effondrement du LoRA non établie** : les fins de textes ne sont pas fixes (vérifié sur les 3 586 textes : aucun marqueur de fin commun), l'hypothèse d'un jeton de fin appris reste à tester ; le script n'a gardé que les classes prédites, pas les probabilités : à refaire avec les probabilités et la distribution des classes prédites avant toute phrase sur la cause. (4) Ce résultat est une limite à déclarer : un LoRA servi sur des comptes rendus tronqués en fin n'est pas fiable, la cascade et l'abstention n'ont pas été testées sous cette condition. **Prédictions de la fiche** : encodeur, accents « dégradé » (0,5) faux, fautes « dégradé » (0,3) faux, début « non résolu ou robuste » (0,7) faux ; LoRA, fin retirée « dégradé » (0,4) vrai mais sans commune mesure avec l'ordre de grandeur attendu ; « le LoRA est moins sensible que l'encodeur à au moins quatre variantes sur cinq » (0,6) : faux (il l'est à trois sur cinq).
+
+
+### Effondrement du LoRA sans la fin du texte : diagnostic et rôle du saut de ligne final (RM-39, suite ; fiches `2026-10-06-diagnostic-effondrement-lora` et `2026-10-06-effondrement-lora-saut-de-ligne` ; runs `20261006-181026-robustesse-lora-diagnostic-fin-retiree`, `20261006-182233-robustesse-lora-saut-de-ligne`, EXPLORE, pli 0, 717 patients, inférence seule)
+
+| Variante (LoRA `llm-mur2`, texte propre 0,7795) | macro-F1 | exactitude | probabilité maximale moyenne |
+|---|---|---|---|
+| fin retirée à 10 % | 0,1436 | 0,2706 | 0,67 |
+| fin retirée à 20 % | 0,1566 | 0,2720 | 0,65 |
+| fin retirée à 30 % | 0,1395 | 0,2524 | 0,66 |
+| fin retirée à 50 % | 0,1250 | 0,2176 | 0,65 |
+| début retiré à 50 % | 0,7282 | 0,7894 | 0,93 |
+| **texte propre sans son saut de ligne final** | **0,7025** | 0,8215 | 0,93 |
+| fin retirée à 10 %, saut de ligne final remis | 0,5774 | 0,6987 | 0,85 |
+| fin retirée à 50 %, saut de ligne final remis | 0,3853 | 0,5286 | 0,75 |
+
+**Lectures** : (1) l'effondrement est un **palier, pas une progression** : dès 10 % de fin retirée, la macro-F1 tombe à 0,14 et n'évolue plus jusqu'à 50 % ; il n'y a **pas de collapse sur une classe** (les 18 classes restent prédites, la plus prédite pèse 25 à 27 % comme en texte propre) mais une perte de signal (probabilité maximale de 0,97 à 0,65). (2) Retirer 50 % du début coûte 5 points : le modèle ne dépend pas de la quantité de contenu mais de **la fin de la séquence**. (3) Verdict de la fiche : **« format »** (la règle écrite d'avance est remplie par la deuxième condition : remettre le saut de ligne final récupère 0,58 sur 0,78 à 10 % de fin retirée) ; **mais la lecture complète est mixte** : le simple retrait du saut de ligne final d'un texte intact coûte déjà 7,7 points, et même avec le saut de ligne remis, la perte reste de 20 points à 10 % et de 39 points à 50 % de fin retirée : le LoRA lit une position de fin de séquence qui ne se réduit pas à ce caractère. (4) Conséquence : le LoRA, qui classe sur le dernier jeton, est **fragile à toute altération de la fin du compte rendu** (saut de ligne, signature, troncature) ; tout service doit normaliser la fin du texte et la cascade doit être testée dans cette condition ; l'encodeur n'a pas ce défaut à ce degré (fin retirée −1,28 [−6,78 ; +3,48], non résolu). Non testé : un entraînement avec fin aléatoire, qui pourrait corriger le défaut. **Prédictions de la fiche** : « progressif » (0,85) faux (palier) ; « collapse sur une classe » (0,5) faux, « perte de signal » (0,25) réalisé ; V1 « s'effondre » (0,55) faux (−7,7) ; V2 « récupère la moitié » (0,5) vrai ; verdict « format » (0,5) vrai au sens de la règle, mixte en substance. Limites : un pli, une graine, descriptif, aucun intervalle.
