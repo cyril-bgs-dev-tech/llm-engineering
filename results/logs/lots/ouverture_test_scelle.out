@@ -1,0 +1,18 @@
+{
+ "n": 633,
+ "question_primaire": {
+  "final": "G LoRA + encodeur + TF-IDF",
+  "reference": "A TF-IDF",
+  "difference_points": 7.28,
+  "ic95_blocs_auteurs": [
+   1.55,
+   12.62
+  ],
+  "ic95_patients": [
+   2.46,
+   11.9
+  ],
+  "delta": 2.0,
+  "verdict": "non résolu"
+ }
+}

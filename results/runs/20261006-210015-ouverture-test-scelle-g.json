@@ -1,0 +1,185 @@
+{
+  "created_at": "2026-10-06T21:00:15Z",
+  "kind": "measure",
+  "metrics": {
+    "exactitude": {
+      "A TF-IDF": 0.8483,
+      "C2 élève distillé": 0.8689,
+      "D encodeur": 0.8657,
+      "E ensemble": 0.8799,
+      "F LoRA": 0.8847,
+      "G LoRA + encodeur + TF-IDF": 0.891
+    },
+    "incertitude_systeme_final": {
+      "abstention": {
+        "0.5": {
+          "exactitude": 0.975,
+          "n_traites": 316,
+          "wilson95": [
+            0.951,
+            0.987
+          ]
+        },
+        "0.7": {
+          "exactitude": 0.962,
+          "n_traites": 443,
+          "wilson95": [
+            0.939,
+            0.976
+          ]
+        },
+        "0.8": {
+          "exactitude": 0.951,
+          "n_traites": 506,
+          "wilson95": [
+            0.928,
+            0.966
+          ]
+        },
+        "0.9": {
+          "exactitude": 0.932,
+          "n_traites": 570,
+          "wilson95": [
+            0.908,
+            0.95
+          ]
+        },
+        "1.0": {
+          "exactitude": 0.891,
+          "n_traites": 633,
+          "wilson95": [
+            0.864,
+            0.913
+          ]
+        }
+      },
+      "conforme": {
+        "marginal": {
+          "couverture": 0.924,
+          "taille_moyenne": 1.096
+        },
+        "niveau_vise": 0.9,
+        "par_famille": {
+          "couverture": 0.916,
+          "couverture_minimale": 0.821,
+          "details": {
+            "0": {
+              "couverture": 0.946,
+              "n": 221
+            },
+            "1": {
+              "couverture": 0.889,
+              "n": 18
+            },
+            "2": {
+              "couverture": 1.0,
+              "n": 19
+            },
+            "3": {
+              "couverture": 0.919,
+              "n": 123
+            },
+            "4": {
+              "couverture": 0.821,
+              "n": 56
+            },
+            "5": {
+              "couverture": 0.923,
+              "n": 91
+            },
+            "6": {
+              "couverture": 0.917,
+              "n": 24
+            },
+            "7": {
+              "couverture": 0.87,
+              "n": 77
+            },
+            "8": {
+              "couverture": 1.0,
+              "n": 4
+            }
+          },
+          "taille_moyenne": 1.575
+        }
+      }
+    },
+    "macro_f1": {
+      "A TF-IDF": 0.7402,
+      "C2 élève distillé": 0.7734,
+      "D encodeur": 0.7737,
+      "E ensemble": 0.8031,
+      "F LoRA": 0.8033,
+      "G LoRA + encodeur + TF-IDF": 0.8131
+    },
+    "n": 633,
+    "question_primaire": {
+      "delta": 2.0,
+      "difference_points": 7.28,
+      "final": "G LoRA + encodeur + TF-IDF",
+      "ic95_blocs_auteurs": [
+        1.55,
+        12.62
+      ],
+      "ic95_patients": [
+        2.46,
+        11.9
+      ],
+      "reference": "A TF-IDF",
+      "verdict": "non résolu"
+    },
+    "secondaires_sans_verdict": {
+      "G LoRA + encodeur + TF-IDF moins E ensemble": {
+        "difference_points": 0.99,
+        "ic95_blocs_auteurs": [
+          -3.71,
+          5.0
+        ],
+        "ic95_patients": [
+          -3.22,
+          5.13
+        ]
+      },
+      "G LoRA + encodeur + TF-IDF moins F LoRA": {
+        "difference_points": 0.98,
+        "ic95_blocs_auteurs": [
+          -1.39,
+          3.76
+        ],
+        "ic95_patients": [
+          -1.84,
+          3.91
+        ]
+      }
+    },
+    "sensibilite": {
+      "sans XVIII": {
+        "A TF-IDF": 0.7597,
+        "C2 élève distillé": 0.7895,
+        "D encodeur": 0.7876,
+        "E ensemble": 0.8179,
+        "F LoRA": 0.8212,
+        "G LoRA + encodeur + TF-IDF": 0.8307
+      },
+      "sans XVIII ni XXI": {
+        "A TF-IDF": 0.797,
+        "C2 élève distillé": 0.8155,
+        "D encodeur": 0.8105,
+        "E ensemble": 0.8428,
+        "F LoRA": 0.8315,
+        "G LoRA + encodeur + TF-IDF": 0.8461
+      }
+    },
+    "sha256_resultat": "7ff0a6fed2019313ee683709c9a3a4d49d78463a1dc604226b26b64cebc5c4c4"
+  },
+  "params": {
+    "adr": "docs/decisions/ADR-016-gel-du-systeme-final.md",
+    "autorisation": "Cyril, 06/10/2026",
+    "frozen_sha256": "8cb2382c75b9a11481c2a95aac2fef833e2c96e63affd5a15749c526e3ce7116"
+  },
+  "run_id": "20261006-210015-ouverture-test-scelle-g",
+  "schema": "mini-1",
+  "slug": "ouverture-test-scelle-g",
+  "status": "ok",
+  "summary": "RM-20 : ouverture unique du test scellé (633 patients), système final G gelé (ADR-016) : macro-F1 0,8131 contre 0,7402 pour le TF-IDF ; différence +7,28 [+1,55 ; +12,62] par blocs d'auteurs : non résolu à δ = 2,0"
+}
