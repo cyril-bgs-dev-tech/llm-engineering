@@ -147,7 +147,8 @@ def main() -> int:
         cal = {n: (p, np.array([labels.index(v) for v in frame_dev["label"]])) for n, p in probs_of.items()}
         authors = dict(zip(frame_dev["id"], frame_dev["author"], strict=True))
         fake_split = {"test": ids}  # répétition : tout le développement joue le rôle du test
-        compute = make_compute(labels, other, authors, ids, probs_of, cal, "C2 élève distillé", "A TF-IDF", ["E ensemble", "F LoRA"])
+        frozen = json.loads(FROZEN.read_text(encoding="utf-8"))  # la répétition utilise le système, la référence et les comparaisons du gel (RM-50), comme l'ouverture
+        compute = make_compute(labels, other, authors, ids, probs_of, cal, frozen["final"], frozen["reference"], frozen["secondaires"])
         with tempfile.TemporaryDirectory() as tmp:
             rep = sealed.sealed_labels_and_score(fake_split, frame_dev, "label", {i: None for i in ids}, compute, marker=Path(tmp) / "m", reason="répétition générale du temps B sur le développement", out_path=Path(tmp) / "r.json", rehearsal=True)
         print(json.dumps({k: rep[k] for k in ("n", "question_primaire", "sensibilite")}, ensure_ascii=False, indent=1)[:1800])

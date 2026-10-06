@@ -1,0 +1,121 @@
+{
+ "final": "G LoRA + encodeur + TF-IDF",
+ "reference": "A TF-IDF",
+ "secondaires": [
+  "E ensemble",
+  "F LoRA"
+ ],
+ "delta": 2.0,
+ "composition": {
+  "lora": [
+   "lora-s1000"
+  ],
+  "encodeur": [
+   "encoder-s1000",
+   "encoder-s1001",
+   "encoder-s1002",
+   "encoder-s1003",
+   "encoder-s1004"
+  ],
+  "tfidf": "tfidf",
+  "poids": "un tiers LoRA, un tiers encodeur (moyenne de ses graines), un tiers TF-IDF"
+ },
+ "modeles": {
+  "tfidf": {
+   "run_entrainement": "20261005-141646-final-tfidf",
+   "sha256_modele": "90dbcd5d1af5b1683b4b81d5dde92a73c4d2bd1b3f0ce0f30eceb2dbb90975fa",
+   "run_temps_a": "20261005-151851-temps-a-tfidf",
+   "sha256_temps_a": "853de1b12fbedf3096ec4f6fc2541f076cba4f37bf7adff47911ca52e2e7e438"
+  },
+  "encoder-s1000": {
+   "run_entrainement": "20261005-142625-final-encoder-s1000",
+   "sha256_modele": "4e342178a8bbf091c76df702b9b4613b1865df3824a92d01806f8ae1e309aabd",
+   "run_temps_a": "20261005-152012-temps-a-encoder-s1000",
+   "sha256_temps_a": "4c267da9eef5b5fcc9c17231d9ae6c77940974958b1b21394b464a1ef2c64530"
+  },
+  "encoder-s1001": {
+   "run_entrainement": "20261005-143549-final-encoder-s1001",
+   "sha256_modele": "3312bd9539663e2ca8bb17d06486b480d7c93ece61c795c5a7f96e1e16b60539",
+   "run_temps_a": "20261005-152137-temps-a-encoder-s1001",
+   "sha256_temps_a": "c7de5d149f000c030a33cceac96845deb4c6952004788fb6b2e9839d522de264"
+  },
+  "encoder-s1002": {
+   "run_entrainement": "20261005-144518-final-encoder-s1002",
+   "sha256_modele": "d7bf22c9eb20dae6e74769d71870c5c19fa6b92362e2622549bd6e11cf9d85ef",
+   "run_temps_a": "20261005-152304-temps-a-encoder-s1002",
+   "sha256_temps_a": "bf858081fa95204b40eb5a1b1fe45430cd381f6e2fafec3979b5e7e56bc805b6"
+  },
+  "encoder-s1003": {
+   "run_entrainement": "20261005-145106-final-encoder-s1003",
+   "sha256_modele": "2703e46127f0ae45791725906b90f1e6564b6840ca4e2d8a88b7f9e64f9ec8a4",
+   "run_temps_a": "20261005-152437-temps-a-encoder-s1003",
+   "sha256_temps_a": "7e4905272ebe40c3712ba299ea2440df7966d93956fe17e81f7c999d31a65f09"
+  },
+  "encoder-s1004": {
+   "run_entrainement": "20261005-145711-final-encoder-s1004",
+   "sha256_modele": "bab852c5bd2893808043df6ebe0a71d9523b50d3e49f08aaa68ba0505845fe14",
+   "run_temps_a": "20261005-152558-temps-a-encoder-s1004",
+   "sha256_temps_a": "93a9b44a58aa584db031c3cf3a22f7d07f6dfe6f0b4ac85208758c227e2e6099"
+  },
+  "lora-s1000": {
+   "run_entrainement": "20261006-022716-final-lora-s1000",
+   "sha256_modele": "c2a0963aea7a576729a8a9c46a3dee5bb4444dcc118cb4c1dd9de99ba91f7990",
+   "run_temps_a": "20261006-023402-temps-a-lora-s1000",
+   "sha256_temps_a": "7c85a097aeca66caf721288afcc6cd49351a05a6e7f50101ff9d65d2cb43eeed"
+  }
+ },
+ "incertitude": {
+  "temperature": "aucune : ECE 0,016 avant et 0,020 après (run cinq-plis-ensemble-g), la calibration brute est conservée",
+  "niveau_conforme": 0.9,
+  "methode": "LAC marginal et LAC par famille (Mondrian), familles de scripts/glm_v3_families.py, quantiles calibrés sur les prédictions hors pli du développement seulement",
+  "abstention_couvertures": [
+   1.0,
+   0.9,
+   0.8,
+   0.7,
+   0.5
+  ],
+  "echangeabilite": "patients tirés du même corpus que le développement, mêmes auteurs possibles ; aucune garantie sous nouveaux auteurs"
+ },
+ "fiche_modeles_finaux_sha256": "6ff64517a85852e6bebe503e6739cdecd86f3c93832f0d7a88006bbb295cb52c",
+ "prediction_test_scelle": {
+  "ecrite_le": "2026-10-06",
+  "avant": "toute ouverture des étiquettes du test scellé ; valeurs centrales = valeurs de développement hors pli, intervalles élargis par l'entraînement sur tout le développement et le décalage d'auteurs",
+  "macro_f1_test_systeme_final": {
+   "centre": 0.78,
+   "intervalle_80": [
+    0.75,
+    0.81
+   ]
+  },
+  "difference_final_moins_tfidf_points": {
+   "centre": 6.0,
+   "intervalle_80": [
+    3.3,
+    8.7
+   ]
+  },
+  "difference_final_moins_ensemble_points": {
+   "centre": 0.8,
+   "verdict_attendu": "non résolu",
+   "probabilite": 0.9
+  },
+  "verdict_question_primaire": {
+   "gain confirmé": 0.47,
+   "non résolu": 0.5,
+   "absence de gain utile": 0.03
+  },
+  "couverture_conforme_minimale_par_famille": {
+   "cible": 0.9,
+   "au_moins": 0.87,
+   "probabilite": 0.6
+  },
+  "exactitude_a_70_pour_cent_de_couverture": {
+   "centre": 0.95,
+   "intervalle_80": [
+    0.93,
+    0.97
+   ]
+  }
+ }
+}
