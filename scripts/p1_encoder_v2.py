@@ -2,7 +2,7 @@
 """Encodeur affiné, recette v2 (RM-41, RM-55) : même chargement, mêmes données et même évaluation que `p1_finetune.py` (mode full, importé sans modification), boucle `train_v2`
 avec options (lissage d'étiquettes, EMA, curriculum, bf16 par autocast), selon une fiche préenregistrée ; une option à la fois par fiche.
 Usage : p1_encoder_v2.py MODELE --lr LR [--fold 0] [--epochs 10] [--seed 1000] [--label-smoothing 0.1] [--ema 0.99] [--curriculum-epochs 2] [--autocast-bf16]
-        [--fiche CHEMIN] --slug NOM [--register] [--device cuda] [--max-steps N]"""
+        [--fold-key control_folds_by_author] [--fiche CHEMIN] --slug NOM [--register] [--device cuda] [--max-steps N]"""
 import argparse
 import hashlib
 import json
@@ -27,6 +27,7 @@ def main() -> int:
     ap.add_argument("model")
     ap.add_argument("--lr", type=float, required=True)
     ap.add_argument("--fold", type=int, default=0)
+    ap.add_argument("--fold-key", default="folds", help="clé des plis dans la partition : folds (par patient) ou control_folds_by_author (RM-39)")
     ap.add_argument("--epochs", type=int, default=10)
     ap.add_argument("--max-len", type=int, default=508)
     ap.add_argument("--effective-batch", type=int, default=32)
@@ -49,7 +50,7 @@ def main() -> int:
     from transformers import AutoTokenizer
 
     fiche_sha = hashlib.sha256((ROOT / a.fiche).read_bytes()).hexdigest() if a.fiche else None
-    texts, y, folds, excluded, ids = p1_04_06_tfidf.load("chapter")
+    texts, y, folds, excluded, ids = p1_04_06_tfidf.load("chapter", a.fold_key)
     labels = sorted(set(y))
     idx = np.array([labels.index(v) for v in y])
     tr, te = np.where(folds != a.fold)[0], np.where(folds == a.fold)[0]
