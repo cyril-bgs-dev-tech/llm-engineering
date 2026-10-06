@@ -66,6 +66,17 @@ def sealed_inputs(split: dict[str, Any], frame: pd.DataFrame, text_col: str, jou
     return pd.DataFrame(rows[["id", text_col]].rename(columns={text_col: "text"}))
 
 
+def _check_frame(ids: Sequence[str], frame: pd.DataFrame, label_col: str) -> None:
+    """Vérifie la structure (colonnes, identifiants uniques et présents) sans lire aucune valeur d'étiquette."""
+    if label_col not in frame.columns:
+        raise KeyError(f"colonne d'étiquettes absente : {label_col}")
+    if frame["id"].duplicated().any():
+        raise ValueError("identifiants dupliqués dans le tableau : étiquettes et prédictions seraient désalignées")
+    missing = set(ids) - set(frame["id"])
+    if missing:
+        raise ValueError(f"identifiants du test absents du tableau : {sorted(missing)[:5]}")
+
+
 def sealed_labels_and_score(
     split: dict[str, Any], frame: pd.DataFrame, label_col: str, predictions: Mapping[str, Any],
     compute: Callable[[Sequence[Any], Sequence[Any]], dict[str, Any]], marker: Path | str, reason: str, out_path: Path | str, rehearsal: bool = False, journal: Path | str | None = None,
@@ -75,6 +86,7 @@ def sealed_labels_and_score(
     `rehearsal=True` (répétition générale) : mêmes calculs en mémoire sur les données données, ni marqueur ni fichier. Une panne après l'écriture du marqueur
     le conserve (le test est consommé sans résultat)."""
     ids: list[str] = list(split["test"])
+    _check_frame(ids, frame, label_col)  # avant tout marqueur : une erreur récupérable ne consomme pas le test
     if set(predictions) != set(ids):
         raise ValueError("les prédictions ne couvrent pas exactement les identifiants du test")
     if not reason.strip():

@@ -30,6 +30,8 @@ def cluster_interval(
 ) -> tuple[float, float, float]:
     """(différence observée, borne basse, borne haute) en points de macro-F1 de A moins B, bootstrap d'auteurs."""
     uniq = sorted(set(groups))
+    if len(uniq) < 2:
+        raise ValueError("le bootstrap d'auteurs exige au moins deux auteurs : avec un seul, l'intervalle est de largeur nulle")
     index = {g: i for i, g in enumerate(uniq)}
     gi = np.array([index[g] for g in groups])
     ca = _counts(truth, pred_a, gi, len(uniq), scored)

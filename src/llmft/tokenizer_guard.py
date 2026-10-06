@@ -65,7 +65,9 @@ def isolated_build_inputs(name: str, texts: Sequence[str], max_len: int, *, atte
     if cache_file is not None and cache_file.exists():
         try:
             cached: list[list[int]] = pickle.loads(cache_file.read_bytes())
-            return cached
+            if isinstance(cached, list) and len(cached) == len(texts):
+                return cached
+            print(f"[tokenizer_guard] cache de longueur inattendue, recalcul : {cache_file.name}", file=sys.stderr, flush=True)
         except (pickle.UnpicklingError, EOFError, AttributeError, ValueError):
             print(f"[tokenizer_guard] cache illisible, recalcul : {cache_file.name}", file=sys.stderr, flush=True)
     last = ""

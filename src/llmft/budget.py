@@ -1,5 +1,6 @@
 """Budget de GPU (protocole, section 5) : somme des durées des runs du registre et alerte à 80 % de B."""
 import json
+import math
 from pathlib import Path
 
 BUDGET_HOURS = 90.0
@@ -7,7 +8,10 @@ ALERT_FRACTION = 0.8
 
 
 def _seconds(value: object) -> float:
-    return float(value) if isinstance(value, int | float) else 0.0
+    if not isinstance(value, int | float) or isinstance(value, bool):
+        return 0.0
+    number = float(value)
+    return number if math.isfinite(number) and number > 0.0 else 0.0  # une durée NaN, infinie ou négative ne fausse pas le total
 
 
 def consumed_hours(runs_dir: Path) -> float:

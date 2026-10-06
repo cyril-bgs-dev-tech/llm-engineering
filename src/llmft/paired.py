@@ -59,6 +59,8 @@ def paired_permutation_pvalue(d: NDArray[np.float64], n_perm: int | None = None,
     """Test de permutation apparié (inversion de signe) de H0 : moyenne des écarts nulle. `n_perm=None` : énumération exacte (n <= 20)."""
     d = np.asarray(d, dtype=float)
     n = len(d)
+    if n == 0:
+        raise ValueError("aucun écart apparié : p-valeur indéfinie")
     observed = abs(d.mean())
     tol = 1e-12 * max(observed, 1.0)
     if n_perm is None:

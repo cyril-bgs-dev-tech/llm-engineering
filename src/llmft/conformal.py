@@ -13,6 +13,8 @@ from numpy.typing import NDArray
 
 
 def conformal_quantile(scores: NDArray[np.float64], alpha: float) -> float:
+    if not 0.0 < alpha < 1.0:
+        raise ValueError(f"alpha doit être dans ]0, 1[, reçu {alpha}")
     n = len(scores)
     k = math.ceil((n + 1) * (1 - alpha))
     return float("inf") if k > n or n == 0 else float(np.sort(scores)[k - 1])
@@ -38,6 +40,8 @@ def _scores_all(probs: NDArray[np.float64], method: str) -> NDArray[np.float64]:
 
 
 def fit(probs: NDArray[np.float64], y: NDArray[np.int_], alpha: float, method: str = "lac") -> float:
+    if not np.isfinite(probs).all():
+        raise ValueError("probabilités non finies (NaN ou infini) : calibration refusée")
     s = _scores_all(probs, method)[np.arange(len(y)), y]
     return conformal_quantile(s, alpha)
 

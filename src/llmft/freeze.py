@@ -23,6 +23,8 @@ def _run(runs_dir: Path, slug: str) -> dict[str, Any]:
 
 
 def build_frozen(runs_dir: Path, *, enc_seeds: tuple[int, ...], lora_seeds: tuple[int, ...]) -> dict[str, Any]:
+    if not enc_seeds or not lora_seeds:
+        raise ValueError("le système final annonce LoRA + encodeur + TF-IDF : au moins une graine d'encodeur et une de LoRA")
     names = ["tfidf", *[f"encoder-s{s}" for s in enc_seeds], *[f"lora-s{s}" for s in lora_seeds]]
     models: dict[str, dict[str, str]] = {}
     for name in names:
@@ -37,3 +39,12 @@ def build_frozen(runs_dir: Path, *, enc_seeds: tuple[int, ...], lora_seeds: tupl
                         "niveau_conforme": CONFORMAL_LEVEL, "methode": "LAC marginal et LAC par famille (Mondrian), familles de scripts/glm_v3_families.py, quantiles calibrés sur les prédictions hors pli du développement seulement",
                         "abstention_couvertures": list(ABSTENTION_COVERAGES), "echangeabilite": "patients tirés du même corpus que le développement, mêmes auteurs possibles ; aucune garantie sous nouveaux auteurs"},
     }
+
+
+def rehearsal_matches_freeze(runs_dir: Path, frozen_sha256: str) -> bool:
+    """Vrai si une répétition générale du temps B a été faite avec ce gel (empreinte du fichier de gel dans ses paramètres) : une répétition antérieure au gel ne compte pas."""
+    for path in runs_dir.glob("*-repetition-generale-temps-b.json"):
+        record = json.loads(path.read_text(encoding="utf-8"))
+        if record.get("status") == "ok" and record.get("params", {}).get("frozen_sha256") == frozen_sha256:
+            return True
+    return False

@@ -39,6 +39,15 @@ def near_duplicate_pairs(texts: Mapping[str, str], threshold: float = NEAR_DUPLI
             jac[row, : start + row + 1] = 0  # une seule fois par paire, jamais avec soi-même
         for row, col in zip(*np.where(jac >= threshold), strict=True):
             out.append((ids[start + int(row)], ids[int(col)], round(float(jac[row, col]), 4)))
+    seen = {(a, b) for a, b, _ in out}
+    by_text: dict[str, list[str]] = {}
+    for i in ids:
+        by_text.setdefault(normalize(texts[i]), []).append(i)
+    for same in by_text.values():  # textes identiques trop courts pour avoir un n-gramme : jamais vus par la similarité
+        for k, a in enumerate(same):
+            for b in same[k + 1 :]:
+                if (a, b) not in seen:
+                    out.append((a, b, 1.0))
     return out
 
 

@@ -44,3 +44,24 @@ def test_deux_runs_du_meme_nom_refusent_le_gel_au_lieu_d_en_choisir_un(runs: Pat
     write_run(runs, "20261006-090000", "final-tfidf", "autre")
     with pytest.raises(ValueError, match="final-tfidf"):
         freeze.build_frozen(runs, enc_seeds=ENC, lora_seeds=(1000,))
+
+
+def write_rehearsal(runs: Path, stamp: str, frozen_sha: str | None) -> None:
+    params = {} if frozen_sha is None else {"frozen_sha256": frozen_sha}
+    (runs / f"{stamp}-repetition-generale-temps-b.json").write_text(json.dumps({"run_id": f"{stamp}-repetition-generale-temps-b", "status": "ok", "params": params}), encoding="utf-8")
+
+
+def test_une_repetition_perimee_sans_empreinte_du_gel_ne_satisfait_pas_la_precondition(tmp_path: Path):
+    write_rehearsal(tmp_path, "20261005-081950", None)
+    assert not freeze.rehearsal_matches_freeze(tmp_path, "abc")
+
+
+def test_une_repetition_d_un_autre_gel_ne_satisfait_pas_la_precondition(tmp_path: Path):
+    write_rehearsal(tmp_path, "20261006-182842", "autre")
+    assert not freeze.rehearsal_matches_freeze(tmp_path, "abc")
+
+
+def test_une_repetition_du_gel_courant_satisfait_la_precondition(tmp_path: Path):
+    write_rehearsal(tmp_path, "20261005-081950", None)
+    write_rehearsal(tmp_path, "20261006-182842", "abc")
+    assert freeze.rehearsal_matches_freeze(tmp_path, "abc")
