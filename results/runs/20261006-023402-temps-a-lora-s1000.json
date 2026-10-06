@@ -1,0 +1,15 @@
+{
+  "created_at": "2026-10-06T02:34:02Z",
+  "kind": "measure",
+  "metrics": {
+    "sha256": "7c85a097aeca66caf721288afcc6cd49351a05a6e7f50101ff9d65d2cb43eeed"
+  },
+  "params": {
+    "n": 633
+  },
+  "run_id": "20261006-023402-temps-a-lora-s1000",
+  "schema": "mini-1",
+  "slug": "temps-a-lora-s1000",
+  "status": "ok",
+  "summary": "Temps A : prédictions du modèle final lora-s1000 sur les textes du test (aucune étiquette), empreinte 7c85a097aeca"
+}
