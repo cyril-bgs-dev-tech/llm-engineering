@@ -357,7 +357,7 @@ ul.clean li b{font-weight:600}
       </ul>
       <div class="kicker" style="margin:22px 0 14px">À exécuter</div>
       <ul class="clean" style="gap:12px">
-        <li style="font-size:27px">Reconstruction à froid complète (données et modèles), rapport passé par le contrôle des affirmations</li>
+        <li style="font-size:27px">Image Docker, version taguée et textes de candidature à passer par le contrôle des affirmations</li>
         <li style="font-size:27px">Relecture humaine, carte de modèle finale et fiche de déploiement (193 micro-tâches, 111 sur le chemin court)</li>
       </ul>
     </div>
@@ -384,7 +384,7 @@ ul.clean li b{font-weight:600}
 <!-- === 12. NOTES === -->
 <section class="slide" data-title="Notes">
   <div class="kicker">Bilan chiffré</div>
-  <h2 style="font-size:50px">Note moyenne : 7,8 / 10, contre 7,6 et 9,4 pour les SOTA</h2>
+  <h2 style="font-size:50px">Note moyenne : 8,0 / 10, contre 7,6 et 9,4 pour les SOTA</h2>
   <div style="margin-top:18px">
     <table class="score">
       <thead><tr><th>Composante</th><th>Ce projet</th><th>SOTA open source</th><th>SOTA absolu</th></tr></thead>
@@ -394,14 +394,14 @@ ul.clean li b{font-weight:600}
         <tr><td>Données et anti-fuite</td><td><div class="mini c-p"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:100%"></i></div><span>10</span></div></td></tr>
         <tr><td>Fiabilité de l'incertitude</td><td><div class="mini c-p"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
         <tr><td>Analyse d'erreurs et robustesse</td><td><div class="mini c-p"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
-        <tr><td>Reproductibilité et ingénierie</td><td><div class="mini c-p"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
+        <tr><td>Reproductibilité et ingénierie</td><td><div class="mini c-p"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
         <tr><td>Efficience et déploiement</td><td><div class="mini c-p"><div class="tr"><i style="width:60%"></i></div><span>6</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:100%"></i></div><span>10</span></div></td></tr>
-        <tr><td>Sûreté, conformité, honnêteté</td><td><div class="mini c-p"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
-        <tr class="avg"><td>Moyenne des 8 composantes</td><td><div class="mini c-p"><div class="tr"><i style="width:78%"></i></div><span>7,8</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:76%"></i></div><span>7,6</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:94%"></i></div><span>9,4</span></div></td></tr>
+        <tr><td>Sûreté, conformité, honnêteté</td><td><div class="mini c-p"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
+        <tr class="avg"><td>Moyenne des 8 composantes</td><td><div class="mini c-p"><div class="tr"><i style="width:80%"></i></div><span>8,0</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:76%"></i></div><span>7,6</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:94%"></i></div><span>9,4</span></div></td></tr>
       </tbody>
     </table>
   </div>
-  <p class="note" style="font-size:21px;margin-top:6px;line-height:1.35"><b>Estimation, non mesurée</b> : notes sur 10 à plus ou moins 1 point, jugement structuré de l'assistant, à contre-expertiser ; « SOTA » = meilleur niveau connu par composante. <b>Depuis le 5 octobre</b> : efficience 5 à 6 ; après l'ouverture du test scellé, performance, rigueur (8 à 9) et incertitude (7 à 8) ; robustesse 6 à 7 (fragilité du LoRA à la fin du texte non corrigée) ; puis, avec l'ancrage MorFITT, <b>performance 7 à 8</b> (mélange à 71,7 contre 71,95 publié au mieux, mais pas au-dessus) et <b>données 7 à 8</b> (second jeu entré avec le même outillage). Inchangées : reproductibilité, honnêteté (relecture humaine et contrôle des textes sortants à faire). Plafond atteignable estimé : 9,2 à 9,4 (docs/CHAINE_DE_DOMINOS.md, PREUVES.md).</p>
+  <p class="note" style="font-size:21px;margin-top:6px;line-height:1.35"><b>Estimation, non mesurée</b> : notes sur 10 à plus ou moins 1 point, jugement structuré de l'assistant, à contre-expertiser ; « SOTA » = meilleur niveau connu par composante. <b>Depuis le 5 octobre</b> : efficience 5 à 6 ; après l'ouverture du test scellé, performance, rigueur (8 à 9) et incertitude (7 à 8) ; robustesse 6 à 7 (fragilité du LoRA à la fin du texte non corrigée) ; puis, avec l'ancrage MorFITT, <b>performance 7 à 8</b> (mélange à 71,7 contre 71,95 publié au mieux, mais pas au-dessus) et <b>données 7 à 8</b> (second jeu entré avec le même outillage). <b>Reproductibilité 8 à 9</b> (chiffre clé reconstruit à l'identique depuis un clone neuf ; Docker et version taguée restent à faire). <b>Honnêteté 8 à 9</b> (rapport final passé par le contrôle des affirmations, checklist TRIPOD-LLM renseignée ; relecture humaine et textes de candidature à faire). Plafond atteignable estimé : 9,2 à 9,4 (docs/CHAINE_DE_DOMINOS.md, PREUVES.md).</p>
   <div class="foot" style="bottom:20px"><span>Projet : état au 06/10/2026</span><span>14 / 14</span></div>
 </section>
 

@@ -375,7 +375,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | RM-33 | Conforme conditionnel par famille (Mondrian) et couverture par famille avec Wilson | La couverture marginale cache des familles à 0,56 |
 | RM-51 | Lecture confirmatoire de l'incertitude et de la robustesse sur le test scellé | Second temps de RM-20 ; seuils figés avant l'ouverture ; **incertitude lue le 06/10/2026** (couverture marginale 0,924, par famille 0,916, minimum 0,821 sur une famille de 56 patients ; exactitude 0,962 à 70 % de couverture) ; **reste** la robustesse aux nouveaux auteurs sur le test et l'ablation de contenu (aucune seconde lecture) |
 | P4-08 | Politique d'abstention, courbe automatisation contre exactitude | |
-| P4-10 | Carte de modèle et checklist TRIPOD-LLM | **Carte v4 du candidat G écrite le 06/10/2026** (`docs/CARTE_DE_MODELE_V4.md` : composition, performance, incertitude, abstention, coûts par composante, résultats négatifs, limites ; chaque chiffre cite un run) ; **non close** : checklist des 19 items et chiffres confirmatoires à rejouer après le gel et RM-51 |
+| P4-10 | Carte de modèle et checklist TRIPOD-LLM | **Carte v4 du candidat G écrite le 06/10/2026** (`docs/CARTE_DE_MODELE_V4.md` : composition, performance, incertitude, abstention, coûts par composante, résultats négatifs, limites ; chaque chiffre cite un run) ; **checklist des 19 items renseignée le 07/10/2026** (`docs/CHECKLIST_TRIPOD_LLM_2026-10-07.md` : 27 lignes remplies, 10 partielles, 4 non applicables, 2 à compléter par l'auteur, financement et conflits d'intérêts) ; carte mise à jour avec le test scellé ; **close sauf les deux déclarations de l'auteur** |
 | G-P4 | Scorecard G-P4 | |
 
 ### Étape R11 : livraison ciblée (jalon B)
@@ -391,7 +391,7 @@ Chaque étape liste ses micro-tâches **dans l'ordre d'exécution**. Les identif
 | RM-35 | Service multi-modèles avec ensembles conformes, abstention et conteneur vérifié | Tests et banc de latence |
 | RM-36 | Rapport préliminaire, carte v3, fiche de données, protocole v2, tableaux regénérés, contrôle des références | Fait le 04/10/2026 ; à tenir à jour |
 | RM-48 | **Fiche de déploiement par contrainte et règle de décision** | Dit quels systèmes deviennent inutiles à servir |
-| P5-09 | Reconstruction à froid : clone neuf puis `make reproduce-small` | |
+| P5-09 | Reconstruction à froid : clone neuf puis `make reproduce-small` | **Faite le 07/10/2026** (`scripts/reproduce_small.sh`) : clone neuf, PARHAF et CIM-10 par scripts versionnés vérifiés, macro-F1 de référence 0,7201565961621372 identique à 1e-9 en 834 s, run `20261006-230806-reconstruction-a-froid-chiffre-cle` ; manque trouvé et comblé (`data/scripts/download_cim10.py`) ; reste l'image Docker et une version taguée |
 | P5-12 | Rapport final et textes sortants passés par `claim-gate` | Aucune formulation au-delà de la preuve ; **rapport final écrit et passé par `claim-gate` le 07/10/2026** (`docs/RAPPORT_FINAL_2026-10-07.md`, tableau de preuve de onze lignes dont trois reformulations ou retraits) ; **reste** les textes de candidature (CV, LinkedIn, lettre), qui exigent un accord de Cyril et le même passage |
 | G-P5 | Scorecard G-P5 | **Jalon B : fin du MVP** |
 

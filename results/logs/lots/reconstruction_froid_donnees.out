@@ -1,0 +1,9 @@
+commit du clone : 7741ebe ; données brutes présentes avant téléchargement : 0 (attendu 0)
+sync code=0 4 s
+telechargement code=0 3 s
+cim10 code=0 0 s
+tfidf essai 1
+tfidf code=0 815 s
+macro-F1 d'origine : 0.7201565961621372 ; reconstruite : 0.7201565961621372
+IDENTIQUE à 1e-9
+total 834 s

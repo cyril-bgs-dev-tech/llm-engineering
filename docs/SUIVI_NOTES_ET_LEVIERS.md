@@ -8,7 +8,7 @@ Sources : `docs/CHAINE_DE_DOMINOS.md` (notes, plafonds, dominos), `roadmap_unifi
 
 ## 1. Composantes : note, plafond, état
 
-Moyenne estimée : **7,8 sur 10** (62 sur 8 composantes ; réévaluations du 06/10 : efficience 5 vers 6, puis après l'ouverture du test scellé performance 6 vers 7, rigueur 8 vers 9, incertitude 7 vers 8 ; raisons de chaque note dans `docs/presentation/PREUVES.md`, dernier paragraphe). Estimation à ±1, pas une scorecard.
+Moyenne estimée : **8,0 sur 10** (64 sur 8 composantes ; réévaluations du 06/10 : efficience 5 vers 6, puis après l'ouverture du test scellé performance 6 vers 7, rigueur 8 vers 9, incertitude 7 vers 8 ; raisons de chaque note dans `docs/presentation/PREUVES.md`, dernier paragraphe). Estimation à ±1, pas une scorecard.
 
 | Composante | Note | Plafond réaliste | Ce qui a monté ou peut monter la note | État au 05/10 soir |
 |---|---|---|---|---|
@@ -17,9 +17,9 @@ Moyenne estimée : **7,8 sur 10** (62 sur 8 composantes ; réévaluations du 06/
 | Données et anti-fuite | **8** (était 7) | 9 | audit d'étiquettes (P2-06) ; synthétique avec lignée (P2-10) ; ancrage public | audit fait sur 65 erreurs confiantes : ambiguïté de codage établie, bruit d'étiquette non établi ; contre-expertise par un codeur à prévoir ; P2-10 planifié |
 | Incertitude | **8** (était 7) | 9 | couverture par famille (RM-33) ; lecture confirmatoire (RM-51) ; nouveaux auteurs (RM-39) | G : ECE 0,016, couverture 0,901 par famille (source : journal de nuit, 05/10 15h12Z) ; RM-51 après RM-20 |
 | Erreurs et robustesse | **7** (était 6) | 9 | taxonomie, audit des 65 cas, RM-39 sur les modèles appris | TF-IDF couvert ; robustesse de l'encodeur et du LoRA à mesurer (RM-39) |
-| Reproductibilité | 8 | 10 | reconstruction à froid (P5-09), release taguée, conteneur vérifié | reconstruction à froid jamais testée sur clone neuf ; release bloquée (push réservé à Cyril) |
+| Reproductibilité | **9** (était 8) | 10 | reconstruction à froid (P5-09), release taguée, conteneur vérifié | reconstruction à froid jamais testée sur clone neuf ; release bloquée (push réservé à Cyril) |
 | Efficience et déploiement | **6** (était 5) | 9 | service mesuré par profil, cascade validée hors pli, fiche de déploiement | cascade conforme : non-infériorité, 45,5 % sans LoRA ; fiche RM-48 provisoire ; élagage RM-45 fait : dégradé (−13,1 points), non retenu |
-| Honnêteté et conformité | 8 | 10 | `claim-gate` sur tout texte sortant, résultats négatifs publiés, carte de modèle, TRIPOD-LLM | résultats négatifs consignés (RM-55, RM-56, empilement, RM-44, RM-45) ; carte v4 du candidat G écrite (06/10), checklist TRIPOD-LLM à rejouer au gel ; P5-12 à faire |
+| Honnêteté et conformité | **9** (était 8) | 10 | `claim-gate` sur tout texte sortant, résultats négatifs publiés, carte de modèle, TRIPOD-LLM | résultats négatifs consignés (RM-55, RM-56, empilement, RM-44, RM-45) ; carte v4 du candidat G écrite (06/10), checklist TRIPOD-LLM à rejouer au gel ; P5-12 à faire |
 
 ## 2. Ce qui devait rendre le reste obsolète, plus simple ou inutile
 

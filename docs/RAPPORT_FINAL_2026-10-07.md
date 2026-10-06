@@ -40,7 +40,7 @@ Distillation vers un encodeur : gain apparent de +3,5 non préservé avec des pr
 - Un seul LoRA final (variance entre graines non mesurée) ; un seul benchmark externe, de résumés d'articles ; le LoRA n'est pas mesuré en plis d'auteurs.
 - **Revue indépendante par trois agents du même modèle** (pas de relecture humaine) : 0 constat bloquant, 12 importants, 88 tests ajoutés et 12 défauts corrigés après coup ; le garde du test scellé est procédural, pas technique.
 - **Fiabilité de la machine** : des pannes internes impossibles en Python correct (TypeError de scikit-learn, segfaults du tokenizer) et des plantages de WSL ont été observés ; hypothèse d'instabilité matérielle non prouvée ; les résultats reposent sur des rejeux identiques et des vérifications, pas sur une garantie matérielle.
-- Reconstruction à froid : le clone neuf passe 391 tests et le fil synthétique ; la reconstruction du chiffre clé de référence est en cours de vérification (voir `RESULTATS.md`).
+- Reconstruction à froid : un clone neuf du dépôt, avec PARHAF et la CIM-10 téléchargés par scripts versionnés dont les empreintes sont vérifiées, redonne la macro-F1 du TF-IDF de référence (0,7201565961621372) identique à 1e-9 près en 834 s ; limites : cache des paquets chaud, image Docker non reconstruite, aucune version taguée.
 
 ## 7. Tableau de preuve
 | Affirmation | Preuve | Statut |
@@ -52,7 +52,7 @@ Distillation vers un encodeur : gain apparent de +3,5 non préservé avec des pr
 | Encodeur en plis d'auteurs : 0,7075, +3,32 [+0,53 ; +6,29], perte 5,2 | run `20261006-213214-encodeur-plis-auteurs-analyse` | prouvé (développement) |
 | Distillation non préservée, élagage dégradé, INT8 effondré | runs `distillation-analyse-cinq-plis` (verdict RM-56, fiche `2026-10-05-distillation-imbriquee`), `20261006-121213-encodeur-elague-analyse-cinq-plis`, `20261006-091535-onnx-int8-statique-partiel-camembert-deploy-ep10-lr1e-4` | prouvé |
 | Fragilité du LoRA à la fin du texte | runs `20261006-173250-robustesse-modeles-appris-lora`, `20261006-182233-robustesse-lora-saut-de-ligne` | prouvé (un pli, une graine) |
-| Reconstruction à froid partielle (391 tests, fil synthétique) | run `20261006-210819-reconstruction-a-froid-partielle` | prouvé pour ce périmètre |
+| Reconstruction à froid : macro-F1 de référence identique à 1e-9 | runs `20261006-230806-reconstruction-a-froid-chiffre-cle`, `20261006-210819-reconstruction-a-froid-partielle` | prouvé (cache uv chaud, Docker non reconstruit) |
 | « le système final bat le TF-IDF » | verdict « non résolu » | **reformulé** : « +7,28 points, non résolu à δ = 2,0 » |
 | « état de l'art » sur MorFITT | mélange dans la bande du meilleur publié, pas au-dessus | **reformulé** ; « état de l'art » **retiré** |
 | « validé sur des patients réels » | corpus fictif | **retiré** |
