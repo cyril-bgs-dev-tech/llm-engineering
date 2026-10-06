@@ -1,0 +1,27 @@
+{
+  "files": [
+    {
+      "bytes": 1002,
+      "path": "README.md",
+      "sha256": "20a72c12606a0452fba9c9094400f3290863d30a36a9728d2951c7e0997112bd"
+    },
+    {
+      "bytes": 1024481,
+      "path": "source/test-00000-of-00001.parquet",
+      "sha256": "3048c2f17ac0402aaf8b999972cac77ca1131f579805548d64e823185b0f116c"
+    },
+    {
+      "bytes": 1422136,
+      "path": "source/train-00000-of-00001.parquet",
+      "sha256": "798cdc4c7d8c5c82ad2824386a9d98adadb40ea228ebd702a0cfd121fc86740a"
+    },
+    {
+      "bytes": 961320,
+      "path": "source/validation-00000-of-00001.parquet",
+      "sha256": "fcd6d15214df38e19ba8ba43f8f214a26aa7b243146d9a1541135574ee77db72"
+    }
+  ],
+  "revision": "5f381299bb113fdba325538d65ef412650a4d98e",
+  "schema": "manifest-1",
+  "source": "Dr-BERT/MORFITT"
+}

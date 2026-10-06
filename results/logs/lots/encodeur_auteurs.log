@@ -1,0 +1,33 @@
+2026-10-06T20:25:15Z DEBUT enc-auteur-pli0-s0 essai=1
+2026-10-06T20:29:56Z FIN enc-auteur-pli0-s0 essai=1 code=0
+2026-10-06T20:29:56Z DEBUT enc-auteur-pli1-s0 essai=1
+2026-10-06T20:34:34Z FIN enc-auteur-pli1-s0 essai=1 code=0
+2026-10-06T20:34:34Z DEBUT enc-auteur-pli2-s0 essai=1
+2026-10-06T20:39:15Z FIN enc-auteur-pli2-s0 essai=1 code=0
+2026-10-06T20:39:16Z DEBUT enc-auteur-pli3-s0 essai=1
+2026-10-06T20:43:36Z FIN enc-auteur-pli3-s0 essai=1 code=0
+2026-10-06T20:43:36Z DEBUT enc-auteur-pli4-s0 essai=1
+2026-10-06T20:49:31Z FIN enc-auteur-pli4-s0 essai=1 code=0
+2026-10-06T20:49:31Z TERMINE (graines : 0)
+2026-10-06T20:50:28Z graine 1000 : verdict (a) non résolu ([+0,07 ; +6,45]) : règle d'arrêt de la fiche non déclenchée, graines 1001 et 1002 lancées
+2026-10-06T20:50:28Z DEBUT enc-auteur-pli0-s1 essai=1
+2026-10-06T20:53:25Z FIN enc-auteur-pli0-s1 essai=1 code=0
+2026-10-06T20:53:25Z DEBUT enc-auteur-pli1-s1 essai=1
+2026-10-06T20:56:10Z FIN enc-auteur-pli1-s1 essai=1 code=0
+2026-10-06T20:56:10Z DEBUT enc-auteur-pli2-s1 essai=1
+2026-10-06T20:59:59Z FIN enc-auteur-pli2-s1 essai=1 code=0
+2026-10-06T20:59:59Z DEBUT enc-auteur-pli3-s1 essai=1
+2026-10-06T21:02:44Z FIN enc-auteur-pli3-s1 essai=1 code=0
+2026-10-06T21:02:44Z DEBUT enc-auteur-pli4-s1 essai=1
+2026-10-06T21:06:08Z FIN enc-auteur-pli4-s1 essai=1 code=0
+2026-10-06T21:06:08Z DEBUT enc-auteur-pli0-s2 essai=1
+2026-10-06T21:09:38Z FIN enc-auteur-pli0-s2 essai=1 code=0
+2026-10-06T21:09:38Z DEBUT enc-auteur-pli1-s2 essai=1
+2026-10-06T21:12:52Z FIN enc-auteur-pli1-s2 essai=1 code=0
+2026-10-06T21:12:52Z DEBUT enc-auteur-pli2-s2 essai=1
+2026-10-06T21:16:47Z FIN enc-auteur-pli2-s2 essai=1 code=0
+2026-10-06T21:16:47Z DEBUT enc-auteur-pli3-s2 essai=1
+2026-10-06T21:21:17Z FIN enc-auteur-pli3-s2 essai=1 code=0
+2026-10-06T21:21:17Z DEBUT enc-auteur-pli4-s2 essai=1
+2026-10-06T21:25:18Z FIN enc-auteur-pli4-s2 essai=1 code=0
+2026-10-06T21:25:18Z TERMINE (graines : 1 2)

@@ -1,0 +1,22 @@
+{
+ "graines": [
+  0,
+  1,
+  2
+ ],
+ "n_patients": 3586,
+ "macro_f1_encodeur_plis_auteurs": 0.7075,
+ "macro_f1_tfidf_plis_auteurs": 0.6742,
+ "a_encodeur_moins_tfidf_points": [
+  3.32,
+  0.53,
+  6.29
+ ],
+ "a_verdict": "non résolu",
+ "b_perte_encodeur_points": 5.23,
+ "b_perte_tfidf_points": 4.6,
+ "b_lecture": "comparable",
+ "exactitude": 0.8215,
+ "log_loss": 0.6856,
+ "ece": 0.0644
+}

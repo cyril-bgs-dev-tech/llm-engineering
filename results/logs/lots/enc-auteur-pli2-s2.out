@@ -1,0 +1,39 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 2292.75it/s]
+[transformers] [1mCamembertForSequenceClassification LOAD REPORT[0m from: almanach/camembert-bio-base
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+classifier.out_proj.weight | MISSING    | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+{
+ "summary": "enc-auteur-pli2-s2 : macro-F1 0.6471 sur le pli 2 (17 chapitres), 96.7 s d'entraînement",
+ "metrics": {
+  "steps": 900,
+  "seconds_train": 96.7,
+  "loss_first": 2.8878504037857056,
+  "loss_last": 0.11502821743488312,
+  "peak_reserved_gib": 5.4,
+  "energie": {
+   "energie_wh": 12.061,
+   "puissance_moyenne_w": 461.9,
+   "puissance_max_w": 480.6
+  },
+  "macro_f1": 0.6471,
+  "accuracy": 0.8223,
+  "log_loss": 0.7859,
+  "ece": 0.1047,
+  "predictions_sha256": "b22979f5bb07d95b8d67388032f11c4948a7769d00ab98c959861403e070352a"
+ }
+}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-211646-enc-auteur-pli2-s2.json

@@ -1,0 +1,35 @@
+{
+  "created_at": "2026-10-06T21:32:14Z",
+  "kind": "measure",
+  "metrics": {
+    "a_encodeur_moins_tfidf_points": [
+      3.32,
+      0.53,
+      6.29
+    ],
+    "a_verdict": "non résolu",
+    "b_lecture": "comparable",
+    "b_perte_encodeur_points": 5.23,
+    "b_perte_tfidf_points": 4.6,
+    "ece": 0.0644,
+    "exactitude": 0.8215,
+    "graines": [
+      0,
+      1,
+      2
+    ],
+    "log_loss": 0.6856,
+    "macro_f1_encodeur_plis_auteurs": 0.7075,
+    "macro_f1_tfidf_plis_auteurs": 0.6742,
+    "n_patients": 3586
+  },
+  "params": {
+    "delta": 2.0,
+    "fiche": "experiments/2026-10-06-encodeur-plis-auteurs.md"
+  },
+  "run_id": "20261006-213214-encodeur-plis-auteurs-analyse",
+  "schema": "mini-1",
+  "slug": "encodeur-plis-auteurs-analyse",
+  "status": "ok",
+  "summary": "Encodeur en plis d'auteurs contre TF-IDF : non résolu, perte 5.23 points (comparable)"
+}

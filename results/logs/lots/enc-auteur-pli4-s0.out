@@ -1,0 +1,44 @@
+[tokenizer_guard] essai 1/6 : code -11 : [transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (681 > 512). Running this sequence through the model will result in indexing errors
+[tokenizer_guard] essai 2/6 : code -6 : >' (48434) panicked at /home/runner/work/tokenizers/tokenizers/tokenizers/src/tokenizer/normalizer.rs:583:56:
+start byte index 99902486968976 is out of bounds for string of length 2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+free(): double free detected in tcache 2
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights:  97%|█████████▋| 191/197 [00:00<00:00, 1908.99it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 1960.87it/s]
+[transformers] [1mCamembertForSequenceClassification LOAD REPORT[0m from: almanach/camembert-bio-base
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+{
+ "summary": "enc-auteur-pli4-s0 : macro-F1 0.7022 sur le pli 4 (17 chapitres), 92.7 s d'entraînement",
+ "metrics": {
+  "steps": 890,
+  "seconds_train": 92.7,
+  "loss_first": 2.9017821550369263,
+  "loss_last": 0.1008701790124178,
+  "peak_reserved_gib": 5.4,
+  "energie": {
+   "energie_wh": 11.763,
+   "puissance_moyenne_w": 470.5,
+   "puissance_max_w": 489.7
+  },
+  "macro_f1": 0.7022,
+  "accuracy": 0.8194,
+  "log_loss": 0.7834,
+  "ece": 0.0918,
+  "predictions_sha256": "6b3a9576755f9e90dcf187cd91e82bed0b66d4c76574b2f39c05123d80a7406a"
+ }
+}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261006-204930-enc-auteur-pli4-s0.json

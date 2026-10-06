@@ -1,0 +1,81 @@
+# Contrat de tâche rédigé à la main pour MorFITT (RM-49, dataset-intake) ; les définitions sont opérationnelles et dérivées des noms de classes du jeu, les étiquettes elles-mêmes sont celles du jeu (non ré-annotées).
+task_id: morfitt_specialities
+title: Spécialités biomédicales d'un résumé d'article français (MorFITT, multi-étiquettes)
+type: multilabel
+input:
+  unit: document
+  max_tokens: 508
+  truncation: head_tail
+classes:
+- id: sp_microbiology
+  name: 'Microbiologie (étiquette 0 du jeu : microbiology)'
+  definition: Résumé d'article biomédical français portant l'étiquette de spécialité « microbiology » dans le jeu MorFITT ; un résumé porte au moins une étiquette et en moyenne 1,39 sur l'entraînement.
+  exclusions:
+  - 'Une étiquette n''est pas exclusive, un même résumé peut en porter plusieurs ; l''absence d''une étiquette ne signifie pas que le sujet est étranger au résumé.'
+- id: sp_etiology
+  name: 'Étiologie (étiquette 1 du jeu : etiology)'
+  definition: Résumé d'article biomédical français portant l'étiquette de spécialité « etiology » dans le jeu MorFITT ; un résumé porte au moins une étiquette et en moyenne 1,39 sur l'entraînement.
+  exclusions:
+  - 'Une étiquette n''est pas exclusive, un même résumé peut en porter plusieurs ; l''absence d''une étiquette ne signifie pas que le sujet est étranger au résumé.'
+- id: sp_virology
+  name: 'Virologie (étiquette 2 du jeu : virology)'
+  definition: Résumé d'article biomédical français portant l'étiquette de spécialité « virology » dans le jeu MorFITT ; un résumé porte au moins une étiquette et en moyenne 1,39 sur l'entraînement.
+  exclusions:
+  - 'Une étiquette n''est pas exclusive, un même résumé peut en porter plusieurs ; l''absence d''une étiquette ne signifie pas que le sujet est étranger au résumé.'
+- id: sp_physiology
+  name: 'Physiologie (étiquette 3 du jeu : physiology)'
+  definition: Résumé d'article biomédical français portant l'étiquette de spécialité « physiology » dans le jeu MorFITT ; un résumé porte au moins une étiquette et en moyenne 1,39 sur l'entraînement.
+  exclusions:
+  - 'Une étiquette n''est pas exclusive, un même résumé peut en porter plusieurs ; l''absence d''une étiquette ne signifie pas que le sujet est étranger au résumé.'
+- id: sp_immunology
+  name: 'Immunologie (étiquette 4 du jeu : immunology)'
+  definition: Résumé d'article biomédical français portant l'étiquette de spécialité « immunology » dans le jeu MorFITT ; un résumé porte au moins une étiquette et en moyenne 1,39 sur l'entraînement.
+  exclusions:
+  - 'Une étiquette n''est pas exclusive, un même résumé peut en porter plusieurs ; l''absence d''une étiquette ne signifie pas que le sujet est étranger au résumé.'
+- id: sp_parasitology
+  name: 'Parasitologie (étiquette 5 du jeu : parasitology)'
+  definition: Résumé d'article biomédical français portant l'étiquette de spécialité « parasitology » dans le jeu MorFITT ; un résumé porte au moins une étiquette et en moyenne 1,39 sur l'entraînement.
+  exclusions:
+  - 'Une étiquette n''est pas exclusive, un même résumé peut en porter plusieurs ; l''absence d''une étiquette ne signifie pas que le sujet est étranger au résumé.'
+- id: sp_genetics
+  name: 'Génétique (étiquette 6 du jeu : genetics)'
+  definition: Résumé d'article biomédical français portant l'étiquette de spécialité « genetics » dans le jeu MorFITT ; un résumé porte au moins une étiquette et en moyenne 1,39 sur l'entraînement.
+  exclusions:
+  - 'Une étiquette n''est pas exclusive, un même résumé peut en porter plusieurs ; l''absence d''une étiquette ne signifie pas que le sujet est étranger au résumé.'
+- id: sp_chemistry
+  name: 'Chimie (étiquette 7 du jeu : chemistry)'
+  definition: Résumé d'article biomédical français portant l'étiquette de spécialité « chemistry » dans le jeu MorFITT ; un résumé porte au moins une étiquette et en moyenne 1,39 sur l'entraînement.
+  exclusions:
+  - 'Une étiquette n''est pas exclusive, un même résumé peut en porter plusieurs ; l''absence d''une étiquette ne signifie pas que le sujet est étranger au résumé.'
+- id: sp_veterinary
+  name: 'Médecine vétérinaire (étiquette 8 du jeu : veterinary)'
+  definition: Résumé d'article biomédical français portant l'étiquette de spécialité « veterinary » dans le jeu MorFITT ; un résumé porte au moins une étiquette et en moyenne 1,39 sur l'entraînement.
+  exclusions:
+  - 'Une étiquette n''est pas exclusive, un même résumé peut en porter plusieurs ; l''absence d''une étiquette ne signifie pas que le sujet est étranger au résumé.'
+- id: sp_surgery
+  name: 'Chirurgie (étiquette 9 du jeu : surgery)'
+  definition: Résumé d'article biomédical français portant l'étiquette de spécialité « surgery » dans le jeu MorFITT ; un résumé porte au moins une étiquette et en moyenne 1,39 sur l'entraînement.
+  exclusions:
+  - 'Une étiquette n''est pas exclusive, un même résumé peut en porter plusieurs ; l''absence d''une étiquette ne signifie pas que le sujet est étranger au résumé.'
+- id: sp_pharmacology
+  name: 'Pharmacologie (étiquette 10 du jeu : pharmacology)'
+  definition: Résumé d'article biomédical français portant l'étiquette de spécialité « pharmacology » dans le jeu MorFITT ; un résumé porte au moins une étiquette et en moyenne 1,39 sur l'entraînement.
+  exclusions:
+  - 'Une étiquette n''est pas exclusive, un même résumé peut en porter plusieurs ; l''absence d''une étiquette ne signifie pas que le sujet est étranger au résumé.'
+- id: sp_psychology
+  name: 'Psychologie (étiquette 11 du jeu : psychology)'
+  definition: Résumé d'article biomédical français portant l'étiquette de spécialité « psychology » dans le jeu MorFITT ; un résumé porte au moins une étiquette et en moyenne 1,39 sur l'entraînement.
+  exclusions:
+  - 'Une étiquette n''est pas exclusive, un même résumé peut en porter plusieurs ; l''absence d''une étiquette ne signifie pas que le sujet est étranger au résumé.'
+output:
+  format: '{class_ids}'
+metrics:
+  primary: macro_f1
+  secondary:
+  - micro_f1
+abstention:
+  enabled: false
+source: 'Jeu MorFITT, dépôt Dr-BERT/MORFITT à la révision 5f381299 ; fiche data/cards/morfitt.md.'
+notes:
+- Jeu public, résumés d'articles biomédicaux, aucune donnée de patient ; ce n'est pas un compte rendu clinique.
+- Réglage sur la validation seulement ; le test public n'est évalué qu'une fois par configuration retenue (fiche experiments/2026-10-05-ancrage-morfitt.md).
