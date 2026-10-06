@@ -1,0 +1,14 @@
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (555 > 512). Running this sequence through the model will result in indexing errors
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:  78%|███████▊  | 157/201 [00:00<00:00, 1565.96it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 1799.82it/s]
+pytorch_fp32 {'macro_f1': 0.7362, 'latence_ms_p50': 219.5, 'latence_ms_p95': 253.5}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/scripts/onnx_int8_static.py:95: DeprecationWarning: You are using the legacy TorchScript-based ONNX export. Starting in PyTorch 2.9, the new torch.export-based ONNX exporter has become the default. Learn more about the new export logic: https://docs.pytorch.org/docs/stable/onnx_export.html. For exporting control flow: https://pytorch.org/tutorials/beginner/onnx/export_control_flow_model_to_onnx_tutorial.html
+  torch.onnx.export(model, (d, torch.ones_like(d)), str(fp32), input_names=["input_ids", "attention_mask"], output_names=["logits"], opset_version=17, dynamo=False,
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/.venv/lib/python3.12/site-packages/transformers/masking_utils.py:214: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if (padding_length := kv_length + kv_offset - attention_mask.shape[-1]) > 0:
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/.venv/lib/python3.12/site-packages/transformers/integrations/sdpa_attention.py:124: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  is_causal = q_length > 1 and attention_mask is None and is_causal
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/.venv/lib/python3.12/site-packages/torch/onnx/_internal/torchscript_exporter/symbolic_opset11.py:954: UserWarning: Exporting aten::index operator of advanced indexing in opset 17 is achieved by combination of multiple ONNX operators, including Reshape, Transpose, Concat, and Gather. If indices include negative values, the exported graph will produce incorrect results.
+  return opset9.index(g, self, index)
+onnx_fp32 {'macro_f1': 0.7362, 'latence_ms_p50': 263.3, 'latence_ms_p95': 304.1, 'taille_mo': 442.8}
+int8_statique_minmax {'macro_f1': 0.0227, 'latence_ms_p50': 335.9, 'latence_ms_p95': 374.3, 'taille_mo': 188.7, 'noeuds_exclus': 0}
