@@ -2,7 +2,7 @@
 PY := .venv/bin/python
 GITLEAKS := docker run --rm -v "$(CURDIR):/repo:ro" zricethezav/gitleaks:latest dir /repo --config /repo/.gitleaks.toml --redact --no-banner
 
-.PHONY: check-fast check check-full check-deck test test-gpu smoke
+.PHONY: check-fast check check-full check-deck serve-image test test-gpu smoke
 
 check-fast:        ## types, lint, plancher, secrets : à chaque édition
 	$(PY) -m ruff check .
@@ -13,6 +13,9 @@ check-fast:        ## types, lint, plancher, secrets : à chaque édition
 
 check-deck:        ## mise en page de la présentation (débordements, chevauchements) ; exige playwright et un navigateur, python3 système
 	python3 scripts/check_deck_layout.py
+
+serve-image:       ## image de service du TF-IDF : construit, lance durcie et mesure (Docker requis)
+	$(PY) scripts/smoke_serve_image.py
 
 test:
 	$(PY) -m pytest -q -p no:cacheprovider -m "not gpu" --cov=src/llmft --cov-report=json:artifacts/coverage.json --cov-report=term:skip-covered

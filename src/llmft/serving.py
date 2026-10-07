@@ -85,4 +85,4 @@ def load_bundle(directory: Path | str) -> Bundle:
     obj = _joblib.load(d / "model.joblib")
     groups = None if meta.get("group_of_class") is None else {int(k): v for k, v in meta["group_of_class"].items()}
     qgroups = None if meta.get("qhat_group") is None else {int(k): v for k, v in meta["qhat_group"].items()}
-    return Bundle(obj["vec"], obj["model"], meta["labels"], meta["temperature"], meta["qhat"], meta["abstain_threshold"], meta["alpha"], groups, qgroups, meta["meta"])
+    return Bundle(obj["vec"], obj["model"], meta["labels"], meta["temperature"], meta["qhat"], meta["abstain_threshold"], meta["alpha"], groups, qgroups, dict(meta["meta"], model_sha256=meta["model_sha256"]))

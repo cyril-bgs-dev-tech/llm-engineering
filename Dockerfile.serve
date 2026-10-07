@@ -1,0 +1,14 @@
+# Image de service du classifieur de chapitre (TF-IDF caractères, ensemble conforme, abstention) : processeur seul, sans GPU, sans PyTorch.
+# Construction : python3 scripts/smoke_serve_image.py (prépare le dossier deploy/serve-bundle, construit, lance et mesure). Versions identiques à celles du modèle sérialisé (uv.lock).
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+ENV PYTHONUTF8=1 PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1
+RUN uv pip install --system --no-cache scikit-learn==1.9.1 numpy==2.5.3 scipy==1.18.1 joblib==1.6.0 threadpoolctl==3.7.0
+RUN useradd --create-home --uid 10001 service
+WORKDIR /app
+COPY src/llmft/__init__.py src/llmft/serving.py src/llmft/http_service.py src/llmft/tfidf.py src/llmft/calibration.py src/llmft/conformal.py src/llmft/metrics.py src/llmft/resilience.py ./src/llmft/
+COPY scripts/serve_tfidf.py ./scripts/
+COPY deploy/serve-bundle /models/bundle
+USER service
+EXPOSE 8000
+HEALTHCHECK --interval=10s --timeout=3s --retries=3 CMD python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).status == 200 else 1)"
+CMD ["python", "scripts/serve_tfidf.py", "--bundle", "/models/bundle", "--host", "0.0.0.0", "--port", "8000"]

@@ -28,3 +28,4 @@ hf_token*
 .claude/settings.local.json
 .coverage
 coverage.json
+deploy/
