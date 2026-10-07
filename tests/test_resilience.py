@@ -65,8 +65,9 @@ def test_un_resultat_corrompu_en_premiere_execution_est_detecte_par_la_seconde()
 @pytest.mark.parametrize("message", [
     "unsupported operand type(s) for +: 'builtin_function_or_method' and 'str'",
     "unsupported operand type(s) for +: 'int' and 'str'",
+    "unsupported operand type(s) for +=: 'list_iterator' and 'int'",
 ])
-def test_les_signatures_observees_au_test_de_charge_du_07_10_sont_relancees(message):
+def test_les_signatures_observees_le_07_10_sont_relancees(message):
     fn, state = flaky(1, TypeError(message))
     assert resilience.retry_transient(fn, attempts=3, log=lambda _: None) == 42
     assert state["calls"] == 2
