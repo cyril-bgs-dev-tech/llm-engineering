@@ -342,7 +342,7 @@ ul.clean li b{font-weight:600}
           <li style="font-size:24px">Estimations jamais remplacées par la mesure (surcoût 25 s annoncé, 75 à 132 s mesuré) : règle de remplacement</li>
           <li style="font-size:24px">Diapositive contredisant un résultat corrigé, notes non réévaluées 48 h : réévaluation à chaque preuve</li>
           <li style="font-size:24px">« Règle de puissance atteinte à 98,33 % » : vraie par patients, fausse par blocs d'auteurs (4,24), rectifiée partout</li>
-          <li style="font-size:24px"><b>Pannes de la machine</b> : 11 % d'échecs et 1 résultat différent sur 120 mesurés : relances bornées, double exécution des chiffres, vérification matérielle demandée</li>
+          <li style="font-size:24px"><b>Pannes de la machine</b> : 11 % d'échecs et 1 résultat différent sur 120 mesurés, puis un arrêt complet de WSL avec 45 Go de RAM libres (donc pas la mémoire) : relances bornées, double exécution des chiffres, vérification matérielle demandée</li>
         </ul>
       </div>
     </div>
@@ -361,7 +361,7 @@ ul.clean li b{font-weight:600}
         <li style="font-size:25px">Système final G gelé avec sa prédiction chiffrée (ADR-016), puis <b>test scellé ouvert une fois : 0,813, +7,3 points sur le TF-IDF, verdict « non résolu »</b> ; prédiction notée, deux échecs publiés</li>
         <li style="font-size:25px">Sept résultats négatifs publiés : distillation (fuite de second ordre), lissage, moyenne de poids, curriculum, INT8 statique, élagage, empilement appris</li>
         <li style="font-size:25px">Robustesse : le LoRA classe sur la fin du texte ; correction testée (fin aléatoire, un pli, une graine : 0,79 au lieu de 0,14 à 10 % de fin retirée), G gelé inchangé ; MorFITT : 71,7 contre 71,95 publié</li>
-        <li style="font-size:25px">Fiabilité des lots : tokenizer contourné, lancement gardé (RAM, VRAM), 524 tests ; pannes de la machine mesurées (11 %)</li>
+        <li style="font-size:25px">Fiabilité des lots : tokenizer contourné, lancement gardé (RAM, VRAM), 524 tests ; pannes de la machine mesurées (11 %), WSL planté une fois de plus le 7 octobre</li>
       </ul>
       <div class="kicker" style="margin:22px 0 14px">À exécuter</div>
       <ul class="clean" style="gap:12px">
@@ -381,7 +381,7 @@ ul.clean li b{font-weight:600}
         <ul class="clean" style="gap:12px">
           <li style="font-size:26px">Que faire d'un verdict « non résolu » : le rapporter tel quel (recommandé) ou financer un second cycle pour le lever</li>
           <li style="font-size:26px">Publication hors machine (dépôt distant, vitrine), après contrôle des affirmations</li>
-          <li style="font-size:26px">Vérifier la machine côté Windows (BIOS, microcode, test de mémoire) avant tout nouveau long calcul publié</li>
+          <li style="font-size:26px">Vérifier la machine côté Windows (BIOS, microcode, test de mémoire, journal Kernel-Power) avant tout nouveau long calcul publié</li>
         </ul>
       </div>
     </div>
