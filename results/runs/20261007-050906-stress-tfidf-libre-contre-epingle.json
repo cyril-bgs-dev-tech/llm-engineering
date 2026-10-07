@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-10-07T05:09:06Z",
+  "kind": "measure",
+  "metrics": {
+    "crashes": 10,
+    "mismatches": 1,
+    "n_trials": 70,
+    "stopped": "10 pannes (règle d'arrêt N31)"
+  },
+  "params": {
+    "fiche": "experiments/2026-10-07-stress-tfidf-libre-contre-epingle.md",
+    "n_texts": 1500,
+    "seed": 20261007,
+    "tours": 3
+  },
+  "run_id": "20261007-050906-stress-tfidf-libre-contre-epingle",
+  "schema": "mini-1",
+  "slug": "stress-tfidf-libre-contre-epingle",
+  "status": "ok",
+  "summary": "Test de charge du TF-IDF par cœur logique (panne brute, empreinte du résultat)"
+}

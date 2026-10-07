@@ -60,3 +60,13 @@ def test_un_resultat_corrompu_en_premiere_execution_est_detecte_par_la_seconde()
     outputs = iter([[0.1, 0.9], [0.1, 0.8], [0.1, 0.9]])
     result = resilience.agree_twice(lambda: next(outputs), equal=lambda a, b: a == b, log=lambda _: None, attempts=3)
     assert result == [0.1, 0.9]  # la troisième exécution départage : deux sur trois identiques
+
+
+@pytest.mark.parametrize("message", [
+    "unsupported operand type(s) for +: 'builtin_function_or_method' and 'str'",
+    "unsupported operand type(s) for +: 'int' and 'str'",
+])
+def test_les_signatures_observees_au_test_de_charge_du_07_10_sont_relancees(message):
+    fn, state = flaky(1, TypeError(message))
+    assert resilience.retry_transient(fn, attempts=3, log=lambda _: None) == 42
+    assert state["calls"] == 2

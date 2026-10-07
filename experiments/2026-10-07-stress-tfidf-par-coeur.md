@@ -1,0 +1,14 @@
+# Fiche préenregistrée : la panne sporadique du TF-IDF dépend-elle d'un cœur du processeur ? (investigation de l'instabilité, mesure d'infrastructure)
+
+Écrite le 07/10/2026 avant tout essai. Contexte : en deux jours, un `TypeError` de scikit-learn impossible en Python correct (`'NoneType' and 'int'`, `'list_iterator' object cannot be interpreted as an integer`), des segfaults du tokenizer, de `python3.12` (journal du noyau, deux à l'adresse 0) et un plantage de WSL ont été observés ; le seul remède mesuré est l'épinglage sur un cœur. Hypothèse (non prouvée, issue de la lecture du processeur Intel i9-13900KF vu par WSL) : un cœur logique défaillant ou une instabilité de tension. Cette fiche ne teste pas l'hypothèse matérielle en général : elle mesure si les pannes se concentrent sur un cœur.
+
+- **question** : en ajustant le même TF-IDF caractères 3 à 5 sur le même échantillon, (a) le taux de panne diffère-t-il selon le cœur d'épinglage ou entre « libre » et « épinglé » ? (b) un résultat silencieusement différent (empreinte du tenseur creux) apparaît-il ?
+- **référence** : bras « libre » (aucun épinglage, comportement des scripts du projet avant le 06/10).
+- **variante** : un bras par cœur logique (0 à 31), processus épinglé avant l'import de scikit-learn.
+- **jeux et découpage** : développement, 1 500 premiers patients de `data/splits/parhaf_cim10_chapter.json` (texte de patient, aucune étiquette utilisée) ; le test scellé n'est pas lu.
+- **mesure** : `TfidfVectorizer(sublinear_tf, min_df=2, max_features=200000, ngram (3, 5), analyzer char_wb).fit_transform` **sans** la relance de `llmft.resilience` (on mesure la panne brute) ; empreinte SHA-256 des tableaux data, indices et indptr de la matrice ; code de sortie et signature d'erreur du processus fils. Un essai = un processus fils, un à la fois, sous `nice -n 10`, 300 s au plus.
+- **plan** : 3 tours × (1 bras libre + 32 bras de cœur) = 99 essais, ordre mélangé par graine fixe 20261007, bras entrelacés.
+- **critère de décision** (descriptif ; la puissance est faible si le taux de base est de l'ordre de 1 % : une absence de panne n'est PAS une preuve de stabilité) : « cœur suspect » si au moins 2 pannes ou divergences sur un même cœur et aucune sur au moins 20 autres cœurs ; « divergence silencieuse » si une empreinte diffère de la plus fréquente (quel que soit le bras) ; « pannes non localisées » si des pannes sans concentration ; « aucune panne observée » sinon (borne haute du taux de panne, règle de trois : 3/99 ≈ 3 %).
+- **règle d'arrêt anticipé (N31)** : arrêt après 5 pannes ou si la mémoire disponible passe sous 20 000 Mio.
+- **budget** : au plus 60 minutes de CPU (un cœur à la fois), moins de 3 Gio de RAM, aucun GPU, aucune lecture hors du dossier.
+- **prédiction** : aucune panne et aucune divergence sur 99 essais (probabilité 0,65) ; pannes non localisées (0,15) ; cœur suspect (0,1) ; divergence silencieuse (0,1).

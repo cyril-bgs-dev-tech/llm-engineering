@@ -72,3 +72,6 @@ Pages créées : conclusions-corrigees-recette-et-tirage. Source : RESULTATS.md.
 
 ## [2026-10-05] update | etat-par-composante
 Reason: verdict RM-56 (gain de distillation non préservé, fuite significative), LoRA aux cinq plis, mesures de service, cascade validée. Source: RESULTATS.md, docs/FICHE_DE_DEPLOIEMENT.md.
+
+## [2026-10-07] update | incidents-et-audits-externes
+Reason: test de charge du TF-IDF (15 pannes sur 135, une divergence silencieuse sur 120), épinglage sans effet mesuré. Source: RESULTATS.md, results/runs/20261007-044852-stress-tfidf-par-coeur.json.

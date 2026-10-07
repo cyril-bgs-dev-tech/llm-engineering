@@ -1,0 +1,449 @@
+{
+ "n_trials": 70,
+ "planned": 128,
+ "stopped": "10 pannes (règle d'arrêt N31)",
+ "seconds_total": 782.3,
+ "arms": {
+  "libre": {
+   "n": 33,
+   "crashes": 4,
+   "mismatches": 1,
+   "signatures": {
+    "TypeError: unsupported operand type(s) for +: 'int' and 'str'": 2,
+    "-11": 2
+   }
+  },
+  "epingle": {
+   "n": 37,
+   "crashes": 6,
+   "mismatches": 0,
+   "signatures": {
+    "-11": 2,
+    "TypeError: unsupported operand type(s) for +: 'int' and 'str'": 3,
+    "TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'": 1
+   }
+  }
+ },
+ "trials": [
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 1,
+   "digest": null,
+   "error": "TypeError: unsupported operand type(s) for +: 'int' and 'str'"
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": -11,
+   "digest": null,
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 1,
+   "digest": null,
+   "error": "TypeError: unsupported operand type(s) for +: 'int' and 'str'"
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 1,
+   "digest": null,
+   "error": "TypeError: unsupported operand type(s) for +: 'int' and 'str'"
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 1,
+   "digest": null,
+   "error": "TypeError: unsupported operand type(s) for +: 'int' and 'str'"
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": -11,
+   "digest": null,
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "cf53f176ec221b0ec9170131b6597c1f6b74fdabb18acf76f9aefccfd2e352c0",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": -11,
+   "digest": null,
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 1,
+   "digest": null,
+   "error": "TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'"
+  },
+  {
+   "arm": "libre",
+   "code": -11,
+   "digest": null,
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "epingle",
+   "code": 1,
+   "digest": null,
+   "error": "TypeError: unsupported operand type(s) for +: 'int' and 'str'"
+  }
+ ]
+}

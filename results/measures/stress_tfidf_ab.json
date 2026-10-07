@@ -1,0 +1,602 @@
+{
+ "n_trials": 65,
+ "planned": 99,
+ "stopped": "5 pannes (règle d'arrêt N31)",
+ "seconds_total": 750.8,
+ "arms": {
+  "libre": {
+   "n": 1,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "0": {
+   "n": 3,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "1": {
+   "n": 2,
+   "crashes": 1,
+   "mismatches": 0,
+   "signatures": {
+    "-11": 1
+   }
+  },
+  "2": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "3": {
+   "n": 2,
+   "crashes": 1,
+   "mismatches": 0,
+   "signatures": {
+    "-11": 1
+   }
+  },
+  "4": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "5": {
+   "n": 1,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "6": {
+   "n": 2,
+   "crashes": 1,
+   "mismatches": 0,
+   "signatures": {
+    "TypeError: unsupported operand type(s) for +: 'int' and 'str'": 1
+   }
+  },
+  "7": {
+   "n": 3,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "8": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "9": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "10": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "11": {
+   "n": 1,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "13": {
+   "n": 1,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "14": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "15": {
+   "n": 1,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "16": {
+   "n": 3,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "17": {
+   "n": 3,
+   "crashes": 1,
+   "mismatches": 0,
+   "signatures": {
+    "TypeError: unsupported operand type(s) for +: 'int' and 'str'": 1
+   }
+  },
+  "18": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "19": {
+   "n": 3,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "20": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "21": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "22": {
+   "n": 3,
+   "crashes": 1,
+   "mismatches": 0,
+   "signatures": {
+    "TypeError: unsupported operand type(s) for +: 'builtin_function_or_method' and 'str'": 1
+   }
+  },
+  "23": {
+   "n": 1,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "24": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "25": {
+   "n": 3,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "26": {
+   "n": 1,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "27": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "28": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "29": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "30": {
+   "n": 2,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  },
+  "31": {
+   "n": 3,
+   "crashes": 0,
+   "mismatches": 0,
+   "signatures": {}
+  }
+ },
+ "trials": [
+  {
+   "arm": "0",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "27",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "18",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "16",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "13",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "21",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "3",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "4",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "30",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "9",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "11",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "7",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "27",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "2",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "16",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "30",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "29",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "29",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "26",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "25",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "20",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "9",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "31",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "17",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "22",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "18",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "28",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "10",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "28",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "5",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "3",
+   "code": -11,
+   "digest": null,
+   "error": null
+  },
+  {
+   "arm": "24",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "22",
+   "code": 1,
+   "digest": null,
+   "error": "TypeError: unsupported operand type(s) for +: 'builtin_function_or_method' and 'str'"
+  },
+  {
+   "arm": "8",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "19",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "15",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "1",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "22",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "0",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "8",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "7",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "6",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "10",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "14",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "23",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "25",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "21",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "14",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "17",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "19",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "19",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "2",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "17",
+   "code": 1,
+   "digest": null,
+   "error": "TypeError: unsupported operand type(s) for +: 'int' and 'str'"
+  },
+  {
+   "arm": "7",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "20",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "31",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "25",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "31",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "16",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "0",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "1",
+   "code": -11,
+   "digest": null,
+   "error": null
+  },
+  {
+   "arm": "4",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "24",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "libre",
+   "code": 0,
+   "digest": "df902b173fead1da949e4e029d11a531b6c3e582a0594c45943db489cb0191b5",
+   "error": null
+  },
+  {
+   "arm": "6",
+   "code": 1,
+   "digest": null,
+   "error": "TypeError: unsupported operand type(s) for +: 'int' and 'str'"
+  }
+ ]
+}

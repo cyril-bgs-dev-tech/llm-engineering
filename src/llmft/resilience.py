@@ -11,6 +11,8 @@ T = TypeVar("T")
 TRANSIENT_SIGNATURES = (
     "'NoneType' and 'int'",  # `offset = 0` puis `offset + n` avec offset à None (sklearn, _char_wb_ngrams)
     "'list_iterator' object cannot be interpreted as an integer",  # `values.extend(dict.values())` (sklearn, _count_vocab)
+    "'builtin_function_or_method' and 'str'",  # observée au test de charge du 07/10 (run `stress-tfidf-par-coeur`), même famille : opérandes impossibles dans sklearn
+    "'int' and 'str'",  # idem ; un vrai défaut de cette forme échoue de façon identique à chaque essai et finit en RuntimeError après les essais bornés
 )
 
 

@@ -5,7 +5,7 @@ summary: Segfault du tokenizer pendant P1-11 (3 runs sur 6), correctifs insuffis
 tags: [incident, audit, tokenizer, glm]
 sources: [journal-nuit-2026-10-02, audit-glm-v3]
 created: 2026-10-03
-updated: 2026-10-06
+updated: 2026-10-07
 ---
 
 # Incidents d'exécution et audits indépendants
@@ -20,6 +20,10 @@ Ces correctifs ne suffisent pas. Le 05/10/2026, le LoRA final (tokenizer de Qwen
 
 Leçon : un lot de nuit calcule le code de sortie avant tout affichage et relance les runs absents du registre plutôt que de se fier à son propre journal. Réduire le nombre de threads du tokenizer ne protège pas ; ce qui a marché est de confiner tout le processus sur un cœur dès son lancement.
 
+## Instabilité de calcul de la machine (07/10/2026)
+
+Un test de charge du TF-IDF caractères (même calcul déterministe répété dans un processus fils par essai, sans relance) donne 15 pannes sur 135 essais (11 %) : 6 segfaults et 9 `TypeError` d'opérandes impossibles en Python correct ; l'épinglage sur un cœur ne change pas le taux (12 % libre contre 16 % épinglé, non résolu) et les pannes ne se concentrent sur aucun cœur[^6]. Sur 120 essais réussis, un résultat diffère silencieusement des 119 autres (même entrée, aucune erreur)[^7]. La cause n'est pas établie ; l'hypothèse d'une instabilité matérielle est cohérente mais non prouvée, la vérification du BIOS et d'un test de mémoire est demandée à Cyril (Q26). Conséquence pour les chiffres : double exécution (`agree_twice`) des chiffres publiés.
+
 ## Audits indépendants de GLM
 
 - **v2** : mypy représente environ 96 % du temps du crochet de commit (entrée-sortie sur disque Windows) ; mesuré, non appliqué.[^1]
@@ -30,3 +34,5 @@ Leçon : un lot de nuit calcule le code de sortie avant tout affichage et relanc
 [^3]: docs/AUDIT_GLM_v3_TRIAGE.md [synthesis] — statut par action
 [^4]: results/runs/20261005-224632-tokenizers-course-threads-qwen35.json [synthesis] : décomptes par condition, diagnostic exploratoire non préenregistré
 [^5]: src/llmft/tokenizer_guard.py [synthesis] : docstring du module et fonction `isolated_build_inputs`
+[^6]: results/runs/20261007-044852-stress-tfidf-par-coeur.json [synthesis] : 5 pannes sur 65 essais, arrêt N31
+[^7]: results/runs/20261007-050906-stress-tfidf-libre-contre-epingle.json [synthesis] : 10 pannes sur 70 essais, une empreinte divergente

@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-10-07T04:48:52Z",
+  "kind": "measure",
+  "metrics": {
+    "crashes": 5,
+    "mismatches": 0,
+    "n_trials": 65,
+    "stopped": "5 pannes (règle d'arrêt N31)"
+  },
+  "params": {
+    "fiche": "experiments/2026-10-07-stress-tfidf-par-coeur.md",
+    "n_texts": 1500,
+    "seed": 20261007,
+    "tours": 3
+  },
+  "run_id": "20261007-044852-stress-tfidf-par-coeur",
+  "schema": "mini-1",
+  "slug": "stress-tfidf-par-coeur",
+  "status": "ok",
+  "summary": "Test de charge du TF-IDF par cœur logique (panne brute, empreinte du résultat)"
+}
