@@ -9,6 +9,7 @@ Toutes les mesures d'analyse portent sur le **développement** ; aucun script ne
 | `budget_alert.py` | Heures de GPU consommées d'après le registre contre B = 90 h ; code de sortie 1 à 80 % de B (alerte du protocole). |  |
 | `build_bundle.py` | Construit le service d'inférence (TF-IDF caractères et poids équilibrés) sur tout le développement ; température, quantile conforme et seuil d'abstention | Usage : build_bundle.py [dossier de sortie]   (défaut : artifacts/models/tfidf_chapter_charbal_v1) |
 | `check_changed_coverage.py` | Couverture des lignes modifiées de src/ : lit le rapport JSON de pytest-cov et le diff Git, sans relancer la suite. |  |
+| `check_deck_layout.py` | Contrôle de mise en page de la présentation (débordements, chevauchements, pied de page, titre orphelin) ; `make check-deck`. | Usage : check_deck_layout.py [fichier.html] [--shots DOSSIER] ; exige playwright et un navigateur (python3 système). |
 | `check_frozen.py` | Vérifie que chaque instantané gelé cité par `experiments/INDEX.md` a bien l'empreinte consignée. |  |
 | `check_microtasks.py` | Vérifie la cohérence de MICROTACHES.md et son accord avec PLAN_PROJET_V6.md. |  |
 | `check_roadmap.py` | Vérifie roadmap_unifié.md contre MICROTACHES.md, et exporte tasks/plan.md et tasks/todo.md. |  |
@@ -64,4 +65,5 @@ Toutes les mesures d'analyse portent sur le **développement** ; aucun script ne
 | `silence_watch.sh` | Témoin d'activité (tasks/SURVEILLEUR_SILENCE.md) : écrit dans results/logs/silence.log chaque minute où le silence dépasse 300 s. Activité = dernière modification du jour |  |
 | `smoke.py` | RM-09 : fil synthétique de bout en bout, sur CPU, sans donnée réelle. |  |
 | `split_discretization_check.py` | Hypothèse de Cyril (04/10) : l'écart patient contre auteur vient en partie de la discrétisation des petites classes et de plis de validation inégaux. | Usage : split_discretization_check.py [--register] |
+| `stress_tfidf_ab.py` | Test de charge du TF-IDF (fiches 2026-10-07-stress-tfidf-par-coeur et 2026-10-07-stress-tfidf-libre-contre-epingle) : un processus fils par essai, panne brute, empreinte du résultat. | Usage : stress_tfidf_ab.py [--tours 3 \| --libre-contre-epingle N] [--register] ; à lancer sous run_guarded.sh. |
 | `tfidf_variants.py` | Variantes de recette du TF-IDF sur le chapitre (fiche 2026-10-04-tfidf-variantes-recette) : cinq plis par patient, EXPLORE. | Usage : tfidf_variants.py {balanced/char/char-balanced} [--folds author] [--register] |
