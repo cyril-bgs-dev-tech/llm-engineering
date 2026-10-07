@@ -5,7 +5,7 @@ summary: Pour chacune des huit composantes de la grille de notation (performance
 tags: [composantes, notation, etat, audit]
 sources: [audit-glm-v3, audit-glm-v4, resultats]
 created: 2026-10-03
-updated: 2026-10-05
+updated: 2026-10-07
 ---
 
 # État du projet par composante de qualité
@@ -31,7 +31,7 @@ Taxonomie des erreurs (96 % hors famille), perturbations et ablations de contenu
 Registre, protocole haché, fiches hachées, contrôle des références de runs, fonction de lancement partagée testée (`scripts/lib/lot.sh`), ensembles reconstruits par script, déterminisme GPU mesuré (même graine : 0,7714 vers 0,7362).[^3]
 
 ## Efficience et déploiement
-TF-IDF 1,9 ms et 20 Mo ; encodeur 191 ms sur processeur ; LoRA fusionné 61 ms et 8,6 Wh pour 1 000 patients ; encodeur sur GPU en bf16 4,3 ms et 0,31 Wh (28 fois moins que le LoRA) ; INT8 dynamique naïf effondré ; cascade encodeur vers LoRA validée hors pli : 93,4 % sans LoRA, non-infériorité à 2 points, environ 26 à 34 ms contre 61 ms ; fiche de déploiement par contrainte écrite ; recette d'encodeur v2 : bf16 équivalent et 2,25 fois plus rapide, lissage, EMA et curriculum sans gain.[^3][^8][^11]
+TF-IDF 1,9 ms et 20 Mo ; encodeur 191 ms sur processeur ; LoRA fusionné 61 ms et 8,6 Wh pour 1 000 patients ; encodeur sur GPU en bf16 4,3 ms et 0,31 Wh (28 fois moins que le LoRA) ; INT8 dynamique naïf effondré ; cascade encodeur vers LoRA validée hors pli : 93,4 % sans LoRA, non-infériorité à 2 points, environ 26 à 34 ms contre 61 ms ; fiche de déploiement par contrainte écrite ; recette d'encodeur v2 : bf16 équivalent et 2,25 fois plus rapide, lissage, EMA et curriculum sans gain.[^3][^8][^11] **Mise à jour du 07/10/2026 (note 6 vers 7, estimation à plus ou moins 1)** : G mesuré d'un seul tenant (p50 91,6 ms, 10,3 Gio, 10,5 Wh pour 1 000 patients, quatre clients : p95 0,8 s), ensemble E sur processeur seul 801 ms, frontière coût-qualité (le LoRA seul et les cascades sont dominés par E ; G coûte 7,9 fois l'entraînement et 3,2 fois la latence de E pour +0,78 point non résolu), image de service du TF-IDF durcie et testée (démarrage 2,6 s, 470 patients par seconde ; un défaut de file de connexions trouvé et corrigé). Pas 8 : compression jamais réussie, G servi par un banc seulement.[^12][^13]
 
 ## Sûreté, conformité, honnêteté
 Résultats négatifs publiés, claim-gate, carte de modèle v3 mise à jour, gabarit de rapport, journal des accès au test scellé.[^6]
@@ -46,3 +46,5 @@ Résultats négatifs publiés, claim-gate, carte de modèle v3 mise à jour, gab
 [^9]: src/llmft/distill.py [synthesis] — réserve de second ordre dans l'en-tête
 [^10]: RESULTATS.md [synthesis] — section « Distillation à professeur imbriqué »
 [^11]: docs/FICHE_DE_DEPLOIEMENT.md [synthesis] — arbre de décision par contrainte
+[^12]: docs/FICHE_DE_DEPLOIEMENT.md [synthesis] — version du 07/10/2026, règle de décision par contrainte avec les mesures d'un seul tenant
+[^13]: docs/FRONTIERE_COUT_QUALITE.md [synthesis] — tableau de dominance, runs `20261007-094900-frontiere-cout-qualite` et `20261007-094117-service-g-bout-en-bout-gpu`

@@ -8,7 +8,7 @@ Sources : `docs/CHAINE_DE_DOMINOS.md` (notes, plafonds, dominos), `roadmap_unifi
 
 ## 1. Composantes : note, plafond, état
 
-Moyenne estimée : **8,0 sur 10** (64 sur 8 composantes ; réévaluations du 06/10 : efficience 5 vers 6, puis après l'ouverture du test scellé performance 6 vers 7, rigueur 8 vers 9, incertitude 7 vers 8 ; raisons de chaque note dans `docs/presentation/PREUVES.md`, dernier paragraphe). Estimation à ±1, pas une scorecard.
+Moyenne estimée : **8,1 sur 10** (65 sur 8 composantes ; réévaluation du 07/10 : efficience 6 vers 7 ; réévaluations du 06/10 : efficience 5 vers 6, puis après l'ouverture du test scellé performance 6 vers 7, rigueur 8 vers 9, incertitude 7 vers 8 ; raisons de chaque note dans `docs/presentation/PREUVES.md`, dernier paragraphe). Estimation à ±1, pas une scorecard.
 
 | Composante | Note | Plafond réaliste | Ce qui a monté ou peut monter la note | État au 05/10 soir |
 |---|---|---|---|---|
@@ -18,7 +18,7 @@ Moyenne estimée : **8,0 sur 10** (64 sur 8 composantes ; réévaluations du 06/
 | Incertitude | **8** (était 7) | 9 | couverture par famille (RM-33) ; lecture confirmatoire (RM-51) ; nouveaux auteurs (RM-39) | G : ECE 0,016, couverture 0,901 par famille (source : journal de nuit, 05/10 15h12Z) ; RM-51 après RM-20 |
 | Erreurs et robustesse | **7** (était 6) | 9 | taxonomie, audit des 65 cas, RM-39 sur les modèles appris | TF-IDF couvert ; robustesse de l'encodeur et du LoRA à mesurer (RM-39) |
 | Reproductibilité | **9** (était 8) | 10 | reconstruction à froid (P5-09), release taguée, conteneur vérifié | reconstruction à froid jamais testée sur clone neuf ; release bloquée (push réservé à Cyril) |
-| Efficience et déploiement | **6** (était 5) | 9 | service mesuré par profil, cascade validée hors pli, fiche de déploiement | cascade conforme : non-infériorité, 45,5 % sans LoRA ; fiche RM-48 provisoire ; élagage RM-45 fait : dégradé (−13,1 points), non retenu |
+| Efficience et déploiement | **7** (était 6) | 9 | service mesuré par profil, cascade validée hors pli, fiche de déploiement | cascade conforme : non-infériorité, 45,5 % sans LoRA ; fiche RM-48 provisoire ; élagage RM-45 fait : dégradé (−13,1 points), non retenu |
 | Honnêteté et conformité | **9** (était 8) | 10 | `claim-gate` sur tout texte sortant, résultats négatifs publiés, carte de modèle, TRIPOD-LLM | résultats négatifs consignés (RM-55, RM-56, empilement, RM-44, RM-45) ; carte v4 du candidat G écrite (06/10), checklist TRIPOD-LLM à rejouer au gel ; P5-12 à faire |
 
 ## 2. Ce qui devait rendre le reste obsolète, plus simple ou inutile
@@ -82,3 +82,5 @@ Réserve déclarée : un seul LoRA final entraîné (variance entre graines non 
 - **Test scellé** : trois lignes « inputs » (633 identifiants, textes sans étiquettes) se sont ajoutées à `data/splits/sealed_access.log` les 05/10 à 20h45, 20h47 et 21h33Z, à cause des relances du temps A du LoRA sur un adaptateur absent. Aucune ouverture d'étiquettes. Le journal compte désormais 13 entrées « inputs » et non 10 comme dit dans la ligne 47 de `docs/presentation/PREUVES.md`, à rectifier.
 
 **Réévaluation du 07/10 (matin, estimation, ±1 ; raison de ne pas changer la note, N32)** : **Analyse d'erreurs et robustesse reste à 7.** Preuve nouvelle : LoRA entraîné avec fin de texte aléatoire, verdict de la fiche « corrigé » au pli 0 (macro-F1 0,794 à 10 % de fin retirée contre 0,1436 ; `PREUVES.md` ligne 59). Elle ne suffit pas à monter la note : une graine, un pli, aucun intervalle ; la variante n'est pas dans le système gelé G, dont le LoRA reste fragile ; la perte logarithmique de la variante est plus élevée (0,99 contre 0,82) ; le LoRA n'a toujours pas été mesuré sur de nouveaux auteurs. Passage à 8 si la variante est répliquée sur une seconde graine ou en plis d'auteurs et que sa calibration est mesurée.
+
+**Réévaluation du 07/10 (matin, estimation, ±1)** : **Efficience et déploiement 6 → 7** : G mesuré d'un seul tenant (p50 91,6 ms, 10,3 Gio, 10,5 Wh ; `PREUVES.md` ligne 61), fiche de déploiement finale et frontière coût-qualité (ligne 62), image de service du TF-IDF construite, durcie et testée (ligne 63). Pas 8 : compression jamais réussie, G servi par un banc seulement, démarrage à froid de 153 s, file sous quatre clients (p95 0,8 s). Passage à 8 : service HTTP de G dans une image GPU, charge prolongée, et un gain de compression ou de cascade qui batte E.

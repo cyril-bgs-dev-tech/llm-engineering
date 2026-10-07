@@ -304,20 +304,20 @@ ul.clean li b{font-weight:600}
 <!-- === 9. MATERIEL === -->
 <section class="slide" data-title="Matériel">
   <div class="kicker">Matériel et coûts mesurés</div>
-  <h2>De 4 minutes à 3,5 h par run, de 2 ms à 190 ms par patient (6 ms pour l'encodeur sur GPU)</h2>
+  <h2>De 4 minutes à 3,5 h par run ; de 2 ms à 0,8 s par patient selon le matériel</h2>
   <div class="body" style="flex-direction:column;justify-content:center">
     <div class="bars dense">
       <div class="bar-row"><div class="lab">Entraînement : encodeur CamemBERT-bio, 10 époques<small>un pli, RTX 5090</small></div><div class="track"><div class="fill" style="width:1.7%"></div></div><div class="val">215 s</div></div>
       <div class="bar-row"><div class="lab">Entraînement : Qwen3.5-4B LoRA, 2 époques<small>un pli</small></div><div class="track"><div class="fill amber" style="width:24%"></div></div><div class="val">3 024 s</div></div>
       <div class="bar-row"><div class="lab">Entraînement : Qwen3.5-4B LoRA, 10 époques<small>un pli, pic 12,9 Gio</small></div><div class="track"><div class="fill amber" style="width:100%"></div></div><div class="val">12 467 s</div></div>
-      <div class="bar-row"><div class="lab">Inférence : TF-IDF (service de 20 Mo)<small>CPU, p50 par patient</small></div><div class="track"><div class="fill" style="width:1%"></div></div><div class="val">1,9 ms</div></div>
-      <div class="bar-row"><div class="lab">Inférence : Qwen3.5-4B (GPU)<small>adaptateur non fusionné ; fusionné bf16 : 61 ms (p95 114 ms), 8,6 Wh pour 1 000 patients</small></div><div class="track"><div class="fill amber" style="width:61%"></div></div><div class="val">117 ms</div></div>
-      <div class="bar-row"><div class="lab">Inférence : encodeur flottant (443 Mo)<small>CPU, 8 threads ; INT8 naïf : effondrement</small></div><div class="track"><div class="fill amber" style="width:100%"></div></div><div class="val">191 ms</div></div>
-      <div class="bar-row"><div class="lab">Inférence : encodeur sur GPU (fp32, lot de 1)<small>p50 ; bf16 : 4,5 ms et 1 325 patients par seconde en lot</small></div><div class="track"><div class="fill" style="width:3.1%"></div></div><div class="val">6,0 ms</div></div>
+      <div class="bar-row"><div class="lab">Service : TF-IDF en conteneur durci (processeur)<small>démarrage 2,6 s, 470 patients par seconde, 182 Mio</small></div><div class="track"><div class="fill" style="width:1%"></div></div><div class="val">2,3 ms</div></div>
+      <div class="bar-row"><div class="lab">Service : cinq encodeurs + TF-IDF (E), GPU bf16<small>mêmes classes qu'en fp32 pour 200 patients sur 200</small></div><div class="track"><div class="fill" style="width:3.6%"></div></div><div class="val">28,8 ms</div></div>
+      <div class="bar-row"><div class="lab">Service : G d'un seul tenant, GPU<small>p95 148 ms ; 10,3 Gio ; 10,5 Wh pour 1 000 ; 4 clients : p95 0,8 s</small></div><div class="track"><div class="fill sky" style="width:11.4%"></div></div><div class="val">91,6 ms</div></div>
+      <div class="bar-row"><div class="lab">Service : E sur processeur seul (huit fils)<small>environ 4 500 patients par heure, +5,2 points sur le TF-IDF</small></div><div class="track"><div class="fill amber" style="width:100%"></div></div><div class="val">801 ms</div></div>
     </div>
-    <p class="note" style="font-size:22px;margin-top:12px;line-height:1.3"><b>Ce qui tient</b> : une cascade encodeur puis LoRA traite 93 % des patients sans le LoRA à macro-F1 égale (+0,1 [−1,7 ; +1,9]), pour 26 à 34 ms contre 61 ms ; le bf16 entraîne l'encodeur 2,3 fois plus vite à qualité équivalente (−0,07 [−1,67 ; +1,69]). <b>Ce qui n'a pas tenu, publié</b> : la distillation (gain non préservé, −0,77 [−2,46 ; +0,96]), l'INT8 statique (macro-F1 0,0227, 39 % plus lent) et l'élagage à six couches (−13,1 points pour ×2 de vitesse sur processeur). Budget : environ 47 h de GPU sur 90 ; plafond de VRAM 28 Gio.</p>
+    <p class="note" style="font-size:22px;margin-top:12px;line-height:1.3"><b>Ce qui tient</b> : sur la frontière coût-qualité, le LoRA seul et les deux cascades sont dominés par E ; G coûte 7,9 fois l'entraînement et 3,2 fois la latence de E pour +0,78 point non résolu, et E n'est pas démontré non inférieur à G. <b>Ce qui n'a pas tenu, publié</b> : distillation (gain non préservé), INT8 statique (0,0227), élagage (−13,1 points). Limites : une machine instable (deux passages concordants), G servi par un banc et non par un service HTTP.</p>
   </div>
-  <div class="foot"><span>Runs : bench-serving-tfidf-charbal-v1, quantization-*, llm-mur-*, camembert-*, p0-08-*</span><span>11 / 14</span></div>
+  <div class="foot"><span>Runs : service-g-bout-en-bout-*, image-de-service-tfidf-*, frontiere-cout-qualite</span><span>11 / 14</span></div>
 </section>
 
 <!-- === 10. AUTONOMIE === -->
@@ -361,7 +361,7 @@ ul.clean li b{font-weight:600}
         <li style="font-size:25px">Système final G gelé avec sa prédiction chiffrée (ADR-016), puis <b>test scellé ouvert une fois : 0,813, +7,3 points sur le TF-IDF, verdict « non résolu »</b> ; prédiction notée, deux échecs publiés</li>
         <li style="font-size:25px">Sept résultats négatifs publiés : distillation (fuite de second ordre), lissage, moyenne de poids, curriculum, INT8 statique, élagage, empilement appris</li>
         <li style="font-size:25px">Robustesse : le LoRA classe sur la fin du texte ; correction testée (fin aléatoire, un pli, une graine : 0,79 au lieu de 0,14 à 10 % de fin retirée), G gelé inchangé ; MorFITT : 71,7 contre 71,95 publié</li>
-        <li style="font-size:25px">Fiabilité des lots : tokenizer contourné, lancement gardé (RAM, VRAM), 505 tests ; pannes de la machine mesurées (11 %)</li>
+        <li style="font-size:25px">Fiabilité des lots : tokenizer contourné, lancement gardé (RAM, VRAM), 524 tests ; pannes de la machine mesurées (11 %)</li>
       </ul>
       <div class="kicker" style="margin:22px 0 14px">À exécuter</div>
       <ul class="clean" style="gap:12px">
@@ -392,7 +392,7 @@ ul.clean li b{font-weight:600}
 <!-- === 12. NOTES === -->
 <section class="slide" data-title="Notes">
   <div class="kicker">Bilan chiffré</div>
-  <h2 style="font-size:50px">Note moyenne : 8,0 / 10, contre 7,6 et 9,4 pour les SOTA</h2>
+  <h2 style="font-size:50px">Note moyenne : 8,1 / 10, contre 7,6 et 9,4 pour les SOTA</h2>
   <div style="margin-top:18px">
     <table class="score">
       <thead><tr><th>Composante</th><th>Ce projet</th><th>SOTA open source</th><th>SOTA absolu</th></tr></thead>
@@ -403,13 +403,13 @@ ul.clean li b{font-weight:600}
         <tr><td>Fiabilité de l'incertitude</td><td><div class="mini c-p"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
         <tr><td>Analyse d'erreurs et robustesse</td><td><div class="mini c-p"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
         <tr><td>Reproductibilité et ingénierie</td><td><div class="mini c-p"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
-        <tr><td>Efficience et déploiement</td><td><div class="mini c-p"><div class="tr"><i style="width:60%"></i></div><span>6</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:100%"></i></div><span>10</span></div></td></tr>
+        <tr><td>Efficience et déploiement</td><td><div class="mini c-p"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:100%"></i></div><span>10</span></div></td></tr>
         <tr><td>Sûreté, conformité, honnêteté</td><td><div class="mini c-p"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
-        <tr class="avg"><td>Moyenne des 8 composantes</td><td><div class="mini c-p"><div class="tr"><i style="width:80%"></i></div><span>8,0</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:76%"></i></div><span>7,6</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:94%"></i></div><span>9,4</span></div></td></tr>
+        <tr class="avg"><td>Moyenne des 8 composantes</td><td><div class="mini c-p"><div class="tr"><i style="width:81%"></i></div><span>8,1</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:76%"></i></div><span>7,6</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:94%"></i></div><span>9,4</span></div></td></tr>
       </tbody>
     </table>
   </div>
-  <p class="note" style="font-size:21px;margin-top:6px;line-height:1.35"><b>Estimation, non mesurée</b> : notes sur 10 à plus ou moins 1 point, jugement structuré de l'assistant, à contre-expertiser ; « SOTA » = meilleur niveau connu par composante. <b>Depuis le 5 octobre</b> : efficience 5 à 6 ; après l'ouverture du test scellé, performance, rigueur (8 à 9) et incertitude (7 à 8) ; robustesse 6 à 7 (fragilité du LoRA à la fin du texte ; correction testée au pli 0 le 7 octobre, hors du système gelé : note maintenue à 7) ; puis, avec l'ancrage MorFITT, <b>performance 7 à 8</b> (mélange à 71,7 contre 71,95 publié au mieux, mais pas au-dessus) et <b>données 7 à 8</b> (second jeu entré avec le même outillage). <b>Reproductibilité 8 à 9</b> (chiffre clé reconstruit à l'identique depuis un clone neuf ; Docker et version taguée restent à faire). <b>Honnêteté 8 à 9</b> (rapport final passé par le contrôle des affirmations, checklist TRIPOD-LLM renseignée ; relecture humaine et textes de candidature à faire). Plafond atteignable estimé : 9,2 à 9,4 (docs/CHAINE_DE_DOMINOS.md, PREUVES.md).</p>
+  <p class="note" style="font-size:21px;margin-top:6px;line-height:1.35"><b>Estimation, non mesurée</b> : notes sur 10 à plus ou moins 1 point, jugement structuré de l'assistant, à contre-expertiser ; « SOTA » = meilleur niveau connu par composante. <b>Depuis le 5 octobre</b> : efficience 5 à 6, puis 6 à 7 le 7 octobre (G mesuré d'un seul tenant, fiche de déploiement finale, image de service testée ; la compression n'a jamais réussi et G n'est servi que par un banc) ; après l'ouverture du test scellé, performance, rigueur (8 à 9) et incertitude (7 à 8) ; robustesse 6 à 7 (fragilité du LoRA à la fin du texte ; correction testée au pli 0 le 7 octobre, hors du système gelé : note maintenue à 7) ; puis, avec l'ancrage MorFITT, <b>performance 7 à 8</b> (mélange à 71,7 contre 71,95 publié au mieux, mais pas au-dessus) et <b>données 7 à 8</b> (second jeu entré avec le même outillage). <b>Reproductibilité 8 à 9</b> (chiffre clé reconstruit à l'identique depuis un clone neuf ; image Docker reconstruite et testée (514 tests) ; version taguée à faire). <b>Honnêteté 8 à 9</b> (rapport final passé par le contrôle des affirmations, checklist TRIPOD-LLM renseignée ; relecture humaine et textes de candidature à faire). Plafond atteignable estimé : 9,2 à 9,4 (docs/CHAINE_DE_DOMINOS.md, PREUVES.md).</p>
   <div class="foot"><span>Projet : état au 07/10/2026</span><span>14 / 14</span></div>
 </section>
 
