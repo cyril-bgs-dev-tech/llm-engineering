@@ -1,0 +1,82 @@
+{
+  "created_at": "2026-10-07T09:41:17Z",
+  "kind": "measure",
+  "metrics": {
+    "accord_bf16_fp32": {
+      "encodeurs_moyennes": 1.0,
+      "g": 1.0
+    },
+    "classes_identiques_entre_passages": true,
+    "demarrage_a_froid_s": 153.4,
+    "essai_concurrent": {
+      "clients": 4,
+      "debit_patients_par_s": 10.14,
+      "moyenne_ms": 390.2,
+      "p50_ms": 371.0,
+      "p95_ms": 798.5,
+      "p99_ms": 1028.4,
+      "requetes": 200
+    },
+    "memoire_pic_gib": 10.29,
+    "mode": "gpu",
+    "modele_cascade_encodeurs_puis_lora_ms": 30.0,
+    "modele_ensemble_E_ms": 28.8,
+    "n_patients": 200,
+    "part_premier_etage_hors_pli": 0.934,
+    "passages": [
+      {
+        "energie": {
+          "euros_pour_1000_patients": 0.0026,
+          "wh_pour_1000_patients": 10.54
+        },
+        "etages_p50_ms": {
+          "cinq_encodeurs": 24.53,
+          "combinaison": 0.12,
+          "lora": 59.63,
+          "tfidf": 2.85,
+          "tokenisation_encodeur": 1.46,
+          "tokenisation_lora": 1.35
+        },
+        "total": {
+          "moyenne_ms": 101.2,
+          "p50_ms": 91.6,
+          "p95_ms": 147.8,
+          "p99_ms": 204.2
+        }
+      },
+      {
+        "energie": {
+          "euros_pour_1000_patients": 0.0026,
+          "wh_pour_1000_patients": 10.58
+        },
+        "etages_p50_ms": {
+          "cinq_encodeurs": 23.25,
+          "combinaison": 0.11,
+          "lora": 58.38,
+          "tfidf": 2.74,
+          "tokenisation_encodeur": 1.21,
+          "tokenisation_lora": 1.25
+        },
+        "total": {
+          "moyenne_ms": 98.9,
+          "p50_ms": 88.9,
+          "p95_ms": 145.7,
+          "p99_ms": 193.1
+        }
+      }
+    ],
+    "passages_acceptes": true,
+    "premiere_requete_ms": 4367.8,
+    "prix_eur_kwh_parametre": 0.25
+  },
+  "params": {
+    "fiche": "experiments/2026-10-07-service-bout-en-bout-g.md",
+    "mode": "gpu",
+    "n": 200
+  },
+  "run_id": "20261007-094117-service-g-bout-en-bout-gpu",
+  "schema": "mini-1",
+  "slug": "service-g-bout-en-bout-gpu",
+  "status": "ok",
+  "summary": "Service d'un seul tenant, mode gpu : p50 91.6 ms, p95 147.8 ms"
+}

@@ -1,0 +1,68 @@
+{
+ "mode": "gpu",
+ "n_patients": 200,
+ "demarrage_a_froid_s": 153.4,
+ "premiere_requete_ms": 4367.8,
+ "memoire_pic_gib": 10.29,
+ "passages": [
+  {
+   "total": {
+    "p50_ms": 91.6,
+    "p95_ms": 147.8,
+    "p99_ms": 204.2,
+    "moyenne_ms": 101.2
+   },
+   "etages_p50_ms": {
+    "tokenisation_encodeur": 1.46,
+    "cinq_encodeurs": 24.53,
+    "tfidf": 2.85,
+    "tokenisation_lora": 1.35,
+    "lora": 59.63,
+    "combinaison": 0.12
+   },
+   "energie": {
+    "wh_pour_1000_patients": 10.54,
+    "euros_pour_1000_patients": 0.0026
+   }
+  },
+  {
+   "total": {
+    "p50_ms": 88.9,
+    "p95_ms": 145.7,
+    "p99_ms": 193.1,
+    "moyenne_ms": 98.9
+   },
+   "etages_p50_ms": {
+    "tokenisation_encodeur": 1.21,
+    "cinq_encodeurs": 23.25,
+    "tfidf": 2.74,
+    "tokenisation_lora": 1.25,
+    "lora": 58.38,
+    "combinaison": 0.11
+   },
+   "energie": {
+    "wh_pour_1000_patients": 10.58,
+    "euros_pour_1000_patients": 0.0026
+   }
+  }
+ ],
+ "classes_identiques_entre_passages": true,
+ "passages_acceptes": true,
+ "prix_eur_kwh_parametre": 0.25,
+ "modele_ensemble_E_ms": 28.8,
+ "modele_cascade_encodeurs_puis_lora_ms": 30.0,
+ "part_premier_etage_hors_pli": 0.934,
+ "essai_concurrent": {
+  "clients": 4,
+  "requetes": 200,
+  "debit_patients_par_s": 10.14,
+  "p50_ms": 371.0,
+  "p95_ms": 798.5,
+  "p99_ms": 1028.4,
+  "moyenne_ms": 390.2
+ },
+ "accord_bf16_fp32": {
+  "encodeurs_moyennes": 1.0,
+  "g": 1.0
+ }
+}

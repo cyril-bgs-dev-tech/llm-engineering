@@ -1,0 +1,36 @@
+{
+  "created_at": "2026-10-07T10:20:10Z",
+  "kind": "measure",
+  "metrics": {
+    "construction_s_premiere": 589,
+    "construction_s_seconde": 589,
+    "image_id": "sha256:1ce212a14c18efc564b1029a2e8acf2ddf4ead01afd68644f0ce0cf2c79e7b8c",
+    "taille_disque": "25GB",
+    "tests_premier_essai": {
+      "cause": "procps absent (free, ps) pour tests/test_run_guarded.py ; documents de pilotage, skills et wiki non copiés pour tests/test_check_scripts.py",
+      "echecs": 2,
+      "erreurs": 10,
+      "ignores": 8,
+      "reussis": 502
+    },
+    "tests_second_essai": {
+      "cause_des_ignores": "données publiques et fichier ClaML absents de l'image (tests conditionnels)",
+      "deselectionnes_gpu": 2,
+      "duree_s": 43.19,
+      "echecs": 0,
+      "erreurs": 0,
+      "ignores": 8,
+      "reussis": 514
+    }
+  },
+  "params": {
+    "commande": "pytest -q -m 'not gpu' dans le conteneur, 16 Gio, 8 processeurs",
+    "dockerfile": "Dockerfile",
+    "tag": "llm-finetuning:rebuild-20261007"
+  },
+  "run_id": "20261007-102010-image-de-developpement-reconstruite",
+  "schema": "mini-1",
+  "slug": "image-de-developpement-reconstruite",
+  "status": "ok",
+  "summary": "Image de développement reconstruite (Dockerfile, uv sync --frozen) et suite de tests exécutée dans le conteneur : 514 réussis, 8 ignorés (données absentes), 0 échec"
+}

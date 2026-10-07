@@ -1,0 +1,60 @@
+{
+  "created_at": "2026-10-07T09:52:13Z",
+  "kind": "measure",
+  "metrics": {
+    "charge_concurrente_par_nombre_de_clients": {
+      "1": {
+        "debit_patients_par_s": 415.7,
+        "moyenne_ms": 2.4,
+        "p50_ms": 2.1,
+        "p95_ms": 3.6,
+        "p99_ms": 5.7
+      },
+      "16": {
+        "debit_patients_par_s": 477.0,
+        "moyenne_ms": 32.1,
+        "p50_ms": 32.8,
+        "p95_ms": 39.2,
+        "p99_ms": 42.0
+      },
+      "4": {
+        "debit_patients_par_s": 485.6,
+        "moyenne_ms": 8.2,
+        "p50_ms": 8.1,
+        "p95_ms": 12.4,
+        "p99_ms": 13.4
+      },
+      "8": {
+        "debit_patients_par_s": 482.5,
+        "moyenne_ms": 16.3,
+        "p50_ms": 16.0,
+        "p95_ms": 21.6,
+        "p99_ms": 26.7
+      }
+    },
+    "construction_s": 0.9,
+    "demarrage_a_froid_s": 2.42,
+    "entree_invalide_code_http": 400,
+    "image": "llmft-serve:smoke",
+    "image_id": "sha256:9314ce2180b79985e01e56abdfdab5dd4dcd15d0bdf5be9b7e76cea7610c34b0",
+    "memoire_conteneur": "181.9MiB / 1GiB",
+    "modele_sha256": "232e62a017abd1e5daec528ca672631d02683c90648122d12a484346c73e1e89",
+    "moyenne_ms": 2.6,
+    "n_patients": 50,
+    "options": "lecture seule, sans privilège, 1 Gio, 2 processeurs, utilisateur non root",
+    "p50_ms": 2.3,
+    "p95_ms": 4.0,
+    "p99_ms": 5.9,
+    "predictions_identiques_au_service_en_processus": "50/50",
+    "taille_mo": 143.5
+  },
+  "params": {
+    "dockerfile": "Dockerfile.serve",
+    "n": 50
+  },
+  "run_id": "20261007-095213-image-de-service-tfidf-test-de-fumee",
+  "schema": "mini-1",
+  "slug": "image-de-service-tfidf-test-de-fumee",
+  "status": "ok",
+  "summary": "Image de service TF-IDF : 143.5 Mo, démarrage 2.42 s, p50 2.3 ms"
+}

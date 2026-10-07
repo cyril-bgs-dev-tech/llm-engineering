@@ -1,0 +1,48 @@
+{
+ "image": "llmft-serve:smoke",
+ "image_id": "sha256:558d87eccd73fc78a20cd9f75c5db58de4d513fd43af7915f1a64eb08d6f9ca5",
+ "taille_contenu_mo": 143.5,
+ "taille_disque": "577MB",
+ "construction_s": 11.2,
+ "demarrage_a_froid_s": 2.62,
+ "n_patients": 50,
+ "p50_ms": 2.1,
+ "p95_ms": 3.1,
+ "p99_ms": 4.6,
+ "moyenne_ms": 2.3,
+ "charge_concurrente_par_nombre_de_clients": {
+  "1": {
+   "debit_patients_par_s": 419.8,
+   "p50_ms": 2.2,
+   "p95_ms": 3.3,
+   "p99_ms": 5.8,
+   "moyenne_ms": 2.4
+  },
+  "4": {
+   "debit_patients_par_s": 472.6,
+   "p50_ms": 8.1,
+   "p95_ms": 12.8,
+   "p99_ms": 14.8,
+   "moyenne_ms": 8.4
+  },
+  "8": {
+   "debit_patients_par_s": 475.7,
+   "p50_ms": 16.2,
+   "p95_ms": 21.2,
+   "p99_ms": 23.4,
+   "moyenne_ms": 16.5
+  },
+  "16": {
+   "debit_patients_par_s": 472.5,
+   "p50_ms": 33.0,
+   "p95_ms": 37.5,
+   "p99_ms": 39.6,
+   "moyenne_ms": 32.4
+  }
+ },
+ "predictions_identiques_au_service_en_processus": "50/50",
+ "entree_invalide_code_http": 400,
+ "memoire_conteneur": "180.8MiB / 1GiB",
+ "options": "lecture seule, sans privilège, 1 Gio, 2 processeurs, utilisateur non root",
+ "modele_sha256": "232e62a017abd1e5daec528ca672631d02683c90648122d12a484346c73e1e89"
+}

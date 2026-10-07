@@ -1,0 +1,82 @@
+[
+ {
+  "systeme": "A TF-IDF (processeur)",
+  "macro_f1": 0.7202,
+  "entrainement_h": 0.01,
+  "latence_ms": 1.9,
+  "domine_par": [],
+  "source": "bench-serving-tfidf-charbal-v1"
+ },
+ {
+  "systeme": "D encodeurs x5 (GPU)",
+  "macro_f1": 0.7528,
+  "entrainement_h": 0.64,
+  "latence_ms": 26.0,
+  "domine_par": [],
+  "source": "service-g-bout-en-bout-gpu"
+ },
+ {
+  "systeme": "E encodeurs x5 + TF-IDF (GPU)",
+  "macro_f1": 0.7721,
+  "entrainement_h": 0.65,
+  "latence_ms": 28.8,
+  "domine_par": [],
+  "source": "service-g-bout-en-bout-gpu"
+ },
+ {
+  "systeme": "E encodeurs x5 + TF-IDF (processeur seul)",
+  "macro_f1": 0.7721,
+  "entrainement_h": 0.65,
+  "latence_ms": 801.5,
+  "domine_par": [
+   "E encodeurs x5 + TF-IDF (GPU)"
+  ],
+  "source": "service-g-bout-en-bout-cpu"
+ },
+ {
+  "systeme": "F LoRA 4B seul (GPU)",
+  "macro_f1": 0.7673,
+  "entrainement_h": 4.45,
+  "latence_ms": 61.0,
+  "domine_par": [
+   "E encodeurs x5 + TF-IDF (GPU)"
+  ],
+  "source": "service-g-bout-en-bout-gpu"
+ },
+ {
+  "systeme": "G LoRA + encodeurs + TF-IDF (GPU)",
+  "macro_f1": 0.7799,
+  "entrainement_h": 5.11,
+  "latence_ms": 91.6,
+  "domine_par": [],
+  "source": "service-g-bout-en-bout-gpu"
+ },
+ {
+  "systeme": "Cascade encodeurs puis LoRA, seuil 0,5",
+  "macro_f1": 0.7685,
+  "entrainement_h": 5.09,
+  "latence_ms": 30.0,
+  "domine_par": [
+   "E encodeurs x5 + TF-IDF (GPU)"
+  ],
+  "source": "cascade-cinq-plis-encodeur-lora"
+ },
+ {
+  "systeme": "Cascade encodeurs puis LoRA, routage conforme",
+  "macro_f1": 0.7696,
+  "entrainement_h": 5.09,
+  "latence_ms": 59.2,
+  "domine_par": [
+   "E encodeurs x5 + TF-IDF (GPU)"
+  ],
+  "source": "cascade-conforme-cinq-plis"
+ },
+ {
+  "systeme": "C2 élève distillé x3, professeurs imbriqués (écarté, RM-56)",
+  "macro_f1": 0.753,
+  "entrainement_h": 0.93,
+  "latence_ms": 16.2,
+  "domine_par": [],
+  "source": "final-student-s*"
+ }
+]
