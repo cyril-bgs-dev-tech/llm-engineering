@@ -1,2 +1,8 @@
 2026-10-06T22:49:29Z lancement LoRA fin aléatoire (fiche hachée avant run, aucune modification depuis)
 2026-10-06T22:49:30Z DEBUT lora-fin-aleatoire-pli0 essai=1
+2026-10-07T02:21:10Z FIN lora-fin-aleatoire-pli0 essai=1 code=0
+2026-10-07T02:21:11Z DEBUT robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-pli0 essai=1
+2026-10-07T02:30:30Z FIN robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-pli0 essai=1 code=0
+2026-10-07T02:30:30Z TERMINE
+2026-10-07T02:35:14Z DEBUT saut-de-ligne lora-fin-aleatoire-pli0
+2026-10-07T02:41:07Z FIN saut-de-ligne code=0

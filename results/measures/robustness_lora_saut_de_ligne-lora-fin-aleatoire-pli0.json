@@ -1,0 +1,29 @@
+{
+ "propre_sans_saut_final": {
+  "macro_f1": 0.7771,
+  "accuracy": 0.8591,
+  "proba_max_moyenne": 0.9743,
+  "entropie_moyenne": 0.0668,
+  "classe_la_plus_predite": "II",
+  "part_classe_la_plus_predite": 0.2762,
+  "n_classes_predites": 18
+ },
+ "fin_10_avec_saut": {
+  "macro_f1": 0.7936,
+  "accuracy": 0.8633,
+  "proba_max_moyenne": 0.9657,
+  "entropie_moyenne": 0.0884,
+  "classe_la_plus_predite": "II",
+  "part_classe_la_plus_predite": 0.2762,
+  "n_classes_predites": 18
+ },
+ "fin_50_avec_saut": {
+  "macro_f1": 0.7573,
+  "accuracy": 0.8438,
+  "proba_max_moyenne": 0.965,
+  "entropie_moyenne": 0.0933,
+  "classe_la_plus_predite": "II",
+  "part_classe_la_plus_predite": 0.2692,
+  "n_classes_predites": 17
+ }
+}

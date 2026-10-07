@@ -1,0 +1,44 @@
+{
+  "created_at": "2026-10-07T02:41:05Z",
+  "kind": "measure",
+  "metrics": {
+    "fin_10_avec_saut": {
+      "accuracy": 0.8633,
+      "classe_la_plus_predite": "II",
+      "entropie_moyenne": 0.0884,
+      "macro_f1": 0.7936,
+      "n_classes_predites": 18,
+      "part_classe_la_plus_predite": 0.2762,
+      "proba_max_moyenne": 0.9657
+    },
+    "fin_50_avec_saut": {
+      "accuracy": 0.8438,
+      "classe_la_plus_predite": "II",
+      "entropie_moyenne": 0.0933,
+      "macro_f1": 0.7573,
+      "n_classes_predites": 17,
+      "part_classe_la_plus_predite": 0.2692,
+      "proba_max_moyenne": 0.965
+    },
+    "propre_sans_saut_final": {
+      "accuracy": 0.8591,
+      "classe_la_plus_predite": "II",
+      "entropie_moyenne": 0.0668,
+      "macro_f1": 0.7771,
+      "n_classes_predites": 18,
+      "part_classe_la_plus_predite": 0.2762,
+      "proba_max_moyenne": 0.9743
+    }
+  },
+  "params": {
+    "adapter": "lora-fin-aleatoire-pli0",
+    "fiche": "experiments/2026-10-06-effondrement-lora-saut-de-ligne.md",
+    "fold": 0,
+    "micro_batch": 1
+  },
+  "run_id": "20261007-024105-robustesse-lora-saut-de-ligne-lora-fin-aleatoire-pli0",
+  "schema": "mini-1",
+  "slug": "robustesse-lora-saut-de-ligne-lora-fin-aleatoire-pli0",
+  "status": "ok",
+  "summary": "Effondrement du LoRA et saut de ligne final (inférence, pli 0)"
+}

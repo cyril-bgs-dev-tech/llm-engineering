@@ -352,7 +352,7 @@ ul.clean li b{font-weight:600}
       <ul class="clean" style="gap:12px">
         <li style="font-size:27px">Système final G gelé avec sa prédiction chiffrée (ADR-016), puis <b>test scellé ouvert une fois : 0,813, +7,3 points sur le TF-IDF, verdict « non résolu »</b> ; prédiction notée, deux échecs publiés</li>
         <li style="font-size:27px">Sept résultats négatifs publiés : distillation (fuite de second ordre), lissage, moyenne de poids, curriculum, INT8 statique, élagage, empilement appris</li>
-        <li style="font-size:27px">Robustesse mesurée : le LoRA classe sur la fin de la séquence, fragilité à corriger ; ancrage MorFITT : mélange à 71,7 contre 71,95 publié au mieux</li>
+        <li style="font-size:27px">Robustesse mesurée : le LoRA classe sur la fin de la séquence ; correction testée (fin aléatoire, un pli, une graine : 0,79 au lieu de 0,14 à 10 % de fin retirée), G gelé inchangé ; ancrage MorFITT : mélange à 71,7 contre 71,95 publié au mieux</li>
         <li style="font-size:27px">Fiabilité des lots : contournement du tokenizer, lancement gardé (RAM, VRAM), 487 tests</li>
       </ul>
       <div class="kicker" style="margin:22px 0 14px">À exécuter</div>

@@ -795,3 +795,24 @@ Réglage retenu sur la validation : encodeur taux 5e-5, 20 époques (validation 
 ## Reconstruction à froid du chiffre clé (P5-09 ; run `20261006-230806-reconstruction-a-froid-chiffre-cle` ; scripts `scripts/reproduce_small.sh`, `data/scripts/download_parhaf.py`, `data/scripts/download_cim10.py`)
 
 Clone neuf du commit `7741ebe` dans le dossier de session, environnement `uv sync --frozen` (5 s : cache des paquets chaud, aucun téléchargement de paquets), PARHAF à la révision épinglée (8 fichiers identiques au manifeste), CIM-10 FR téléchargée de l'ATIH (empreintes du zip et du XML identiques à la fiche), puis TF-IDF caractères équilibré sur cinq plis : **macro-F1 0,7201565961621372, identique à 1e-9 près au run d'origine (`tfidf-variant-char-balanced`)**, en 815 s pour l'entraînement et 834 s au total, un seul essai. **La reconstruction a révélé un manque réel** : aucun script versionné ne fournissait le XML de la CIM-10 qui sert à dériver les étiquettes ; `data/scripts/download_cim10.py` a été écrit (commit `7741ebe`) ; une première tentative a aussi échoué par un `TypeError` interne de scikit-learn, panne impossible en Python correct (troisième de ce type), d'où les trois essais consignés du script. Limites : image Docker non reconstruite, aucune version taguée ni dépôt distant, le XML ATIH est téléchargé sous réserve de la disponibilité du site.
+
+
+## Correction de la fragilité du LoRA à la fin du texte (RM-39 ; fiche `2026-10-07-lora-fin-aleatoire` ; runs `20261007-022108-lora-fin-aleatoire-pli0`, `20261007-023028-robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-pli0`, `20261007-024105-robustesse-lora-saut-de-ligne-lora-fin-aleatoire-pli0`)
+
+Même recette que le LoRA de référence (Qwen3.5-4B, 10 époques, taux 1e-4, pli 0, graine 1000) avec une seule différence : à l'entraînement, la fin de chaque texte est coupée (5 à 50 % des mots) avec une probabilité de 0,5 (`--tail-aug 0.5`). **EXPLORE : un pli, une graine, aucun intervalle ; lecture descriptive déclarée dans la fiche, avant le run.** Entraînement : 12 423 s (référence 12 467 s), pic de VRAM 12,6 Gio, 900 pas.
+
+| Mesure (pli 0, 717 patients) | Référence `llm-mur2-qwen3-5-4b-ep10-lr1e-4` | Fin aléatoire |
+|---|---|---|
+| macro-F1, texte propre | 0,7795 | **0,7852** |
+| exactitude, texte propre | 0,8577 | 0,8577 |
+| ECE | 0,1078 | 0,1216 |
+| perte logarithmique | 0,8166 | 0,9857 |
+| fin retirée à 10 % | 0,1436 | **0,794** |
+| fin retirée à 30 % | 0,1395 | **0,767** |
+| fin retirée à 50 % | 0,1250 | 0,750 |
+| début retiré à 50 % | 0,7282 | 0,739 |
+| texte propre sans son saut de ligne final | 0,7025 | **0,7771** |
+
+**Verdict de la fiche, appliqué sans reformulation : « corrigé »** (lecture descriptive). (a) macro-F1 propre à 0,7852, soit +0,6 point par rapport à la référence (limite : pas plus de 2,0 points en dessous) ; (b) à 30 % de fin retirée, 1,9 point sous la propre de la variante (limite 5,0) et sans saut de ligne final 0,8 point sous (limite 3,0). Prédiction préenregistrée : « corrigé » avec la probabilité 0,45, c'est la modalité la plus probable et elle s'est réalisée ; la prédiction (a) (perte entre 0 et 3 points) est **fausse dans le sens favorable** (gain de 0,6 point) ; (b) au-dessus de 0,65 : réussie ; sans saut de ligne, perte sous 3 points : réussie.
+
+**Ce que le résultat ne dit pas** : (1) un pli et une graine : l'écart de +0,6 point avec la référence est dans le bruit de graine connu du LoRA (0,7795 contre 0,7893 pour deux graines du même pli) ; on ne peut pas dire que la variante est meilleure, seulement qu'elle ne coûte pas de performance mesurable. (2) **Coût caché sur les probabilités** : l'exactitude est identique, mais la perte logarithmique passe de 0,8166 à 0,9857 et l'ECE de 0,1078 à 0,1216 : la variante est plus surconfiante (probabilité maximale moyenne 0,978 en texte propre). Avant tout usage dans un mélange ou dans un étalonnage conforme, la calibration doit être mesurée de nouveau. (3) **Le système gelé G n'est pas modifié** : son LoRA reste celui de la référence (ADR-016) et reste fragile à la fin du texte ; le test scellé n'a pas été et ne sera pas relu. (4) La robustesse du LoRA aux nouveaux auteurs (RM-39, plis d'auteurs, 5 × 3,6 h) n'est toujours pas mesurée.
