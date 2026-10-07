@@ -746,3 +746,18 @@ Un seul lot en cours, le mien : recoupement du TF-IDF de référence A (fiche v2
 
 ### 12:59Z : recoupement de A terminé en échec (résultat négatif consigné)
 12 pannes brutes sur 12 essais de la fiche v2 (11 segfaults, un TypeError impossible), 16 sur 16 au total pour ce recoupement ; verdict « non résolu » (aucune comparaison possible). Journal du noyau : 48 segfaults (20 au début de la séance). RESULTATS.md, Q26 à jour ; make check-fast vert. Plus aucun essai tant que la machine n est pas vérifiée côté Windows (sonde courte de 8 s à chaque passage du surveillant, rien de plus).
+
+### 13:35Z : reprise par surveilleur
+Rien en cours (aucun lot, GPU libre hors 2,4 Go d un processus que je n ai pas lancé, RAM disponible 52 Go, aucune alerte mémoire), arbre propre hors journaux, dernier commit 77f3ff1, aucune réponse de Cyril (Q26 ouverte). Sonde courte de 8 s (une seule, comme décidé) : 2 pannes sur 6 lancements (segfaults), contre environ 9 sur 12 à 12:30Z et 11 % ce matin : la machine reste instable, un peu moins qu à 12:30Z. Noyau : 50 segfaults (48 avant la sonde). Aucun calcul long relancé.
+
+### 14:35Z : reprise par surveilleur
+Rien changé : aucun lot, GPU libre hors 2,6 Go d un processus que je n ai pas lancé, RAM disponible 52 Go, aucune alerte mémoire, dernier commit 77f3ff1, aucune réponse de Cyril (Q26 ouverte). Aucun segfault spontané depuis la sonde de 13:35Z (50 puis 51 avec la sonde de ce passage). Sonde de 8 s : 1 panne sur 6 lancements (environ 17 %, proche des 11 à 16 % du matin, contre 9 sur 12 à 12:30Z) : la rafale semble passée, sans preuve de cause. Le recoupement de A reste suspendu (décision : pas de calcul long avant Q26) ; rien lancé.
+
+### 15:35Z : reprise par surveilleur
+Rien changé côté projet : aucun lot à moi, dernier commit 77f3ff1, aucune réponse de Cyril (Q26 ouverte), RAM disponible 50 Go, aucune alerte mémoire, segfaults du noyau inchangés (51, aucun spontané en une heure). Le GPU est utilisé à 69 % (5,3 Go) par un processus python que je n ai pas lancé (très probablement les évaluations de l autre session Claude, qui m a prévenu) : signalé, laissé en place, je n ai pas besoin du GPU. Pas de sonde cette fois (rien n a changé), rien lancé.
+
+### 16:35Z : reprise par surveilleur
+Rien changé : aucun lot, GPU revenu à 2,4 Go hors lot (l autre session a fini ses évaluations, rien de mon côté), RAM disponible 51 Go, aucune alerte mémoire, segfaults du noyau inchangés (51), dernier commit 77f3ff1, aucune réponse de Cyril (Q26 ouverte). Rien lancé.
+
+### 19:56Z : WSL a planté (constat à la reprise de séance), règles de nuit réarmées
+Constat : les journaux s'arrêtent à 16:55:22Z (memoire.log et silence.log), WSL a redémarré à 17:00:25Z (uptime 2 h 53 à ma reprise), aucun fichier du dépôt modifié entre les deux, dernier commit toujours 77f3ff1, aucun lot de moi en cours (silence=1187 s : je n'avais rien lancé depuis 16:35Z). Dernière ligne de memoire.log : mémoire disponible 45 Go sur 68, swap 0, pression PSI 0,00 ; mais un processus python que je n'ai pas lancé passait de 619 Mo à 7,2 Go de RAM et la VRAM de 2,6 à 9,96 Gio en 30 s (chargement d'un modèle, très probablement l'autre session Claude, non démontré). Donc ce plantage n'est PAS une pénurie de mémoire : le garde de RAM n'avait rien à voir, l'hypothèse « mémoire » ne l'explique pas. Pas de journal du noyau de l'ancien démarrage (dmesg repart à zéro) : cause non établie. Depuis le redémarrage : 0 segfault du noyau en 3 h au repos. Rien perdu côté dépôt. Réarmés : silence_watch.sh (PID 2061, LOGDIR du dépôt), mem_watch.sh (PID 2060), tâche périodique 7/27/47. Q26 complétée, mémoire et présentation mises à jour, rien lancé en calcul.
