@@ -1,0 +1,16 @@
+{"attempt": 1, "returncode": -11, "seconds": 27, "stderr_tail": ""}
+{"attempt": 2, "returncode": -11, "seconds": 4, "stderr_tail": ""}
+{"attempt": 3, "returncode": -11, "seconds": 30, "stderr_tail": ""}
+{"attempt": 4, "returncode": -11, "seconds": 60, "stderr_tail": ""}
+{"attempt": 5, "returncode": -11, "seconds": 4, "stderr_tail": ""}
+{"attempt": 6, "returncode": -11, "seconds": 27, "stderr_tail": ""}
+{"ok": false, "returncode": -11, "seconds": 27, "failures": [{"attempt": 1, "returncode": -11, "seconds": 27, "stderr_tail": ""}, {"attempt": 2, "returncode": -11, "seconds": 4, "stderr_tail": ""}, {"attempt": 3, "returncode": -11, "seconds": 30, "stderr_tail": ""}, {"attempt": 4, "returncode": -11, "seconds": 60, "stderr_tail": ""}, {"attempt": 5, "returncode": -11, "seconds": 4, "stderr_tail": ""}, {"attempt": 6, "returncode": -11, "seconds": 27, "stderr_tail": ""}], "attempts": 6}
+{"attempt": 1, "returncode": -11, "seconds": 30, "stderr_tail": ""}
+{"attempt": 2, "returncode": -11, "seconds": 2, "stderr_tail": ""}
+{"attempt": 3, "returncode": -11, "seconds": 4, "stderr_tail": ""}
+{"attempt": 4, "returncode": 1, "seconds": 60, "stderr_tail": " 1421, in transform\n    _, X = self._count_vocab(raw_documents, fixed_vocab=True)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/cyril/miniforge3/envs/llm-agent/lib/python3.12/site-packages/sklearn/feature_extraction/text.py\", line 1263, in _count_vocab\n    for feature in analyze(doc):\n                   ^^^^^^^^^^^^\nTypeError: 'TfidfVectorizer' object is not iterable\n"}
+{"attempt": 5, "returncode": -11, "seconds": 3, "stderr_tail": ""}
+{"attempt": 6, "returncode": -11, "seconds": 2, "stderr_tail": ""}
+{"ok": false, "returncode": -11, "seconds": 2, "failures": [{"attempt": 1, "returncode": -11, "seconds": 30, "stderr_tail": ""}, {"attempt": 2, "returncode": -11, "seconds": 2, "stderr_tail": ""}, {"attempt": 3, "returncode": -11, "seconds": 4, "stderr_tail": ""}, {"attempt": 4, "returncode": 1, "seconds": 60, "stderr_tail": " 1421, in transform\n    _, X = self._count_vocab(raw_documents, fixed_vocab=True)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/cyril/miniforge3/envs/llm-agent/lib/python3.12/site-packages/sklearn/feature_extraction/text.py\", line 1263, in _count_vocab\n    for feature in analyze(doc):\n                   ^^^^^^^^^^^^\nTypeError: 'TfidfVectorizer' object is not iterable\n"}, {"attempt": 5, "returncode": -11, "seconds": 3, "stderr_tail": ""}, {"attempt": 6, "returncode": -11, "seconds": 2, "stderr_tail": ""}], "attempts": 6}
+{"verdicts": [], "crashes": 12}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261007-125625-recoupement-tfidf-reference.json

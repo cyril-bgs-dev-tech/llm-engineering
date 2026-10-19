@@ -1,0 +1,17 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:  19%|█▉        | 136/723 [00:00<00:00, 1355.93it/s]Loading weights:  38%|███▊      | 272/723 [00:00<00:00, 1202.47it/s]Loading weights:  54%|█████▍    | 394/723 [00:00<00:00, 904.55it/s] Loading weights:  68%|██████▊   | 492/723 [00:00<00:00, 878.74it/s]Loading weights:  89%|████████▊ | 641/723 [00:00<00:00, 1059.83it/s]Loading weights: 100%|██████████| 723/723 [00:00<00:00, 1117.32it/s]
+[transformers] [1mQwen3_5ForSequenceClassification LOAD REPORT[0m from: Qwen/Qwen3.5-4B
+Key          | Status  | 
+-------------+---------+-
+score.weight | MISSING | 
+
+Notes:
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+propre {'macro_f1': 0.7079, 'accuracy': 0.8039, 'proba_max_moyenne': 0.9688, 'entropie_moyenne': 0.0849, 'classe_la_plus_predite': 'II', 'part_classe_la_plus_predite': 0.2896, 'n_classes_predites': 18}
+fin_10 {'macro_f1': 0.6651, 'accuracy': 0.7798, 'proba_max_moyenne': 0.9653, 'entropie_moyenne': 0.0938, 'classe_la_plus_predite': 'II', 'part_classe_la_plus_predite': 0.2911, 'n_classes_predites': 18}
+fin_20 {'macro_f1': 0.6792, 'accuracy': 0.7919, 'proba_max_moyenne': 0.9615, 'entropie_moyenne': 0.1033, 'classe_la_plus_predite': 'II', 'part_classe_la_plus_predite': 0.2911, 'n_classes_predites': 18}
+fin_30 {'macro_f1': 0.6715, 'accuracy': 0.7888, 'proba_max_moyenne': 0.9601, 'entropie_moyenne': 0.1054, 'classe_la_plus_predite': 'II', 'part_classe_la_plus_predite': 0.2896, 'n_classes_predites': 17}
+fin_50 {'macro_f1': 0.6338, 'accuracy': 0.7466, 'proba_max_moyenne': 0.947, 'entropie_moyenne': 0.1379, 'classe_la_plus_predite': 'II', 'part_classe_la_plus_predite': 0.2881, 'n_classes_predites': 18}
+debut_50 {'macro_f1': 0.6457, 'accuracy': 0.7602, 'proba_max_moyenne': 0.9546, 'entropie_moyenne': 0.12, 'classe_la_plus_predite': 'II', 'part_classe_la_plus_predite': 0.2971, 'n_classes_predites': 18}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261017-152628-robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli0.json

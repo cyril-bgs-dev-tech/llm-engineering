@@ -1,0 +1,48 @@
+2026-10-16T22:53:54Z essai 1/128 bras=libre code=0 13s 
+2026-10-16T22:54:06Z essai 2/128 bras=libre code=0 12s 
+2026-10-16T22:54:14Z essai 3/128 bras=libre code=-11 8s 
+2026-10-16T22:54:24Z essai 4/128 bras=libre code=0 10s 
+2026-10-16T22:54:36Z essai 5/128 bras=libre code=0 12s 
+2026-10-16T22:54:46Z essai 6/128 bras=libre code=0 10s 
+2026-10-16T22:54:58Z essai 7/128 bras=libre code=0 12s 
+2026-10-16T22:55:12Z essai 8/128 bras=libre code=0 14s 
+2026-10-16T22:55:22Z essai 9/128 bras=libre code=0 10s 
+2026-10-16T22:55:31Z essai 10/128 bras=libre code=0 9s 
+2026-10-16T22:55:41Z essai 11/128 bras=libre code=0 10s 
+2026-10-16T22:55:53Z essai 12/128 bras=libre code=0 12s 
+2026-10-16T22:56:07Z essai 13/128 bras=libre code=0 14s 
+2026-10-16T22:56:19Z essai 14/128 bras=libre code=0 12s 
+2026-10-16T22:56:29Z essai 15/128 bras=libre code=0 10s 
+2026-10-16T22:56:39Z essai 16/128 bras=libre code=0 10s 
+2026-10-16T22:56:49Z essai 17/128 bras=libre code=0 10s 
+2026-10-16T22:56:58Z essai 18/128 bras=libre code=0 10s 
+2026-10-16T22:57:12Z essai 19/128 bras=libre code=0 14s 
+2026-10-16T22:57:27Z essai 20/128 bras=libre code=0 15s 
+2026-10-16T22:57:41Z essai 21/128 bras=libre code=0 13s 
+2026-10-16T22:57:55Z essai 22/128 bras=libre code=0 14s 
+2026-10-16T22:58:09Z essai 23/128 bras=libre code=0 14s 
+2026-10-16T22:58:23Z essai 24/128 bras=libre code=0 14s 
+2026-10-16T22:58:34Z essai 25/128 bras=libre code=0 12s 
+2026-10-16T22:58:48Z essai 26/128 bras=libre code=0 13s 
+2026-10-16T22:59:01Z essai 27/128 bras=libre code=0 13s 
+2026-10-16T22:59:14Z essai 28/128 bras=libre code=0 13s 
+2026-10-16T22:59:25Z essai 29/128 bras=libre code=-11 11s 
+2026-10-16T22:59:37Z essai 30/128 bras=libre code=0 11s 
+2026-10-16T22:59:50Z essai 31/128 bras=libre code=0 13s 
+2026-10-16T23:00:00Z essai 32/128 bras=libre code=-11 11s 
+2026-10-16T23:00:11Z essai 33/128 bras=libre code=-11 11s 
+2026-10-16T23:00:18Z essai 34/128 bras=libre code=1 8s TypeError: unsupported operand type(s) for +: 'int' and 'str'
+2026-10-16T23:00:32Z essai 35/128 bras=libre code=0 13s 
+2026-10-16T23:00:43Z essai 36/128 bras=libre code=0 11s 
+2026-10-16T23:00:52Z essai 37/128 bras=libre code=-11 9s 
+2026-10-16T23:01:03Z essai 38/128 bras=libre code=0 11s 
+2026-10-16T23:01:15Z essai 39/128 bras=libre code=0 12s 
+2026-10-16T23:01:25Z essai 40/128 bras=libre code=1 10s TypeError: unsupported operand type(s) for +: 'int' and 'str'
+2026-10-16T23:01:37Z essai 41/128 bras=libre code=0 12s 
+2026-10-16T23:01:50Z essai 42/128 bras=libre code=0 13s 
+2026-10-16T23:02:00Z essai 43/128 bras=libre code=0 10s 
+2026-10-16T23:02:11Z essai 44/128 bras=libre code=1 11s TypeError: unsupported operand type(s) for +: 'int' and 'str'
+2026-10-16T23:02:19Z essai 45/128 bras=libre code=1 8s TypeError: unsupported operand type(s) for +: 'int' and 'str'
+2026-10-16T23:02:29Z essai 46/128 bras=libre code=-11 9s 
+{"n": 46, "stopped": "10 pannes (règle d'arrêt N31)", "arms_with_problems": {"libre": [10, 0]}}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261016-230229-verification-machine-bios-avant.json

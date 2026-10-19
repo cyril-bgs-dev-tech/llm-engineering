@@ -1,0 +1,77 @@
+{
+ "seuils_par_pli": {
+  "0": 0.6,
+  "1": 0.6,
+  "2": 0.6,
+  "3": 0.6,
+  "4": 0.6
+ },
+ "part_sans_lora": 0.8226,
+ "fidelite_a_g": 0.9972,
+ "macro_f1": {
+  "cascade": 0.7789,
+  "g": 0.7799,
+  "e": 0.7721
+ },
+ "cascade_moins_g_points": -0.1,
+ "ic95_contre_g": [
+  -0.23,
+  0.02
+ ],
+ "cascade_moins_e_points": 0.68,
+ "ic95_contre_e": [
+  -0.72,
+  2.68
+ ],
+ "latence_moyenne_ms_modelisee": 39.6,
+ "latence_g_mesuree_ms": 91.6,
+ "verdict": "cascade retenue",
+ "courbe_descriptive_sur_tous_les_plis": [
+  {
+   "tau": 0.5,
+   "part_sans_lora": 0.9071,
+   "macro_f1": 0.7756,
+   "fidelite_a_g": 0.9755
+  },
+  {
+   "tau": 0.6,
+   "part_sans_lora": 0.8226,
+   "macro_f1": 0.7789,
+   "fidelite_a_g": 0.9972
+  },
+  {
+   "tau": 0.7,
+   "part_sans_lora": 0.7395,
+   "macro_f1": 0.7799,
+   "fidelite_a_g": 1.0
+  },
+  {
+   "tau": 0.8,
+   "part_sans_lora": 0.6531,
+   "macro_f1": 0.7799,
+   "fidelite_a_g": 1.0
+  },
+  {
+   "tau": 0.9,
+   "part_sans_lora": 0.5284,
+   "macro_f1": 0.7799,
+   "fidelite_a_g": 1.0
+  },
+  {
+   "tau": 0.95,
+   "part_sans_lora": 0.4189,
+   "macro_f1": 0.7799,
+   "fidelite_a_g": 1.0
+  },
+  {
+   "tau": 0.99,
+   "part_sans_lora": 0.1458,
+   "macro_f1": 0.7799,
+   "fidelite_a_g": 1.0
+  }
+ ],
+ "n": 3586,
+ "delta_points": 2.0,
+ "fidelite_minimale": 0.98
+}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261017-012416-cascade-e-puis-g.json

@@ -104,7 +104,7 @@ ul.clean li b{font-weight:600}
 
 <!-- === 1. TITRE === -->
 <section class="slide title active" data-title="Titre">
-  <div class="kicker">Projet LLM_finetuning · état au 7 octobre 2026</div>
+  <div class="kicker">Projet LLM_finetuning · état au 17 octobre 2026</div>
   <h1>Affiner et distiller des LLM<br>sur des textes cliniques français</h1>
   <p class="lead">Mesurer ce que chaque technique apporte vraiment, avec un protocole gelé avant la première mesure, sur une seule carte graphique.</p>
   <div class="foot"><span>Données fictives (PARHAF) · aucune donnée de patient réel</span><span>1 / 14</span></div>
@@ -197,23 +197,23 @@ ul.clean li b{font-weight:600}
 <!-- === 6. REFERENCES === -->
 <section class="slide" data-title="Références">
   <div class="kicker">Références mesurées</div>
-  <h2>L'ensemble bat le meilleur TF-IDF de 5,2 points sur cinq plis</h2>
+  <h2>L'ensemble bat le meilleur TF-IDF de <span data-claim="s6_e_tf_abs">5,2</span> points sur cinq plis</h2>
   <div class="body" style="flex-direction:column;justify-content:center">
     <div class="bars dense">
-      <div class="bar-row"><div class="lab">Classe majoritaire<small>borne sans modèle</small></div><div class="track"><div class="fill grey" style="width:2.5%"></div></div><div class="val">0,025</div></div>
-      <div class="bar-row"><div class="lab">Qwen3.5-4B zéro-shot, sans affinage<small>pli 0 ; l'affinage apporte +28,8 points [+22,5 ; +35,0]</small></div><div class="track"><div class="fill amber" style="width:49.3%"></div></div><div class="val">0,493</div></div>
-      <div class="bar-row"><div class="lab">CamemBERT-bio, recette gelée à 2 époques<small>pli 0 : sous-entraîné</small></div><div class="track"><div class="fill amber" style="width:44.8%"></div></div><div class="val">0,448</div></div>
+      <div class="bar-row"><div class="lab">Classe majoritaire<small>borne sans modèle</small></div><div class="track"><div class="fill grey" style="width:2.5%"></div></div><div class="val"><span data-claim="s6_maj">0,025</span></div></div>
+      <div class="bar-row"><div class="lab">Qwen3.5-4B zéro-shot, sans affinage<small>pli 0 ; l'affinage apporte <span data-claim="s6_zs_gain">+28,8</span> points [<span data-claim="s6_zs_gain_lo">+22,5</span> ; <span data-claim="s6_zs_gain_hi">+35,0</span>]</small></div><div class="track"><div class="fill amber" style="width:49.3%"></div></div><div class="val"><span data-claim="s6_zs">0,493</span></div></div>
+      <div class="bar-row"><div class="lab">CamemBERT-bio, recette gelée à 2 époques<small>pli 0 : sous-entraîné</small></div><div class="track"><div class="fill amber" style="width:44.8%"></div></div><div class="val"><span data-claim="s6_enc2ep">0,448</span></div></div>
       <div class="bar-row"><div class="lab">CamemBERT-bio, 10 époques, 5 graines<small>pli 0 : moyenne ± 0,026</small></div><div class="track"><div class="fill amber" style="width:72.9%"></div></div><div class="val">0,729</div></div>
-      <div class="bar-row"><div class="lab">TF-IDF caractères, poids équilibrés<small>5 plis, 3 586 patients hors pli</small></div><div class="track"><div class="fill" style="width:72.0%"></div></div><div class="val">0,720</div></div>
-      <div class="bar-row"><div class="lab">Encodeur moyenné (5 graines)<small>5 plis ; +3,3 [+1,0 ; +5,6] contre le TF-IDF</small></div><div class="track"><div class="fill" style="width:75.3%"></div></div><div class="val">0,753</div></div>
-      <div class="bar-row"><div class="lab">Qwen3.5-4B LoRA, 10 époques<small>5 plis, une graine ; +4,7 [+2,4 ; +7,2] contre le TF-IDF</small></div><div class="track"><div class="fill" style="width:76.7%"></div></div><div class="val">0,767</div></div>
-      <div class="bar-row"><div class="lab">Ensemble encodeur + TF-IDF<small>5 plis ; +5,2 [+3,7 ; +6,8] ; règle de puissance v2 atteinte</small></div><div class="track"><div class="fill" style="width:77.2%"></div></div><div class="val">0,772</div></div>
-      <div class="bar-row"><div class="lab">G : LoRA + encodeur + TF-IDF<small>5 plis ; seul système admissible (règle écrite d'avance)</small></div><div class="track"><div class="fill" style="width:78.0%"></div></div><div class="val">0,780</div></div>
-      <div class="bar-row"><div class="lab">Élève encodeur distillé de l'ensemble<small>gain apparent +3,5, <b>non préservé</b> (imbriqués : −0,8 [−2,5 ; +1,0])</small></div><div class="track"><div class="fill amber" style="width:75.3%"></div></div><div class="val">0,753</div></div>
+      <div class="bar-row"><div class="lab">TF-IDF caractères, poids équilibrés<small>5 plis, 3 586 patients hors pli</small></div><div class="track"><div class="fill" style="width:72.0%"></div></div><div class="val"><span data-claim="s6_a">0,720</span></div></div>
+      <div class="bar-row"><div class="lab">Encodeur moyenné (5 graines)<small>5 plis ; <span data-claim="s6_d_tf">+3,27</span> [<span data-claim="s6_d_tf_lo">+1,00</span> ; <span data-claim="s6_d_tf_hi">+5,55</span>] contre le TF-IDF</small></div><div class="track"><div class="fill" style="width:75.3%"></div></div><div class="val"><span data-claim="s6_d">0,753</span></div></div>
+      <div class="bar-row"><div class="lab">Qwen3.5-4B LoRA, 10 époques<small>5 plis, une graine ; <span data-claim="s6_f_tf">+4,7</span> [<span data-claim="s6_f_tf_lo">+2,4</span> ; <span data-claim="s6_f_tf_hi">+7,2</span>] contre le TF-IDF</small></div><div class="track"><div class="fill" style="width:76.7%"></div></div><div class="val"><span data-claim="s6_f">0,767</span></div></div>
+      <div class="bar-row"><div class="lab">Ensemble encodeur + TF-IDF<small>5 plis ; <span data-claim="s6_e_tf">+5,2</span> [<span data-claim="s6_e_tf_lo">+3,7</span> ; <span data-claim="s6_e_tf_hi">+6,8</span>] ; règle de puissance v2 atteinte</small></div><div class="track"><div class="fill" style="width:77.2%"></div></div><div class="val"><span data-claim="s6_e">0,772</span></div></div>
+      <div class="bar-row"><div class="lab">G : LoRA + encodeur + TF-IDF<small>5 plis ; seul système admissible (règle écrite d'avance)</small></div><div class="track"><div class="fill" style="width:78.0%"></div></div><div class="val"><span data-claim="s6_g">0,780</span></div></div>
+      <div class="bar-row"><div class="lab">Élève encodeur distillé de l'ensemble<small>gain apparent <span data-claim="s6_di_app">+3,5</span>, <b>non préservé</b> (imbriqués : <span data-claim="s6_di_n">−0,8</span> [<span data-claim="s6_di_n_lo">−2,5</span> ; <span data-claim="s6_di_n_hi">+1,0</span>])</small></div><div class="track"><div class="fill amber" style="width:75.3%"></div></div><div class="val"><span data-claim="s6_di_f1">0,753</span></div></div>
     </div>
-    <p class="note" style="font-size:22px;margin-top:12px;line-height:1.3">La recette gelée à 2 époques sous-estimait tous les modèles appris. À 10 époques, LoRA et encodeur dépassent le TF-IDF, mais ne se distinguent pas entre eux (+1,45 [−1,1 ; +4,1]). L'ensemble gagne +5,2 points sur le meilleur TF-IDF ; la distillation vers un encodeur ne survit pas au contrôle de fuite. Criblage au pli 0 : Qwen3.5-4B 0,587, 9B 0,565, Gemma-4-E4B 0,456 (2 époques).</p>
+    <p class="note" style="font-size:22px;margin-top:12px;line-height:1.3">La recette gelée à 2 époques sous-estimait tous les modèles appris. À 10 époques, LoRA et encodeur dépassent le TF-IDF, mais ne se distinguent pas entre eux (<span data-claim="s6_f_d">+1,45</span> [<span data-claim="s6_f_d_lo">−1,1</span> ; <span data-claim="s6_f_d_hi">+4,1</span>]). L'ensemble gagne <span data-claim="s6_e_tf">+5,2</span> points sur le meilleur TF-IDF ; la distillation vers un encodeur ne survit pas au contrôle de fuite. Criblage au pli 0 : Qwen3.5-4B 0,587, 9B 0,565, Gemma-4-E4B 0,456 (2 époques).</p>
   </div>
-  <div class="foot"><span>Runs : p1-03-bounds, p1-06-tfidf-chapter, camembert-pli*, p1-11-*, v2-power-preview-5-plis</span><span>6 / 14</span></div>
+  <div class="foot"><span>Runs : p1-03-bounds, selection-systeme-final-apres-rm56, v2-power-preview-5-plis et autres (claims.json)</span><span>6 / 14</span></div>
 </section>
 
 <!-- === 6b. INCERTITUDE === -->
@@ -222,47 +222,47 @@ ul.clean li b{font-weight:600}
   <h2>La couverture de 90 % cachait des familles à 65 % ; l'étalonnage par famille la rétablit</h2>
   <div class="body" style="flex-direction:column;justify-content:center">
     <div class="bars dense">
-      <div class="bar-row"><div class="lab">Couverture minimale par famille, conforme marginal<small>ensemble encodeur + TF-IDF, couverture globale 0,901</small></div><div class="track"><div class="fill red" style="width:65.5%"></div></div><div class="val">0,655</div></div>
-      <div class="bar-row"><div class="lab">Couverture minimale par famille, conforme par famille<small>même système, niveau visé 0,90</small></div><div class="track"><div class="fill" style="width:89.2%"></div></div><div class="val">0,892</div></div>
-      <div class="bar-row"><div class="lab">Taille moyenne des ensembles de classes : ensemble<small>conforme par famille</small></div><div class="track"><div class="fill" style="width:63%"></div></div><div class="val">1,89</div></div>
-      <div class="bar-row"><div class="lab">Taille moyenne des ensembles de classes : TF-IDF seul<small>couverture minimale 0,897</small></div><div class="track"><div class="fill amber" style="width:89.7%"></div></div><div class="val">2,69</div></div>
-      <div class="bar-row"><div class="lab">Exactitude à 70 % de couverture : ensemble<small>30 % renvoyés à un humain ; TF-IDF seul : 0,925</small></div><div class="track"><div class="fill" style="width:94.8%"></div></div><div class="val">0,948</div></div>
-      <div class="bar-row"><div class="lab">Système G (LoRA + encodeur + TF-IDF) : couverture minimale par famille<small>conforme par famille, couverture globale 0,901 ; ECE 0,016, la température n'améliore pas G</small></div><div class="track"><div class="fill" style="width:89.1%"></div></div><div class="val">0,891</div></div>
-      <div class="bar-row"><div class="lab">Exactitude à 70 % de couverture : G<small>30 % renvoyés à un humain</small></div><div class="track"><div class="fill" style="width:95.1%"></div></div><div class="val">0,951</div></div>
+      <div class="bar-row"><div class="lab">Couverture minimale par famille, conforme marginal<small>ensemble encodeur + TF-IDF, couverture globale <span data-claim="s7_ens_marg_cov">0,901</span></small></div><div class="track"><div class="fill red" style="width:65.5%"></div></div><div class="val"><span data-claim="s7_ens_marg_min">0,655</span></div></div>
+      <div class="bar-row"><div class="lab">Couverture minimale par famille, conforme par famille<small>même système, niveau visé 0,90</small></div><div class="track"><div class="fill" style="width:89.2%"></div></div><div class="val"><span data-claim="s7_ens_fam_min">0,892</span></div></div>
+      <div class="bar-row"><div class="lab">Taille moyenne des ensembles de classes : ensemble<small>conforme par famille</small></div><div class="track"><div class="fill" style="width:63%"></div></div><div class="val"><span data-claim="s7_ens_size">1,89</span></div></div>
+      <div class="bar-row"><div class="lab">Taille moyenne des ensembles de classes : TF-IDF seul<small>couverture minimale <span data-claim="s7_tf_min">0,897</span></small></div><div class="track"><div class="fill amber" style="width:89.7%"></div></div><div class="val"><span data-claim="s7_tf_size">2,69</span></div></div>
+      <div class="bar-row"><div class="lab">Exactitude à 70 % de couverture : ensemble<small>30 % renvoyés à un humain ; TF-IDF seul : <span data-claim="s7_tf_acc70">0,925</span></small></div><div class="track"><div class="fill" style="width:94.8%"></div></div><div class="val"><span data-claim="s7_ens_acc70">0,948</span></div></div>
+      <div class="bar-row"><div class="lab">Système G (LoRA + encodeur + TF-IDF) : couverture minimale par famille<small>conforme par famille, couverture globale <span data-claim="s7_g_cov">0,901</span> ; ECE <span data-claim="s7_g_ece">0,016</span>, la température n'améliore pas G</small></div><div class="track"><div class="fill" style="width:89.1%"></div></div><div class="val"><span data-claim="s7_g_min">0,891</span></div></div>
+      <div class="bar-row"><div class="lab">Exactitude à 70 % de couverture : G<small>30 % renvoyés à un humain</small></div><div class="track"><div class="fill" style="width:95.1%"></div></div><div class="val"><span data-claim="s7_g_acc70">0,951</span></div></div>
     </div>
-    <p class="note" style="font-size:22px;margin-top:12px;line-height:1.3">À couverture minimale égale, les ensembles de G sont 32 % plus petits que ceux du TF-IDF (1,82 contre 2,69 classes). Réserves : étalonnage croisé par plis (exploratoire), l'exactitude est conditionnelle à l'étiquette du scénario et non à un codage humain, la classe AUTRE reste hors de portée (0 sur 18).</p>
+    <p class="note" style="font-size:22px;margin-top:12px;line-height:1.3">À couverture minimale égale, les ensembles de G sont 32 % plus petits que ceux du TF-IDF (<span data-claim="s7_g_size">1,82</span> contre <span data-claim="s7_tf_size">2,69</span> classes). Réserves : étalonnage croisé par plis (exploratoire), l'exactitude est conditionnelle à l'étiquette du scénario et non à un codage humain, la classe AUTRE reste hors de portée (0 sur 18).</p>
   </div>
-  <div class="foot"><span>Runs : conformal-by-family, abstention-cinq-plis, cinq-plis-ensemble-g</span><span>7 / 14</span></div>
+  <div class="foot"><span>Runs : conformal-by-family, abstention-cinq-plis, cinq-plis-ensemble-g (identifiants dans claims.json)</span><span>7 / 14</span></div>
 </section>
 
 <!-- === 6c. SYSTEME FINAL === -->
 <section class="slide" data-title="Système final">
   <div class="kicker">Test scellé, ouvert une seule fois (633 patients)</div>
-  <h2>G atteint 0,813 : +7,3 points sur le TF-IDF, mais le verdict à δ = 2 reste « non résolu »</h2>
+  <h2>G atteint <span data-claim="s8_g">0,813</span> : <span data-claim="s8_ga_1">+7,3</span> points sur le TF-IDF, mais le verdict à δ = 2 reste « non résolu »</h2>
   <div class="body" style="flex-direction:column;justify-content:center">
     <div class="bars">
-      <div class="bar-row"><div class="lab">TF-IDF caractères, poids équilibrés<small>référence de la question primaire</small></div><div class="track"><div class="fill grey" style="width:74.0%"></div></div><div class="val">0,740</div></div>
-      <div class="bar-row"><div class="lab">Encodeur CamemBERT-bio, 5 graines<small></small></div><div class="track"><div class="fill amber" style="width:77.4%"></div></div><div class="val">0,774</div></div>
-      <div class="bar-row"><div class="lab">Ensemble encodeur + TF-IDF<small>G moins cet ensemble : +1,0 [−3,7 ; +5,0], non résolu</small></div><div class="track"><div class="fill" style="width:80.3%"></div></div><div class="val">0,803</div></div>
-      <div class="bar-row"><div class="lab">Qwen3.5-4B LoRA seul<small>G moins LoRA : +1,0 [−1,4 ; +3,8], non résolu</small></div><div class="track"><div class="fill" style="width:80.3%"></div></div><div class="val">0,803</div></div>
-      <div class="bar-row"><div class="lab">G : LoRA + encodeur + TF-IDF<small>gelé avant l'ouverture ; +7,28 [+1,55 ; +12,62] contre le TF-IDF (blocs d'auteurs)</small></div><div class="track"><div class="fill sky" style="width:81.3%"></div></div><div class="val">0,813</div></div>
+      <div class="bar-row"><div class="lab">TF-IDF caractères, poids équilibrés<small>référence de la question primaire</small></div><div class="track"><div class="fill grey" style="width:74.0%"></div></div><div class="val"><span data-claim="s8_a">0,740</span></div></div>
+      <div class="bar-row"><div class="lab">Encodeur CamemBERT-bio, 5 graines<small></small></div><div class="track"><div class="fill amber" style="width:77.4%"></div></div><div class="val"><span data-claim="s8_d">0,774</span></div></div>
+      <div class="bar-row"><div class="lab">Ensemble encodeur + TF-IDF<small>G moins cet ensemble : <span data-claim="s8_ge">+1,0</span> [<span data-claim="s8_ge_lo">−3,7</span> ; <span data-claim="s8_ge_hi">+5,0</span>], non résolu</small></div><div class="track"><div class="fill" style="width:80.3%"></div></div><div class="val"><span data-claim="s8_e">0,803</span></div></div>
+      <div class="bar-row"><div class="lab">Qwen3.5-4B LoRA seul<small>G moins LoRA : <span data-claim="s8_gf">+1,0</span> [<span data-claim="s8_gf_lo">−1,4</span> ; <span data-claim="s8_gf_hi">+3,8</span>], non résolu</small></div><div class="track"><div class="fill" style="width:80.3%"></div></div><div class="val"><span data-claim="s8_f">0,803</span></div></div>
+      <div class="bar-row"><div class="lab">G : LoRA + encodeur + TF-IDF<small>gelé avant l'ouverture ; <span data-claim="t_ga_d">+7,28</span> [<span data-claim="t_ga_lo">+1,55</span> ; <span data-claim="t_ga_hi">+12,62</span>] contre le TF-IDF (blocs d'auteurs)</small></div><div class="track"><div class="fill sky" style="width:81.3%"></div></div><div class="val"><span data-claim="s8_g">0,813</span></div></div>
     </div>
-    <p class="note" style="font-size:26px"><b>Verdict de la règle écrite d'avance</b> : la borne basse de l'intervalle par blocs d'auteurs (+1,55) est sous δ = 2,0, donc « non résolu » (annoncé comme probable : 0,50) ; l'intervalle par patients, qui n'est pas la règle, serait au-dessus. <b>Prédiction préenregistrée : quatre réussites sur six</b>, deux échecs publiés : macro-F1 plus haute que prévu (0,813 pour 0,78 [0,75 ; 0,81]), couverture conforme minimale par famille de 0,821 pour au moins 0,87. <b>Incertitude</b> : couverture marginale 0,924 et par famille 0,916 pour une cible de 0,90 ; exactitude 0,962 à 70 % de couverture.</p>
+    <p class="note" style="font-size:26px"><b>Verdict de la règle écrite d'avance</b> : la borne basse de l'intervalle par blocs d'auteurs (+1,55) est sous δ = 2,0, donc « non résolu » (annoncé comme probable : 0,50) ; l'intervalle par patients, qui n'est pas la règle, serait au-dessus. <b>Prédiction préenregistrée</b> : quatre réussites sur six, deux échecs publiés : macro-F1 plus haute que prévu (0,813 pour 0,78 [0,75 ; 0,81]), couverture conforme minimale par famille de <span data-claim="s8_cov_min">0,821</span> pour au moins 0,87. <b>Incertitude</b> : couverture marginale <span data-claim="s8_cov_marg">0,924</span> et par famille <span data-claim="s8_cov_fam">0,916</span> pour une cible de 0,90 ; exactitude <span data-claim="s8_abst70">0,962</span> à 70 % de couverture.</p>
   </div>
-  <div class="foot"><span>Runs : ouverture-test-scelle-g, selection-systeme-final-apres-rm56 ; ADR-016</span><span>8 / 14</span></div>
+  <div class="foot"><span>Runs : <code>20261006-210015-ouverture-test-scelle-g</code>, selection-systeme-final-apres-rm56 ; ADR-016</span><span>8 / 14</span></div>
 </section>
 
 <!-- === 7. RM-14 === -->
 <section class="slide" data-title="Découpage">
   <div class="kicker">Un résultat inattendu</div>
-  <h2>Le score dépend du découpage : 3,9 points de plus avec des plis par patient</h2>
+  <h2>Le score dépend du découpage : <span data-claim="s9_d1">3,9</span> points de plus avec des plis par patient</h2>
   <div class="body">
     <div class="col" style="flex:1.25">
       <div class="bars">
-        <div class="bar-row" style="grid-template-columns:330px 1fr 130px"><div class="lab">Plis par patient<small>IC [0,657 ; 0,709]</small></div><div class="track"><div class="fill" style="width:68.4%"></div><div class="ci" style="left:65.7%;width:5.2%"></div></div><div class="val">0,684</div></div>
-        <div class="bar-row" style="grid-template-columns:330px 1fr 130px"><div class="lab">Plis par auteur<small>IC [0,620 ; 0,669]</small></div><div class="track"><div class="fill sky" style="width:64.6%"></div><div class="ci" style="left:62%;width:4.9%"></div></div><div class="val">0,646</div></div>
+        <div class="bar-row" style="grid-template-columns:330px 1fr 130px"><div class="lab">Plis par patient<small>IC [<span data-claim="s9_p_lo">0,657</span> ; <span data-claim="s9_p_hi">0,709</span>]</small></div><div class="track"><div class="fill" style="width:68.4%"></div><div class="ci" style="left:65.7%;width:5.2%"></div></div><div class="val"><span data-claim="s9_p">0,684</span></div></div>
+        <div class="bar-row" style="grid-template-columns:330px 1fr 130px"><div class="lab">Plis par auteur<small>IC [<span data-claim="s9_a_lo">0,620</span> ; <span data-claim="s9_a_hi">0,669</span>]</small></div><div class="track"><div class="fill sky" style="width:64.6%"></div><div class="ci" style="left:62%;width:4.9%"></div></div><div class="val"><span data-claim="s9_a">0,646</span></div></div>
       </div>
-      <p class="note" style="font-size:27px;margin-top:34px">Écart <b>+3,87 points, IC 95 % [+1,27 ; +6,31]</b>, « signalé » par la règle écrite avant le run ; avec une grille de réglage plus large : +3,42 [+1,17 ; +5,78].</p>
+      <p class="note" style="font-size:27px;margin-top:34px">Écart <b><span data-claim="s9_d">+3,87</span> points, IC 95 % [<span data-claim="s9_d_lo">+1,27</span> ; <span data-claim="s9_d_hi">+6,31</span>]</b>, « signalé » par la règle écrite avant le run ; avec une grille de réglage plus large : <span data-claim="s9_v2">+3,42</span> [<span data-claim="s9_v2_lo">+1,17</span> ; <span data-claim="s9_v2_hi">+5,78</span>].</p>
     </div>
     <div class="col">
       <div class="card">
@@ -276,7 +276,7 @@ ul.clean li b{font-weight:600}
       </div>
     </div>
   </div>
-  <div class="foot"><span>Runs : rm-14-author-shortcut-tfidf et sa version v2</span><span>9 / 14</span></div>
+  <div class="foot"><span>Runs : <code>20261003-122037-rm-14-author-shortcut-tfidf</code> et sa version v2</span><span>9 / 14</span></div>
 </section>
 
 <!-- === 8. INGENIERIE === -->
@@ -285,20 +285,20 @@ ul.clean li b{font-weight:600}
   <h2>Chaque étape est testée, tracée et rejouable</h2>
   <div class="body" style="flex-direction:column;justify-content:center">
     <div class="stats" style="grid-template-columns:repeat(4,1fr)">
-      <div class="card stat"><div class="n">487</div><div class="t">tests automatiques, typage strict, analyse statique</div></div>
-      <div class="card stat"><div class="n">453</div><div class="t">runs au registre, un fichier par run, jamais réécrit</div></div>
-      <div class="card stat"><div class="n">16</div><div class="t">décisions d'architecture tracées (ADR)</div></div>
+      <div class="card stat"><div class="n">616</div><div class="t">tests automatiques, typage strict, analyse statique</div></div>
+      <div class="card stat"><div class="n">486</div><div class="t">runs au registre, un fichier par run, jamais réécrit</div></div>
+      <div class="card stat"><div class="n">17</div><div class="t">décisions d'architecture tracées (ADR)</div></div>
       <div class="card stat"><div class="n">7/7</div><div class="t">mutations du code statistique détectées par les tests</div></div>
     </div>
     <ul class="clean" style="margin-top:44px;gap:14px">
-      <li style="font-size:29px">Garde anti-affaiblissement des règles de qualité, détection de secrets à chaque commit, 58 fiches et instantanés hachés avant les runs</li>
-      <li style="font-size:29px">Lots de nuit enchaînés avec relances plafonnées et consignées, journaux archivés dans le dépôt ; un plantage aléatoire du tokenizer diagnostiqué par la mesure (25 échecs sur 31 runs, 0 sur 78 une fois le processus épinglé) puis contourné</li>
+      <li style="font-size:29px">Garde anti-affaiblissement des règles de qualité, détection de secrets à chaque commit, 57 fiches et 10 instantanés hachés avant les runs, tampon de santé de la machine sur chaque run depuis le 16 octobre</li>
+      <li style="font-size:29px">Lots de nuit enchaînés avec relances plafonnées et consignées, journaux archivés dans le dépôt ; un plantage aléatoire du tokenizer diagnostiqué par la mesure (<span data-claim="tk_free_fail">25</span> échecs sur <span data-claim="tk_free_runs">31</span> runs, <span data-claim="tk_pin_fail">0</span> sur <span data-claim="tk_pin_runs">78</span> une fois le processus épinglé) puis contourné</li>
       <li style="font-size:29px">Cinq audits externes triés ligne à ligne, puis une revue indépendante par trois agents : 72 mutations survivantes dans les tests (20 sur 21 dans le module du verdict publié), tuées par 88 tests ajoutés, 12 défauts corrigés</li>
       <li style="font-size:29px">Wiki de 19 pages avec citations vérifiées ligne par ligne contre les sources</li>
       <li style="font-size:29px">Porte « claim-gate » : une affirmation sort du dépôt avec sa preuve, ou ne sort pas</li>
     </ul>
   </div>
-  <div class="foot"><span>Sources : make check, journal de nuit (réserve R-c), docs/decisions</span><span>10 / 14</span></div>
+  <div class="foot"><span>Sources : pytest --collect-only, ls results/runs, docs/decisions, journal de nuit (compteurs du 17/10)</span><span>10 / 14</span></div>
 </section>
 
 <!-- === 9. MATERIEL === -->
@@ -307,17 +307,17 @@ ul.clean li b{font-weight:600}
   <h2>De 4 minutes à 3,5 h par run ; de 2 ms à 0,8 s par patient selon le matériel</h2>
   <div class="body" style="flex-direction:column;justify-content:center">
     <div class="bars dense">
-      <div class="bar-row"><div class="lab">Entraînement : encodeur CamemBERT-bio, 10 époques<small>un pli, RTX 5090</small></div><div class="track"><div class="fill" style="width:1.7%"></div></div><div class="val">215 s</div></div>
-      <div class="bar-row"><div class="lab">Entraînement : Qwen3.5-4B LoRA, 2 époques<small>un pli</small></div><div class="track"><div class="fill amber" style="width:24%"></div></div><div class="val">3 024 s</div></div>
-      <div class="bar-row"><div class="lab">Entraînement : Qwen3.5-4B LoRA, 10 époques<small>un pli, pic 12,9 Gio</small></div><div class="track"><div class="fill amber" style="width:100%"></div></div><div class="val">12 467 s</div></div>
-      <div class="bar-row"><div class="lab">Service : TF-IDF en conteneur durci (processeur)<small>démarrage 2,6 s, 470 patients par seconde, 182 Mio</small></div><div class="track"><div class="fill" style="width:1%"></div></div><div class="val">2,3 ms</div></div>
-      <div class="bar-row"><div class="lab">Service : cinq encodeurs + TF-IDF (E), GPU bf16<small>mêmes classes qu'en fp32 pour 200 patients sur 200</small></div><div class="track"><div class="fill" style="width:3.6%"></div></div><div class="val">28,8 ms</div></div>
-      <div class="bar-row"><div class="lab">Service : G d'un seul tenant, GPU<small>p95 148 ms ; 10,3 Gio ; 10,5 Wh pour 1 000 ; 4 clients : p95 0,8 s</small></div><div class="track"><div class="fill sky" style="width:11.4%"></div></div><div class="val">91,6 ms</div></div>
-      <div class="bar-row"><div class="lab">Service : E sur processeur seul (huit fils)<small>environ 4 500 patients par heure, +5,2 points sur le TF-IDF</small></div><div class="track"><div class="fill amber" style="width:100%"></div></div><div class="val">801 ms</div></div>
+      <div class="bar-row"><div class="lab">Entraînement : encodeur CamemBERT-bio, 10 époques<small>un pli, RTX 5090</small></div><div class="track"><div class="fill" style="width:1.7%"></div></div><div class="val"><span data-claim="s11_enc_s">215</span> s</div></div>
+      <div class="bar-row"><div class="lab">Entraînement : Qwen3.5-4B LoRA, 2 époques<small>un pli</small></div><div class="track"><div class="fill amber" style="width:24%"></div></div><div class="val"><span data-claim="s11_lora2_s">3 024</span> s</div></div>
+      <div class="bar-row"><div class="lab">Entraînement : Qwen3.5-4B LoRA, 10 époques<small>un pli, pic <span data-claim="s11_lora10_gib">12,9</span> Gio</small></div><div class="track"><div class="fill amber" style="width:100%"></div></div><div class="val"><span data-claim="s11_lora10_s">12 467</span> s</div></div>
+      <div class="bar-row"><div class="lab">Service : TF-IDF en conteneur durci (processeur)<small>démarrage <span data-claim="s11_tfidf_boot">2,6</span> s, environ 470 patients par seconde, 182 Mio</small></div><div class="track"><div class="fill" style="width:1%"></div></div><div class="val"><span data-claim="s11_tfidf_ms">2,1</span> ms</div></div>
+      <div class="bar-row"><div class="lab">Service : cinq encodeurs + TF-IDF (E), GPU bf16<small>mêmes classes qu'en fp32 pour 200 patients sur 200</small></div><div class="track"><div class="fill" style="width:3.6%"></div></div><div class="val"><span data-claim="s11_e_ms">28,8</span> ms</div></div>
+      <div class="bar-row"><div class="lab">Service : G d'un seul tenant, GPU<small>p95 <span data-claim="s11_g_p95">148</span> ms ; <span data-claim="s11_g_gib">10,3</span> Gio ; <span data-claim="s11_g_wh">10,5</span> Wh pour 1 000 ; 4 clients : p95 <span data-claim="s11_g_conc_p95_s">0,8</span> s</small></div><div class="track"><div class="fill sky" style="width:11.4%"></div></div><div class="val"><span data-claim="s11_g_ms">91,6</span> ms</div></div>
+      <div class="bar-row"><div class="lab">Service : E sur processeur seul (huit fils)<small>environ 4 500 patients par heure, +5,2 points sur le TF-IDF</small></div><div class="track"><div class="fill amber" style="width:100%"></div></div><div class="val"><span data-claim="s11_ecpu_ms">801,5</span> ms</div></div>
     </div>
-    <p class="note" style="font-size:22px;margin-top:12px;line-height:1.3"><b>Ce qui tient</b> : sur la frontière coût-qualité, le LoRA seul et les deux cascades sont dominés par E ; G coûte 7,9 fois l'entraînement et 3,2 fois la latence de E pour +0,78 point non résolu, et E n'est pas démontré non inférieur à G. <b>Ce qui n'a pas tenu, publié</b> : distillation (gain non préservé), INT8 statique (0,0227), élagage (−13,1 points). Limites : une machine instable (deux passages concordants), G servi par un banc et non par un service HTTP.</p>
+    <p class="note" style="font-size:22px;margin-top:12px;line-height:1.3"><b>Ce qui tient</b> : sur la frontière coût-qualité, le LoRA seul et les deux cascades sont dominés par E ; G coûte 7,9 fois l'entraînement et 3,2 fois la latence de E pour +0,78 point non résolu, et E n'est pas démontré non inférieur à G. <b>Ce qui n'a pas tenu, publié</b> : distillation (gain non préservé), INT8 statique (<span data-claim="i8_f1">0,0227</span>), élagage (<span data-claim="pr_d_1">−13,1</span> points). <b>Nouveau (17/10)</b> : G servi par HTTP en cascade E puis G, même qualité (<span data-claim="cas_dg">−0,10</span> point, hors pli), <span data-claim="sv_expected">38,4</span> ms et <span data-claim="en_expected_1">3,1</span> Wh pour 1 000 patients attendus contre <span data-claim="sv_g_mean">97,4</span> ms et <span data-claim="en_g_1">10,7</span> Wh pour G complet. Limites : une machine instable, même après la mise à jour du BIOS ; pas d'image GPU.</p>
   </div>
-  <div class="foot"><span>Runs : service-g-bout-en-bout-*, image-de-service-tfidf-*, frontiere-cout-qualite</span><span>11 / 14</span></div>
+  <div class="foot"><span>Runs : service-g-bout-en-bout-*, frontiere-cout-qualite, <code>20261017-015754-service-g-cascade</code></span><span>11 / 14</span></div>
 </section>
 
 <!-- === 10. AUTONOMIE === -->
@@ -336,13 +336,13 @@ ul.clean li b{font-weight:600}
       <div class="card">
         <div class="kicker" style="margin-bottom:12px">Erreurs vues et corrigées</div>
         <ul class="clean" style="gap:10px">
-          <li style="font-size:24px">Plantage du tokenizer : premier correctif insuffisant ; mesure : 25 échecs sur 31, 0 sur 78 une fois épinglé</li>
+          <li style="font-size:24px">Plantage du tokenizer : premier correctif insuffisant ; mesure : <span data-claim="tk_free_fail">25</span> échecs sur <span data-claim="tk_free_runs">31</span>, <span data-claim="tk_pin_fail">0</span> sur <span data-claim="tk_pin_runs">78</span> une fois épinglé</li>
           <li style="font-size:24px">Chemin à espaces non protégé dans les scripts de lot : redirections guillemetées, contrôle automatique</li>
           <li style="font-size:24px">Garde mémoire posé sur le mauvais processus, lot de 4 à 32 Gio de VRAM : lancement gardé testé</li>
           <li style="font-size:24px">Estimations jamais remplacées par la mesure (surcoût 25 s annoncé, 75 à 132 s mesuré) : règle de remplacement</li>
           <li style="font-size:24px">Diapositive contredisant un résultat corrigé, notes non réévaluées 48 h : réévaluation à chaque preuve</li>
           <li style="font-size:24px">« Règle de puissance atteinte à 98,33 % » : vraie par patients, fausse par blocs d'auteurs (4,24), rectifiée partout</li>
-          <li style="font-size:24px"><b>Pannes de la machine</b> : 11 % d'échecs et 1 résultat différent sur 120 mesurés, puis un arrêt complet de WSL avec 45 Go de RAM libres (donc pas la mémoire) : relances bornées, double exécution des chiffres, vérification matérielle demandée</li>
+          <li style="font-size:24px"><b>Pannes de la machine</b> : 11 % d'échecs, 1 résultat faux sur 120, un arrêt de WSL avec 45 Go libres, rien de changé par le BIOS (<span data-claim="bios_ap_crash">10</span> pannes sur <span data-claim="bios_ap_n">46</span> avant et après) : double exécution, aucun long calcul publié</li>
         </ul>
       </div>
     </div>
@@ -361,12 +361,12 @@ ul.clean li b{font-weight:600}
         <li style="font-size:25px">Système final G gelé avec sa prédiction chiffrée (ADR-016), puis <b>test scellé ouvert une fois : 0,813, +7,3 points sur le TF-IDF, verdict « non résolu »</b> ; prédiction notée, deux échecs publiés</li>
         <li style="font-size:25px">Sept résultats négatifs publiés : distillation (fuite de second ordre), lissage, moyenne de poids, curriculum, INT8 statique, élagage, empilement appris</li>
         <li style="font-size:25px">Robustesse : le LoRA classe sur la fin du texte ; correction testée (fin aléatoire, un pli, une graine : 0,79 au lieu de 0,14 à 10 % de fin retirée), G gelé inchangé ; MorFITT : 71,7 contre 71,95 publié</li>
-        <li style="font-size:25px">Fiabilité des lots : tokenizer contourné, lancement gardé (RAM, VRAM), 524 tests ; pannes de la machine mesurées (11 %), WSL planté une fois de plus le 7 octobre</li>
+        <li style="font-size:25px">Fiabilité des lots : tokenizer contourné, lancement gardé (RAM, VRAM), 616 tests ; pannes de la machine mesurées (11 %), WSL planté une fois de plus le 7 octobre</li>
       </ul>
       <div class="kicker" style="margin:22px 0 14px">À exécuter</div>
       <ul class="clean" style="gap:12px">
         <li style="font-size:25px">Image Docker, version taguée et textes de candidature à passer par le contrôle des affirmations</li>
-        <li style="font-size:25px">Relecture humaine, carte de modèle finale et fiche de déploiement (193 micro-tâches, 111 sur le chemin court)</li>
+        <li style="font-size:25px">Relecture humaine, carte de modèle finale et fiche de déploiement (199 micro-tâches, 111 sur le chemin court) ; présentation de méthode « itinéraire le plus court »</li>
       </ul>
     </div>
     <div class="col">
@@ -381,7 +381,7 @@ ul.clean li b{font-weight:600}
         <ul class="clean" style="gap:12px">
           <li style="font-size:26px">Que faire d'un verdict « non résolu » : le rapporter tel quel (recommandé) ou financer un second cycle pour le lever</li>
           <li style="font-size:26px">Publication hors machine (dépôt distant, vitrine), après contrôle des affirmations</li>
-          <li style="font-size:26px">Vérifier la machine côté Windows (BIOS, microcode, test de mémoire, journal Kernel-Power) avant tout nouveau long calcul publié</li>
+          <li style="font-size:26px">BIOS à jour, machine toujours instable : relever le microcode, le journal WHEA, un test natif sous Windows et un test de mémoire avant tout long calcul publié</li>
         </ul>
       </div>
     </div>
@@ -392,7 +392,7 @@ ul.clean li b{font-weight:600}
 <!-- === 12. NOTES === -->
 <section class="slide" data-title="Notes">
   <div class="kicker">Bilan chiffré</div>
-  <h2 style="font-size:50px">Note moyenne : 8,1 / 10, contre 7,6 et 9,4 pour les SOTA</h2>
+  <h2 style="font-size:50px">Note moyenne : 8,25 / 10, contre 7,6 et 9,4 pour les SOTA</h2>
   <div style="margin-top:18px">
     <table class="score">
       <thead><tr><th>Composante</th><th>Ce projet</th><th>SOTA open source</th><th>SOTA absolu</th></tr></thead>
@@ -403,14 +403,14 @@ ul.clean li b{font-weight:600}
         <tr><td>Fiabilité de l'incertitude</td><td><div class="mini c-p"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
         <tr><td>Analyse d'erreurs et robustesse</td><td><div class="mini c-p"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
         <tr><td>Reproductibilité et ingénierie</td><td><div class="mini c-p"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
-        <tr><td>Efficience et déploiement</td><td><div class="mini c-p"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:100%"></i></div><span>10</span></div></td></tr>
+        <tr><td>Efficience et déploiement</td><td><div class="mini c-p"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:80%"></i></div><span>8</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:100%"></i></div><span>10</span></div></td></tr>
         <tr><td>Sûreté, conformité, honnêteté</td><td><div class="mini c-p"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:70%"></i></div><span>7</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:90%"></i></div><span>9</span></div></td></tr>
-        <tr class="avg"><td>Moyenne des 8 composantes</td><td><div class="mini c-p"><div class="tr"><i style="width:81%"></i></div><span>8,1</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:76%"></i></div><span>7,6</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:94%"></i></div><span>9,4</span></div></td></tr>
+        <tr class="avg"><td>Moyenne des 8 composantes</td><td><div class="mini c-p"><div class="tr"><i style="width:82.5%"></i></div><span>8,25</span></div></td><td><div class="mini c-o"><div class="tr"><i style="width:76%"></i></div><span>7,6</span></div></td><td><div class="mini c-a"><div class="tr"><i style="width:94%"></i></div><span>9,4</span></div></td></tr>
       </tbody>
     </table>
   </div>
-  <p class="note" style="font-size:21px;margin-top:6px;line-height:1.35"><b>Estimation, non mesurée</b> : notes sur 10 à plus ou moins 1 point, jugement structuré de l'assistant, à contre-expertiser ; « SOTA » = meilleur niveau connu par composante. <b>Depuis le 5 octobre</b> : efficience 5 à 6, puis 6 à 7 le 7 octobre (G mesuré d'un seul tenant, fiche de déploiement finale, image de service testée ; la compression n'a jamais réussi et G n'est servi que par un banc) ; après l'ouverture du test scellé, performance, rigueur (8 à 9) et incertitude (7 à 8) ; robustesse 6 à 7 (fragilité du LoRA à la fin du texte ; correction testée au pli 0 le 7 octobre, hors du système gelé : note maintenue à 7) ; puis, avec l'ancrage MorFITT, <b>performance 7 à 8</b> (mélange à 71,7 contre 71,95 publié au mieux, mais pas au-dessus) et <b>données 7 à 8</b> (second jeu entré avec le même outillage). <b>Reproductibilité 8 à 9</b> (chiffre clé reconstruit à l'identique depuis un clone neuf ; image Docker reconstruite et testée (514 tests) ; version taguée à faire). <b>Honnêteté 8 à 9</b> (rapport final passé par le contrôle des affirmations, checklist TRIPOD-LLM renseignée ; relecture humaine et textes de candidature à faire). Plafond atteignable estimé : 9,2 à 9,4 (docs/CHAINE_DE_DOMINOS.md, PREUVES.md).</p>
-  <div class="foot"><span>Projet : état au 07/10/2026</span><span>14 / 14</span></div>
+  <p class="note" style="font-size:21px;margin-top:6px;line-height:1.35"><b>Estimation, non mesurée</b> : notes sur 10 à plus ou moins 1 point, jugement structuré de l'assistant, à contre-expertiser ; « SOTA » = meilleur niveau connu par composante. <b>Depuis le 5 octobre</b> : efficience 5 à 6, 6 à 7 le 7 octobre (G mesuré, fiche de déploiement, image du TF-IDF), puis 7 à 8 le 17 octobre (G servi par HTTP en cascade, 38,4 ms attendus contre 97,4 ms ; compression jamais réussie) ; après l'ouverture du test scellé, performance, rigueur (8 à 9) et incertitude (7 à 8) ; robustesse 6 à 7 (fragilité du LoRA à la fin du texte ; correction testée au pli 0 le 7 octobre, hors du système gelé : note maintenue à 7) ; puis, avec l'ancrage MorFITT, <b>performance 7 à 8</b> (mélange à 71,7 contre 71,95 publié au mieux, mais pas au-dessus) et <b>données 7 à 8</b> (second jeu entré avec le même outillage). <b>Reproductibilité 8 à 9</b> (chiffre clé reconstruit à l'identique depuis un clone neuf ; image Docker reconstruite et testée (514 tests) ; version taguée à faire). <b>Honnêteté 8 à 9</b> (rapport final passé par le contrôle des affirmations, checklist TRIPOD-LLM renseignée ; relecture humaine et textes de candidature à faire). Plafond atteignable estimé : 9,2 à 9,4 (docs/CHAINE_DE_DOMINOS.md, PREUVES.md).</p>
+  <div class="foot"><span>Projet : état au 17/10/2026</span><span>14 / 14</span></div>
 </section>
 
 </div></div>

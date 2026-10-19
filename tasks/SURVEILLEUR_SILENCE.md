@@ -27,3 +27,14 @@ Les tâches périodiques vivent dans la session (perdues à sa fermeture) et exp
 
 ## Cadence du 06/10/2026 à 13h50Z
 File vide et GPU libre, en attente des réponses de Cyril (Q22 à Q25) : la tâche périodique passe à une fois par heure (id eda5b075, minute 7, remplace 69f29474). Elle repasse à 5 minutes dès qu'un lot est à lancer sans attente.
+
+## Cadence du 17/10/2026 à 04:16Z
+File et réserve faites ou verrouillées (Q26, Q27, Q28, accord wiki), GPU libre : la tâche périodique passe à une fois par heure (id b42c6f6e, minute 7, remplace d4d84425). Elle repasse à 20 minutes dès que Docker répond ou que Cyril autorise RM-61 ou RM-62.
+
+## Cadence du 17/10/2026 à 08:44Z
+
+Cyril a autorisé RM-61 et RM-62 par écrit (« vas-y », Q26) ; lot lancé à 08:42:49Z (`scripts/run_morfitt_g_puis_auteurs.sh`, garde PID 130451). La tâche périodique repasse à 20 minutes (5d524726, minutes 7, 27 et 47 ; remplace b42c6f6e) et surveille le lot : journaux `results/logs/lots/morfitt_g.log` et `lora_fin_aleatoire_auteurs.log`, arrêts N31, tampons de santé.
+
+## Cadence du 17/10/2026 à 13:15Z
+
+Fin de la fenêtre de nuit de 12 h. RM-62 tourne avec ses règles d'arrêt mécaniques ; son prochain événement (fin du pli 0) est attendu vers 15:15Z. La tâche périodique passe à une fois par heure (8de56c6b, minute 17 locale ; remplace b60af706) : surveillance du lot, application des critères de sa fiche à chaque run terminé, puis, à la fin du lot, démo de G et charge prolongée.

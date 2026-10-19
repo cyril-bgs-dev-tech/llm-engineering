@@ -1,0 +1,407 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.13kB 0.2s
+#1 transferring dockerfile: 1.14kB 0.2s done
+#1 DONE 0.2s
+
+#2 [internal] load metadata for ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+#2 DONE 0.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 32B 0.0s
+#3 transferring context: 127B 0.2s done
+#3 DONE 0.2s
+
+#4 [ 1/14] FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim@sha256:e5b65587bce7de595f299855d7385fe7fca39b8a74baa261ba1b7147afa78e58
+#4 resolve ghcr.io/astral-sh/uv:python3.12-bookworm-slim@sha256:e5b65587bce7de595f299855d7385fe7fca39b8a74baa261ba1b7147afa78e58 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 843.66kB 1.3s done
+#5 DONE 1.3s
+
+#6 [ 2/14] WORKDIR /work
+#6 CACHED
+
+#7 [ 3/14] COPY pyproject.toml uv.lock ./
+#7 CACHED
+
+#8 [ 4/14] RUN uv sync --frozen --no-install-project
+#8 0.354 Using CPython 3.12.12 interpreter at: /usr/local/bin/python3
+#8 0.354 Creating virtual environment at: .venv
+#8 0.523 Downloading pygments (1.2MiB)
+#8 0.524 Downloading sympy (6.0MiB)
+#8 0.547 Downloading setuptools (1.0MiB)
+#8 0.547 Downloading pandas (10.3MiB)
+#8 0.557 Downloading torch (782.3MiB)
+#8 0.570 Downloading hf-xet (4.3MiB)
+#8 0.571 Downloading aiohttp (1.7MiB)
+#8 0.571 Downloading ast-serialize (1.3MiB)
+#8 0.571 Downloading pydantic-core (2.0MiB)
+#8 0.571 Downloading numpy (15.9MiB)
+#8 0.572 Downloading pip (1.7MiB)
+#8 0.572 Downloading ruff (9.9MiB)
+#8 0.572 Downloading tokenizers (3.2MiB)
+#8 0.572 Downloading scipy (33.7MiB)
+#8 0.572 Downloading nvidia-cuda-cupti-cu12 (9.8MiB)
+#8 0.572 Downloading nvidia-cuda-nvrtc-cu12 (84.0MiB)
+#8 0.573 Downloading transformers (12.0MiB)
+#8 0.573 Downloading nvidia-cufft-cu12 (184.2MiB)
+#8 0.573 Downloading networkx (2.0MiB)
+#8 0.573 Downloading nvidia-curand-cu12 (60.7MiB)
+#8 0.574 Downloading cuda-bindings (11.6MiB)
+#8 0.574 Downloading scikit-learn (8.7MiB)
+#8 0.574 Downloading nvidia-nvjitlink-cu12 (37.4MiB)
+#8 0.574 Downloading nvidia-nccl-cu12 (283.0MiB)
+#8 0.574 Downloading bitsandbytes (41.1MiB)
+#8 0.574 Downloading nvidia-cusolver-cu12 (255.1MiB)
+#8 0.575 Downloading nvidia-nvshmem-cu12 (132.7MiB)
+#8 0.575 Downloading mypy (14.8MiB)
+#8 0.575 Downloading nvidia-cusparse-cu12 (274.9MiB)
+#8 0.575 Downloading nvidia-cublas-cu12 (566.8MiB)
+#8 0.575 Downloading pyarrow (47.8MiB)
+#8 0.576 Downloading statsmodels (11.5MiB)
+#8 0.576 Downloading nvidia-cudnn-cu12 (627.4MiB)
+#8 0.576 Downloading nvidia-cufile-cu12 (1.1MiB)
+#8 0.576 Downloading nvidia-cusparselt-cu12 (273.9MiB)
+#8 0.577 Downloading triton (179.5MiB)
+#8 3.689  Downloaded setuptools
+#8 3.958  Downloaded nvidia-cufile-cu12
+#8 4.097  Downloaded pygments
+#8 4.189  Downloaded ast-serialize
+#8 5.163  Downloaded aiohttp
+#8 5.247  Downloaded pip
+#8 5.783  Downloaded networkx
+#8 5.810  Downloaded pydantic-core
+#8 7.740  Downloaded tokenizers
+#8 9.543  Downloaded hf-xet
+#8 12.40  Downloaded sympy
+#8 16.60  Downloaded scikit-learn
+#8 18.26  Downloaded nvidia-cuda-cupti-cu12
+#8 18.57  Downloaded ruff
+#8 19.12  Downloaded pandas
+#8 20.65  Downloaded statsmodels
+#8 20.76  Downloaded cuda-bindings
+#8 21.20  Downloaded transformers
+#8 24.50  Downloaded mypy
+#8 25.84  Downloaded numpy
+#8 43.22  Downloaded scipy
+#8 46.45  Downloaded nvidia-nvjitlink-cu12
+#8 49.61  Downloaded bitsandbytes
+#8 54.82  Downloaded torch
+#8 55.08  Downloaded pyarrow
+#8 65.65  Downloaded nvidia-curand-cu12
+#8 82.59  Downloaded nvidia-cuda-nvrtc-cu12
+#8 115.5  Downloaded nvidia-nvshmem-cu12
+#8 142.5  Downloaded triton
+#8 145.2  Downloaded nvidia-cufft-cu12
+#8 176.1  Downloaded nvidia-cusolver-cu12
+#8 183.6  Downloaded nvidia-cusparselt-cu12
+#8 183.8  Downloaded nvidia-cusparse-cu12
+#8 185.2  Downloaded nvidia-nccl-cu12
+#8 227.1  Downloaded nvidia-cublas-cu12
+#8 231.7  Downloaded nvidia-cudnn-cu12
+#8 231.7 Prepared 121 packages in 3m 51s
+#8 233.3 Installed 121 packages in 1.60s
+#8 238.4 Bytecode compiled 15780 files in 5.06s
+#8 238.4  + accelerate==1.15.0
+#8 238.4  + aiohappyeyeballs==2.7.1
+#8 238.4  + aiohttp==3.14.3
+#8 238.4  + aiosignal==1.4.0
+#8 238.4  + annotated-doc==0.0.5
+#8 238.4  + annotated-types==0.8.0
+#8 238.4  + anyio==4.15.1
+#8 238.4  + ast-serialize==0.11.2
+#8 238.4  + attrs==26.1.0
+#8 238.4  + bitsandbytes==0.50.2
+#8 238.4  + boolean-py==5.0
+#8 238.4  + cachecontrol==0.14.4
+#8 238.4  + certifi==2026.7.22
+#8 238.4  + charset-normalizer==3.5.2
+#8 238.4  + click==8.5.0
+#8 238.4  + cloudpickle==3.1.2
+#8 238.4  + coverage==7.16.2
+#8 238.4  + cuda-bindings==12.9.4
+#8 238.4  + cuda-pathfinder==1.8.2
+#8 238.4  + cuda-toolkit==12.8.1
+#8 238.4  + cyclonedx-python-lib==11.12.0
+#8 238.4  + datasets==5.0.1
+#8 238.4  + defusedxml==0.7.1
+#8 238.4  + dill==0.4.1
+#8 238.4  + filelock==4.0.8
+#8 238.4  + formulaic==1.2.2
+#8 238.4  + frozenlist==1.8.0
+#8 238.4  + fsspec==2026.6.0
+#8 238.4  + h11==0.16.0
+#8 238.4  + hf-xet==1.6.0
+#8 238.4  + httpcore==1.0.9
+#8 238.4  + httpx==0.28.1
+#8 238.4  + huggingface-hub==1.33.0
+#8 238.4  + idna==3.20
+#8 238.4  + iniconfig==2.3.0
+#8 238.4  + interface-meta==2.0.1
+#8 238.4  + jinja2==3.1.6
+#8 238.4  + joblib==1.6.0
+#8 238.4  + librt==0.16.0
+#8 238.4  + license-expression==30.4.4
+#8 238.4  + markdown-it-py==4.2.0
+#8 238.4  + markupsafe==3.0.3
+#8 238.4  + mdurl==0.1.2
+#8 238.4  + mpmath==1.3.0
+#8 238.4  + msgpack==1.2.3
+#8 238.4  + multidict==6.9.1
+#8 238.4  + multiprocess==0.70.19
+#8 238.4  + mypy==2.4.0
+#8 238.4  + mypy-extensions==1.1.0
+#8 238.4  + narwhals==2.26.0
+#8 238.4  + networkx==3.7
+#8 238.4  + numpy==2.5.3
+#8 238.4  + nvidia-cublas-cu12==12.8.4.1
+#8 238.4  + nvidia-cuda-cupti-cu12==12.8.90
+#8 238.4  + nvidia-cuda-nvrtc-cu12==12.8.93
+#8 238.4  + nvidia-cuda-runtime-cu12==12.8.90
+#8 238.4  + nvidia-cudnn-cu12==9.19.0.56
+#8 238.4  + nvidia-cufft-cu12==11.3.3.83
+#8 238.4  + nvidia-cufile-cu12==1.13.1.3
+#8 238.4  + nvidia-curand-cu12==10.3.9.90
+#8 238.4  + nvidia-cusolver-cu12==11.7.3.90
+#8 238.4  + nvidia-cusparse-cu12==12.5.8.93
+#8 238.4  + nvidia-cusparselt-cu12==0.7.1
+#8 238.4  + nvidia-nccl-cu12==2.28.9
+#8 238.4  + nvidia-nvjitlink-cu12==12.8.93
+#8 238.4  + nvidia-nvshmem-cu12==3.4.5
+#8 238.4  + nvidia-nvtx-cu12==12.8.90
+#8 238.4  + packageurl-python==0.17.6
+#8 238.4  + packaging==26.3
+#8 238.4  + pandas==3.0.6
+#8 238.4  + pathspec==1.1.1
+#8 238.4  + patsy==1.0.3
+#8 238.4  + peft==0.21.2
+#8 238.4  + pip==26.2.1
+#8 238.4  + pip-api==0.0.35
+#8 238.4  + pip-audit==2.10.1
+#8 238.4  + pip-requirements-parser==32.0.1
+#8 238.4  + platformdirs==4.12.2
+#8 238.4  + pluggy==1.6.0
+#8 238.4  + propcache==0.5.4
+#8 238.4  + psutil==7.2.2
+#8 238.4  + py-serializable==2.1.0
+#8 238.4  + pyarrow==25.0.1
+#8 238.4  + pydantic==2.13.5
+#8 238.4  + pydantic-core==2.46.5
+#8 238.4  + pygments==2.21.0
+#8 238.4  + pyparsing==3.3.3
+#8 238.4  + pytest==9.1.1
+#8 238.4  + pytest-cov==7.1.0
+#8 238.4  + python-dateutil==2.9.0.post0
+#8 238.4  + pyyaml==6.0.3
+#8 238.4  + regex==2026.9.29
+#8 238.4  + requests==2.34.2
+#8 238.4  + rich==15.0.0
+#8 238.4  + ruff==0.16.10
+#8 238.4  + safetensors==0.8.0
+#8 238.4  + scikit-learn==1.9.1
+#8 238.4  + scipy==1.18.1
+#8 238.4  + setuptools==81.0.0
+#8 238.4  + shellingham==1.5.4
+#8 238.4  + six==1.17.0
+#8 238.4  + sortedcontainers==2.4.0
+#8 238.4  + statsmodels==0.15.0
+#8 238.4  + sympy==1.14.0
+#8 238.4  + threadpoolctl==3.7.0
+#8 238.4  + tokenizers==0.23.2
+#8 238.4  + tomli==2.4.1
+#8 238.4  + tomli-w==1.2.0
+#8 238.4  + torch==2.11.0+cu128
+#8 238.4  + tqdm==4.70.1
+#8 238.4  + transformers==5.18.0
+#8 238.4  + triton==3.6.0
+#8 238.4  + trl==1.14.1
+#8 238.4  + typer==0.27.2
+#8 238.4  + types-pyyaml==6.0.12.20260906
+#8 238.4  + typing-extensions==4.16.0
+#8 238.4  + typing-inspection==0.4.4
+#8 238.4  + urllib3==2.8.0
+#8 238.4  + wrapt==2.5.0
+#8 238.4  + xxhash==4.0.1
+#8 238.4  + yarl==1.25.1
+#8 DONE 242.8s
+
+#9 [ 5/14] RUN apt-get update && apt-get install -y --no-install-recommends git procps && rm -rf /var/lib/apt/lists/*
+#9 0.770 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#9 0.829 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#9 0.854 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+#9 0.877 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8790 kB]
+#9 1.665 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+#9 1.665 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [349 kB]
+#9 2.154 Fetched 9388 kB in 2s (6228 kB/s)
+#9 2.154 Reading package lists...
+#9 2.439 Reading package lists...
+#9 2.706 Building dependency tree...
+#9 2.767 Reading state information...
+#9 2.832 The following additional packages will be installed:
+#9 2.832   git-man libbrotli1 libcurl3-gnutls liberror-perl libexpat1 libgdbm-compat4
+#9 2.832   libldap-2.5-0 libnghttp2-14 libperl5.36 libproc2-0 libpsl5 librtmp1
+#9 2.832   libsasl2-2 libsasl2-modules-db libssh2-1 perl perl-base perl-modules-5.36
+#9 2.832 Suggested packages:
+#9 2.832   gettext-base git-daemon-run | git-daemon-sysvinit git-doc git-email git-gui
+#9 2.832   gitk gitweb git-cvs git-mediawiki git-svn sensible-utils perl-doc
+#9 2.832   libterm-readline-gnu-perl | libterm-readline-perl-perl make
+#9 2.832   libtap-harness-archive-perl
+#9 2.832 Recommended packages:
+#9 2.832   patch less ssh-client libldap-common publicsuffix libsasl2-modules psmisc
+#9 2.887 The following NEW packages will be installed:
+#9 2.887   git git-man libbrotli1 libcurl3-gnutls liberror-perl libexpat1
+#9 2.887   libgdbm-compat4 libldap-2.5-0 libnghttp2-14 libperl5.36 libproc2-0 libpsl5
+#9 2.888   librtmp1 libsasl2-2 libsasl2-modules-db libssh2-1 perl perl-modules-5.36
+#9 2.888   procps
+#9 2.888 The following packages will be upgraded:
+#9 2.888   perl-base
+#9 2.989 1 upgraded, 19 newly installed, 0 to remove and 21 not upgraded.
+#9 2.989 Need to get 20.4 MB of archives.
+#9 2.989 After this operation, 103 MB of additional disk space will be used.
+#9 2.989 Get:1 http://deb.debian.org/debian-security bookworm-security/main amd64 perl-base amd64 5.36.0-7+deb12u4 [1610 kB]
+#9 3.160 Get:2 http://deb.debian.org/debian-security bookworm-security/main amd64 perl-modules-5.36 all 5.36.0-7+deb12u4 [2817 kB]
+#9 3.362 Get:3 http://deb.debian.org/debian bookworm/main amd64 libgdbm-compat4 amd64 1.23-3 [48.2 kB]
+#9 3.365 Get:4 http://deb.debian.org/debian-security bookworm-security/main amd64 libperl5.36 amd64 5.36.0-7+deb12u4 [4208 kB]
+#9 3.661 Get:5 http://deb.debian.org/debian-security bookworm-security/main amd64 perl amd64 5.36.0-7+deb12u4 [239 kB]
+#9 3.678 Get:6 http://deb.debian.org/debian bookworm/main amd64 libproc2-0 amd64 2:4.0.2-3 [62.8 kB]
+#9 3.682 Get:7 http://deb.debian.org/debian bookworm/main amd64 procps amd64 2:4.0.2-3 [709 kB]
+#9 3.757 Get:8 http://deb.debian.org/debian bookworm/main amd64 libbrotli1 amd64 1.0.9-2+b6 [275 kB]
+#9 3.768 Get:9 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules-db amd64 2.1.28+dfsg-10 [20.3 kB]
+#9 3.769 Get:10 http://deb.debian.org/debian bookworm/main amd64 libsasl2-2 amd64 2.1.28+dfsg-10 [59.7 kB]
+#9 3.770 Get:11 http://deb.debian.org/debian bookworm/main amd64 libldap-2.5-0 amd64 2.5.13+dfsg-5 [183 kB]
+#9 3.775 Get:12 http://deb.debian.org/debian bookworm/main amd64 libnghttp2-14 amd64 1.52.0-1+deb12u3 [72.4 kB]
+#9 3.777 Get:13 http://deb.debian.org/debian bookworm/main amd64 libpsl5 amd64 0.21.2-1 [58.7 kB]
+#9 3.779 Get:14 http://deb.debian.org/debian bookworm/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-2+b2 [60.8 kB]
+#9 3.781 Get:15 http://deb.debian.org/debian-security bookworm-security/main amd64 libssh2-1 amd64 1.10.0-3+deb12u1 [176 kB]
+#9 3.786 Get:16 http://deb.debian.org/debian bookworm/main amd64 libcurl3-gnutls amd64 7.88.1-10+deb12u15 [386 kB]
+#9 3.805 Get:17 http://deb.debian.org/debian-security bookworm-security/main amd64 libexpat1 amd64 2.5.0-1+deb12u4 [106 kB]
+#9 3.813 Get:18 http://deb.debian.org/debian bookworm/main amd64 liberror-perl all 0.17029-2 [29.0 kB]
+#9 3.815 Get:19 http://deb.debian.org/debian bookworm/main amd64 git-man all 1:2.39.5-0+deb12u3 [2053 kB]
+#9 3.963 Get:20 http://deb.debian.org/debian bookworm/main amd64 git amd64 1:2.39.5-0+deb12u3 [7264 kB]
+#9 4.576 debconf: delaying package configuration, since apt-utils is not installed
+#9 4.603 Fetched 20.4 MB in 2s (12.7 MB/s)
+#9 4.669 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6695 files and directories currently installed.)
+#9 4.676 Preparing to unpack .../perl-base_5.36.0-7+deb12u4_amd64.deb ...
+#9 4.717 Unpacking perl-base (5.36.0-7+deb12u4) over (5.36.0-7+deb12u3) ...
+#9 9.482 Setting up perl-base (5.36.0-7+deb12u4) ...
+#9 9.589 Selecting previously unselected package perl-modules-5.36.
+#9 9.589 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6696 files and directories currently installed.)
+#9 9.597 Preparing to unpack .../00-perl-modules-5.36_5.36.0-7+deb12u4_all.deb ...
+#9 9.608 Unpacking perl-modules-5.36 (5.36.0-7+deb12u4) ...
+#9 9.843 Selecting previously unselected package libgdbm-compat4:amd64.
+#9 9.845 Preparing to unpack .../01-libgdbm-compat4_1.23-3_amd64.deb ...
+#9 9.866 Unpacking libgdbm-compat4:amd64 (1.23-3) ...
+#9 9.961 Selecting previously unselected package libperl5.36:amd64.
+#9 9.963 Preparing to unpack .../02-libperl5.36_5.36.0-7+deb12u4_amd64.deb ...
+#9 9.972 Unpacking libperl5.36:amd64 (5.36.0-7+deb12u4) ...
+#9 10.21 Selecting previously unselected package perl.
+#9 10.22 Preparing to unpack .../03-perl_5.36.0-7+deb12u4_amd64.deb ...
+#9 10.23 Unpacking perl (5.36.0-7+deb12u4) ...
+#9 10.31 Selecting previously unselected package libproc2-0:amd64.
+#9 10.31 Preparing to unpack .../04-libproc2-0_2%3a4.0.2-3_amd64.deb ...
+#9 10.32 Unpacking libproc2-0:amd64 (2:4.0.2-3) ...
+#9 10.40 Selecting previously unselected package procps.
+#9 10.40 Preparing to unpack .../05-procps_2%3a4.0.2-3_amd64.deb ...
+#9 10.42 Unpacking procps (2:4.0.2-3) ...
+#9 10.51 Selecting previously unselected package libbrotli1:amd64.
+#9 10.51 Preparing to unpack .../06-libbrotli1_1.0.9-2+b6_amd64.deb ...
+#9 10.52 Unpacking libbrotli1:amd64 (1.0.9-2+b6) ...
+#9 10.59 Selecting previously unselected package libsasl2-modules-db:amd64.
+#9 10.59 Preparing to unpack .../07-libsasl2-modules-db_2.1.28+dfsg-10_amd64.deb ...
+#9 10.60 Unpacking libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+#9 10.69 Selecting previously unselected package libsasl2-2:amd64.
+#9 10.69 Preparing to unpack .../08-libsasl2-2_2.1.28+dfsg-10_amd64.deb ...
+#9 10.70 Unpacking libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+#9 10.81 Selecting previously unselected package libldap-2.5-0:amd64.
+#9 10.81 Preparing to unpack .../09-libldap-2.5-0_2.5.13+dfsg-5_amd64.deb ...
+#9 10.82 Unpacking libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+#9 10.91 Selecting previously unselected package libnghttp2-14:amd64.
+#9 10.92 Preparing to unpack .../10-libnghttp2-14_1.52.0-1+deb12u3_amd64.deb ...
+#9 10.93 Unpacking libnghttp2-14:amd64 (1.52.0-1+deb12u3) ...
+#9 11.01 Selecting previously unselected package libpsl5:amd64.
+#9 11.01 Preparing to unpack .../11-libpsl5_0.21.2-1_amd64.deb ...
+#9 11.02 Unpacking libpsl5:amd64 (0.21.2-1) ...
+#9 11.13 Selecting previously unselected package librtmp1:amd64.
+#9 11.14 Preparing to unpack .../12-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_amd64.deb ...
+#9 11.15 Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#9 11.25 Selecting previously unselected package libssh2-1:amd64.
+#9 11.25 Preparing to unpack .../13-libssh2-1_1.10.0-3+deb12u1_amd64.deb ...
+#9 11.27 Unpacking libssh2-1:amd64 (1.10.0-3+deb12u1) ...
+#9 11.36 Selecting previously unselected package libcurl3-gnutls:amd64.
+#9 11.36 Preparing to unpack .../14-libcurl3-gnutls_7.88.1-10+deb12u15_amd64.deb ...
+#9 11.38 Unpacking libcurl3-gnutls:amd64 (7.88.1-10+deb12u15) ...
+#9 11.47 Selecting previously unselected package libexpat1:amd64.
+#9 11.47 Preparing to unpack .../15-libexpat1_2.5.0-1+deb12u4_amd64.deb ...
+#9 11.48 Unpacking libexpat1:amd64 (2.5.0-1+deb12u4) ...
+#9 11.56 Selecting previously unselected package liberror-perl.
+#9 11.56 Preparing to unpack .../16-liberror-perl_0.17029-2_all.deb ...
+#9 11.58 Unpacking liberror-perl (0.17029-2) ...
+#9 11.65 Selecting previously unselected package git-man.
+#9 11.65 Preparing to unpack .../17-git-man_1%3a2.39.5-0+deb12u3_all.deb ...
+#9 11.66 Unpacking git-man (1:2.39.5-0+deb12u3) ...
+#9 11.80 Selecting previously unselected package git.
+#9 11.80 Preparing to unpack .../18-git_1%3a2.39.5-0+deb12u3_amd64.deb ...
+#9 11.84 Unpacking git (1:2.39.5-0+deb12u3) ...
+#9 12.08 Setting up libexpat1:amd64 (2.5.0-1+deb12u4) ...
+#9 12.11 Setting up libpsl5:amd64 (0.21.2-1) ...
+#9 12.14 Setting up libbrotli1:amd64 (1.0.9-2+b6) ...
+#9 12.18 Setting up libnghttp2-14:amd64 (1.52.0-1+deb12u3) ...
+#9 12.22 Setting up libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+#9 12.25 Setting up perl-modules-5.36 (5.36.0-7+deb12u4) ...
+#9 12.29 Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#9 12.32 Setting up libproc2-0:amd64 (2:4.0.2-3) ...
+#9 12.36 Setting up libgdbm-compat4:amd64 (1.23-3) ...
+#9 12.39 Setting up libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+#9 12.42 Setting up procps (2:4.0.2-3) ...
+#9 12.50 Setting up git-man (1:2.39.5-0+deb12u3) ...
+#9 12.54 Setting up libssh2-1:amd64 (1.10.0-3+deb12u1) ...
+#9 12.59 Setting up libperl5.36:amd64 (5.36.0-7+deb12u4) ...
+#9 12.62 Setting up libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+#9 12.66 Setting up perl (5.36.0-7+deb12u4) ...
+#9 12.71 Setting up libcurl3-gnutls:amd64 (7.88.1-10+deb12u15) ...
+#9 12.75 Setting up liberror-perl (0.17029-2) ...
+#9 12.78 Setting up git (1:2.39.5-0+deb12u3) ...
+#9 12.84 Processing triggers for libc-bin (2.36-9+deb12u13) ...
+#9 DONE 13.8s
+
+#10 [ 6/14] COPY src ./src
+#10 DONE 0.1s
+
+#11 [ 7/14] COPY hardware ./hardware
+#11 DONE 0.1s
+
+#12 [ 8/14] COPY tests ./tests
+#12 DONE 0.1s
+
+#13 [ 9/14] COPY scripts ./scripts
+#13 DONE 0.1s
+
+#14 [10/14] COPY task_specs ./task_specs
+#14 DONE 0.1s
+
+#15 [11/14] COPY MICROTACHES.md PLAN_PROJET_V6.md BOITE_A_OUTILS.md roadmap_unifié.md ./
+#15 DONE 0.1s
+
+#16 [12/14] COPY .claude/skills ./.claude/skills
+#16 DONE 0.1s
+
+#17 [13/14] COPY knowledge ./knowledge
+#17 DONE 0.1s
+
+#18 [14/14] RUN mkdir -p results
+#18 DONE 0.3s
+
+#19 exporting to image
+#19 exporting layers
+#19 exporting layers 269.7s done
+#19 exporting manifest sha256:036a533eddd6679fd47225f793742a8ecd19b621ca767b1a815095e8e9127a02 0.0s done
+#19 exporting config sha256:50a94ff7c5a0d1270e796b888b68b41c3fb5e581130ae93766ee0116262b2e0b done
+#19 exporting attestation manifest sha256:71788b92bc640e4315b7b8fe22bf83b0bf82dc13d59627bbc593129ee82133a9 done
+#19 exporting manifest list sha256:1ce212a14c18efc564b1029a2e8acf2ddf4ead01afd68644f0ce0cf2c79e7b8c done
+#19 naming to docker.io/library/llm-finetuning:rebuild-20261007 done
+#19 unpacking to docker.io/library/llm-finetuning:rebuild-20261007
+#19 unpacking to docker.io/library/llm-finetuning:rebuild-20261007 58.3s done
+#19 DONE 328.1s

@@ -1,0 +1,115 @@
+{
+  "created_at": "2026-10-17T01:24:16Z",
+  "kind": "measure",
+  "machine_health": {
+    "end": {
+      "boot_id": "6591621d",
+      "kernel_segfaults": 5,
+      "uptime_s": 935.54
+    },
+    "reasons": [],
+    "start": {
+      "boot_id": "6591621d",
+      "kernel_segfaults": 5,
+      "uptime_s": 933.9
+    },
+    "verdict": "ok"
+  },
+  "metrics": {
+    "cascade_moins_e_points": 0.68,
+    "cascade_moins_g_points": -0.1,
+    "courbe_descriptive_sur_tous_les_plis": [
+      {
+        "fidelite_a_g": 0.9755,
+        "macro_f1": 0.7756,
+        "part_sans_lora": 0.9071,
+        "tau": 0.5
+      },
+      {
+        "fidelite_a_g": 0.9972,
+        "macro_f1": 0.7789,
+        "part_sans_lora": 0.8226,
+        "tau": 0.6
+      },
+      {
+        "fidelite_a_g": 1.0,
+        "macro_f1": 0.7799,
+        "part_sans_lora": 0.7395,
+        "tau": 0.7
+      },
+      {
+        "fidelite_a_g": 1.0,
+        "macro_f1": 0.7799,
+        "part_sans_lora": 0.6531,
+        "tau": 0.8
+      },
+      {
+        "fidelite_a_g": 1.0,
+        "macro_f1": 0.7799,
+        "part_sans_lora": 0.5284,
+        "tau": 0.9
+      },
+      {
+        "fidelite_a_g": 1.0,
+        "macro_f1": 0.7799,
+        "part_sans_lora": 0.4189,
+        "tau": 0.95
+      },
+      {
+        "fidelite_a_g": 1.0,
+        "macro_f1": 0.7799,
+        "part_sans_lora": 0.1458,
+        "tau": 0.99
+      }
+    ],
+    "delta_points": 2.0,
+    "fidelite_a_g": 0.9972,
+    "fidelite_minimale": 0.98,
+    "ic95_contre_e": [
+      -0.72,
+      2.68
+    ],
+    "ic95_contre_g": [
+      -0.23,
+      0.02
+    ],
+    "latence_g_mesuree_ms": 91.6,
+    "latence_moyenne_ms_modelisee": 39.6,
+    "macro_f1": {
+      "cascade": 0.7789,
+      "e": 0.7721,
+      "g": 0.7799
+    },
+    "n": 3586,
+    "part_sans_lora": 0.8226,
+    "seuils_par_pli": {
+      "0": 0.6,
+      "1": 0.6,
+      "2": 0.6,
+      "3": 0.6,
+      "4": 0.6
+    },
+    "verdict": "cascade retenue"
+  },
+  "params": {
+    "calcul_double": true,
+    "fiche": "experiments/2026-10-17-cascade-e-puis-g.md",
+    "fidelite_minimale": 0.98,
+    "grid": [
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      0.95,
+      0.99
+    ],
+    "premier": "cinq-plis-ensemble-encodeur5-tfidf-charbal",
+    "second": "cinq-plis-ensemble-g"
+  },
+  "run_id": "20261017-012416-cascade-e-puis-g",
+  "schema": "mini-1",
+  "slug": "cascade-e-puis-g",
+  "status": "ok",
+  "summary": "Cascade E puis G : cascade retenue, cascade moins G -0.1 points [-0.23, 0.02], 82% sans LoRA"
+}

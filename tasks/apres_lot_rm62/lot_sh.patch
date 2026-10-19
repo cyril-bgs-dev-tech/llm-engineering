@@ -1,0 +1,30 @@
+--- a/scripts/lib/lot.sh
++++ b/scripts/lib/lot.sh
+@@ -2,15 +2,26 @@
+ # Lancement partagé des runs de lot (règle N25) : code de sortie capturé AVANT tout affichage, essais plafonnés et consignés, run déjà au registre sauté.
+ # Usage : source scripts/lib/lot.sh ; run_lot JOURNAL SLUG ESSAIS_MAX COMMANDE...   (variables : RUNS_DIR, RETRY_CODES="1 134 139")
+ # Code de retour : 0 si le run a abouti ou était déjà au registre, sinon le dernier code de sortie (le lot décide de la suite).
++# Un essai mort laisse ses sorties sous NOM.essaiN.out (dossier du journal) : l'essai suivant réécrit NOM.out et effaçait le diagnostic (RM-61, 17/10/2026).
++_lot_keep_outputs() {
++  local log="$1" attempt="$2" marker="$3" f
++  while IFS= read -r -d '' f; do
++    case "$f" in *.essai[0-9]*.out) continue;; esac
++    cp -- "$f" "${f%.out}.essai$attempt.out" && echo "$(date -u +%FT%TZ) CONSERVE ${f##*/} -> $(basename -- "${f%.out}").essai$attempt.out" >> "$log"
++  done < <(find "$(dirname -- "$log")" -maxdepth 1 -name '*.out' -newer "$marker" -print0)
++}
+ run_lot() {
+   local log="$1" slug="$2" max="$3"; shift 3
+-  local runs_dir="${RUNS_DIR:-results/runs}" retry="${RETRY_CODES:-1 134 139}" attempt code=0
++  local runs_dir="${RUNS_DIR:-results/runs}" retry="${RETRY_CODES:-1 134 139}" attempt code=0 marker
+   for attempt in $(seq 1 "$max"); do
+     if ls "$runs_dir" 2>/dev/null | grep -Eq -- "^[0-9]{8}-[0-9]{6}-${slug//./\\.}\.json$"; then echo "$(date -u +%FT%TZ) DEJA $slug" >> "$log"; return 0; fi
+     echo "$(date -u +%FT%TZ) DEBUT $slug essai=$attempt" >> "$log"
++    marker="$(dirname -- "$log")/.lot_essai_$$"; touch -- "$marker"
+     "$@"
+     code=$?
+     echo "$(date -u +%FT%TZ) FIN $slug essai=$attempt code=$code" >> "$log"
++    [ "$code" -eq 0 ] || _lot_keep_outputs "$log" "$attempt" "$marker"
++    rm -f -- "$marker"
+     if [ "$code" -eq 0 ]; then return 0; fi
+     case " $retry " in *" $code "*) ;; *) echo "$(date -u +%FT%TZ) ARRET $slug code=$code non relançable" >> "$log"; return "$code";; esac
+   done

@@ -3,7 +3,7 @@
 
 Entraînement sur les quatre autres plis (clé `folds`), évaluation sur le pli k : le test scellé n'est jamais lu. Entrée : documents du patient concaténés
 avec balise de type, troncature tête et fin au niveau des tokens (PROTOCOLE.md section 1).
-Usage : p1_finetune.py MODELE --mode {lora|full} --lr LR [--fold 0] [--epochs 2] [--max-len 4096] [--rank 16] [--alpha 32] [--effective-batch 32]
+Usage : p1_finetune.py MODELE --mode {lora|full} --lr LR [--fold 0] [--fold-key folds|control_folds_by_author] [--epochs 2] [--max-len 4096] [--rank 16] [--alpha 32] [--effective-batch 32]
         [--micro-batch 4] [--seed 1000] [--max-steps N] [--fiche CHEMIN] [--slug NOM] [--register]
 `--max-steps N` : pré-vol (vram-preflight) : N pas d'optimiseur, pas d'évaluation, enregistré comme `preflight` seulement avec --register ;
 `--order random` mesure le débit moyen (RM-16) au lieu du pire cas.
@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import p1_04_06_tfidf  # chargement des étiquettes de développement, même fonction que les références TF-IDF
-from llmft import augment, evaluation, failures, last_token, lora_train, tokenizer_guard
+from llmft import augment, evaluation, failures, last_token, lora_train, machine_health, tokenizer_guard
 from llmft.fingerprint import dir_sha256
 from llmft.mini_registry import register_run
 from llmft.quant import load_kwargs
@@ -89,7 +89,7 @@ def predict(model: Any, ids: list[list[int]], pad_id: int, device: str, micro_ba
     return probs
 
 
-def main() -> int:
+def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
     ap.add_argument("model")
     ap.add_argument("--mode", choices=["lora", "full"], required=True)
@@ -117,13 +117,19 @@ def main() -> int:
     ap.add_argument("--fiche", default="")
     ap.add_argument("--slug", required=True)
     ap.add_argument("--register", action="store_true")
-    a = ap.parse_args()
+    ap.add_argument("--fold-key", choices=["folds", "control_folds_by_author"], default="folds", help="plis de la partition : par patient (défaut) ou groupés par auteur (RM-62, comme l'encodeur en RM-39)")
+    return ap
+
+
+def main() -> int:
+    a = build_parser().parse_args()
+    start = machine_health.snapshot()  # tampon de santé de la machine (RM-59) : instantané au début, comparé à la fin au moment d'enregistrer
 
     import torch
     from transformers import AutoTokenizer
 
     fiche_sha = hashlib.sha256((ROOT / a.fiche).read_bytes()).hexdigest() if a.fiche else None
-    texts, y, folds, excluded, ids = p1_04_06_tfidf.load("chapter")
+    texts, y, folds, excluded, ids = p1_04_06_tfidf.load("chapter", a.fold_key)
     labels = sorted(set(y))
     idx = np.array([labels.index(v) for v in y])
     tr, te = np.where(folds != a.fold)[0], np.where(folds == a.fold)[0]
@@ -179,19 +185,19 @@ def main() -> int:
         record.update({"status": "aborted", "summary": f"{a.slug} : arrêt anticipé, durée projetée {exc.projected_seconds:.0f} s", "loss_history": exc.loss_history, "error": str(exc)})
         print(json.dumps({k: record[k] for k in ("slug", "summary")}, ensure_ascii=False))
         if a.register:
-            print(register_run(ROOT / "results/runs", record))
+            print(register_run(ROOT / "results/runs", {**record, "machine_health": machine_health.stamp(start)}))
         return 4
     except lora_train.TrainingDiverged as exc:
         record.update({"summary": f"{a.slug} : perte non finie au pas {len(exc.loss_history)}", "loss_history": exc.loss_history, "error": str(exc)})
         print(json.dumps({k: record[k] for k in ("slug", "summary")}))
         if a.register:
-            print(failures.register_failed(ROOT / "results/runs", record))
+            print(failures.register_failed(ROOT / "results/runs", {**record, "machine_health": machine_health.stamp(start)}))
         return 2
     except torch.cuda.OutOfMemoryError as exc:
         record.update({"summary": f"{a.slug} : mémoire insuffisante", "loss_history": [], "error": str(exc)[:300]})
         print(json.dumps({k: record[k] for k in ("slug", "summary")}))
         if a.register:
-            print(failures.register_failed(ROOT / "results/runs", record))
+            print(failures.register_failed(ROOT / "results/runs", {**record, "machine_health": machine_health.stamp(start)}))
         return 3
     metrics: dict[str, Any] = {"steps": len(res.loss_history), "seconds_train": round(res.seconds, 1), "seconds_tokenize": round(tok_seconds, 1),
                                "peak_alloc_gib": round(res.peak_alloc_gib or 0, 2), "peak_reserved_gib": round(res.peak_reserved_gib or 0, 2),
@@ -238,7 +244,7 @@ def main() -> int:
     record.update({"status": "ok", "summary": summary, "loss_history": res.loss_history, "metrics": metrics})
     print(json.dumps({"summary": summary, "metrics": metrics}, ensure_ascii=False, indent=1))
     if a.register:
-        print(register_run(ROOT / "results/runs", record))
+        print(register_run(ROOT / "results/runs", {**record, "machine_health": machine_health.stamp(start)}))
     return 0
 
 

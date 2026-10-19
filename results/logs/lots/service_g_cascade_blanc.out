@@ -1,0 +1,69 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:07, 27.22it/s]Loading weights:  74%|███████▍  | 149/201 [00:00<00:00, 404.22it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 345.97it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:07, 27.29it/s]Loading weights:  66%|██████▌   | 133/201 [00:00<00:00, 386.45it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 350.82it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:08, 22.35it/s]Loading weights:  74%|███████▍  | 149/201 [00:00<00:00, 358.32it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 317.02it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:07, 27.40it/s]Loading weights:  66%|██████▌   | 133/201 [00:00<00:00, 385.92it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 334.11it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:07, 25.00it/s]Loading weights:  66%|██████▌   | 133/201 [00:00<00:00, 359.12it/s]Loading weights: 100%|█████████▉| 200/201 [00:00<00:00, 405.64it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 331.04it/s]
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:  19%|█▉        | 136/723 [00:00<00:00, 1349.47it/s]Loading weights:  37%|███▋      | 271/723 [00:00<00:00, 1265.27it/s]Loading weights:  55%|█████▌    | 398/723 [00:00<00:00, 1234.93it/s]Loading weights:  76%|███████▋  | 553/723 [00:00<00:00, 1353.99it/s]Loading weights: 100%|██████████| 723/723 [00:00<00:00, 1488.24it/s]
+[transformers] [1mQwen3_5ForSequenceClassification LOAD REPORT[0m from: Qwen/Qwen3.5-4B
+Key          | Status  | 
+-------------+---------+-
+score.weight | MISSING | 
+
+Notes:
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (555 > 512). Running this sequence through the model will result in indexing errors
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+{
+ "n_patients": 5,
+ "tau": 0.6,
+ "demarrage_a_froid_s": 97.1,
+ "memoire_pic_gib": 9.85,
+ "passages": [
+  {
+   "latence": {
+    "p50_ms": 23.0,
+    "p95_ms": 23.5,
+    "p99_ms": 23.5,
+    "moyenne_ms": 23.0
+   },
+   "part_e": 1.0
+  },
+  {
+   "latence": {
+    "p50_ms": 23.8,
+    "p95_ms": 24.0,
+    "p99_ms": 24.0,
+    "moyenne_ms": 23.5
+   },
+   "part_e": 1.0
+  }
+ ],
+ "passages_acceptes": true,
+ "chemin_e_force": {
+  "p50_ms": 22.8,
+  "p95_ms": 23.2,
+  "p99_ms": 23.3,
+  "moyenne_ms": 22.6
+ },
+ "chemin_g_force": {
+  "p50_ms": 97.7,
+  "p95_ms": 2526.1,
+  "p99_ms": 3008.4,
+  "moyenne_ms": 704.3
+ },
+ "part_e_hors_pli": 0.8226,
+ "latence_moyenne_attendue_ms": 143.5,
+ "accord_cascade_contre_g": 1.0,
+ "essai_concurrent": {
+  "clients": 4,
+  "requetes": 5,
+  "debit_patients_par_s": 42.32,
+  "p50_ms": 71.1,
+  "p95_ms": 93.0,
+  "p99_ms": 93.6,
+  "moyenne_ms": 66.2
+ },
+ "reference_g_un_seul_tenant_p50_ms": 91.6,
+ "modele_rm60_ms": 39.6
+}

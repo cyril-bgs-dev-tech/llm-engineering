@@ -1,0 +1,53 @@
+{
+ "n_patients": 200,
+ "tau": 0.6,
+ "demarrage_a_froid_s": 93.4,
+ "memoire_pic_gib": 10.29,
+ "passages": [
+  {
+   "latence": {
+    "p50_ms": 28.4,
+    "p95_ms": 33.0,
+    "p99_ms": 38.7,
+    "moyenne_ms": 29.1
+   },
+   "part_e": 0.995
+  },
+  {
+   "latence": {
+    "p50_ms": 27.2,
+    "p95_ms": 31.5,
+    "p99_ms": 49.0,
+    "moyenne_ms": 28.0
+   },
+   "part_e": 0.995
+  }
+ ],
+ "passages_acceptes": true,
+ "chemin_e_force": {
+  "p50_ms": 25.3,
+  "p95_ms": 29.2,
+  "p99_ms": 31.8,
+  "moyenne_ms": 25.7
+ },
+ "chemin_g_force": {
+  "p50_ms": 87.7,
+  "p95_ms": 150.9,
+  "p99_ms": 193.4,
+  "moyenne_ms": 97.4
+ },
+ "part_e_hors_pli": 0.8226,
+ "latence_moyenne_attendue_ms": 38.4,
+ "accord_cascade_contre_g": 1.0,
+ "essai_concurrent": {
+  "clients": 4,
+  "requetes": 200,
+  "debit_patients_par_s": 37.57,
+  "p50_ms": 103.0,
+  "p95_ms": 121.8,
+  "p99_ms": 213.6,
+  "moyenne_ms": 105.6
+ },
+ "reference_g_un_seul_tenant_p50_ms": 91.6,
+ "modele_rm60_ms": 39.6
+}

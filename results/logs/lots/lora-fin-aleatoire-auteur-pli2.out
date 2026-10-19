@@ -1,0 +1,34 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:  21%|██        | 149/723 [00:00<00:00, 1487.12it/s]Loading weights:  43%|████▎     | 313/723 [00:00<00:00, 1574.84it/s]Loading weights:  67%|██████▋   | 486/723 [00:00<00:00, 1643.06it/s]Loading weights:  90%|█████████ | 651/723 [00:00<00:00, 1638.26it/s]Loading weights: 100%|██████████| 723/723 [00:00<00:00, 1668.31it/s]
+[transformers] [1mQwen3_5ForSequenceClassification LOAD REPORT[0m from: Qwen/Qwen3.5-4B
+Key          | Status  | 
+-------------+---------+-
+score.weight | MISSING | 
+
+Notes:
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/.venv/lib/python3.12/site-packages/peft/utils/save_and_load.py:313: UserWarning: Could not find a config file in Qwen/Qwen3.5-4B - will assume that the vocabulary was not modified.
+  warnings.warn(
+{
+ "summary": "lora-fin-aleatoire-auteur-pli2 : macro-F1 0.8062 sur le pli 2 (17 chapitres), 12091.6 s d'entraînement",
+ "metrics": {
+  "steps": 900,
+  "seconds_train": 12091.6,
+  "seconds_tokenize": 124.5,
+  "peak_alloc_gib": 11.32,
+  "peak_reserved_gib": 12.44,
+  "loss_first": 5.974926475435495,
+  "loss_last": 7.253388779915326e-05,
+  "macro_f1": 0.8062,
+  "accuracy": 0.8815,
+  "log_loss": 0.7852,
+  "class_balanced_log_loss": 1.4348,
+  "ece": 0.0917,
+  "predictions_sha256": "2945896462da31233c931466bf9a669a0612d45e2c9116bba0399bf966147453",
+  "adapter_dir": "artifacts/adapters/lora-fin-aleatoire-auteur-pli2",
+  "adapter_sha256": "153940fe1aeb9045a229faaa6f0f77ad8caa92b154883a178ace98dc775f7f71"
+ }
+}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261017-223339-lora-fin-aleatoire-auteur-pli2.json

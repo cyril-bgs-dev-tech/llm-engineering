@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le système en clair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* === TOKENS === */
+:root{
+  --ink:#10202f; --ink-2:#34475a; --muted:#6b7b8a;
+  --paper:#f7f3ea; --card:#ffffff; --line:#d9d2c3;
+  --teal:#0e7c7b; --teal-2:#0b5f5e; --amber:#d99a1c; --red:#b8402f; --sky:#2f6da3;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'IBM Plex Sans','Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'IBM Plex Mono',Consolas,'SFMono-Regular',monospace;
+}
+/* === BASE === */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0b1722;overflow:hidden}
+body{font-family:var(--sans);color:var(--ink)}
+.viewport{position:fixed;inset:0;display:grid;place-items:center}
+.stage{width:1920px;height:1080px;position:relative;transform-origin:center center;flex:none}
+.slide{position:absolute;inset:0;background:var(--paper);padding:96px 128px 88px;display:flex;flex-direction:column;
+  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s}
+.slide.active{opacity:1;visibility:visible}
+.slide::before{content:"";position:absolute;left:0;top:0;bottom:0;width:14px;background:var(--teal)}
+.kicker{font:500 24px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--teal-2);margin-bottom:22px}
+h1{font:700 92px/1.04 var(--serif);letter-spacing:-.01em}
+h2{font:700 56px/1.12 var(--serif);max-width:1560px;letter-spacing:-.005em;text-wrap:balance}
+.lead{font-size:34px;line-height:1.45;color:var(--ink-2);max-width:1400px;margin-top:28px}
+.foot{position:absolute;left:128px;right:128px;bottom:34px;display:flex;justify-content:space-between;
+  font:500 20px var(--mono);color:var(--muted)}
+.body{flex:1;display:flex;gap:56px;margin-top:44px;min-height:0}
+.col{flex:1;min-width:0}
+ul.clean{list-style:none;display:flex;flex-direction:column;gap:20px}
+ul.clean li{font-size:32px;line-height:1.35;padding-left:38px;position:relative;color:var(--ink)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.5em;width:16px;height:16px;border-radius:4px;background:var(--teal)}
+ul.clean li b{font-weight:600}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:30px 36px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;width:100%}
+.stat .n{font:700 84px/1 var(--serif);color:var(--teal-2)}
+.stat .t{font-size:26px;line-height:1.3;color:var(--ink-2);margin-top:12px}
+.note{font-size:24px;line-height:1.4;color:var(--muted);margin-top:20px}
+.tag{display:inline-block;font:500 22px var(--mono);padding:6px 14px;border-radius:999px;border:2px solid var(--line);color:var(--ink-2);background:#fff}
+.tag.red{border-color:var(--red);color:var(--red)} .tag.amber{border-color:var(--amber);color:#8a5d00} .tag.teal{border-color:var(--teal);color:var(--teal-2)}
+/* === BARS === */
+.bars{display:flex;flex-direction:column;gap:22px;width:100%}
+.bar-row{display:grid;grid-template-columns:560px 1fr 150px;align-items:center;gap:22px}
+.bar-row .lab{font-size:27px;line-height:1.2;color:var(--ink)}
+.bar-row .lab small{display:block;font-size:20px;color:var(--muted);margin-top:4px}
+.track{position:relative;height:40px;background:#ebe5d6;border-radius:10px;overflow:hidden}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:10px;background:var(--teal)}
+.fill.amber{background:var(--amber)} .fill.red{background:var(--red)} .fill.grey{background:#9aa7b2} .fill.sky{background:var(--sky)}
+.ci{position:absolute;top:50%;height:6px;margin-top:-3px;background:var(--ink);opacity:.85}
+.ci::before,.ci::after{content:"";position:absolute;top:-8px;width:4px;height:22px;background:var(--ink)}
+.ci::before{left:0}.ci::after{right:0}
+.val{font:600 30px var(--mono);text-align:right}
+/* variante dense : diapositives à beaucoup de barres (contrôle : scripts/check_deck_layout.py) */
+.bars.dense{gap:8px}
+.dense .bar-row{grid-template-columns:600px 1fr 130px;gap:18px}
+.dense .bar-row .lab{font-size:22px;line-height:1.12}
+.dense .bar-row .lab small{font-size:17px;margin-top:1px;line-height:1.15}
+.dense .track{height:24px;border-radius:8px}
+.dense .val{font-size:25px}
+/* === SCORE TABLE === */
+.score{width:100%;border-collapse:separate;border-spacing:0 6px}
+.score th{font:500 20px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 12px 6px}
+.score td{background:#fff;padding:5px 12px;font-size:23px;border-top:2px solid var(--line);border-bottom:2px solid var(--line)}
+.score td:first-child{border-left:2px solid var(--line);border-radius:12px 0 0 12px;font-weight:500;width:520px}
+.score td:last-child{border-right:2px solid var(--line);border-radius:0 12px 12px 0}
+.mini{display:flex;align-items:center;gap:12px}
+.mini .tr{flex:1;height:20px;background:#ebe5d6;border-radius:6px;position:relative;overflow:hidden}
+.mini .tr i{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
+.mini span{font:600 22px var(--mono);width:44px;text-align:right}
+.c-p i{background:var(--teal)} .c-o i{background:var(--sky)} .c-a i{background:var(--ink)}
+.avg td{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600;font-size:28px}
+.avg .mini .tr{background:#2c4156}.avg .c-p i{background:#4fd1c5}.avg .c-o i{background:#7fb4e6}.avg .c-a i{background:#f2efe6}
+/* === TITLE === */
+.slide.title{background:var(--ink);color:#fff;justify-content:center}
+.slide.title::before{background:var(--amber);width:22px}
+.slide.title .kicker{color:#7fd6d0}
+.slide.title .lead{color:#c8d3dd}
+.slide.title .foot{color:#8aa0b3}
+/* === UI === */
+.progress{position:fixed;left:0;top:0;height:5px;background:var(--amber);width:0;z-index:5;transition:width .3s}
+.hint{position:fixed;right:18px;top:10px;font:500 13px var(--mono);color:#8aa0b3;z-index:5;opacity:.8}
+@media (prefers-reduced-motion:reduce){.slide{transition:none}.progress{transition:none}}
+@media print{
+  @page{size:1920px 1080px;margin:0}
+  html,body{overflow:visible;background:#fff;height:auto}
+  .viewport{position:static;display:block}
+  .stage{transform:none!important;width:1920px;height:auto}
+  .slide{position:relative;inset:auto;width:1920px;height:1080px;opacity:1;visibility:visible;page-break-after:always;break-after:page}
+  .progress,.hint{display:none}
+}
+
+/* === SCHÉMA DU SYSTÈME (présentation grand public) === */
+.flow{display:flex;align-items:stretch;gap:14px;width:100%;margin-top:40px}
+.flow .box{flex:1;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:24px 24px;display:flex;flex-direction:column;justify-content:center}
+.flow .box h3{font:700 32px/1.15 var(--serif);color:var(--ink);margin-bottom:10px}
+.flow .box p{font-size:24px;line-height:1.35;color:var(--ink-2)}
+.flow .box.teal{border-color:var(--teal)} .flow .box.amber{border-color:var(--amber)} .flow .box.dark{background:var(--ink);border-color:var(--ink)}
+.flow .box.dark h3,.flow .box.dark p{color:#fff}
+.flow .arr{display:flex;align-items:center;font:700 52px var(--serif);color:var(--teal)}
+.branch{display:flex;gap:28px;margin-top:22px;width:100%}
+.branch .card{flex:1;font-size:26px;line-height:1.35;padding:22px 30px}
+.big{font:700 64px/1 var(--serif);color:var(--teal-2)}
+ol.steps{list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:40px}
+ol.steps li{counter-increment:s;font-size:36px;line-height:1.35;padding-left:84px;position:relative}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:56px;height:56px;border-radius:50%;background:var(--teal);color:#fff;font:700 30px/56px var(--sans);text-align:center}
+ol.steps li .tag{margin-left:10px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="viewport"><div class="stage" id="stage">
+
+<!-- === 1. TITRE === -->
+<section class="slide title active" data-title="Titre">
+  <div class="kicker">Pour un public non spécialiste · état au 17 octobre 2026</div>
+  <h1>Le système en clair</h1>
+  <p class="lead">Un ensemble de modèles lit le dossier d'un patient, propose le chapitre de sa maladie principale dans la classification internationale des maladies, et passe la main à un humain quand il doute. Ce qu'il fait, ce qu'il vaut, ce qu'il coûte, ce qui peut mal tourner.</p>
+  <div class="foot"><span>Données fictives (corpus PARHAF) · recherche seulement, pas d'usage clinique · chaque chiffre balisé est relu dans le registre</span><span>1 / 8</span></div>
+</section>
+
+<!-- === 2. LA RÉPONSE === -->
+<section class="slide" data-title="Réponse">
+  <div class="kicker">Examen final : <span data-claim="gp_n">633</span> dossiers jamais vus, ouverts une seule fois</div>
+  <h2>Bien classé près de 9 fois sur 10, et 95 fois sur 100 quand il décide seul</h2>
+  <div class="stats" style="margin-top:56px">
+    <div class="stat card"><div class="n"><span data-claim="gp_acc_g">89</span> %</div><div class="t">des dossiers bien classés par le système complet</div></div>
+    <div class="stat card"><div class="n"><span data-claim="gp_acc_auto">95</span> %</div><div class="t">de bonnes réponses sur les <span data-claim="gp_n_auto">506</span> dossiers où il est assez sûr pour décider seul (8 sur 10) ; les autres vont à un humain</div></div>
+    <div class="stat card"><div class="n"><span data-claim="sv_expected">38,4</span> ms</div><div class="t">par dossier en moyenne, soit moins de quatre centièmes de seconde</div></div>
+  </div>
+  <p class="note">« Bien classé » : le chapitre proposé est celui du scénario du dossier fictif. Les deux premiers chiffres sont ceux du système complet ; le service allégé de la diapositive suivante donne la même réponse dans <span data-claim="cas_fid">99,7</span> % des cas en développement.</p>
+  <div class="foot"><span>Runs : <code>20261006-210015-ouverture-test-scelle-g</code>, <code>20261017-015754-service-g-cascade</code> et un autre (claims.json)</span><span>2 / 8</span></div>
+</section>
+
+<!-- === 3. COMMENT ÇA MARCHE === -->
+<section class="slide" data-title="Fonctionnement">
+  <div class="kicker">Comment ça marche</div>
+  <h2>Un lecteur rapide d'abord, un lecteur approfondi seulement si besoin, un humain en dernier recours</h2>
+  <div class="flow">
+    <div class="box"><h3>Le dossier</h3><p>Les comptes rendus du patient, en texte</p></div>
+    <div class="arr">→</div>
+    <div class="box teal"><h3>Lecteur rapide</h3><p>Cinq petits modèles de langue et un comptage de mots votent ensemble</p></div>
+    <div class="arr">→</div>
+    <div class="box amber"><h3>Sûr de lui ?</h3><p>Si oui, il répond seul ; sinon, le lecteur approfondi relit</p></div>
+    <div class="arr">→</div>
+    <div class="box dark"><h3>Proposition</h3><p>Un chapitre, son degré de confiance, et un renvoi à un humain en cas de doute</p></div>
+  </div>
+  <div class="branch">
+    <div class="card"><span class="big"><span data-claim="cas_share">82,3</span> %</span><br>des dossiers sont traités par le seul lecteur rapide</div>
+    <div class="card">Le lecteur approfondi ajoute un grand modèle de langage, adapté au corpus pendant <span data-claim="fr_g_h">5,11</span> h sur une carte graphique, une seule fois</div>
+    <div class="card">Le service compte en continu la répartition des chapitres proposés et signale quand elle change (diapositive 6)</div>
+  </div>
+  <div class="foot"><span>Runs : <code>20261017-012416-cascade-e-puis-g</code>, <code>20261007-094900-frontiere-cout-qualite</code></span><span>3 / 8</span></div>
+</section>
+
+<!-- === 4. EST-CE FIABLE ? === -->
+<section class="slide" data-title="Fiabilité">
+  <div class="kicker">Est-ce fiable ?</div>
+  <h2>Les règles du jeu étaient écrites avant les essais, et l'examen final n'a été ouvert qu'une fois</h2>
+  <div class="body">
+    <div class="col">
+      <ul class="clean">
+        <li><b>Avant chaque essai</b>, une fiche scellée : la question, le critère de réussite chiffré, la prédiction</li>
+        <li><b>L'examen final</b> mis sous clé dès le départ, ouvert une seule fois, sur un système figé</li>
+        <li><b>Les échecs</b> sont publiés au même rang que les réussites</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="card">
+        <ul class="clean">
+          <li>Note qui compte autant les maladies rares que les fréquentes : <b><span data-claim="gp_f1_g">81</span> sur 100</b>, contre <span data-claim="gp_f1_tfidf">74</span> pour une méthode simple de comptage de mots</li>
+          <li>Avance de <span data-claim="gp_diff">+7,3</span> points, réelle mais pas assez nette pour être déclarée : la fourchette va de <span data-claim="gp_diff_lo">+1,6</span> à <span data-claim="gp_diff_hi">+12,6</span>, et le seuil utile fixé d'avance était de 2 points</li>
+          <li>Sur un jeu public d'une autre équipe, sans aucun réglage : <b><span data-claim="gp_mf_g">72</span> sur 100</b>, au niveau du meilleur système publié (<span data-claim="gp_mf_pub">72</span>)</li>
+          <li>Quand il propose une courte liste de chapitres, la bonne réponse y figure <b><span data-claim="gp_cov">92</span> fois sur 100</b> (objectif : 90)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Runs : <code>20261006-210015-ouverture-test-scelle-g</code>, <code>20261017-113948-morfitt-g-gele</code></span><span>4 / 8</span></div>
+</section>
+
+<!-- === 5. COMBIEN ÇA COÛTE === -->
+<section class="slide" data-title="Coût">
+  <div class="kicker">Combien ça coûte</div>
+  <h2>Une seule carte graphique, et quelques watts-heure pour mille dossiers</h2>
+  <div class="stats" style="margin-top:56px">
+    <div class="stat card"><div class="n"><span data-claim="en_expected">3,06</span> Wh</div><div class="t">pour 1 000 dossiers, l'équivalent d'une ampoule LED de 10 W allumée environ 18 minutes ; <span data-claim="en_g">10,67</span> Wh sans le tri du lecteur rapide</div></div>
+    <div class="stat card"><div class="n"><span data-claim="sv_expected">38,4</span> ms</div><div class="t">par dossier avec le tri, contre <span data-claim="sv_g_mean">97,4</span> ms quand chaque dossier passe par le lecteur approfondi</div></div>
+    <div class="stat card"><div class="n"><span data-claim="fr_g_h">5,11</span> h</div><div class="t">d'apprentissage, une seule fois, sur la carte graphique</div></div>
+  </div>
+  <p class="note">Sans carte graphique, la méthode simple tourne sur un processeur ordinaire (<span data-claim="fr_a_ms">1,9</span> ms par dossier) mais classe moins bien à l'examen final : <span data-claim="gp_acc_tfidf">85</span> dossiers sur 100 contre <span data-claim="gp_acc_g">89</span>. Énergie de la carte seulement ; le processeur n'est pas compté.</p>
+  <div class="foot"><span>Runs : <code>20261017-025855-energie-service-g-cascade</code>, <code>20261017-015754-service-g-cascade</code> et deux autres (claims.json)</span><span>5 / 8</span></div>
+</section>
+
+<!-- === 6. CE QUI PEUT MAL TOURNER === -->
+<section class="slide" data-title="Limites">
+  <div class="kicker">Ce qui peut mal tourner</div>
+  <h2>Trois limites à connaître avant toute décision</h2>
+  <div class="stats" style="margin-top:56px">
+    <div class="stat card"><div class="n">Fictif</div><div class="t"><b>Données fictives</b> : rien n'est validé cliniquement. Le système propose, un humain décide ; il n'aide ni au codage ni au diagnostic d'un vrai patient.</div></div>
+    <div class="stat card"><div class="n"><span data-claim="gp_drift_ref">77</span> → <span data-claim="gp_drift_new">72</span></div><div class="t"><b>Nouveaux médecins ou nouvel hôpital</b> : la note baisse dans notre simulation sans qu'aucune alerte automatique ne le voie ; il faut vérifier à la main environ <span data-claim="gp_audit_n">1 000</span> dossiers par contrôle, et valider sur place.</div></div>
+    <div class="stat card"><div class="n">2 sur 10</div><div class="t"><b>Relecture humaine</b> : environ deux dossiers sur dix restent incertains et vont à un humain ; ce temps fait partie du coût.</div></div>
+  </div>
+  <div class="foot"><span>Runs : <code>20261017-090325-simulation-derive</code>, <code>20261017-091931-taille-echantillon-etiquete</code>, <code>20261006-210015-ouverture-test-scelle-g</code></span><span>6 / 8</span></div>
+</section>
+
+<!-- === 7. METTRE EN SERVICE === -->
+<section class="slide" data-title="Mise en service">
+  <div class="kicker">Ce qu'il faut pour le mettre en service</div>
+  <h2>Cinq étapes ; les outils de deux d'entre elles sont déjà prêts</h2>
+  <div style="margin-top:44px">
+    <ol class="steps">
+      <li><b>Cadre et autorisation</b> avec le délégué à la protection des données du CHU, avant toute donnée réelle</li>
+      <li><b>Données et définitions</b> : extraction sur place, chapitres définis avec les cliniciens et le département d'information médicale</li>
+      <li><b>Validation sur place</b> : rejouer la chaîne sur les données du CHU <span class="tag teal">guide de transposition testé</span></li>
+      <li><b>Service et surveillance</b> : service, alerte automatique et échantillon vérifié à la main <span class="tag teal">prêts, à régler sur place</span></li>
+      <li><b>Relecture humaine</b> des dossiers incertains, organisée avec les équipes</li>
+    </ol>
+  </div>
+  <div class="foot"><span>Détails : docs/TRANSPOSER_AU_CHU.md, docs/SURVEILLANCE_DERIVE.md</span><span>7 / 8</span></div>
+</section>
+
+<!-- === 8. À RETENIR === -->
+<section class="slide" data-title="À retenir">
+  <div class="kicker">À retenir</div>
+  <h2>Ce qu'il faut retenir</h2>
+  <div class="stats" style="margin-top:56px">
+    <div class="stat card"><div class="t" style="font-size:34px;color:var(--ink)"><b style="display:block;margin-bottom:12px">Il classe bien et sait quand il doute</b><span data-claim="gp_acc_auto">95</span> % de bonnes réponses quand il décide seul, le reste va à un humain</div></div>
+    <div class="stat card"><div class="t" style="font-size:34px;color:var(--ink)"><b style="display:block;margin-bottom:12px">Il coûte peu à faire tourner</b>une carte graphique, <span data-claim="sv_expected">38,4</span> ms et <span data-claim="en_expected">3,06</span> Wh pour mille dossiers</div></div>
+    <div class="stat card"><div class="t" style="font-size:34px;color:var(--ink)"><b style="display:block;margin-bottom:12px">Il doit être revalidé sur place</b>données fictives, et un changement de rédacteurs ne se voit pas sans vérification à la main</div></div>
+  </div>
+  <p class="note">Pour les spécialistes : les présentations « Projet LLM_finetuning » et « L'itinéraire le plus court », et le rapport final.</p>
+  <div class="foot"><span>Données fictives (corpus PARHAF) · recherche seulement · chiffres relus dans le registre</span><span>8 / 8</span></div>
+</section>
+
+</div></div>
+<script>
+/* === NAVIGATION === */
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide')), stage=document.getElementById('stage'), bar=document.getElementById('progress'), i=0;
+  function fit(){var s=Math.min(window.innerWidth/1920,window.innerHeight/1080);stage.style.transform='scale('+s+')';}
+  function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach(function(s,k){s.classList.toggle('active',k===i);});
+    bar.style.width=((i+1)/slides.length*100)+'%';try{history.replaceState(null,'','#'+(i+1));}catch(e){}}
+  window.addEventListener('resize',fit);fit();
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();show(i+1);}
+    else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>-1){e.preventDefault();show(i-1);}
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+    else if(e.key==='f'||e.key==='F'){if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+  });
+  var x0=null;document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',function(e){if(x0===null)return;var d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)show(i+(d<0?1:-1));x0=null;});
+  document.addEventListener('click',function(e){show(i+(e.clientX>window.innerWidth/2?1:-1));});
+  var h=parseInt((location.hash||'').slice(1),10);show(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>

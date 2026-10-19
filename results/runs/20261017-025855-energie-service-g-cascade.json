@@ -1,0 +1,55 @@
+{
+  "created_at": "2026-10-17T02:58:55Z",
+  "kind": "measure",
+  "machine_health": {
+    "end": {
+      "boot_id": "6591621d",
+      "kernel_segfaults": 5,
+      "uptime_s": 6614.34
+    },
+    "reasons": [],
+    "start": {
+      "boot_id": "6591621d",
+      "kernel_segfaults": 5,
+      "uptime_s": 6476.81
+    },
+    "verdict": "ok"
+  },
+  "metrics": {
+    "chemin_e_force": {
+      "echantillons": 31,
+      "euros_pour_1000_patients": 0.0004,
+      "passages": 3,
+      "puissance_moyenne_w": 189.0,
+      "secondes_de_charge": 16.3,
+      "wh_pour_1000_patients": 1.42
+    },
+    "chemin_g_force": {
+      "echantillons": 37,
+      "euros_pour_1000_patients": 0.0027,
+      "passages": 1,
+      "puissance_moyenne_w": 397.4,
+      "secondes_de_charge": 19.3,
+      "wh_pour_1000_patients": 10.67
+    },
+    "energie_attendue_wh_pour_1000_patients": 3.06,
+    "methode": "puissance moyenne de la carte × durée mesurée, au moins 15 s de charge par chemin",
+    "n_patients": 200,
+    "part_e_hors_pli": 0.8226,
+    "prix_eur_kwh_parametre": 0.25,
+    "reference_g_un_seul_tenant_wh_pour_1000": 10.5
+  },
+  "params": {
+    "fiche": "experiments/2026-10-17-energie-service-g-cascade.md",
+    "min_load_s": 15.0,
+    "n": 200,
+    "part_e_hors_pli": 0.8226,
+    "tau": 0.6
+  },
+  "run_id": "20261017-025855-energie-service-g-cascade",
+  "schema": "mini-1",
+  "slug": "energie-service-g-cascade",
+  "status": "ok",
+  "summary": "Énergie du service de G en cascade : 3.06 Wh attendus pour 1 000 patients (E 1.42, G 10.67)",
+  "supersedes": "20261017-025421-energie-service-g-cascade"
+}

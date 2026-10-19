@@ -1,0 +1,86 @@
+{
+  "created_at": "2026-10-17T19:05:42Z",
+  "kind": "measure",
+  "machine_health": {
+    "end": {
+      "boot_id": "6591621d",
+      "kernel_segfaults": 6,
+      "uptime_s": 64621.72
+    },
+    "reasons": [],
+    "start": {
+      "boot_id": "6591621d",
+      "kernel_segfaults": 6,
+      "uptime_s": 63796.8
+    },
+    "verdict": "ok"
+  },
+  "metrics": {
+    "debut_50": {
+      "accuracy": 0.7811,
+      "classe_la_plus_predite": "II",
+      "entropie_moyenne": 0.1196,
+      "macro_f1": 0.6132,
+      "n_classes_predites": 17,
+      "part_classe_la_plus_predite": 0.2726,
+      "proba_max_moyenne": 0.9554
+    },
+    "fin_10": {
+      "accuracy": 0.8375,
+      "classe_la_plus_predite": "II",
+      "entropie_moyenne": 0.0754,
+      "macro_f1": 0.7317,
+      "n_classes_predites": 18,
+      "part_classe_la_plus_predite": 0.2608,
+      "proba_max_moyenne": 0.9731
+    },
+    "fin_20": {
+      "accuracy": 0.8401,
+      "classe_la_plus_predite": "II",
+      "entropie_moyenne": 0.0855,
+      "macro_f1": 0.7432,
+      "n_classes_predites": 17,
+      "part_classe_la_plus_predite": 0.2543,
+      "proba_max_moyenne": 0.9666
+    },
+    "fin_30": {
+      "accuracy": 0.8257,
+      "classe_la_plus_predite": "II",
+      "entropie_moyenne": 0.0823,
+      "macro_f1": 0.7042,
+      "n_classes_predites": 17,
+      "part_classe_la_plus_predite": 0.2569,
+      "proba_max_moyenne": 0.9677
+    },
+    "fin_50": {
+      "accuracy": 0.8257,
+      "classe_la_plus_predite": "II",
+      "entropie_moyenne": 0.0841,
+      "macro_f1": 0.7051,
+      "n_classes_predites": 18,
+      "part_classe_la_plus_predite": 0.249,
+      "proba_max_moyenne": 0.969
+    },
+    "propre": {
+      "accuracy": 0.8349,
+      "classe_la_plus_predite": "II",
+      "entropie_moyenne": 0.065,
+      "macro_f1": 0.741,
+      "n_classes_predites": 18,
+      "part_classe_la_plus_predite": 0.2661,
+      "proba_max_moyenne": 0.9752
+    }
+  },
+  "params": {
+    "adapter": "lora-fin-aleatoire-auteur-pli1",
+    "fiche": "experiments/2026-10-17-lora-fin-aleatoire-plis-auteurs.md",
+    "fold": 1,
+    "fold_key": "control_folds_by_author",
+    "micro_batch": 1
+  },
+  "run_id": "20261017-190542-robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli1",
+  "schema": "mini-1",
+  "slug": "robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli1",
+  "status": "ok",
+  "summary": "Diagnostic de l'effondrement du LoRA sans la fin du texte (inférence, pli 1, control_folds_by_author)"
+}

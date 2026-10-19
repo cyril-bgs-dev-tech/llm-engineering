@@ -35,3 +35,43 @@ def test_sans_essai_la_synthese_est_vide_et_un_essai_reussi_sans_empreinte_est_r
     assert stress.summarize([]) == {}
     with pytest.raises(ValueError, match="empreinte"):
         stress.summarize([trial("a", code=0, digest=None)])
+
+
+REF = "df902b17"
+
+
+def libres(n_ok: int, crashes: int = 0, divergent: int = 0) -> list[stress.Trial]:
+    return ([stress.Trial("libre", 0, REF)] * n_ok + [stress.Trial("libre", 139, None)] * crashes
+            + [stress.Trial("libre", 0, "autre")] * divergent)
+
+
+def test_une_seule_panne_apres_la_mise_a_jour_signifie_machine_toujours_instable():
+    v = stress.bios_verdict(libres(120, crashes=8), libres(127, crashes=1), reference_digest=REF)
+    assert v.label == "toujours instable"
+
+
+def test_une_empreinte_differente_de_la_reference_apres_la_mise_a_jour_signifie_toujours_instable():
+    v = stress.bios_verdict(libres(120, crashes=8), libres(127, divergent=1), reference_digest=REF)
+    assert v.label == "toujours instable"
+
+
+def test_zero_panne_apres_et_pannes_avant_significatives_donne_stabilisee():
+    v = stress.bios_verdict(libres(118, crashes=10), libres(128), reference_digest=REF)
+    assert v.label == "stabilisée"
+    assert v.p_value < 0.05
+
+
+def test_zero_panne_apres_sans_pannes_avant_ne_demontre_pas_l_effet():
+    v = stress.bios_verdict(libres(128), libres(128), reference_digest=REF)
+    assert v.label == "aucune panne après, effet non démontré"
+
+
+def test_trop_peu_d_essais_apres_n_est_pas_concluant():
+    v = stress.bios_verdict(libres(118, crashes=10), libres(60), reference_digest=REF)
+    assert v.label == "non concluant"
+
+
+def test_la_reference_d_empreinte_est_imposee_et_non_la_majoritaire():
+    # tous les essais d'après concordent entre eux mais diffèrent de la référence d'avant la mise à jour : résultat changé
+    v = stress.bios_verdict(libres(118, crashes=10), [stress.Trial("libre", 0, "autre")] * 128, reference_digest=REF)
+    assert v.label == "toujours instable"

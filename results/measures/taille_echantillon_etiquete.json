@@ -1,0 +1,119 @@
+{
+ "n_patients": 3586,
+ "lots": 2000,
+ "graine": 20261017,
+ "alpha": 0.05,
+ "part_nouveaux_auteurs_a40": 0.4,
+ "jeu_entier": {
+  "patient": {
+   "macro_f1": 77.39,
+   "exactitude": 85.86
+  },
+  "auteur": {
+   "macro_f1": 72.22,
+   "exactitude": 83.69
+  },
+  "a40": {
+   "macro_f1": 75.69,
+   "exactitude": 85.08
+  }
+ },
+ "par_taille": {
+  "100": {
+   "macro_f1": {
+    "seuil": 56.74,
+    "fausse_alerte": 0.05,
+    "puissance_a100": 0.141,
+    "puissance_a40": 0.071
+   },
+   "exactitude": {
+    "seuil": 80.0,
+    "fausse_alerte": 0.037,
+    "puissance_a100": 0.1255,
+    "puissance_a40": 0.055
+   }
+  },
+  "200": {
+   "macro_f1": {
+    "seuil": 63.64,
+    "fausse_alerte": 0.05,
+    "puissance_a100": 0.2015,
+    "puissance_a40": 0.077
+   },
+   "exactitude": {
+    "seuil": 81.5,
+    "fausse_alerte": 0.035,
+    "puissance_a100": 0.186,
+    "puissance_a40": 0.0695
+   }
+  },
+  "500": {
+   "macro_f1": {
+    "seuil": 71.1,
+    "fausse_alerte": 0.05,
+    "puissance_a100": 0.5055,
+    "puissance_a40": 0.1415
+   },
+   "exactitude": {
+    "seuil": 83.59,
+    "fausse_alerte": 0.05,
+    "puissance_a100": 0.4345,
+    "puissance_a40": 0.151
+   }
+  },
+  "1000": {
+   "macro_f1": {
+    "seuil": 73.7,
+    "fausse_alerte": 0.05,
+    "puissance_a100": 0.8105,
+    "puissance_a40": 0.2035
+   },
+   "exactitude": {
+    "seuil": 84.39,
+    "fausse_alerte": 0.05,
+    "puissance_a100": 0.7395,
+    "puissance_a40": 0.2275
+   }
+  },
+  "2000": {
+   "macro_f1": {
+    "seuil": 75.6,
+    "fausse_alerte": 0.05,
+    "puissance_a100": 0.9995,
+    "puissance_a40": 0.5135
+   },
+   "exactitude": {
+    "seuil": 85.0,
+    "fausse_alerte": 0.048,
+    "puissance_a100": 0.99,
+    "puissance_a40": 0.425
+   }
+  }
+ },
+ "puissance_a100": {
+  "macro_f1": {
+   "100": 0.141,
+   "200": 0.2015,
+   "500": 0.5055,
+   "1000": 0.8105,
+   "2000": 0.9995
+  },
+  "exactitude": {
+   "100": 0.1255,
+   "200": 0.186,
+   "500": 0.4345,
+   "1000": 0.7395,
+   "2000": 0.99
+  }
+ },
+ "decision": {
+  "taille_par_metrique": {
+   "macro_f1": 1000,
+   "exactitude": 2000
+  },
+  "metrique_recommandee": "macro_f1",
+  "taille_recommandee": 1000,
+  "lecture": "macro_f1 sur 1000 patients étiquetés",
+  "puissance_a40_a_cette_taille": 0.2035
+ }
+}

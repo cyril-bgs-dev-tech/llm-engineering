@@ -1,0 +1,1 @@
+bash: line 1: 85203 Segmentation fault         .venv/bin/python scripts/morfitt_run.py tune --register --fiche experiments/2026-10-05-ancrage-morfitt.md > "/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/logs/lots/morfitt_tune.out" 2>&1

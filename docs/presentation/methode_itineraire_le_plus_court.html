@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Itinéraire le plus court</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* === TOKENS === */
+:root{
+  --ink:#10202f; --ink-2:#34475a; --muted:#6b7b8a;
+  --paper:#f7f3ea; --card:#ffffff; --line:#d9d2c3;
+  --teal:#0e7c7b; --teal-2:#0b5f5e; --amber:#d99a1c; --red:#b8402f; --sky:#2f6da3;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'IBM Plex Sans','Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'IBM Plex Mono',Consolas,'SFMono-Regular',monospace;
+}
+/* === BASE === */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0b1722;overflow:hidden}
+body{font-family:var(--sans);color:var(--ink)}
+.viewport{position:fixed;inset:0;display:grid;place-items:center}
+.stage{width:1920px;height:1080px;position:relative;transform-origin:center center;flex:none}
+.slide{position:absolute;inset:0;background:var(--paper);padding:96px 128px 88px;display:flex;flex-direction:column;
+  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s}
+.slide.active{opacity:1;visibility:visible}
+.slide::before{content:"";position:absolute;left:0;top:0;bottom:0;width:14px;background:var(--teal)}
+.kicker{font:500 24px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--teal-2);margin-bottom:22px}
+h1{font:700 92px/1.04 var(--serif);letter-spacing:-.01em}
+h2{font:700 56px/1.12 var(--serif);max-width:1560px;letter-spacing:-.005em;text-wrap:balance}
+.lead{font-size:34px;line-height:1.45;color:var(--ink-2);max-width:1400px;margin-top:28px}
+.foot{position:absolute;left:128px;right:128px;bottom:34px;display:flex;justify-content:space-between;
+  font:500 20px var(--mono);color:var(--muted)}
+.body{flex:1;display:flex;gap:56px;margin-top:44px;min-height:0}
+.col{flex:1;min-width:0}
+ul.clean{list-style:none;display:flex;flex-direction:column;gap:20px}
+ul.clean li{font-size:32px;line-height:1.35;padding-left:38px;position:relative;color:var(--ink)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.5em;width:16px;height:16px;border-radius:4px;background:var(--teal)}
+ul.clean li b{font-weight:600}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:30px 36px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;width:100%}
+.stat .n{font:700 84px/1 var(--serif);color:var(--teal-2)}
+.stat .t{font-size:26px;line-height:1.3;color:var(--ink-2);margin-top:12px}
+.note{font-size:24px;line-height:1.4;color:var(--muted);margin-top:20px}
+.tag{display:inline-block;font:500 22px var(--mono);padding:6px 14px;border-radius:999px;border:2px solid var(--line);color:var(--ink-2);background:#fff}
+.tag.red{border-color:var(--red);color:var(--red)} .tag.amber{border-color:var(--amber);color:#8a5d00} .tag.teal{border-color:var(--teal);color:var(--teal-2)}
+/* === BARS === */
+.bars{display:flex;flex-direction:column;gap:22px;width:100%}
+.bar-row{display:grid;grid-template-columns:560px 1fr 150px;align-items:center;gap:22px}
+.bar-row .lab{font-size:27px;line-height:1.2;color:var(--ink)}
+.bar-row .lab small{display:block;font-size:20px;color:var(--muted);margin-top:4px}
+.track{position:relative;height:40px;background:#ebe5d6;border-radius:10px;overflow:hidden}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:10px;background:var(--teal)}
+.fill.amber{background:var(--amber)} .fill.red{background:var(--red)} .fill.grey{background:#9aa7b2} .fill.sky{background:var(--sky)}
+.ci{position:absolute;top:50%;height:6px;margin-top:-3px;background:var(--ink);opacity:.85}
+.ci::before,.ci::after{content:"";position:absolute;top:-8px;width:4px;height:22px;background:var(--ink)}
+.ci::before{left:0}.ci::after{right:0}
+.val{font:600 30px var(--mono);text-align:right}
+/* variante dense : diapositives à beaucoup de barres (contrôle : scripts/check_deck_layout.py) */
+.bars.dense{gap:8px}
+.dense .bar-row{grid-template-columns:600px 1fr 130px;gap:18px}
+.dense .bar-row .lab{font-size:22px;line-height:1.12}
+.dense .bar-row .lab small{font-size:17px;margin-top:1px;line-height:1.15}
+.dense .track{height:24px;border-radius:8px}
+.dense .val{font-size:25px}
+/* === SCORE TABLE === */
+.score{width:100%;border-collapse:separate;border-spacing:0 6px}
+.score th{font:500 20px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 12px 6px}
+.score td{background:#fff;padding:5px 12px;font-size:23px;border-top:2px solid var(--line);border-bottom:2px solid var(--line)}
+.score td:first-child{border-left:2px solid var(--line);border-radius:12px 0 0 12px;font-weight:500;width:520px}
+.score td:last-child{border-right:2px solid var(--line);border-radius:0 12px 12px 0}
+.mini{display:flex;align-items:center;gap:12px}
+.mini .tr{flex:1;height:20px;background:#ebe5d6;border-radius:6px;position:relative;overflow:hidden}
+.mini .tr i{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
+.mini span{font:600 22px var(--mono);width:44px;text-align:right}
+.c-p i{background:var(--teal)} .c-o i{background:var(--sky)} .c-a i{background:var(--ink)}
+.avg td{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600;font-size:28px}
+.avg .mini .tr{background:#2c4156}.avg .c-p i{background:#4fd1c5}.avg .c-o i{background:#7fb4e6}.avg .c-a i{background:#f2efe6}
+/* === TITLE === */
+.slide.title{background:var(--ink);color:#fff;justify-content:center}
+.slide.title::before{background:var(--amber);width:22px}
+.slide.title .kicker{color:#7fd6d0}
+.slide.title .lead{color:#c8d3dd}
+.slide.title .foot{color:#8aa0b3}
+/* === UI === */
+.progress{position:fixed;left:0;top:0;height:5px;background:var(--amber);width:0;z-index:5;transition:width .3s}
+.hint{position:fixed;right:18px;top:10px;font:500 13px var(--mono);color:#8aa0b3;z-index:5;opacity:.8}
+@media (prefers-reduced-motion:reduce){.slide{transition:none}.progress{transition:none}}
+@media print{
+  @page{size:1920px 1080px;margin:0}
+  html,body{overflow:visible;background:#fff;height:auto}
+  .viewport{position:static;display:block}
+  .stage{transform:none!important;width:1920px;height:auto}
+  .slide{position:relative;inset:auto;width:1920px;height:1080px;opacity:1;visibility:visible;page-break-after:always;break-after:page}
+  .progress,.hint{display:none}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="viewport"><div class="stage" id="stage">
+
+<!-- === 1. TITRE === -->
+<section class="slide title active" data-title="Titre">
+  <div class="kicker">Méthode · état au 17 octobre 2026</div>
+  <h1>L'itinéraire le plus court</h1>
+  <p class="lead">Dans quel ordre attaquer un nouveau problème de classification de textes cliniques : ce que les mesures du projet ont gardé, dominé ou réfuté. Tiré d'un seul corpus fictif (PARHAF), d'une tâche (chapitre CIM-10) et d'une carte graphique : un point de départ à revérifier, pas une loi.</p>
+  <div class="foot"><span>Données fictives (PARHAF) · aucune donnée de patient réel · chaque chiffre balisé est relu dans le registre</span><span>1 / 10</span></div>
+</section>
+
+<!-- === 2. LE CONSTAT === -->
+<section class="slide" data-title="Constat">
+  <div class="kicker">Le constat qui fonde l'itinéraire (développement, cinq plis, 3 586 patients)</div>
+  <h2>Cinq encodeurs et un TF-IDF donnent 99 % de la qualité du meilleur système pour 13 % de son entraînement</h2>
+  <div style="margin-top:34px">
+    <table class="score">
+      <thead><tr><th>Système</th><th>Macro-F1</th><th>Entraînement</th><th>Latence p50</th><th>Statut</th></tr></thead>
+      <tbody>
+        <tr><td>A. TF-IDF caractères (processeur)</td><td><span data-claim="fr_a_f1">0,7202</span></td><td><span data-claim="fr_a_h">0,01</span> h</td><td><span data-claim="fr_a_ms">1,9</span> ms</td><td><span class="tag teal">frontière</span></td></tr>
+        <tr><td>D. Cinq encodeurs (GPU, bf16)</td><td><span data-claim="fr_d_f1">0,7528</span></td><td><span data-claim="fr_d_h">0,64</span> h</td><td><span data-claim="fr_d_ms">26,0</span> ms</td><td><span class="tag teal">frontière</span></td></tr>
+        <tr><td>E. Cinq encodeurs + TF-IDF</td><td><b><span data-claim="fr_e_f1">0,7721</span></b></td><td><b><span data-claim="fr_e_h">0,65</span> h</b></td><td><b><span data-claim="fr_e_ms">28,8</span> ms</b></td><td><span class="tag teal">frontière</span></td></tr>
+        <tr><td>F. LoRA Qwen3.5-4B seul</td><td><span data-claim="fr_f_f1">0,7673</span></td><td><span data-claim="fr_f_h">4,45</span> h</td><td><span data-claim="fr_f_ms">61,0</span> ms</td><td><span class="tag red">dominé par E</span></td></tr>
+        <tr><td>G. LoRA + encodeurs + TF-IDF</td><td><b><span data-claim="fr_g_f1">0,7799</span></b></td><td><span data-claim="fr_g_h">5,11</span> h</td><td><span data-claim="fr_g_ms">91,6</span> ms</td><td><span class="tag amber">frontière, retenu</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="font-size:25px">Rapports calculés sur les valeurs du tableau : 0,7721 / 0,7799 = 99,0 % ; 0,65 h / 5,11 h = 13 %. <b>Ce n'est pas une équivalence</b> : E n'est pas démontré non inférieur à G (borne basse <span data-claim="sel_e_borne">−2,79</span> point contre une marge de −2,0). La règle de sélection écrite d'avance retient G ; l'itinéraire dit seulement dans quel ordre dépenser le calcul.</p>
+  <div class="foot"><span>Runs : <code>20261007-094900-frontiere-cout-qualite</code>, <code>20261005-145138-selection-systeme-final-apres-rm56</code></span><span>2 / 10</span></div>
+</section>
+
+<!-- === 3. ÉTAPE 0 === -->
+<section class="slide" data-title="Étape 0">
+  <div class="kicker">Étape 0 · processeur seul, quelques minutes</div>
+  <h2>Cadrer et découper avant tout modèle</h2>
+  <div class="body">
+    <div class="col">
+      <ul class="clean">
+        <li><b>Un contrat de tâche fermé</b> : catégories nommées et définies, format de sortie fixe ; le code lit le contrat</li>
+        <li><b>Plis par patient et par auteur</b> dès le départ : un raccourci par le style du rédacteur ne se voit pas en plis par patient</li>
+        <li><b>Un test scellé</b> réservé à un seul script, ouvert une fois sur un système gelé</li>
+        <li><b>Une fiche hachée</b> par expérience : question, critère chiffré, prédiction, avant le premier run</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="kicker" style="margin-bottom:14px">Ce que coûtent les nouveaux auteurs</div>
+        <ul class="clean">
+          <li>Encodeur en plis d'auteurs : <b><span data-claim="au_enc">0,7075</span></b>, perte de <span data-claim="au_perte_enc">5,23</span> points</li>
+          <li>TF-IDF en plis d'auteurs : <b><span data-claim="au_tfidf">0,6742</span></b>, perte de <span data-claim="au_perte_tfidf">4,60</span> points</li>
+          <li>Pertes comparables : l'écart patient contre auteur se mesure, il ne se suppose pas</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Run : <code>20261006-213214-encodeur-plis-auteurs-analyse</code></span><span>3 / 10</span></div>
+</section>
+
+<!-- === 4. ÉTAPE 1 === -->
+<section class="slide" data-title="Étape 1">
+  <div class="kicker">Étape 1 · moins d'une minute de processeur</div>
+  <h2>La référence non neuronale, réglée comme les autres</h2>
+  <div class="body" style="flex-direction:column">
+    <div class="stats">
+      <div class="stat card"><div class="n"><span data-claim="fr_a_f1">0,7202</span></div><div class="t">macro-F1 du TF-IDF caractères à poids équilibrés, cinq plis</div></div>
+      <div class="stat card"><div class="n"><span data-claim="fr_a_ms">1,9</span> ms</div><div class="t">par patient sur un cœur de processeur ; entraînement <span data-claim="fr_a_h">0,01</span> h</div></div>
+      <div class="stat card"><div class="n"><span data-claim="zs_4b">0,4929</span></div><div class="t">Qwen3.5-4B sans affinage (zéro-shot, pli 0) : un LLM non affiné ne remplace pas cette référence</div></div>
+    </div>
+    <p class="note" style="font-size:27px;margin-top:36px"><b>Même effort de réglage pour chaque famille.</b> La première recette, gelée à deux époques, sous-estimait fortement l'encodeur et le LoRA (amendement du 04/10/2026, RM-25) : comparer une référence mûre à des modèles sous-entraînés aurait inversé les conclusions. La barre à franchir est celle-ci, pas la classe majoritaire.</p>
+  </div>
+  <div class="foot"><span>Runs : <code>20261007-094900-frontiere-cout-qualite</code>, <code>20261005-030952-zero-shot-qwen3-5-4b-pli0</code></span><span>4 / 10</span></div>
+</section>
+
+<!-- === 5. ÉTAPE 2 === -->
+<section class="slide" data-title="Étape 2">
+  <div class="kicker">Étape 2 · moins d'une heure de GPU</div>
+  <h2>Encodeurs français et TF-IDF en ensemble : le point d'arrêt quand le coût compte</h2>
+  <div class="body">
+    <div class="col">
+      <ul class="clean">
+        <li><b>E = cinq graines de CamemBERT-bio + TF-IDF</b>, probabilités moyennées : <span data-claim="fr_e_f1">0,7721</span> en <span data-claim="fr_e_h">0,65</span> h, <span data-claim="fr_e_ms">28,8</span> ms par patient</li>
+        <li><b>bf16 à l'entraînement</b> : équivalent au fp32, <span data-claim="v2_bf16_d">−0,07</span> [<span data-claim="v2_bf16_lo">−1,67</span> ; <span data-claim="v2_bf16_hi">+1,69</span>], <span data-claim="v2_bf16_s">95,4</span> s par run</li>
+        <li><b>L'ensemble avant le réglage fin</b> : ajouter le TF-IDF à D fait passer la macro-F1 de <span data-claim="fr_d_f1">0,7528</span> à <span data-claim="fr_e_f1">0,7721</span> (estimations ponctuelles), quand aucune variante de recette testée ne gagne</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="kicker" style="margin-bottom:14px">Recette v2 de l'encodeur : rien ne gagne</div>
+        <ul class="clean">
+          <li>Lissage des étiquettes : <span data-claim="v2_ls_d">−0,70</span> point</li>
+          <li>Moyenne mobile des poids : <span data-claim="v2_ema_d">−1,20</span> point</li>
+          <li>Curriculum : <span data-claim="v2_curr_d">−0,13</span> point</li>
+          <li>Résultats négatifs publiés ; un facteur à la fois, cinq plis</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Runs : <code>20261007-094900-frontiere-cout-qualite</code>, <code>20261005-101921-encodeur-v2-analyse-cinq-plis</code></span><span>5 / 10</span></div>
+</section>
+
+<!-- === 6. ÉTAPE 3 === -->
+<section class="slide" data-title="Étape 3">
+  <div class="kicker">Étape 3 · environ 4,5 h de GPU de plus</div>
+  <h2>Le LLM affiné seulement si les derniers points valent leur prix</h2>
+  <div class="body">
+    <div class="col">
+      <ul class="clean">
+        <li><b>Seul, le LoRA est dominé</b> : <span data-claim="fr_f_f1">0,7673</span> pour <span data-claim="fr_f_h">4,45</span> h et <span data-claim="fr_f_ms">61,0</span> ms, sous E</li>
+        <li><b>Dans l'ensemble G</b>, il apporte le meilleur point : <span data-claim="fr_g_f1">0,7799</span>, pour <span data-claim="fr_g_h">5,11</span> h et <span data-claim="fr_g_ms">91,6</span> ms</li>
+        <li><b>Gain sur E non résolu</b> en développement comme au test : le LLM se justifie par la qualité maximale, pas par l'efficience</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="kicker" style="margin-bottom:14px">Test scellé, ouvert une fois (633 patients)</div>
+        <ul class="clean">
+          <li>G <b><span data-claim="t_g_f1">0,8131</span></b>, E <span data-claim="t_e_f1">0,8031</span>, TF-IDF <span data-claim="t_a_f1">0,7402</span></li>
+          <li>G moins E : <span data-claim="t_ge_d">+0,99</span> [<span data-claim="t_ge_lo">−3,71</span> ; <span data-claim="t_ge_hi">+5,00</span>], sans verdict</li>
+          <li>G moins TF-IDF : <span data-claim="t_ga_d">+7,28</span> [<span data-claim="t_ga_lo">+1,55</span> ; <span data-claim="t_ga_hi">+12,62</span>], « non résolu » à δ = 2</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Runs : <code>20261007-094900-frontiere-cout-qualite</code>, <code>20261006-210015-ouverture-test-scelle-g</code></span><span>6 / 10</span></div>
+</section>
+
+<!-- === 7. CASCADE === -->
+<section class="slide" data-title="Cascade">
+  <div class="kicker">Étape 3 bis · même entraînement que G, inférence allégée (17/10/2026)</div>
+  <h2>Servir G en cascade : E répond seul quand il est sûr, G pour le reste</h2>
+  <div class="body">
+    <div class="col">
+      <ul class="clean">
+        <li><b>Seuil choisi hors pli</b> par fidélité à G (au moins 98 % de classes identiques) : τ = <span data-claim="cas_tau">0,6</span> dans les cinq plis</li>
+        <li><b><span data-claim="cas_share">82,3</span> % des patients</b> traités sans le LoRA ; fidélité à G <span data-claim="cas_fid">99,7</span> %</li>
+        <li>Macro-F1 : cascade <span data-claim="cas_f1">0,7789</span>, G <span data-claim="cas_g_f1">0,7799</span>, E <span data-claim="cas_e_f1">0,7721</span></li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="kicker" style="margin-bottom:14px">Verdict préenregistré : « cascade retenue »</div>
+        <ul class="clean">
+          <li>Cascade moins G : <span data-claim="cas_dg">−0,10</span> [<span data-claim="cas_dg_lo">−0,23</span> ; <span data-claim="cas_dg_hi">+0,02</span>], marge −2,0</li>
+          <li>Cascade moins E : <span data-claim="cas_de">+0,68</span> [<span data-claim="cas_de_lo">−0,72</span> ; <span data-claim="cas_de_hi">+2,68</span>], non résolu</li>
+          <li>Servie par HTTP : <b><span data-claim="sv_expected">38,4</span> ms</b> en moyenne attendue (modèle : <span data-claim="cas_ms">39,6</span>), contre <span data-claim="sv_g_mean">97,4</span> ms pour G complet ; <span data-claim="en_expected">3,06</span> Wh pour 1 000 patients contre <span data-claim="en_g">10,67</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="font-size:24px">L'entraînement reste celui de G (<span data-claim="fr_g_h">5,11</span> h) : la cascade allège le service, pas l'apprentissage. La fidélité presque parfaite est en partie mécanique (E est une composante de G). Latence attendue = chemins mesurés par HTTP (E <span data-claim="sv_e_p50">25,3</span> ms, G <span data-claim="sv_g_p50">87,7</span> ms au p50) pondérés par la part hors pli : les patients de l'échantillon, vus à l'entraînement, passent presque tous par E.</p>
+  <div class="foot"><span>Runs : <code>20261017-012416-cascade-e-puis-g</code>, <code>20261017-015754-service-g-cascade</code> et un autre (claims.json)</span><span>7 / 10</span></div>
+</section>
+
+
+<!-- === 8. RÉFUTÉ === -->
+<section class="slide" data-title="Réfuté">
+  <div class="kicker">Ce qu'on ne refait pas</div>
+  <h2>Dominé ou réfuté sur ce corpus, chaque fois avec une fiche écrite avant</h2>
+  <div class="body">
+    <div class="col">
+      <ul class="clean">
+        <li><b>Distillation vers l'encodeur</b> : gain apparent <span data-claim="di_ens_d">+3,47</span> [<span data-claim="di_ens_lo">+2,25</span> ; <span data-claim="di_ens_hi">+5,08</span>] qui disparaît avec des professeurs imbriqués, <span data-claim="di_nest_d">−0,77</span> [<span data-claim="di_nest_lo">−2,46</span> ; <span data-claim="di_nest_hi">+0,96</span>] : fuite de second ordre de <span data-claim="di_leak_d">−4,24</span> [<span data-claim="di_leak_lo">−6,00</span> ; <span data-claim="di_leak_hi">−2,90</span>]</li>
+        <li><b>Encodeur élagué à six couches</b> : <span data-claim="pr_d">−13,08</span> [<span data-claim="pr_lo">−15,88</span> ; <span data-claim="pr_hi">−10,14</span>] pour une latence divisée par deux au mieux</li>
+      </ul>
+    </div>
+    <div class="col">
+      <ul class="clean">
+        <li><b>INT8 statique min-max</b> : macro-F1 <span data-claim="i8_f1">0,0227</span> contre <span data-claim="i8_fp32_f1">0,7362</span> en ONNX 32 bits, et plus lent</li>
+        <li><b>Cascades encodeurs puis LoRA seul</b> : <span data-claim="fr_c1_f1">0,7685</span> et <span data-claim="fr_c2_f1">0,7696</span>, dominées par E car elles gardent l'entraînement du LoRA</li>
+        <li><b>Leçon de méthode</b> : un gain qui bat son propre professeur se contrôle par imbrication avant d'être cru</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>Runs : <code>20261005-144635-distillation-analyse-cinq-plis</code> et deux autres (claims.json)</span><span>8 / 10</span></div>
+</section>
+
+<!-- === 9. PIÈGES === -->
+<section class="slide" data-title="Pièges">
+  <div class="kicker">Ce qui coûte des jours sans prévenir</div>
+  <h2>Trois pièges d'ingénierie, chacun mesuré avant d'être contourné</h2>
+  <div class="body" style="flex-direction:column">
+    <div class="stats">
+      <div class="stat card"><div class="n"><span data-claim="tk_free_fail">25</span> / <span data-claim="tk_free_runs">31</span></div><div class="t"><b>Tokenizer Rust</b> : échecs aléatoires sans épinglage, <span data-claim="tk_pin_fail">0</span> sur <span data-claim="tk_pin_runs">78</span> une fois le processus épinglé sur un cœur dès son lancement ; tokenisation déléguée à un sous-processus</div></div>
+      <div class="stat card"><div class="n"><span data-claim="rb_end30">0,1395</span></div><div class="t"><b>LoRA sans les 30 % de fin du texte</b> (<span data-claim="rb_clean">0,7795</span> sur le texte entier) : il classait sur la fin ; fin aléatoire à l'entraînement : <span data-claim="rb_fix_clean">0,7852</span> et <span data-claim="rb_fix_end30">0,7665</span> (pli 0, une graine)</div></div>
+      <div class="stat card"><div class="n"><span data-claim="bios_ap_crash">10</span> / <span data-claim="bios_ap_n">46</span></div><div class="t"><b>Machine instable</b> : pannes d'un calcul déterministe après la mise à jour du BIOS, contre <span data-claim="bios_av_crash">10</span> sur <span data-claim="bios_av_n">46</span> avant ; chiffres courts calculés deux fois, tampon de santé au registre</div></div>
+    </div>
+    <p class="note" style="font-size:26px;margin-top:30px"><b>La règle commune</b> : un défaut se reproduit et se mesure avant d'être contourné, et le contournement est prouvé là où il doit mordre. Réduire le nombre de fils ne protégeait pas le tokenizer ; l'épinglage, qui le protège, ne protège pas scikit-learn.</p>
+  </div>
+  <div class="foot"><span>Runs : <code>20261017-012310-verification-machine-bios-apres</code> et cinq autres (claims.json)</span><span>9 / 10</span></div>
+</section>
+
+
+<!-- === 10. ITINÉRAIRE === -->
+<section class="slide" data-title="Itinéraire">
+  <div class="kicker">L'itinéraire en une page</div>
+  <h2>Sept étapes, chacune avec son coût et sa raison de s'arrêter</h2>
+  <div style="margin-top:26px">
+    <table class="score">
+      <thead><tr><th>Étape</th><th>Coût mesuré</th><th>S'arrêter si</th></tr></thead>
+      <tbody>
+        <tr><td>1. Contrat, plis patient et auteur, test scellé</td><td>processeur, minutes</td><td>classes trop rares ou groupes d'auteurs insolubles</td></tr>
+        <tr><td>2. TF-IDF caractères, recette mûre</td><td><span data-claim="fr_a_h">0,01</span> h, <span data-claim="fr_a_ms">1,9</span> ms</td><td>la tâche est déjà résolue au niveau voulu</td></tr>
+        <tr><td>3. Encodeurs bf16 + TF-IDF (E)</td><td><span data-claim="fr_e_h">0,65</span> h, <span data-claim="fr_e_ms">28,8</span> ms</td><td>le coût compte plus que le dernier point</td></tr>
+        <tr><td>4. Repère public, même code</td><td>MorFITT : mélange <span data-claim="mf_mix">71,74</span> [<span data-claim="mf_mix_lo">69,60</span> ; <span data-claim="mf_mix_hi">73,71</span>], G gelé <span data-claim="mf_g">72,30</span> [<span data-claim="mf_g_lo">70,15</span> ; <span data-claim="mf_g_hi">74,35</span>]</td><td>contre <span data-claim="mf_pub">71,95</span> publié au mieux : dans la bande</td></tr>
+        <tr><td>5. LoRA du LLM, ensemble G</td><td><span data-claim="fr_g_h">5,11</span> h, <span data-claim="fr_g_ms">91,6</span> ms</td><td>le gain sur E reste non résolu et le budget compte</td></tr>
+        <tr><td>6. Calibration, conforme, abstention</td><td>minutes, sur probabilités hors pli</td><td>couverture hors cible sans cause identifiée</td></tr>
+        <tr><td>7. Gel, prédiction hachée, test scellé</td><td>une ouverture, une seule</td><td>jamais rouvert : la décision est consommée</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="font-size:22px;margin-top:10px">Portée : un corpus fictif, une tâche, une RTX 5090. Sur un nouveau problème, les étapes 1 à 3 se rejouent d'abord et décident si les suivantes valent leur coût ; aucune durée n'est annoncée avant sa mesure.</p>
+  <div class="foot"><span>Runs : <code>20261007-094900-frontiere-cout-qualite</code>, <code>20261006-223731-morfitt-final-resume</code></span><span>10 / 10</span></div>
+</section>
+
+</div></div>
+<div class="hint">← → ou espace · F plein écran · impression = PDF</div>
+<script>
+/* === NAVIGATION === */
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide')), stage=document.getElementById('stage'), bar=document.getElementById('progress'), i=0;
+  function fit(){var s=Math.min(window.innerWidth/1920,window.innerHeight/1080);stage.style.transform='scale('+s+')';}
+  function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach(function(s,k){s.classList.toggle('active',k===i);});
+    bar.style.width=((i+1)/slides.length*100)+'%';try{history.replaceState(null,'','#'+(i+1));}catch(e){}}
+  window.addEventListener('resize',fit);fit();
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();show(i+1);}
+    else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>-1){e.preventDefault();show(i-1);}
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+    else if(e.key==='f'||e.key==='F'){if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+  });
+  var x0=null;document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',function(e){if(x0===null)return;var d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)show(i+(d<0?1:-1));x0=null;});
+  document.addEventListener('click',function(e){show(i+(e.clientX>window.innerWidth/2?1:-1));});
+  var h=parseInt((location.hash||'').slice(1),10);show(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>

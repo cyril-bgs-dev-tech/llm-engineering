@@ -1,0 +1,56 @@
+{
+ "propre": {
+  "macro_f1": 0.8062,
+  "accuracy": 0.8815,
+  "proba_max_moyenne": 0.9691,
+  "entropie_moyenne": 0.0804,
+  "classe_la_plus_predite": "II",
+  "part_classe_la_plus_predite": 0.259,
+  "n_classes_predites": 18
+ },
+ "fin_10": {
+  "macro_f1": 0.7842,
+  "accuracy": 0.8664,
+  "proba_max_moyenne": 0.9612,
+  "entropie_moyenne": 0.1049,
+  "classe_la_plus_predite": "II",
+  "part_classe_la_plus_predite": 0.2562,
+  "n_classes_predites": 18
+ },
+ "fin_20": {
+  "macro_f1": 0.748,
+  "accuracy": 0.8526,
+  "proba_max_moyenne": 0.9595,
+  "entropie_moyenne": 0.1112,
+  "classe_la_plus_predite": "II",
+  "part_classe_la_plus_predite": 0.259,
+  "n_classes_predites": 18
+ },
+ "fin_30": {
+  "macro_f1": 0.7325,
+  "accuracy": 0.8457,
+  "proba_max_moyenne": 0.9612,
+  "entropie_moyenne": 0.1031,
+  "classe_la_plus_predite": "II",
+  "part_classe_la_plus_predite": 0.2576,
+  "n_classes_predites": 18
+ },
+ "fin_50": {
+  "macro_f1": 0.6972,
+  "accuracy": 0.8416,
+  "proba_max_moyenne": 0.9608,
+  "entropie_moyenne": 0.1035,
+  "classe_la_plus_predite": "II",
+  "part_classe_la_plus_predite": 0.2617,
+  "n_classes_predites": 17
+ },
+ "debut_50": {
+  "macro_f1": 0.7308,
+  "accuracy": 0.8292,
+  "proba_max_moyenne": 0.9608,
+  "entropie_moyenne": 0.1086,
+  "classe_la_plus_predite": "II",
+  "part_classe_la_plus_predite": 0.2672,
+  "n_classes_predites": 17
+ }
+}

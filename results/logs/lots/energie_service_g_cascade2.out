@@ -1,0 +1,41 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:07, 25.33it/s]Loading weights:  74%|███████▎  | 148/201 [00:00<00:00, 416.26it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 322.05it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:08, 21.48it/s]Loading weights:  68%|██████▊   | 137/201 [00:00<00:00, 336.87it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 312.18it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:07, 24.40it/s]Loading weights:  66%|██████▌   | 133/201 [00:00<00:00, 360.89it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 318.55it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:06, 27.79it/s]Loading weights:  58%|█████▊    | 117/201 [00:00<00:00, 342.74it/s]Loading weights:  89%|████████▊ | 178/201 [00:00<00:00, 371.31it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 301.22it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:07, 26.68it/s]Loading weights:  66%|██████▌   | 133/201 [00:00<00:00, 382.26it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 322.38it/s]
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:  27%|██▋       | 192/723 [00:00<00:00, 1916.95it/s]Loading weights:  55%|█████▌    | 398/723 [00:00<00:00, 2000.01it/s]Loading weights:  87%|████████▋ | 628/723 [00:00<00:00, 2135.22it/s]Loading weights: 100%|██████████| 723/723 [00:00<00:00, 2223.89it/s]
+[transformers] [1mQwen3_5ForSequenceClassification LOAD REPORT[0m from: Qwen/Qwen3.5-4B
+Key          | Status  | 
+-------------+---------+-
+score.weight | MISSING | 
+
+Notes:
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (555 > 512). Running this sequence through the model will result in indexing errors
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+{
+ "n_patients": 200,
+ "chemin_e_force": {
+  "passages": 3,
+  "secondes_de_charge": 16.3,
+  "echantillons": 31,
+  "puissance_moyenne_w": 189.0,
+  "wh_pour_1000_patients": 1.42,
+  "euros_pour_1000_patients": 0.0004
+ },
+ "chemin_g_force": {
+  "passages": 1,
+  "secondes_de_charge": 19.3,
+  "echantillons": 37,
+  "puissance_moyenne_w": 397.4,
+  "wh_pour_1000_patients": 10.67,
+  "euros_pour_1000_patients": 0.0027
+ },
+ "part_e_hors_pli": 0.8226,
+ "energie_attendue_wh_pour_1000_patients": 3.06,
+ "prix_eur_kwh_parametre": 0.25,
+ "reference_g_un_seul_tenant_wh_pour_1000": 10.5,
+ "methode": "puissance moyenne de la carte × durée mesurée, au moins 15 s de charge par chemin"
+}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261017-025855-energie-service-g-cascade.json

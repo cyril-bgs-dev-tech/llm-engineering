@@ -1,0 +1,24 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:  22%|██▏       | 157/723 [00:00<00:00, 1559.66it/s]Loading weights:  45%|████▍     | 324/723 [00:00<00:00, 1622.62it/s]Loading weights:  67%|██████▋   | 487/723 [00:00<00:00, 896.88it/s] Loading weights: 100%|██████████| 723/723 [00:00<00:00, 1286.09it/s]
+[transformers] [1mQwen3_5ForSequenceClassification LOAD REPORT[0m from: Qwen/Qwen3.5-4B
+Key          | Status  | 
+-------------+---------+-
+score.weight | MISSING | 
+
+Notes:
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+{
+ "summary": "pré-vol preflight-lora-fin-aleatoire-auteur-pli0 : 10 pas, pic réservé 12.81 Gio, 237.7 s",
+ "metrics": {
+  "steps": 10,
+  "seconds_train": 237.7,
+  "seconds_tokenize": 34.1,
+  "peak_alloc_gib": 11.32,
+  "peak_reserved_gib": 12.81,
+  "loss_first": 5.821650179103017,
+  "loss_last": 4.970979260280728
+ }
+}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261017-022712-preflight-lora-fin-aleatoire-auteur-pli0.json

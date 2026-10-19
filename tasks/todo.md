@@ -608,6 +608,24 @@ Ne pas l'éditer à la main hors des cases à cocher ; toute autre modification 
 - [x] RM-58 (code) : Fiabilité des lots : cache disque des identifiants tokenisés, redirections guillemetées dans tous les scripts `run_*.sh` avec contrôle statique, identité des identifiants du sous-processus vérifiée contre le calcul local sur Qwen3.5 et CamemBERT-bio
   - Preuve de fin : Test statique vert sur tous les scripts ; identité vérifiée et consignée au registre ; durée de `build_inputs` mesurée avant et après
   - Skills : debugging-and-error-recovery, test-driven-development, ci-cd-and-automation ; dépendances : RM-57
+- [x] RM-64 (mesure) : Vérification de la machine après la mise à jour du BIOS (Q26) : rejeu préenregistré du test de charge du TF-IDF (même script, même nombre d'essais) et comparaison du taux de pannes et des résultats silencieusement différents
+  - Preuve de fin : Fiche hachée avant le flash ; run au registre ; verdict écrit d'avance (machine stable ou non) ; Q26 close ou complétée
+  - Skills : experiment-preregistration, debugging-and-error-recovery, run-registry ; dépendances : RM-57
+- [ ] RM-59 (code) : Contrôles de validation mécaniques : santé de la machine pendant chaque run (identifiant de démarrage, compteur de segfaults du noyau et puissance GPU dans le témoin mémoire, verdict par fenêtre de run), valeurs chiffrées des présentations reliées au registre (attribut `data-claim`), identifiants de runs vérifiés aussi dans les présentations HTML
+  - Preuve de fin : Tests rouges puis verts ; `make check` lance les nouveaux contrôles ; un défaut piégé (chiffre faux, run pendant une panne) est détecté
+  - Skills : test-driven-development, claim-gate, run-registry, observability-and-instrumentation ; dépendances : RM-57
+- [ ] RM-60 (code) : Cascade E puis G : encodeurs et TF-IDF d'abord, G complet seulement sous un seuil de confiance choisi hors pli ; analyse hors ligne préenregistrée, puis service HTTP de G avec la cascade, image GPU et charge prolongée si la non-infériorité à G tient
+  - Preuve de fin : Fiche hachée avant calcul ; run au registre (calcul fait deux fois) ; verdict de non-infériorité contre G et part traitée sans LoRA ; si la cascade est retenue, latence mesurée par le service
+  - Skills : experiment-preregistration, paired-comparison, performance-optimization, api-and-interface-design ; dépendances : RM-43, RM-50
+- [ ] RM-61 (GPU) : G gelé transposé sur un benchmark public à chiffres publiés (MorFITT ; DiaMED si ses chiffres publiés sont vérifiés à la source) sans réglage sur le test : tête multi-étiquettes du LoRA lue dans le contrat, prédiction hachée, seconde lecture du test public déclarée
+  - Preuve de fin : Fiche hachée avant tout entraînement ; runs au registre ; verdict contre le meilleur chiffre publié par la règle de bifurcation (d) ; lancement seulement après RM-64
+  - Skills : dataset-intake, experiment-preregistration, lora-classifier-recipe, vram-preflight, paired-comparison ; dépendances : RM-49, RM-50, RM-64
+- [ ] RM-62 (GPU) : LoRA à fin de texte aléatoire en plis d'auteurs (cinq plis) : nouveaux auteurs pour le LoRA, réplication de la correction de RM-39 et calibration mesurée
+  - Preuve de fin : Fiche hachée avec règle d'arrêt anticipé (N31) ; cinq runs au registre ; perte contre les plis de patients et couverture par famille ; lancement seulement après RM-64
+  - Skills : experiment-preregistration, lora-classifier-recipe, vram-preflight, model-card-calibration ; dépendances : RM-39, RM-64
+- [ ] RM-63 (doc) : Présentation de méthode « itinéraire le plus court » : la séquence de traitement à appliquer d'emblée à un nouveau problème de classification de textes cliniques, tirée des mesures du projet (ce qui marche, ce qui est dominé, ce qui est réfuté, dans quel ordre), tenue à jour en même temps que la présentation du projet
+  - Preuve de fin : Fichier dans `docs/presentation/` ; chaque chiffre relié à une ligne de `PREUVES.md` ou à un run ; `make check-deck` sans défaut sur les deux présentations
+  - Skills : claim-gate, documentation-and-adrs ; dépendances : RM-48
 
 ## Étape R16 : options (sur décision de Cyril)
 

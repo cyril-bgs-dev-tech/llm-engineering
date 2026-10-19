@@ -1,0 +1,4 @@
+{"ok": false, "returncode": -11, "seconds": 2, "first_failure": {"returncode": -11, "stderr_tail": ""}, "retried": true}
+{"ok": false, "returncode": -11, "seconds": 3, "first_failure": {"returncode": -11, "stderr_tail": ""}, "retried": true}
+{"verdicts": [], "crashes": 2}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261007-121517-recoupement-tfidf-reference.json

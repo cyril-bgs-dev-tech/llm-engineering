@@ -72,6 +72,14 @@
   "source": "cascade-conforme-cinq-plis"
  },
  {
+  "systeme": "G servi en cascade E puis G, seuil 0,6 (GPU, HTTP)",
+  "macro_f1": 0.7789,
+  "entrainement_h": 5.11,
+  "latence_ms": 38.4,
+  "domine_par": [],
+  "source": "cascade-e-puis-g, service-g-cascade"
+ },
+ {
   "systeme": "C2 élève distillé x3, professeurs imbriqués (écarté, RM-56)",
   "macro_f1": 0.753,
   "entrainement_h": 0.93,

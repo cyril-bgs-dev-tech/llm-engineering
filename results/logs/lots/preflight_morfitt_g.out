@@ -1,0 +1,23 @@
+[tokenizer_guard] essai 1/6 : code -11 : 
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:  29%|██▉       | 209/723 [00:00<00:00, 2087.01it/s]Loading weights:  58%|█████▊    | 418/723 [00:00<00:00, 1743.74it/s]Loading weights:  90%|████████▉ | 649/723 [00:00<00:00, 1976.52it/s]Loading weights: 100%|██████████| 723/723 [00:00<00:00, 2057.65it/s]
+[transformers] [1mQwen3_5ForSequenceClassification LOAD REPORT[0m from: Qwen/Qwen3.5-4B
+Key          | Status  | 
+-------------+---------+-
+score.weight | MISSING | 
+
+Notes:
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+{
+ "pre_vol": {
+  "steps": 10,
+  "seconds_train": 105.7,
+  "peak_alloc_gib": 10.32,
+  "peak_reserved_gib": 10.78,
+  "loss_first": 0.972424941137433,
+  "loss_last": 0.4094959064386785
+ }
+}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261017-023820-preflight-morfitt-g-lora.json

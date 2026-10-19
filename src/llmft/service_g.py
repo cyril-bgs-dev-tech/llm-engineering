@@ -1,5 +1,6 @@
-"""Service du système final G d'un seul tenant (RM-35, RM-48) : composition des probabilités, latence modélisée d'une cascade, critère d'acceptation d'une mesure répétée."""
-from collections.abc import Sequence
+"""Service du système final G d'un seul tenant (RM-35, RM-48) : composition des probabilités, cascade E puis G (RM-60), latence modélisée d'une cascade, critère d'acceptation d'une mesure répétée."""
+from collections.abc import Callable, Sequence
+from typing import Any
 
 import numpy as np
 from numpy.typing import NDArray
@@ -13,6 +14,30 @@ def combine_g(lora: NDArray[np.floating], encoders: Sequence[NDArray[np.floating
         raise ValueError("formes différentes entre composantes")
     enc = np.mean(np.stack(list(encoders)), axis=0)
     return np.mean(np.stack([lora, enc, tfidf]), axis=0)
+
+
+def combine_e(encoders: Sequence[NDArray[np.floating]], tfidf: NDArray[np.floating]) -> NDArray[np.floating]:
+    """E = moyenne à parts égales de la moyenne des encodeurs et du TF-IDF (composition de `scripts/build_fold_ensemble.py`)."""
+    if not encoders:
+        raise ValueError("aucun encodeur fourni")
+    enc = np.mean(np.stack(list(encoders)), axis=0)
+    if enc.shape != tfidf.shape:
+        raise ValueError("formes différentes entre composantes")
+    return 0.5 * enc + 0.5 * tfidf
+
+
+def cascade_predict(
+    text: str, first: Callable[[str], tuple[list[NDArray[np.floating]], NDArray[np.floating]]], lora: Callable[[str], NDArray[np.floating]], labels: Sequence[str], tau: float,
+) -> dict[str, Any]:
+    """Cascade E puis G (RM-60) : E répond seul si sa probabilité maximale atteint `tau` (seuil inclusif, comme `llmft.cascade.cascade_probs`) ; sinon le LoRA est calculé et G complet répond."""
+    encoders, tfidf = first(text)
+    e = combine_e(encoders, tfidf).reshape(-1)
+    if float(e.max()) >= tau:
+        probs, stage = e, "E"
+    else:
+        probs, stage = combine_g(lora(text), encoders, tfidf).reshape(-1), "G"
+    k = int(probs.argmax())
+    return {"label": labels[k], "probability": float(probs[k]), "stage": stage}
 
 
 def cascade_mean_latency(first_ms: float, second_ms: float, share_first: float) -> float:

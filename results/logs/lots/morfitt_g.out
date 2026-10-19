@@ -1,0 +1,61 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:  24%|██▎       | 171/723 [00:00<00:00, 1706.60it/s]Loading weights:  48%|████▊     | 345/723 [00:00<00:00, 1721.39it/s]Loading weights:  75%|███████▌  | 544/723 [00:00<00:00, 1841.07it/s]Loading weights: 100%|██████████| 723/723 [00:00<00:00, 1951.82it/s]
+[transformers] [1mQwen3_5ForSequenceClassification LOAD REPORT[0m from: Qwen/Qwen3.5-4B
+Key          | Status  | 
+-------------+---------+-
+score.weight | MISSING | 
+
+Notes:
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+{
+ "n_test": 1088,
+ "cout_lora": {
+  "steps": 480,
+  "seconds_train": 5136.6,
+  "peak_alloc_gib": 10.32,
+  "peak_reserved_gib": 10.76,
+  "loss_first": 0.952057583257556,
+  "loss_last": 0.000519409601110965
+ },
+ "lora": {
+  "weighted_f1": 71.7,
+  "micro_f1": 72.49,
+  "macro_f1": 68.98,
+  "ic95_weighted_f1_bootstrap": [
+   69.72,
+   73.64
+  ]
+ },
+ "melange_rm49": {
+  "weighted_f1": 71.74,
+  "micro_f1": 72.78,
+  "macro_f1": 67.97,
+  "ic95_weighted_f1_bootstrap": [
+   69.6,
+   73.71
+  ]
+ },
+ "g": {
+  "weighted_f1": 72.3,
+  "micro_f1": 73.29,
+  "macro_f1": 68.94,
+  "ic95_weighted_f1_bootstrap": [
+   70.15,
+   74.35
+  ]
+ },
+ "tfidf_C": 10.0,
+ "g_moins_melange_points": [
+  0.56,
+  -0.66,
+  1.85
+ ],
+ "publie_meilleur": {
+  "systeme": "DrLongformer-CP",
+  "weighted_f1": 71.95
+ },
+ "verdict_regle_d": "dans la bande"
+}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261017-113948-morfitt-g-gele.json

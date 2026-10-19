@@ -1,0 +1,1 @@
+bash: line 1: 130466 Segmentation fault         timeout 9000 .venv/bin/python scripts/morfitt_g.py --register > "/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/logs/lots/morfitt_g.out" 2>&1

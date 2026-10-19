@@ -11,8 +11,8 @@ check-fast:        ## types, lint, plancher, secrets : à chaque édition
 	$(PY) scripts/check_exec_bits.py
 	$(GITLEAKS)
 
-check-deck:        ## mise en page de la présentation (débordements, chevauchements) ; exige playwright et un navigateur, python3 système
-	python3 scripts/check_deck_layout.py
+check-deck:        ## mise en page de chaque présentation de docs/presentation (débordements, chevauchements) ; exige playwright et un navigateur, python3 système
+	rc=0; for f in docs/presentation/*.html; do echo "== $$f"; python3 scripts/check_deck_layout.py "$$f" || rc=1; done; exit $$rc
 
 serve-image:       ## image de service du TF-IDF : construit, lance durcie et mesure (Docker requis)
 	$(PY) scripts/smoke_serve_image.py
@@ -29,8 +29,12 @@ check: check-fast test  ## fin de tâche : plus tests, couverture des lignes mod
 	$(PY) scripts/check_wiki_quotes.py
 	$(PY) scripts/check_scorecards.py
 	$(PY) scripts/check_frozen.py
+	$(PY) scripts/check_fiches.py
 	$(PY) scripts/budget_alert.py
 	$(PY) scripts/check_claims.py
+	$(PY) scripts/check_run_health.py
+	$(PY) scripts/check_deck_claims.py
+	$(PY) scripts/check_protocol_drift.py
 
 test-gpu:          ## variantes GPU des tests (RTX 5090)
 	$(PY) -m pytest -q -p no:cacheprovider -m gpu

@@ -8,7 +8,15 @@ Sources : `docs/CHAINE_DE_DOMINOS.md` (notes, plafonds, dominos), `roadmap_unifi
 
 ## 1. Composantes : note, plafond, état
 
-Moyenne estimée : **8,1 sur 10** (65 sur 8 composantes ; réévaluation du 07/10 : efficience 6 vers 7 ; réévaluations du 06/10 : efficience 5 vers 6, puis après l'ouverture du test scellé performance 6 vers 7, rigueur 8 vers 9, incertitude 7 vers 8 ; raisons de chaque note dans `docs/presentation/PREUVES.md`, dernier paragraphe). Estimation à ±1, pas une scorecard.
+Moyenne estimée : **8,25 sur 10** (66 sur 8 composantes ; réévaluation du 17/10 : efficience 7 vers 8 ; réévaluation du 07/10 : efficience 6 vers 7 ; réévaluations du 06/10 : efficience 5 vers 6, puis après l'ouverture du test scellé performance 6 vers 7, rigueur 8 vers 9, incertitude 7 vers 8 ; raisons de chaque note dans `docs/presentation/PREUVES.md`, dernier paragraphe). Estimation à ±1, pas une scorecard.
+
+**Réévaluation du 17/10/2026 (N32), aucune note ne change** : (1) *efficience* reste à 7 : la cascade E puis G est retenue par sa fiche (cascade moins G −0,10 [−0,23 ; +0,02], 82,3 % des patients sans le LoRA, run `20261017-012416-cascade-e-puis-g`), mais sa latence de 39,6 ms est **modélisée** ; la note ne bougera qu'avec la latence mesurée du service HTTP de G avec la cascade (suite de RM-60) ; (2) *reproductibilité* reste à 9 et *robustesse* à 7 : la vérification après le BIOS donne « toujours instable » (10 pannes sur 46 avant comme après, runs `20261016-230229-verification-machine-bios-avant`, `20261017-012310-verification-machine-bios-apres`) ; les preuves de ces notes (reconstruction à froid identique à 1e-9, double calcul des chiffres courts) ne sont pas touchées, mais aucun calcul long publié ne peut être ajouté tant que Q26 n'est pas traitée (RM-61, RM-62 bloquées) ; (3) *honnêteté* reste à 9 : deux résultats publiés, dont un négatif, avec leurs prédictions notées.
+
+**Réévaluation du 17/10/2026, après la mesure du service (N32)** : *efficience 7 → 8* : la latence de la cascade n'est plus seulement modélisée ; le service HTTP de G en cascade donne une latence moyenne attendue de 38,4 ms (chemins mesurés par HTTP, part hors pli), contre 97,4 ms pour G complet dans le même service (run `20261017-015754-service-g-cascade`, `docs/presentation/PREUVES.md` ligne 68) ; pas 9 (énergie de la cascade, image GPU, charge prolongée non faites). **Moyenne estimée : 66 sur 8 = 8,25.**
+
+**Réévaluation du 17/10/2026, après RM-61 (N32) : performance maintenue à 8**, comme écrit d'avance : G gelé transposé sur MorFITT est « dans la bande » du meilleur chiffre publié (72,30 [70,15 ; 74,35] contre 71,95, run `20261017-113948-morfitt-g-gele`) ; le plafond de 9 n'est pas atteint (moyenne 8,25).
+
+**Réévaluation du 17/10/2026, après P5-08 et P5-11 (N32) : aucune note ne change** (moyenne 8,25) : surveillance de dérive mesurée et branchée, échantillon étiqueté dimensionné, démo locale (`docs/presentation/PREUVES.md`, lignes 70 à 72) ; l'efficience reste à 8 tant que l'image GPU (Q27) et la charge prolongée (fiche hachée, après le lot RM-61 puis RM-62) manquent.
 
 | Composante | Note | Plafond réaliste | Ce qui a monté ou peut monter la note | État au 05/10 soir |
 |---|---|---|---|---|
@@ -18,7 +26,7 @@ Moyenne estimée : **8,1 sur 10** (65 sur 8 composantes ; réévaluation du 07/1
 | Incertitude | **8** (était 7) | 9 | couverture par famille (RM-33) ; lecture confirmatoire (RM-51) ; nouveaux auteurs (RM-39) | G : ECE 0,016, couverture 0,901 par famille (source : journal de nuit, 05/10 15h12Z) ; RM-51 après RM-20 |
 | Erreurs et robustesse | **7** (était 6) | 9 | taxonomie, audit des 65 cas, RM-39 sur les modèles appris | TF-IDF couvert ; robustesse de l'encodeur et du LoRA à mesurer (RM-39) |
 | Reproductibilité | **9** (était 8) | 10 | reconstruction à froid (P5-09), release taguée, conteneur vérifié | reconstruction à froid jamais testée sur clone neuf ; release bloquée (push réservé à Cyril) |
-| Efficience et déploiement | **7** (était 6) | 9 | service mesuré par profil, cascade validée hors pli, fiche de déploiement | cascade conforme : non-infériorité, 45,5 % sans LoRA ; fiche RM-48 provisoire ; élagage RM-45 fait : dégradé (−13,1 points), non retenu |
+| Efficience et déploiement | **8** (était 7, réévaluée le 17/10) | 9 | service mesuré par profil, cascade validée hors pli, fiche de déploiement | cascade conforme : non-infériorité, 45,5 % sans LoRA ; fiche RM-48 provisoire ; élagage RM-45 fait : dégradé (−13,1 points), non retenu |
 | Honnêteté et conformité | **9** (était 8) | 10 | `claim-gate` sur tout texte sortant, résultats négatifs publiés, carte de modèle, TRIPOD-LLM | résultats négatifs consignés (RM-55, RM-56, empilement, RM-44, RM-45) ; carte v4 du candidat G écrite (06/10), checklist TRIPOD-LLM à rejouer au gel ; P5-12 à faire |
 
 ## 2. Ce qui devait rendre le reste obsolète, plus simple ou inutile

@@ -1,0 +1,90 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:06, 27.56it/s]Loading weights:  65%|██████▌   | 131/201 [00:00<00:00, 390.42it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 316.00it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:10, 19.01it/s]Loading weights:  74%|███████▍  | 149/201 [00:00<00:00, 314.40it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 282.33it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:13, 14.62it/s]Loading weights:  66%|██████▌   | 133/201 [00:00<00:00, 244.29it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 233.51it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:06, 28.43it/s]Loading weights:  66%|██████▌   | 133/201 [00:00<00:00, 400.28it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 356.63it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   4%|▍         | 9/201 [00:00<00:08, 23.38it/s]Loading weights:  58%|█████▊    | 117/201 [00:00<00:00, 285.03it/s]Loading weights:  83%|████████▎ | 167/201 [00:00<00:00, 314.77it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 279.49it/s]
+Loading weights:   0%|          | 0/723 [00:00<?, ?it/s]Loading weights:  20%|██        | 146/723 [00:00<00:00, 1457.20it/s]Loading weights:  40%|████      | 292/723 [00:00<00:00, 1237.23it/s]Loading weights:  64%|██████▍   | 463/723 [00:00<00:00, 1431.78it/s]Loading weights:  84%|████████▍ | 610/723 [00:00<00:00, 1368.27it/s]Loading weights: 100%|██████████| 723/723 [00:00<00:00, 1485.09it/s]
+[transformers] [1mQwen3_5ForSequenceClassification LOAD REPORT[0m from: Qwen/Qwen3.5-4B
+Key          | Status  | 
+-------------+---------+-
+score.weight | MISSING | 
+
+Notes:
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (555 > 512). Running this sequence through the model will result in indexing errors
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:  80%|████████  | 161/201 [00:00<00:00, 1538.37it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 1542.11it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:  55%|█████▌    | 111/201 [00:00<00:00, 1105.10it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 1417.27it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 2359.51it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:  96%|█████████▌| 193/201 [00:00<00:00, 1929.77it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 2002.12it/s]
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 2475.61it/s]
+{
+ "mode": "gpu",
+ "n_patients": 200,
+ "demarrage_a_froid_s": 153.4,
+ "premiere_requete_ms": 4367.8,
+ "memoire_pic_gib": 10.29,
+ "passages": [
+  {
+   "total": {
+    "p50_ms": 91.6,
+    "p95_ms": 147.8,
+    "p99_ms": 204.2,
+    "moyenne_ms": 101.2
+   },
+   "etages_p50_ms": {
+    "tokenisation_encodeur": 1.46,
+    "cinq_encodeurs": 24.53,
+    "tfidf": 2.85,
+    "tokenisation_lora": 1.35,
+    "lora": 59.63,
+    "combinaison": 0.12
+   },
+   "energie": {
+    "wh_pour_1000_patients": 10.54,
+    "euros_pour_1000_patients": 0.0026
+   }
+  },
+  {
+   "total": {
+    "p50_ms": 88.9,
+    "p95_ms": 145.7,
+    "p99_ms": 193.1,
+    "moyenne_ms": 98.9
+   },
+   "etages_p50_ms": {
+    "tokenisation_encodeur": 1.21,
+    "cinq_encodeurs": 23.25,
+    "tfidf": 2.74,
+    "tokenisation_lora": 1.25,
+    "lora": 58.38,
+    "combinaison": 0.11
+   },
+   "energie": {
+    "wh_pour_1000_patients": 10.58,
+    "euros_pour_1000_patients": 0.0026
+   }
+  }
+ ],
+ "classes_identiques_entre_passages": true,
+ "passages_acceptes": true,
+ "prix_eur_kwh_parametre": 0.25,
+ "modele_ensemble_E_ms": 28.8,
+ "modele_cascade_encodeurs_puis_lora_ms": 30.0,
+ "part_premier_etage_hors_pli": 0.934,
+ "essai_concurrent": {
+  "clients": 4,
+  "requetes": 200,
+  "debit_patients_par_s": 10.14,
+  "p50_ms": 371.0,
+  "p95_ms": 798.5,
+  "p99_ms": 1028.4,
+  "moyenne_ms": 390.2
+ },
+ "accord_bf16_fp32": {
+  "encodeurs_moyennes": 1.0,
+  "g": 1.0
+ }
+}
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/results/runs/20261007-094117-service-g-bout-en-bout-gpu.json

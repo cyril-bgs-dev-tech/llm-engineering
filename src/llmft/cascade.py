@@ -27,6 +27,18 @@ def choose_threshold(
     return None
 
 
+def choose_threshold_by_agreement(first: NDArray[np.floating], second: NDArray[np.floating], grid: Sequence[float], min_agreement: float) -> float | None:
+    """Plus petit seuil dont la cascade donne la même classe que le second modèle pour au moins `min_agreement` des cas (fidélité, RM-60) ; None si aucun.
+
+    Critère moins bruité qu'une tolérance sur la macro-F1 quand le second étage est le système de référence à reproduire à moindre coût. Données d'étalonnage seulement."""
+    target = second.argmax(axis=1)
+    for tau in sorted(grid):
+        probs, _ = cascade_probs(first, second, tau)
+        if float((probs.argmax(axis=1) == target).mean()) >= min_agreement:
+            return float(tau)
+    return None
+
+
 def route_by_set_size(
     sets: Sequence[set[int]], first: NDArray[np.floating], second: NDArray[np.floating],
 ) -> tuple[NDArray[np.floating], NDArray[np.bool_]]:

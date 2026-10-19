@@ -12,11 +12,15 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from . import machine_health  # bibliothèque standard seule, comme ce module
+
 SCHEMA = "mini-1"
 STATUSES = ("ok", "failed", "aborted")
 REQUIRED = ("kind", "slug", "status", "summary")
 _SLUG = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 MAX_ID_ATTEMPTS = 1000
+# Début de la fenêtre du tampon automatique : l'import du registre, c'est-à-dire le lancement du script qui enregistre (RM-59 rendu préventif, 17/10/2026).
+_PROCESS_START = machine_health.snapshot()
 
 
 def _validate(record: dict[str, Any]) -> None:
@@ -30,10 +34,12 @@ def _validate(record: dict[str, Any]) -> None:
 
 
 def register_run(runs_dir: Path | str, record: dict[str, Any]) -> Path:
-    """Écrit `<runs_dir>/<run_id>.json` et le renvoie. Refuse d'écraser un run existant (FileExistsError)."""
+    """Écrit `<runs_dir>/<run_id>.json` et le renvoie. Refuse d'écraser un run existant (FileExistsError). Ajoute un tampon de santé de la machine s'il manque (sauf dérogation écrite)."""
     _validate(record)
     now = datetime.now(UTC)
     data = dict(record)  # l'argument n'est jamais modifié
+    if "machine_health" not in data and not str(data.get("health_waiver", "")).strip():  # un tampon du script ou une dérogation écrite priment
+        data["machine_health"] = {**machine_health.stamp(_PROCESS_START), "source": "registre : de l'import du registre à l'enregistrement"}
     explicit_id = "run_id" in data
     base_id = data.get("run_id") or f"{now:%Y%m%d-%H%M%S}-{record['slug']}"
     data["created_at"] = now.strftime("%Y-%m-%dT%H:%M:%SZ")

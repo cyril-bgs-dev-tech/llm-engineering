@@ -108,3 +108,31 @@ def test_an_explicit_run_id_that_exists_is_still_refused_not_renamed(tmp_path):
     with pytest.raises(FileExistsError):
         reg.register_run(tmp_path, record(run_id="20261001-120000-essai"))
     assert len(list(tmp_path.glob("*.json"))) == 1
+
+
+def test_un_run_sans_tampon_recoit_celui_du_registre_de_l_import_a_l_enregistrement(tmp_path):
+    """RM-59 rendu préventif (incident du 17/10 : 56 scripts enregistraient sans tampon, refusés seulement après coup par check_run_health)."""
+    data = json.loads(reg.register_run(tmp_path, record()).read_text(encoding="utf-8"))
+    assert data["machine_health"]["verdict"] in ("ok", "suspect") and data["machine_health"]["source"].startswith("registre")
+
+
+def test_un_tampon_pose_par_le_script_n_est_jamais_remplace(tmp_path):
+    stamp = {"verdict": "ok", "reasons": [], "start": {"boot_id": "a"}, "end": {"boot_id": "a"}}
+    data = json.loads(reg.register_run(tmp_path, record(machine_health=stamp)).read_text(encoding="utf-8"))
+    assert data["machine_health"] == stamp
+
+
+def test_une_derogation_ecrite_n_est_pas_doublee_d_un_tampon_automatique(tmp_path):
+    data = json.loads(reg.register_run(tmp_path, record(health_waiver="mesure de l'instabilité elle-même")).read_text(encoding="utf-8"))
+    assert "machine_health" not in data
+
+
+def test_le_module_de_sante_reste_en_bibliotheque_standard_comme_le_registre():
+    src = (Path(reg.__file__).parent / "machine_health.py").read_text(encoding="utf-8")
+    roots = set()
+    for node in ast.walk(ast.parse(src)):
+        if isinstance(node, ast.Import):
+            roots |= {a.name.split(".")[0] for a in node.names}
+        elif isinstance(node, ast.ImportFrom) and node.level == 0:
+            roots.add((node.module or "").split(".")[0])
+    assert roots <= set(sys.stdlib_module_names) | {"__future__"}

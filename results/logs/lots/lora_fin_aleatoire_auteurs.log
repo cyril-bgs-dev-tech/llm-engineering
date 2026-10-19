@@ -1,0 +1,22 @@
+2026-10-17T11:39:50Z DEBUT lora-fin-aleatoire-auteur-pli0 essai=1
+2026-10-17T15:05:48Z FIN lora-fin-aleatoire-auteur-pli0 essai=1 code=0
+{"verdicts_sante": ["ok"], "pause": false}
+2026-10-17T15:06:06Z DEBUT robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli0 essai=1
+2026-10-17T15:26:29Z FIN robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli0 essai=1 code=0
+2026-10-17T15:26:29Z DEBUT lora-fin-aleatoire-auteur-pli1 essai=1
+2026-10-17T18:50:17Z FIN lora-fin-aleatoire-auteur-pli1 essai=1 code=0
+{"verdicts_sante": ["ok", "ok"], "pause": false}
+2026-10-17T18:50:28Z DEBUT robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli1 essai=1
+2026-10-17T19:05:43Z FIN robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli1 essai=1 code=0
+{"regle_arret_n31": false, "lora_plis_0_1": [0.7079, 0.741], "tfidf_plis_0_1": [0.6443, 0.6485]}
+2026-10-17T19:05:54Z DEBUT lora-fin-aleatoire-auteur-pli2 essai=1
+2026-10-17T22:33:40Z FIN lora-fin-aleatoire-auteur-pli2 essai=1 code=0
+{"verdicts_sante": ["ok", "ok", "ok"], "pause": false}
+2026-10-17T22:33:49Z DEBUT robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli2 essai=1
+2026-10-17T22:49:14Z FIN robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli2 essai=1 code=0
+2026-10-17T22:49:14Z DEBUT lora-fin-aleatoire-auteur-pli3 essai=1
+2026-10-18T02:15:25Z FIN lora-fin-aleatoire-auteur-pli3 essai=1 code=0
+{"verdicts_sante": ["ok", "ok", "ok", "ok"], "pause": false}
+2026-10-18T02:15:32Z DEBUT robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli3 essai=1
+2026-10-18T02:28:21Z FIN robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli3 essai=1 code=0
+2026-10-18T02:28:21Z DEBUT lora-fin-aleatoire-auteur-pli4 essai=1

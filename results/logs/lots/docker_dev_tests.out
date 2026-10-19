@@ -1,0 +1,596 @@
+Bytecode compiled 15780 files in 273ms
+.............................EEEEEEEEEE...........s..................... [ 13%]
+........................................................................ [ 27%]
+........................................................................ [ 41%]
+........ss.............................................................. [ 55%]
+........................................................................ [ 68%]
+.......F.F.............................................................s [ 82%]
+sss........................................................s............ [ 96%]
+..................                                                       [100%]
+==================================== ERRORS ====================================
+__ ERROR at setup of test_the_unmodified_project_passes[check_microtasks.py] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_the_unmodified_project_pa0')
+
+>   ???
+
+/mnt/d/Projet Assistante IA/LLM_finetuning/tests/test_check_scripts.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/shutil.py:435: in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = PosixPath('/work/MICROTACHES.md')
+dst = PosixPath('/tmp/pytest-of-root/pytest-0/test_the_unmodified_project_pa0/MICROTACHES.md')
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+>           with open(src, 'rb') as fsrc:
+                 ^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/work/MICROTACHES.md'
+
+/usr/local/lib/python3.12/shutil.py:260: FileNotFoundError
+____ ERROR at setup of test_the_unmodified_project_passes[check_roadmap.py] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_the_unmodified_project_pa1')
+
+>   ???
+
+/mnt/d/Projet Assistante IA/LLM_finetuning/tests/test_check_scripts.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/shutil.py:435: in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = PosixPath('/work/MICROTACHES.md')
+dst = PosixPath('/tmp/pytest-of-root/pytest-0/test_the_unmodified_project_pa1/MICROTACHES.md')
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+>           with open(src, 'rb') as fsrc:
+                 ^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/work/MICROTACHES.md'
+
+/usr/local/lib/python3.12/shutil.py:260: FileNotFoundError
+_____ ERROR at setup of test_the_unmodified_project_passes[check_wiki.py] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_the_unmodified_project_pa2')
+
+>   ???
+
+/mnt/d/Projet Assistante IA/LLM_finetuning/tests/test_check_scripts.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/shutil.py:435: in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = PosixPath('/work/MICROTACHES.md')
+dst = PosixPath('/tmp/pytest-of-root/pytest-0/test_the_unmodified_project_pa2/MICROTACHES.md')
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+>           with open(src, 'rb') as fsrc:
+                 ^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/work/MICROTACHES.md'
+
+/usr/local/lib/python3.12/shutil.py:260: FileNotFoundError
+_____ ERROR at setup of test_backlog_rejects_a_gpu_task_without_preflight ______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_backlog_rejects_a_gpu_tas0')
+
+>   ???
+
+/mnt/d/Projet Assistante IA/LLM_finetuning/tests/test_check_scripts.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/shutil.py:435: in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = PosixPath('/work/MICROTACHES.md')
+dst = PosixPath('/tmp/pytest-of-root/pytest-0/test_backlog_rejects_a_gpu_tas0/MICROTACHES.md')
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+>           with open(src, 'rb') as fsrc:
+                 ^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/work/MICROTACHES.md'
+
+/usr/local/lib/python3.12/shutil.py:260: FileNotFoundError
+______ ERROR at setup of test_backlog_rejects_a_skill_that_does_not_exist ______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_backlog_rejects_a_skill_t0')
+
+>   ???
+
+/mnt/d/Projet Assistante IA/LLM_finetuning/tests/test_check_scripts.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/shutil.py:435: in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = PosixPath('/work/MICROTACHES.md')
+dst = PosixPath('/tmp/pytest-of-root/pytest-0/test_backlog_rejects_a_skill_t0/MICROTACHES.md')
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+>           with open(src, 'rb') as fsrc:
+                 ^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/work/MICROTACHES.md'
+
+/usr/local/lib/python3.12/shutil.py:260: FileNotFoundError
+_ ERROR at setup of test_backlog_rejects_a_star_count_that_drifted_from_the_plan _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_backlog_rejects_a_star_co0')
+
+>   ???
+
+/mnt/d/Projet Assistante IA/LLM_finetuning/tests/test_check_scripts.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/shutil.py:435: in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = PosixPath('/work/MICROTACHES.md')
+dst = PosixPath('/tmp/pytest-of-root/pytest-0/test_backlog_rejects_a_star_co0/MICROTACHES.md')
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+>           with open(src, 'rb') as fsrc:
+                 ^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/work/MICROTACHES.md'
+
+/usr/local/lib/python3.12/shutil.py:260: FileNotFoundError
+____ ERROR at setup of test_backlog_rejects_a_dependency_on_a_missing_task _____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_backlog_rejects_a_depende0')
+
+>   ???
+
+/mnt/d/Projet Assistante IA/LLM_finetuning/tests/test_check_scripts.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/shutil.py:435: in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = PosixPath('/work/MICROTACHES.md')
+dst = PosixPath('/tmp/pytest-of-root/pytest-0/test_backlog_rejects_a_depende0/MICROTACHES.md')
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+>           with open(src, 'rb') as fsrc:
+                 ^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/work/MICROTACHES.md'
+
+/usr/local/lib/python3.12/shutil.py:260: FileNotFoundError
+__ ERROR at setup of test_roadmap_rejects_a_task_placed_before_its_dependency __
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_roadmap_rejects_a_task_pl0')
+
+>   ???
+
+/mnt/d/Projet Assistante IA/LLM_finetuning/tests/test_check_scripts.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/shutil.py:435: in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = PosixPath('/work/MICROTACHES.md')
+dst = PosixPath('/tmp/pytest-of-root/pytest-0/test_roadmap_rejects_a_task_pl0/MICROTACHES.md')
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+>           with open(src, 'rb') as fsrc:
+                 ^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/work/MICROTACHES.md'
+
+/usr/local/lib/python3.12/shutil.py:260: FileNotFoundError
+___ ERROR at setup of test_roadmap_rejects_a_task_missing_from_the_sequence ____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_roadmap_rejects_a_task_mi0')
+
+>   ???
+
+/mnt/d/Projet Assistante IA/LLM_finetuning/tests/test_check_scripts.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/shutil.py:435: in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = PosixPath('/work/MICROTACHES.md')
+dst = PosixPath('/tmp/pytest-of-root/pytest-0/test_roadmap_rejects_a_task_mi0/MICROTACHES.md')
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+>           with open(src, 'rb') as fsrc:
+                 ^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/work/MICROTACHES.md'
+
+/usr/local/lib/python3.12/shutil.py:260: FileNotFoundError
+_ ERROR at setup of test_wiki_check_rejects_a_broken_link_and_an_unreadable_report _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_wiki_check_rejects_a_brok0')
+
+>   ???
+
+/mnt/d/Projet Assistante IA/LLM_finetuning/tests/test_check_scripts.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/shutil.py:435: in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+src = PosixPath('/work/MICROTACHES.md')
+dst = PosixPath('/tmp/pytest-of-root/pytest-0/test_wiki_check_rejects_a_brok0/MICROTACHES.md')
+follow_symlinks = True
+
+    def copyfile(src, dst, *, follow_symlinks=True):
+        """Copy data from src to dst in the most efficient way possible.
+    
+        If follow_symlinks is not set and src is a symbolic link, a new
+        symlink will be created instead of copying the file it points to.
+    
+        """
+        sys.audit("shutil.copyfile", src, dst)
+    
+        if _samefile(src, dst):
+            raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+    
+        file_size = 0
+        for i, fn in enumerate([src, dst]):
+            try:
+                st = _stat(fn)
+            except OSError:
+                # File most likely does not exist
+                pass
+            else:
+                # XXX What about other special files? (sockets, devices...)
+                if stat.S_ISFIFO(st.st_mode):
+                    fn = fn.path if isinstance(fn, os.DirEntry) else fn
+                    raise SpecialFileError("`%s` is a named pipe" % fn)
+                if _WINDOWS and i == 0:
+                    file_size = st.st_size
+    
+        if not follow_symlinks and _islink(src):
+            os.symlink(os.readlink(src), dst)
+        else:
+>           with open(src, 'rb') as fsrc:
+                 ^^^^^^^^^^^^^^^
+E           FileNotFoundError: [Errno 2] No such file or directory: '/work/MICROTACHES.md'
+
+/usr/local/lib/python3.12/shutil.py:260: FileNotFoundError
+=================================== FAILURES ===================================
+______ test_le_garde_arrete_la_commande_quand_la_ram_passe_sous_le_seuil _______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_le_garde_arrete_la_comman0')
+
+>   ???
+E   AssertionError: assert (0 == 3)
+E    +  where 0 = CompletedProcess(args=['/work/scripts/run_guarded.sh', 'sleep', '40'], returncode=0, stdout='', stderr='/work/scripts/...arded.sh: line 13: free: command not found\n/work/scripts/run_guarded.sh: line 16: [: : integer expression expected\n').returncode
+
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/tests/test_run_guarded.py:24: AssertionError
+__________ test_le_garde_arrete_aussi_les_petits_fils_de_la_commande ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_le_garde_arrete_aussi_les0')
+
+>   ???
+
+/mnt/d/Projets persos/Data Platform Agentic/LLM_Engineering/tests/test_run_guarded.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/subprocess.py:550: in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/subprocess.py:1209: in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/subprocess.py:2141: in _communicate
+    self.wait(timeout=self._remaining_time(endtime))
+/usr/local/lib/python3.12/subprocess.py:1264: in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Popen: returncode: -9 args: ['/work/scripts/run_guarded.sh', 'bash', '-c', ...>
+timeout = 29.99996368100983
+
+    def _wait(self, timeout):
+        """Internal implementation of wait() on POSIX."""
+        if self.returncode is not None:
+            return self.returncode
+    
+        if timeout is not None:
+            endtime = _time() + timeout
+            # Enter a busy loop if we have a timeout.  This busy loop was
+            # cribbed from Lib/threading.py in Thread.wait() at r71065.
+            delay = 0.0005 # 500 us -> initial delay of 1 ms
+            while True:
+                if self._waitpid_lock.acquire(False):
+                    try:
+                        if self.returncode is not None:
+                            break  # Another thread waited.
+                        (pid, sts) = self._try_wait(os.WNOHANG)
+                        assert pid == self.pid or pid == 0
+                        if pid == self.pid:
+                            self._handle_exitstatus(sts)
+                            break
+                    finally:
+                        self._waitpid_lock.release()
+                remaining = self._remaining_time(endtime)
+                if remaining <= 0:
+>                   raise TimeoutExpired(self.args, timeout)
+E                   subprocess.TimeoutExpired: Command '['/work/scripts/run_guarded.sh', 'bash', '-c', 'sleep 47.123 & wait']' timed out after 29.99996368100983 seconds
+
+/usr/local/lib/python3.12/subprocess.py:2045: TimeoutExpired
+=========================== short test summary info ============================
+FAILED tests/test_run_guarded.py::test_le_garde_arrete_la_commande_quand_la_ram_passe_sous_le_seuil
+FAILED tests/test_run_guarded.py::test_le_garde_arrete_aussi_les_petits_fils_de_la_commande
+ERROR tests/test_check_scripts.py::test_the_unmodified_project_passes[check_microtasks.py]
+ERROR tests/test_check_scripts.py::test_the_unmodified_project_passes[check_roadmap.py]
+ERROR tests/test_check_scripts.py::test_the_unmodified_project_passes[check_wiki.py]
+ERROR tests/test_check_scripts.py::test_backlog_rejects_a_gpu_task_without_preflight
+ERROR tests/test_check_scripts.py::test_backlog_rejects_a_skill_that_does_not_exist
+ERROR tests/test_check_scripts.py::test_backlog_rejects_a_star_count_that_drifted_from_the_plan
+ERROR tests/test_check_scripts.py::test_backlog_rejects_a_dependency_on_a_missing_task
+ERROR tests/test_check_scripts.py::test_roadmap_rejects_a_task_placed_before_its_dependency
+ERROR tests/test_check_scripts.py::test_roadmap_rejects_a_task_missing_from_the_sequence
+ERROR tests/test_check_scripts.py::test_wiki_check_rejects_a_broken_link_and_an_unreadable_report
+2 failed, 502 passed, 8 skipped, 2 deselected, 10 errors in 100.31s (0:01:40)

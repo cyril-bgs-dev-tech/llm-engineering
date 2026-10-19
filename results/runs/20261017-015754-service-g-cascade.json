@@ -1,0 +1,82 @@
+{
+  "created_at": "2026-10-17T01:57:54Z",
+  "kind": "measure",
+  "machine_health": {
+    "end": {
+      "boot_id": "6591621d",
+      "kernel_segfaults": 5,
+      "uptime_s": 2953.58
+    },
+    "reasons": [],
+    "start": {
+      "boot_id": "6591621d",
+      "kernel_segfaults": 5,
+      "uptime_s": 2838.58
+    },
+    "verdict": "ok"
+  },
+  "metrics": {
+    "accord_cascade_contre_g": 1.0,
+    "chemin_e_force": {
+      "moyenne_ms": 25.7,
+      "p50_ms": 25.3,
+      "p95_ms": 29.2,
+      "p99_ms": 31.8
+    },
+    "chemin_g_force": {
+      "moyenne_ms": 97.4,
+      "p50_ms": 87.7,
+      "p95_ms": 150.9,
+      "p99_ms": 193.4
+    },
+    "demarrage_a_froid_s": 93.4,
+    "essai_concurrent": {
+      "clients": 4,
+      "debit_patients_par_s": 37.57,
+      "moyenne_ms": 105.6,
+      "p50_ms": 103.0,
+      "p95_ms": 121.8,
+      "p99_ms": 213.6,
+      "requetes": 200
+    },
+    "latence_moyenne_attendue_ms": 38.4,
+    "memoire_pic_gib": 10.29,
+    "modele_rm60_ms": 39.6,
+    "n_patients": 200,
+    "part_e_hors_pli": 0.8226,
+    "passages": [
+      {
+        "latence": {
+          "moyenne_ms": 29.1,
+          "p50_ms": 28.4,
+          "p95_ms": 33.0,
+          "p99_ms": 38.7
+        },
+        "part_e": 0.995
+      },
+      {
+        "latence": {
+          "moyenne_ms": 28.0,
+          "p50_ms": 27.2,
+          "p95_ms": 31.5,
+          "p99_ms": 49.0
+        },
+        "part_e": 0.995
+      }
+    ],
+    "passages_acceptes": true,
+    "reference_g_un_seul_tenant_p50_ms": 91.6,
+    "tau": 0.6
+  },
+  "params": {
+    "fiche": "experiments/2026-10-17-service-g-cascade.md",
+    "n": 200,
+    "part_e_hors_pli": 0.8226,
+    "tau": 0.6
+  },
+  "run_id": "20261017-015754-service-g-cascade",
+  "schema": "mini-1",
+  "slug": "service-g-cascade",
+  "status": "ok",
+  "summary": "Service HTTP de G en cascade : p50 28.4 ms, latence moyenne attendue 38.4 ms"
+}

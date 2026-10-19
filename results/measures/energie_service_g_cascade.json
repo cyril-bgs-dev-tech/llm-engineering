@@ -1,0 +1,24 @@
+{
+ "n_patients": 200,
+ "chemin_e_force": {
+  "passages": 3,
+  "secondes_de_charge": 16.3,
+  "echantillons": 31,
+  "puissance_moyenne_w": 189.0,
+  "wh_pour_1000_patients": 1.42,
+  "euros_pour_1000_patients": 0.0004
+ },
+ "chemin_g_force": {
+  "passages": 1,
+  "secondes_de_charge": 19.3,
+  "echantillons": 37,
+  "puissance_moyenne_w": 397.4,
+  "wh_pour_1000_patients": 10.67,
+  "euros_pour_1000_patients": 0.0027
+ },
+ "part_e_hors_pli": 0.8226,
+ "energie_attendue_wh_pour_1000_patients": 3.06,
+ "prix_eur_kwh_parametre": 0.25,
+ "reference_g_un_seul_tenant_wh_pour_1000": 10.5,
+ "methode": "puissance moyenne de la carte × durée mesurée, au moins 15 s de charge par chemin"
+}

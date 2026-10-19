@@ -1,0 +1,48 @@
+{
+  "created_at": "2026-10-17T02:38:20Z",
+  "kind": "preflight",
+  "machine_health": {
+    "end": {
+      "boot_id": "6591621d",
+      "kernel_segfaults": 5,
+      "uptime_s": 5379.14
+    },
+    "reasons": [],
+    "start": {
+      "boot_id": "6591621d",
+      "kernel_segfaults": 5,
+      "uptime_s": 5159.3
+    },
+    "verdict": "ok"
+  },
+  "metrics": {
+    "pre_vol": {
+      "loss_first": 0.972424941137433,
+      "loss_last": 0.4094959064386785,
+      "peak_alloc_gib": 10.32,
+      "peak_reserved_gib": 10.78,
+      "seconds_train": 105.7,
+      "steps": 10
+    }
+  },
+  "params": {
+    "alpha": 32,
+    "base": "Qwen/Qwen3.5-4B",
+    "effective_batch": 32,
+    "epochs": 10,
+    "fiche": "experiments/2026-10-17-g-gele-morfitt.md",
+    "fiche_sha256": "748be189cbfb259e04f3ed1c2b06d8c0cc0924682ef884f94fb877a0ec092f02",
+    "lr": 0.0001,
+    "max_len": 4096,
+    "max_steps": 10,
+    "micro_batch": 1,
+    "rank": 16,
+    "route": "A",
+    "seed": 1000
+  },
+  "run_id": "20261017-023820-preflight-morfitt-g-lora",
+  "schema": "mini-1",
+  "slug": "preflight-morfitt-g-lora",
+  "status": "ok",
+  "summary": "pré-vol du LoRA multi-étiquettes MorFITT : 10 pas, pic réservé 10.78 Gio"
+}

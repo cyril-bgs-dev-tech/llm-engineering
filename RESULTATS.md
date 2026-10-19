@@ -1,6 +1,6 @@
 # RESULTATS
 
-Un chiffre sans `run_id` n'existe pas ici. Résultats négatifs et positifs au même titre. Tout est **développement (exploratoire)** : le test scellé n'a jamais été ouvert, aucun verdict confirmatoire n'existe (protocole gelé, premier cycle classé EXPLORE, ADR-004 et ADR-007). Données : PARHAF, textes cliniques fictifs français, 17 chapitres CIM-10 évalués. Tenu à jour à la main avec `claim-gate` ; mise à jour du 03/10/2026.
+Un chiffre sans `run_id` n'existe pas ici. Résultats négatifs et positifs au même titre. Tout est **développement (exploratoire)**, sauf la section « Ouverture unique du test scellé » : le test scellé a été ouvert **une seule fois**, le 06/10/2026, sur le système gelé G (RM-20, ADR-016) ; son verdict est « non résolu » (en-tête corrigé le 17/10/2026 : il disait encore le test jamais ouvert ; protocole gelé, premier cycle classé EXPLORE, ADR-004 et ADR-007). Données : PARHAF, textes cliniques fictifs français, 17 chapitres CIM-10 évalués. Tenu à jour à la main avec `claim-gate` ; mise à jour du 03/10/2026.
 
 ## Chapitre CIM-10 (macro-F1, 17 classes, `AUTRE` exclue de la moyenne)
 
@@ -887,3 +887,131 @@ Question (règle N36) : deux recalculs indépendants des cinq plis du TF-IDF de 
 - Premier et deuxième lancements (fiche d'origine, un nouvel essai prévu) : 4 pannes sur 4 (segfaults, code -11, 2 à 3 secondes après le démarrage). Troisième lancement (fiche v2, 6 essais par recalcul, pause de 120 s) : **12 pannes sur 12 essais**, 11 segfaults et un `TypeError` impossible en Python correct (`'TfidfVectorizer' object is not iterable`, dans `_count_vocab` de scikit-learn) ; le plus long essai a tenu 60 s sur les environ 12 minutes nécessaires. Au total 16 pannes brutes sur 16 essais de ce recoupement le 07/10 entre 12:15Z et 12:56Z.
 - Sondes de 8 secondes à 12:30Z : 4 pannes sur 6 lancements directs, 5 sur 6 par `subprocess`. Journal du noyau : 20 segfaults avant ces essais, 48 après (presque tous un saut à l'adresse 0 dans l'interpréteur, cœurs variés). Bibliothèques inchangées depuis juin (dates de fichiers de numpy, scipy, scikit-learn, torch).
 - **Lecture** : le taux de panne a été très supérieur aux 11 % du matin (runs `20261007-044852-stress-tfidf-par-coeur`, `20261007-050906-stress-tfidf-libre-contre-epingle`) pendant cette fenêtre ; la machine ne tient plus un calcul CPU de 12 minutes. Cause non établie (matériel probable, non prouvé ; Q26). **Conséquence** : le chiffre de A (0,7202) reste celui d'un calcul unique, non recoupé ; ne pas relancer d'essai tant que la machine n'a pas été vérifiée côté Windows, sauf une sonde courte à chaque passage du surveillant. Outillage ajouté : `llmft.recoupement.compare_probs` (7 tests, mutation de la tolérance vérifiée) et une quatrième signature impossible dans `llmft.resilience` (`'list_iterator' and 'int'`).
+
+## Vérification de la machine avant et après la mise à jour du BIOS (RM-64, Q26 ; fiche `2026-10-17-verification-machine-apres-bios` ; runs `20261016-230229-verification-machine-bios-avant` et `20261017-012310-verification-machine-bios-apres` ; mesure d'infrastructure, hors modèle) — **résultat négatif**
+
+Même test de charge que le 07/10 (TF-IDF caractères 3 à 5 sur les 1 500 premiers patients de développement, un processus fils par essai, panne brute sans relance, empreinte SHA-256 de la matrice), 128 essais libres prévus par phase, arrêt N31 à 10 pannes. Phase « avant » le 16/10 de 22:53Z à 23:02Z (ancien BIOS) ; flash par Cyril ; phase « après » le 17/10 de 01:14Z à 01:23Z, BIOS à jour **avec ses réglages par défaut, rien retouché** (réponse de Cyril) : la comparaison porte sur le BIOS et sa remise à zéro des réglages, sans les séparer.
+
+| Phase | Essais | Pannes | Segfaults (−11) | Abandon (−6) | TypeError impossibles | Empreinte divergente |
+|---|---|---|---|---|---|---|
+| avant | 46 (arrêt N31) | 10 (21,7 %, Wilson 95 % : 12,3 % à 35,6 %) | 6 | 0 | 4 | 0 |
+| après | 46 (arrêt N31) | 10 (21,7 %, idem) | 5 | 1 | 4 | 0 |
+
+- **Verdict de la fiche (règle écrite et testée avant la mesure, `llmft.stress.bios_verdict`) : « toujours instable »** : la phase « après » compte au moins une panne ; le taux n'a pas bougé (Fisher unilatéral p = 0,60). Le journal du noyau du nouveau démarrage compte 5 segfaults pendant la phase « après » (saut à l'adresse 0, cœurs 2, 15 et 23 entre autres), 0 avant elle. Les 72 essais réussis des deux phases ont tous l'empreinte de référence `df902b17…` : aucune divergence silencieuse cette fois (une sur 120 le 07/10).
+- **Prédictions préenregistrées** : au moins une panne avant (0,6) réussie ; au moins 5 pannes avant (0,35) réussie ; au moins une divergence (0,15) non réalisée ; verdict « toujours instable » (0,3) réalisé.
+- **Lecture** : la mise à jour du BIOS (et le retour aux réglages par défaut qu'elle a entraîné) ne change pas le taux de panne mesuré. Cela écarte un réglage de surcadençage ou de profil mémoire actif avant le flash comme seule cause, **si** le flash les a bien remis par défaut (non vérifié de mon côté : WSL masque le microcode, `0xffffffff`). Restent possibles, sans preuve : un processeur déjà dégradé (une mise à jour de microcode protège, elle ne répare pas), une mémoire défectueuse, un défaut propre à WSL ou à son noyau. **Conséquence écrite d'avance, appliquée** : aucun calcul long publié (RM-61 et RM-62 en préparation seulement) ; Q26 complétée (`tasks/QUESTIONS_POUR_CYRIL.md`). Les chiffres courts continuent d'être calculés deux fois (`agree_twice`) avec tampon de santé au registre.
+
+## Cascade E puis G : la qualité de G avec 82 % des patients sans le LoRA (RM-60 ; fiche `2026-10-17-cascade-e-puis-g` ; run `20261017-012416-cascade-e-puis-g` ; EXPLORE, développement, cinq plis, 3 586 patients)
+
+E (cinq encodeurs + TF-IDF) répond quand sa probabilité maximale atteint τ ; sinon le patient reçoit la réponse de G complet. τ est choisi pour chaque pli sur les quatre autres, comme le plus petit seuil de la grille dont la cascade reproduit la classe de G pour au moins 98 % des patients. Calcul fait deux fois et identique (`agree_twice`), tampon de santé « ok » (aucun segfault pendant le calcul).
+
+| Mesure | Valeur | Intervalle (blocs d'auteurs, 95 %) |
+|---|---|---|
+| Seuil choisi hors pli | τ = 0,6 dans les cinq plis | |
+| Part des patients traités sans le LoRA | **82,3 %** | |
+| Fidélité à G (même classe) | 99,7 % | |
+| Macro-F1 : cascade, G, E | 0,7789 ; 0,7799 ; 0,7721 | |
+| **Cascade moins G** | **−0,10 point** | **[−0,23 ; +0,02]** |
+| Cascade moins E | +0,68 point | [−0,72 ; +2,68] |
+| Latence moyenne **modélisée** (étages mesurés le 07/10) | 39,6 ms | contre 91,6 ms **mesurées** pour G d'un seul tenant |
+
+- **Verdict de la fiche : « cascade retenue »** : borne basse −0,23 au-dessus de −2,0 et part sans LoRA d'au moins 50 %. Courbe descriptive sur tous les plis : à τ ≥ 0,7 la cascade donne exactement la classe de G (fidélité 1,0) pour 74 % (τ = 0,7) à 15 % (τ = 0,99) des patients sans le LoRA.
+- **Prédictions préenregistrées** : τ entre 0,7 et 0,9 dans au moins trois plis (0,6) **fausse** (0,6 partout) ; part sans LoRA entre 60 et 90 % (0,6) réussie ; non-infériorité (0,75) réussie ; « cascade retenue » (0,65) réussie ; cascade au-dessus de E en point estimé (0,7) réussie ; au-dessus de E avec intervalle entièrement positif (0,1) non réalisée.
+- **Lecture et limites** : la fidélité presque parfaite est en partie mécanique (E est une composante de G ; quand E est confiant, le LoRA change rarement l'argmax). C'est une variante de service de G gelé, pas une nouvelle recette ; résultat de développement seulement (test scellé consommé). **L'entraînement reste celui de G** (5,11 h) : la cascade réduit le coût d'inférence, pas celui d'entraînement. La latence de 39,6 ms est **modélisée** et ne sera présentée comme mesurée qu'après la mesure du service (suite de RM-60, conséquence écrite d'avance : service HTTP de G avec la cascade).
+
+## Service HTTP de G en cascade E puis G : latence mesurée (suite de RM-60 ; fiche `2026-10-17-service-g-cascade` ; run `20261017-015754-service-g-cascade` ; mesure d'infrastructure, hors qualité)
+
+G gelé (ADR-016) servi par `llmft.http_service.make_json_server` et `scripts/service_g_cascade.py` : E répond seul si sa probabilité maximale atteint τ = 0,6, sinon G complet ; requêtes HTTP sur la boucle locale, lot de 1, tokenisation comprise ; 200 premiers patients du pli 0 (texte seul) ; tampon de santé « ok ». Répétition à blanc d'abord (5 patients) : elle a révélé un défaut de méthode corrigé avant la mesure (échauffement par E seul, LoRA froid, premières requêtes du chemin G à 2,5 à 3 s).
+
+| Mesure | p50 | p95 | Moyenne |
+|---|---|---|---|
+| Cascade à τ = 0,6, passage 1 (part E sur l'échantillon 99,5 %) | 28,4 ms | 33,0 ms | 29,1 ms |
+| Cascade à τ = 0,6, passage 2 | 27,2 ms | 31,5 ms | 28,0 ms |
+| Chemin E forcé | 25,3 ms | 29,2 ms | 25,7 ms |
+| Chemin G forcé (G complet) | 87,7 ms | 150,9 ms | 97,4 ms |
+| **Latence moyenne attendue à la part hors pli (82,26 % par E)** | | | **38,4 ms** |
+
+- **Passages acceptés** (p50 à 4 % l'un de l'autre, classes identiques) ; accord des classes de la cascade avec G complet sur l'échantillon : 200 sur 200 ; pointe de mémoire GPU 10,29 Gio ; démarrage à froid jusqu'au premier `/health` 93,4 s ; quatre clients : 37,6 patients par seconde, p95 121,8 ms.
+- **Lecture** : servie en cascade, G garde sa qualité (cascade moins G −0,10 [−0,23 ; +0,02] hors pli, run `20261017-012416-cascade-e-puis-g`) pour une latence moyenne attendue de 38,4 ms contre 97,4 ms en moyenne pour G complet (même service, chemin G forcé) ; le modèle de RM-60 (39,6 ms) est confirmé à 3 % près. **Limites écrites d'avance** : la part routée vers E sur l'échantillon (99,5 %) et donc la latence à τ (28 ms) et le débit à quatre clients sont **optimistes**, ces patients ayant servi à l'entraînement des modèles finaux ; la latence attendue combine deux chemins mesurés et une part de routage hors pli, elle n'est pas mesurée sur des patients inédits ; énergie non mesurée ; pas d'image GPU (Docker indisponible, Q27), pas de charge prolongée.
+- **Prédictions préenregistrées** : 7 sur 8 réalisées (p50 sous 50 ms ; part E d'au moins 85 % ; chemin G entre 85 et 115 ms ; latence attendue entre 38 et 55 ms ; passages acceptés ; accord d'au moins 99 % ; débit d'au moins 15 patients par seconde) ; **une fausse** : chemin E à 25,3 ms, sous la fourchette prévue (26 à 38 ms).
+
+## Énergie du service de G en cascade (suite de RM-60 ; fiche `2026-10-17-energie-service-g-cascade` ; run `20261017-025855-energie-service-g-cascade`, qui remplace `20261017-025421-energie-service-g-cascade` ; mesure d'infrastructure)
+
+Puissance de la carte lue par nvidia-smi pendant des passages complets des 200 patients du pli 0, au moins 15 s de charge mesurée par chemin ; énergie = puissance moyenne × durée ; tampon de santé « ok ». **Écart déclaré** : au premier run, le chemin E n'avait couvert que 10,2 s de charge (nombre de passages calculé sur le passage d'échauffement, plus lent) ; défaut corrigé (passages répétés jusqu'à 15 s mesurées, test de régression) et mesure refaite (ligne d'écart dans `experiments/INDEX.md`). Les deux runs concordent à 2 % près.
+
+| Chemin | Charge mesurée | Puissance moyenne de la carte | Énergie pour 1 000 patients |
+|---|---|---|---|
+| E seul (forcé) | 16,3 s, 31 échantillons | 189,0 W | 1,42 Wh |
+| G complet (forcé) | 19,3 s, 37 échantillons | 397,4 W | 10,67 Wh |
+| **Cascade à la part hors pli (82,26 % par E)** | | | **3,06 Wh** |
+
+- **Lecture** : servi en cascade, G consomme environ 3,5 fois moins d'énergie par patient que G complet (3,06 contre 10,67 Wh pour 1 000 patients, même mesure) pour la même qualité à la marge près (RM-60). Énergie de la carte seulement (processeur non mesuré), puissance au repos incluse ; méthode différente de celle du 07/10 (10,5 Wh pour G), comparaison à ce chiffre indicative.
+- **Prédictions préenregistrées** : 4 sur 4 réalisées (chemin E entre 0,6 et 2,0 Wh ; chemin G entre 8 et 13 Wh ; attendu entre 2 et 4 Wh ; au moins 20 échantillons par chemin).
+
+## Simulation de dérive et seuils d'alerte de la surveillance (P5-08 ; fiche `2026-10-17-simulation-derive` ; run `20261017-090325-simulation-derive` ; EXPLORE, développement, processeur seulement)
+
+Signaux sans étiquette calculés par lot de n patients contre la référence hors pli de E (3 586 patients) : S1 baisse de la part servie par E seul (τ = 0,6), S2 variation totale des chapitres prédits, S3 Kolmogorov-Smirnov des longueurs ; seuil = 99e centile de 2 000 lots tirés de la référence ; trois scénarios de dérive, 2 000 lots chacun ; calcul fait deux fois, identique, et identique à la répétition à blanc ; tampon de santé « ok ». **Écart déclaré** (ligne dans `experiments/INDEX.md`, constaté à la répétition à blanc) : le code construisait la règle d'alerte avec les signaux atteignant 0,80 à n = 500 au lieu des signaux « retenus » de la fiche (0,80 à n = 200) ; ramené à la lettre de la fiche, seconde lecture rapportée à part. Détail et fiches d'intervention : `docs/SURVEILLANCE_DERIVE.md`.
+
+| Scénario (n = 200) | Détection S1 | Détection S2 | Détection S3 | Impact moyen sur la macro-F1 | Lecture de la fiche |
+|---|---|---|---|---|---|
+| A, nouveaux auteurs (substitut E′, apparié) | 10 % | 1 % | sans objet | −4,68 points (−5,17 sur tout le jeu) | nuisible, **non surveillable sans étiquettes** |
+| B, prévalence (chapitre II pesé 3 fois) | 0 % | 99,8 % | 57 % | −3,68 points (−1,88 à n = 500) | nuisible, S2 retenu |
+| C, textes courts (quart le plus court pesé 3 fois) | 0 % | 35 % | 100 % | −1,55 points | non nuisible, S3 retenu |
+
+- **Seuils mesurés** (n = 100, 200, 500) : S1 0,0926, 0,0576, 0,0386 ; S2 0,207, 0,150, 0,0877 ; S3 0,167, 0,110, 0,0645 ; fausse alerte des trois réunis 2,75 à 2,9 %. Les constantes actuelles de `llmft.drift` sont mal placées : variation totale de 0,15 = 30 % de fausses alertes à n = 100 ; Kolmogorov-Smirnov de 0,2 = presque aucune alerte.
+- **Règle d'alerte de la fiche** : S2 sur des lots de 100 patients (seuil 0,207) ; S3 n'atteint 80 % pour B qu'à 500 patients (seconde lecture, hors règle).
+- **Résultat principal, négatif pour la surveillance automatique** : le changement d'auteurs coûte 5,17 points au substitut E′ sur les mêmes patients alors que la part servie par E′ seul ne baisse que de 82,46 % à 79,81 % ; aucun signal ne le détecte à 80 %, même sur 500 patients : il faut un échantillon étiqueté (taille à mesurer).
+- **Réserve** : pour B et C, l'impact compare des lots différents et mêle une vraie baisse et un effet de composition de la macro-F1 sur petits lots (il rétrécit quand n grandit) ; A est apparié et n'a pas ce biais ; A repose sur un substitut de E (un encodeur au lieu de cinq).
+- **Prédictions préenregistrées** : 6 sur 9 réalisées (seuil de S1 entre 0,04 et 0,08 ; seuil de S2 au-dessus de 0,10 ; 0,15 plus strict que mesuré à n = 100 ; A nuisible ; S2 retenu pour B ; S3 retenu pour C) ; manquées : S1 retenu pour A, B non nuisible, C nuisible.
+
+## Taille de l'échantillon étiqueté qui surveille la qualité (suite de P5-08 ; fiche `2026-10-17-taille-echantillon-etiquete` ; run `20261017-091931-taille-echantillon-etiquete` ; EXPLORE, développement, processeur seulement)
+
+Substitut E′ (encodeur bf16 et TF-IDF caractères équilibré) ; seuil d'alerte au 5e centile de 2 000 lots sans dérive (plis par patient) ; puissance = part des lots du scénario sous ce seuil ; mêmes patients pour la référence et les scénarios ; calcul fait deux fois, identique, et identique à la répétition à blanc ; tampon de santé « ok ».
+
+| Patients étiquetés | Puissance A100, macro-F1 | Puissance A100, exactitude | Puissance A40, macro-F1 | Puissance A40, exactitude |
+|---|---|---|---|---|
+| 100 | 0,14 | 0,13 | 0,07 | 0,06 |
+| 200 | 0,20 | 0,19 | 0,08 | 0,07 |
+| 500 | 0,51 | 0,43 | 0,14 | 0,15 |
+| 1 000 | **0,81** | 0,74 | 0,20 | 0,23 |
+| 2 000 | 1,00 | 0,99 | 0,51 | 0,43 |
+
+- **Lecture de la fiche** : taille recommandée **1 000 patients étiquetés, en suivant la macro-F1** (l'exactitude demande 2 000) ; puissance pour A40 à cette taille : 0,20.
+- **Pourquoi la macro-F1 l'emporte** : sur tout le jeu, les nouveaux auteurs (A100) coûtent 5,17 points de macro-F1 (77,39 contre 72,22) mais 2,17 points d'exactitude (85,86 contre 83,69) : la baisse touche surtout les petits chapitres. A40 coûte 1,70 point de macro-F1.
+- **Limite déclarée après coup** : lots tirés sans remise dans un réservoir de 3 586 patients, ce qui réduit la dispersion pour les grandes tailles (facteur d'environ 0,85 à 1 000, 0,66 à 2 000) : la taille de 1 000 est un peu optimiste pour un flux de production.
+- **Prédictions préenregistrées** : 2 sur 3 réalisées (au moins 500 avec la macro-F1 ; puissance pour A40 sous 0,5 à la taille recommandée) ; manquée : l'exactitude devait demander moins de cas que la macro-F1.
+
+## G gelé transposé sur MorFITT, contre le meilleur chiffre publié (RM-61 ; fiche `2026-10-17-g-gele-morfitt` ; run `20261017-113948-morfitt-g-gele` ; ADAPT, test public de MorFITT)
+
+G gelé (ADR-016) transposé sans aucun réglage : LoRA Qwen3.5-4B à tête multi-étiquettes (recette gelée du LoRA de G, 480 pas, 5 137 s, 10,76 Gio réservés), cinq encodeurs et TF-IDF de RM-49 (TF-IDF recalculé deux fois, identique), moyenne à parts égales, seuil fixe 0,5 ; test public de 1 088 résumés ; tampon de santé « ok ». Lancé sur autorisation écrite de Cyril malgré l'instabilité de la machine (Q26). **Incident déclaré** (ligne dans `experiments/INDEX.md`) : l'essai 1 est mort d'une erreur de segmentation pendant le calcul du TF-IDF, après les prédictions du LoRA sur le test public et avant toute métrique ; l'essai 2 (relance automatique) a lu le test public une fois de plus, sans aucun réglage.
+
+| Système (test public, 1 088 résumés) | F1 pondéré [IC 95 %] | F1 micro | F1 macro |
+|---|---|---|---|
+| **G gelé transposé** | **72,30 [70,15 ; 74,35]** | 73,29 | 68,94 |
+| LoRA seul | 71,70 [69,72 ; 73,64] | 72,49 | 68,98 |
+| Mélange de RM-49 (encodeurs et TF-IDF) | 71,74 [69,60 ; 73,71] | 72,78 | 67,97 |
+| Meilleur chiffre publié (DrLongformer-CP) | 71,95 | | |
+
+- **Verdict de la règle (d), écrit d'avance : « dans la bande »** (borne basse 70,15 sous 71,95, borne haute 74,35 au-dessus). Conséquence écrite d'avance appliquée : **la performance reste à 8** ; le repère se cite tel quel. Phrase autorisée : « transposé sans réglage sur MorFITT, notre système final est au niveau du meilleur chiffre publié (72,30 contre 71,95, intervalle [70,15 ; 74,35]) », jamais « au-dessus ».
+- **G moins le mélange de RM-49** (bootstrap apparié des résumés) : +0,56 [−0,66 ; +1,85] : l'ajout du LoRA n'est pas établi sur MorFITT non plus.
+- **Limite écrite d'avance** : un ensemble de sept modèles (un LoRA 4B, cinq encodeurs, un TF-IDF) face à des modèles seuls publiés ; même métrique, même test public, même seuil fixe, pas à budget égal.
+- **Contrôle de déterminisme, hors fiche, sans étiquette** : les prédictions du LoRA de l'essai 1 (conservées) et de l'essai 2, même graine et même recette, **ne sont pas identiques** : décisions par étiquette concordantes à 98,6 %, ensembles d'étiquettes identiques pour 85,4 % des résumés (écart absolu moyen des probabilités 0,015, maximal 0,955). L'intervalle ci-dessus ne contient que l'aléa d'échantillonnage du test, pas la variance d'entraînement du LoRA, non mesurée (Q3 de la scorecard G-P5).
+- **Prédictions préenregistrées** : F1 pondéré de G entre 71 et 75 (réalisée) ; verdict le plus probable « dans la bande » (réalisé) ; LoRA seul entre 64 et 72 (réalisée) ; G moins le mélange positif au point estimé (réalisée) ; intervalle de cette différence entièrement positif, annoncé à 0,2 (non réalisé).
+
+## LoRA à fin aléatoire en plis groupés par auteur : en cours, plis 0 à 3 faits (RM-62 ; fiche `2026-10-17-lora-fin-aleatoire-plis-auteurs` ; runs `20261017-150547-lora-fin-aleatoire-auteur-pli0`, `20261017-152628-robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli0`, `20261017-185016-lora-fin-aleatoire-auteur-pli1`, `20261017-190542-robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli1`, `20261017-223339-lora-fin-aleatoire-auteur-pli2`, `20261017-224913-robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli2`, `20261018-021524-lora-fin-aleatoire-auteur-pli3`, `20261018-022820-robustesse-lora-diagnostic-fin-retiree-lora-fin-aleatoire-auteur-pli3` ; EXPLORE, développement)
+
+**Aucun verdict à ce stade** : les critères (a), (b) et (d) de la fiche portent sur les cinq plis regroupés ; (c) compte les plis. Lancé sur autorisation écrite de Cyril malgré l'instabilité de la machine (Q26). Pli 3 et sa robustesse faits (fin le 18/10/2026 à 02:28:21Z) ; pli 4 en cours depuis 02:28:21Z.
+
+| Plis d'auteurs (aucun auteur commun avec l'entraînement) | Pli 0 (663 patients) | Pli 1 (763 patients) | Pli 2 (726 patients) | Pli 3 (692 patients) |
+|---|---|---|---|---|
+| Macro-F1 regroupée (17 chapitres), texte propre | 70,79 | 74,10 | 80,62 | 77,68 |
+| Exactitude ; log loss ; ECE | 80,39 ; 1,7212 ; 0,1649 | 83,49 ; 1,1615 ; 0,1404 | 88,15 ; 0,7852 ; 0,0917 | 85,26 ; 1,2384 ; 0,1264 |
+| Fin retirée à 10 / 20 / 30 / 50 % (macro-F1) | 66,51 / 67,92 / 67,15 / 63,38 | 73,17 / 74,32 / 70,42 / 70,51 | 78,42 / 74,80 / 73,25 / 69,72 | 78,53 / 76,28 / 73,59 / 74,14 |
+| Début retiré à 50 % (macro-F1) | 64,57 | 61,32 | 73,08 | 74,56 |
+| Entraînement ; tokenisation ; mémoire réservée de pointe | 12 091,2 s ; 54,4 s ; 12,61 Gio | 11 623,9 s ; 253,7 s ; 12,13 Gio | 12 091,6 s ; 124,5 s ; 12,44 Gio | 12 027,0 s ; 117,8 s ; 12,32 Gio |
+| Tampon de santé (entraînement, robustesse) | « ok », « ok » | « ok », « ok » | « ok », « ok » | « ok », « suspect » |
+
+- **Règle d'arrêt N31 (1), calculée par le lot après le pli 1 : pas d'arrêt** (`{"regle_arret_n31": false, "lora_plis_0_1": [0.7079, 0.741], "tfidf_plis_0_1": [0.6443, 0.6485]}`). Au point, le LoRA est au-dessus du TF-IDF caractères équilibré du même pli (+6,36 et +9,25 points) ; ce n'est pas le critère (a), qui se calcule sur les cinq plis regroupés avec un bootstrap par blocs d'auteurs. Contrôle N31 (3) après le pli 1 : `{"verdicts_sante": ["ok", "ok"], "pause": false}` ; après le pli 2 : `{"verdicts_sante": ["ok", "ok", "ok"], "pause": false}` ; après le pli 3 : `{"verdicts_sante": ["ok", "ok", "ok", "ok"], "pause": false}`. Pli 3 : probabilité maximale moyenne 0,979 pour 85,26 % d'exactitude (surconfiance).
+- **(c), plis 0 à 2** : −3,64 et −3,68 points à 30 % de fin retirée aux plis 0 et 1 (à moins de 5,0 sous le texte propre : ils comptent), **−7,37 au pli 2** (73,25 contre 80,62 : plus de 5,0 sous le texte propre, il ne compte pas). **Pli 3 : −4,09** (73,59 contre 77,68 : à moins de 5,0 sous le texte propre, il compte). Trois plis sur quatre comptent (0, 1 et 3) ; la fiche en demande au moins quatre sur cinq : « correction répliquée » si le pli 4 compte, « non répliquée » sinon. Aucun verdict avant le pli 4. La perte n'est pas monotone selon la part retirée (une graine par pli).
+- **Tampon « suspect » de la robustesse du pli 3** : deux segfaults du noyau pendant le calcul (compteur 6 → 8, à 02:19:37Z et 02:23:49Z, dans `tokenizers.abi3.so`, sur le cœur 0). Ce sont deux essais de l'enfant de tokenisation épinglé (`[tokenizer_guard] essai 1/6 : code -11`, deux fois dans `robustesse_lora-fin-aleatoire-auteur-pli3.out`), relancés avec succès ; le run finit en code 0 et sa macro-F1 propre (77,68) égale celle du run d'entraînement. Les chiffres sont gardés, avec ce tampon. **Écart entre fiche et code (N41)** : la règle N31 (3) de la fiche parle de « deux runs consécutifs » au tampon « suspect », mais `lora_author_analysis.py --sante` ne lit que les runs d'entraînement des plis. Si le pli 4 est « suspect », la fiche demandait la pause avant sa robustesse alors que le code ne la déclenche pas : à vérifier au résultat du pli 4.
+- Pas de comparaison au pli 0 par patient (78,52, run `20261007-022108-lora-fin-aleatoire-pli0`) : partitions différentes ; la fiche ne compare les deux découpages qu'en regroupé, au point (b).

@@ -1,0 +1,48 @@
+.venv/bin/python -m pytest -q -p no:cacheprovider -m "not gpu" --cov=src/llmft --cov-report=json:artifacts/coverage.json --cov-report=term:skip-covered
+........................................................................ [ 11%]
+........................................................................ [ 23%]
+........................................................................ [ 35%]
+........................................................................ [ 46%]
+........................................................................ [ 58%]
+........................................................................ [ 70%]
+........................................................................ [ 82%]
+........................................................................ [ 93%]
+.....................................                                    [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.13-final-0 _______________
+
+Name                           Stmts   Miss  Cover
+--------------------------------------------------
+src/llmft/adapters/parhaf.py      17      1    94%
+src/llmft/augment.py              34      1    97%
+src/llmft/cim10.py                81      2    98%
+src/llmft/conformal.py            62      1    98%
+src/llmft/determinism.py          10      1    90%
+src/llmft/distill.py              78      9    88%
+src/llmft/energy.py               49      5    90%
+src/llmft/ensemble.py             15      1    93%
+src/llmft/http_service.py         71      7    90%
+src/llmft/leakage.py              61      1    98%
+src/llmft/loader.py               45      1    98%
+src/llmft/lora_train.py          108      5    95%
+src/llmft/machine_health.py       70      5    93%
+src/llmft/mini_registry.py        54      1    98%
+src/llmft/models.py               81     34    58%
+src/llmft/multilabel.py           46      1    98%
+src/llmft/pipeline.py             37      3    92%
+src/llmft/registry.py             62      5    92%
+src/llmft/resilience.py           27      1    96%
+src/llmft/selection.py            18      1    94%
+src/llmft/service_g.py            38      2    95%
+src/llmft/servicecost.py          16      1    94%
+src/llmft/soft_labels.py          23      1    96%
+src/llmft/taskspec.py            111      4    96%
+src/llmft/tokenizer_child.py      16      1    94%
+src/llmft/toy.py                  23      1    96%
+src/llmft/train_v2.py             71      8    89%
+--------------------------------------------------
+TOTAL                           2602    104    96%
+
+38 files skipped due to complete coverage.
+Coverage JSON written to file artifacts/coverage.json
+613 passed, 2 deselected in 289.35s (0:04:49)
