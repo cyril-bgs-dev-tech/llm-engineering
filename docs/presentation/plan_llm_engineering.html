@@ -1,0 +1,1017 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Plan LLM-Engineering</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout : feuille de plan d'ingénieur. Bandeau collant, colonne 1240px, planches avec cartouche, plan global élargi, flux animés en SVG. */
+:root{
+  --bg:#ECF0F3;
+  --sheet:#F7F9FA;
+  --surface:#FFFFFF;
+  --ink:#0E2133;
+  --muted:#4E6276;
+  --line:#C5D0DA;
+  --grid:#E1E7EC;
+  --f-intent:#AD6A12;
+  --f-task:#0B8274;
+  --f-verify:#C9462F;
+  --f-context:#2B63C8;
+  --f-control:#5A6B7D;
+  --f-learn:#7142BA;
+  --accent:#2B63C8;
+  --c-us:#00897B;
+  --c-oss:#2B63C8;
+  --c-abs:#AD6A12;
+  --font-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --font-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-cond:"IBM Plex Sans Condensed","Arial Narrow","IBM Plex Sans",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#09141F;--sheet:#0D1B29;--surface:#122434;--ink:#E1EAF2;--muted:#93A7BA;--line:#26394C;--grid:#102131;
+    --f-intent:#EFAE3F;--f-task:#36C6B0;--f-verify:#FF7A62;--f-context:#6AA3FF;--f-control:#9DAFC0;--f-learn:#B18DF1;--accent:#6AA3FF;--c-us:#14A08A;--c-oss:#4F86E8;--c-abs:#C98420;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#09141F;--sheet:#0D1B29;--surface:#122434;--ink:#E1EAF2;--muted:#93A7BA;--line:#26394C;--grid:#102131;
+  --f-intent:#EFAE3F;--f-task:#36C6B0;--f-verify:#FF7A62;--f-context:#6AA3FF;--f-control:#9DAFC0;--f-learn:#B18DF1;--accent:#6AA3FF;--c-us:#14A08A;--c-oss:#4F86E8;--c-abs:#C98420;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background-color:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:32px 32px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1240px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wide{max-width:1720px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.k{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+code{font-family:var(--font-mono);font-size:.88em;overflow-wrap:anywhere;background:color-mix(in srgb,var(--f-context) 8%,var(--surface));border:1px solid var(--line);border-radius:5px;padding:0 4px}
+
+/* Bandeau */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:16px;padding-block:10px}
+.brand{font-family:var(--font-display);font-weight:800;font-size:22px;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap;color:var(--ink);text-decoration:none;line-height:1}
+.brand span{color:var(--f-intent)}
+.nav{display:flex;gap:2px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{font-family:var(--font-mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-decoration:none;padding:6px 9px;border-radius:6px;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:var(--surface)}
+.btn{font:500 12px/1 var(--font-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 11px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn svg{width:12px;height:12px;fill:currentColor}
+
+/* Hero */
+.hero{padding-block:52px 24px;display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:40px;align-items:end}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;gap:6px 14px;flex-wrap:wrap}
+.eyebrow b{color:var(--f-intent);font-weight:500}
+h1{font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:clamp(2.6rem,6.4vw,5.2rem);line-height:.9;letter-spacing:.005em;margin:14px 0 20px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--f-task)}
+.lede{font-size:1.125rem;max-width:62ch;margin:0}
+.formula{border:1px solid var(--line);background:var(--sheet);border-radius:14px;padding:20px 22px;display:grid;gap:10px}
+.formula .eq{font-family:var(--font-display);font-weight:800;font-size:clamp(1.9rem,3.4vw,2.7rem);line-height:1;text-transform:uppercase;display:flex;flex-wrap:wrap;gap:.22em;align-items:baseline}
+.formula .eq .op{color:var(--muted);font-weight:600}
+.formula .eq .h{color:var(--f-task)}
+.formula p{margin:0;font-size:.95rem;color:var(--muted)}
+.parts{display:flex;flex-wrap:wrap;gap:6px}
+.parts span{font-family:var(--font-mono);font-size:11px;padding:3px 8px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+
+/* Révision */
+.revbox{border:1px solid var(--line);background:var(--sheet);border-radius:16px;padding:18px 20px;display:grid;gap:12px}
+.revbox h2{font-size:clamp(1.6rem,3vw,2.1rem)}
+.revlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 28px}
+.revlist li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:baseline;font-size:.95rem}
+.pill{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:999px;border:1px solid color-mix(in srgb,var(--pc) 50%,var(--line));color:var(--pc);background:color-mix(in srgb,var(--pc) 8%,var(--surface));white-space:nowrap}
+
+/* Sections */
+section{padding-block:36px}
+.sec-head{display:grid;gap:8px;margin-bottom:20px}
+h2{font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:clamp(2.1rem,4.4vw,3.2rem);line-height:.95;margin:0;text-wrap:balance}
+.sec-head p{max-width:72ch;margin:0;color:var(--muted)}
+h3.sub{font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:1.55rem;line-height:1;margin:38px 0 12px;letter-spacing:.01em}
+p.intro{max-width:76ch;margin:0 0 14px}
+
+/* Planche */
+.sheet{background:var(--sheet);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.sheet:fullscreen{overflow:auto;border-radius:0}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+svg.dg{display:block;width:100%;height:auto}
+.bp-svg{min-width:780px}
+.plan-svg{min-width:1240px}
+.keys-svg{min-width:900px}
+.q-svg{min-width:900px}
+.pz-svg{min-width:860px}
+.hint{display:none;margin:0;padding:10px 14px 0;font-family:var(--font-mono);font-size:11px;color:var(--muted)}
+.cartouche{display:flex;flex-wrap:wrap;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.cartouche>div{padding:8px 14px;border-right:1px solid var(--line)}
+.cartouche>div:last-child{border-right:0;margin-left:auto}
+.cartouche b{color:var(--ink);font-weight:500}
+
+/* Légende */
+.legend{display:flex;flex-wrap:wrap;gap:6px 8px;padding:12px 14px;border-top:1px solid var(--line);align-items:center}
+.lg{display:inline-flex;align-items:center;gap:8px;font:500 13px/1.2 var(--font-cond);color:var(--ink);border:1px solid transparent;border-radius:999px;padding:5px 11px 5px 9px;background:none}
+button.lg{cursor:pointer;border-color:var(--line);background:var(--surface)}
+button.lg:hover{border-color:var(--fc)}
+button.lg[aria-pressed="true"]{border-color:var(--fc);box-shadow:inset 0 0 0 1px var(--fc);background:color-mix(in srgb,var(--fc) 10%,var(--surface))}
+.lg i{width:22px;height:0;border-top:2px solid var(--fc);position:relative;flex:none}
+.lg i::after{content:"";position:absolute;right:-2px;top:-5px;width:8px;height:8px;border-radius:50%;background:var(--fc)}
+.lg.dash i{border-top-style:dashed}
+
+/* Info bloc */
+.info{display:grid;gap:8px}
+.info-h{display:flex;align-items:center;gap:10px;font:600 1.12rem/1.2 var(--font-cond)}
+.sw{width:12px;height:12px;border-radius:3px;background:var(--fc);transform:rotate(45deg);flex:none}
+.info p{margin:0;max-width:78ch}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--font-mono);font-size:11px;letter-spacing:.03em;padding:3px 9px;border-radius:999px;border:1px solid color-mix(in srgb,var(--fc,var(--muted)) 45%,var(--line));color:var(--ink);background:var(--surface)}
+.caption{padding:14px 16px 16px;border-top:1px solid var(--line);min-height:120px}
+
+/* Preuves */
+.evidence{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:22px}
+.ev{border-top:2px solid var(--ink);padding-top:10px;min-width:0}
+.ev .n{font-family:var(--font-display);font-weight:800;font-size:2.4rem;line-height:1;font-variant-numeric:tabular-nums}
+.ev p{margin:6px 0 4px;font-size:.93rem}
+.ev small{font-family:var(--font-mono);font-size:11px;color:var(--muted)}
+
+/* Lois */
+.laws{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:26px}
+.law{background:var(--sheet);padding:18px 18px 20px;min-width:0;display:grid;gap:6px;align-content:start}
+.law h4{font:600 1.15rem/1.25 var(--font-cond);margin:0;display:flex;gap:10px;align-items:center}
+.law svg{width:24px;height:24px;flex:none}
+.law svg path,.ico path{fill:none;stroke:var(--fc);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.law p{margin:0;font-size:.95rem;color:var(--muted)}
+.callout{margin-top:16px;border:1px dashed var(--f-intent);border-radius:12px;padding:14px 18px;background:color-mix(in srgb,var(--f-intent) 7%,var(--sheet));display:flex;gap:14px;align-items:flex-start}
+.callout .ico{width:26px;height:26px;flex:none;--fc:var(--f-intent)}
+.callout p{margin:0}
+.callout b{font-family:var(--font-cond);font-weight:600}
+
+/* Fondements */
+.ladder{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--sheet)}
+.ladder li{display:grid;grid-template-columns:52px minmax(0,1fr) minmax(0,1.35fr);gap:8px 18px;padding:14px 18px;border-top:1px solid var(--line);align-items:baseline;background:color-mix(in srgb,var(--f-intent) var(--d),var(--sheet))}
+.ladder li:first-child{border-top:0}
+.ladder .r{font-family:var(--font-display);font-weight:800;font-size:1.9rem;line-height:1;color:var(--f-intent);font-variant-numeric:tabular-nums}
+.ladder .q{font:600 1.05rem/1.3 var(--font-cond)}
+.ladder .a{color:var(--ink);font-size:.97rem}
+.ladder li.top .a{font-weight:600}
+.axioms{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 18px}
+.ax{border-top:2px solid var(--ink);padding-top:10px;display:grid;gap:6px;align-content:start;min-width:0}
+.ax .id{font-family:var(--font-display);font-weight:800;font-size:1.5rem;line-height:1;color:var(--f-context)}
+.ax p{margin:0;font-size:.95rem}
+.ax .then{font-size:.9rem;color:var(--muted);display:flex;gap:8px}
+.ax .then::before{content:"→";color:var(--f-task);font-weight:600}
+.loops{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.loop{background:var(--sheet);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.loop .mini{padding:8px 6px 0}
+.loop .body{padding:10px 16px 16px;border-top:1px solid var(--line);display:grid;gap:6px}
+.loop h4{font:600 1.1rem/1.25 var(--font-cond);margin:0}
+.loop p{margin:0;font-size:.93rem}
+.loop .act{font-size:.9rem;color:var(--muted)}
+.loop .act b{color:var(--ink);font-family:var(--font-cond);font-weight:600}
+.chain{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:ord}
+.ord{background:var(--sheet);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:6px;align-content:start;position:relative;min-width:0}
+.ord .o{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--f-verify)}
+.ord p{margin:0;font-size:.94rem}
+.ord .par{font-size:.88rem;color:var(--muted)}
+.ord .par b{color:var(--f-task);font-weight:600}
+.hz{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.hzc{border-top:2px solid var(--ink);padding-top:10px;display:grid;gap:6px;align-content:start;min-width:0}
+.hzc .y{font-family:var(--font-display);font-weight:800;font-size:2rem;line-height:1}
+.hzc p{margin:0;font-size:.94rem}
+.beliefs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.bel{border:1px solid var(--line);border-radius:12px;background:var(--sheet);padding:12px 16px;display:grid;gap:4px;min-width:0}
+.bel .x{font:600 1.02rem/1.3 var(--font-cond);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--f-verify) 70%,transparent);text-decoration-thickness:1.5px}
+.bel p{margin:0;font-size:.93rem;color:var(--muted)}
+.inv{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.inv li{display:flex;gap:12px;align-items:baseline;font-size:1rem}
+.inv li::before{content:"";width:9px;height:9px;flex:none;transform:rotate(45deg) translateY(-1px);background:var(--f-context);border-radius:2px}
+.verdict{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.vd{background:var(--sheet);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.vd .k{color:var(--fc)}
+.vd p{margin:0;font-size:.95rem}
+.vd p.big{font:600 1.1rem/1.35 var(--font-cond);color:var(--ink)}
+.principle{margin-top:12px;border-radius:14px;padding:18px 22px;background:var(--ink);color:var(--bg);display:grid;gap:6px}
+.principle .k{color:color-mix(in srgb,var(--bg) 70%,var(--ink))}
+.principle p{margin:0;font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:clamp(1.4rem,2.8vw,2.1rem);line-height:1.05;text-wrap:balance}
+
+/* Bilan */
+.dotplot{background:var(--sheet);border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative;margin-top:22px}
+.dp-legend{display:flex;flex-wrap:wrap;gap:8px 20px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:.92rem;align-items:center}
+.dp-legend span{display:inline-flex;align-items:center;gap:8px}
+.dp-legend svg{width:16px;height:16px;flex:none}
+svg.dp{display:block;width:100%;height:auto;min-width:640px;font-family:var(--font-cond)}
+.dp .row-bg{fill:transparent}
+.dp .row:hover .row-bg,.dp .row:focus .row-bg{fill:color-mix(in srgb,var(--ink) 5%,transparent)}
+.dp .row:focus{outline:none}
+.dp .row:focus-visible .row-bg{stroke:var(--accent);stroke-width:1.5}
+.dp .lab{font-weight:600;fill:var(--ink);font-size:13.5px}
+.dp .lab.tot{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:.04em}
+.dp .grid{stroke:var(--line);stroke-width:1}
+.dp .sep{stroke:var(--ink);stroke-width:1}
+.dp .tick{font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)}
+.dp .trk{stroke:color-mix(in srgb,var(--ink) 9%,transparent);stroke-width:1}
+.dp .gain{stroke:var(--c-us);stroke-width:2;fill:none}
+.dp .m-us{fill:var(--c-us);stroke:var(--sheet);stroke-width:2}
+.dp .m-r2{fill:var(--sheet);stroke:var(--c-us);stroke-width:2}
+.dp .m-oss{fill:var(--c-oss);stroke:var(--sheet);stroke-width:2}
+.dp .m-abs{fill:var(--c-abs);stroke:var(--sheet);stroke-width:2}
+.dp .val{font-family:var(--font-mono);font-size:12px;font-weight:500;fill:var(--ink);font-variant-numeric:tabular-nums}
+.dp-tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:8px;padding:7px 10px;font:12px/1.5 var(--font-mono);white-space:nowrap;transform:translate(-50%,calc(-100% - 10px));z-index:5}
+.tbl td.n{font-family:var(--font-mono);font-size:12.5px;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;font-weight:400}
+.tbl th.n{text-align:right}
+.tbl tr.cgrp td{background:color-mix(in srgb,var(--ink) 5%,var(--sheet));font-weight:600;border-bottom:1px solid var(--line)}
+.tbl tr.cgrp td.n{font-weight:600}
+.tbl tr.gtot td{border-top:1px solid var(--ink);font-family:var(--font-display);font-weight:800;font-size:1.05rem;letter-spacing:.03em}
+.tbl tr.gtot td.n{font-family:var(--font-mono);font-weight:600;font-size:13px;letter-spacing:0}
+.tbl td.sub{padding-left:28px;font-family:var(--font-body);font-weight:400}
+.guards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.guards li{border:1px solid var(--line);border-radius:12px;background:var(--sheet);padding:12px 16px;display:grid;gap:4px;font-size:.94rem;min-width:0}
+.guards b{font-family:var(--font-cond);font-weight:600;font-size:1.02rem}
+.guards .ax-ref{font-family:var(--font-mono);font-size:11px;color:var(--muted)}
+
+/* Chunks */
+.chunks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.stage{grid-column:1/-1;display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 14px;margin-top:16px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.stage:first-child{margin-top:0}
+.stage b{font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:1.5rem;letter-spacing:.02em;color:var(--fc)}
+.stage span{font-family:var(--font-mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.chunk{background:var(--sheet);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.chunk .mini{border-bottom:1px solid var(--line);padding:6px 6px 2px}
+.chunk .body{padding:14px 18px 18px;display:grid;gap:10px;align-content:start}
+.chunk .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.chunk .num{font-family:var(--font-display);font-weight:800;font-size:2.6rem;line-height:.8;color:var(--fc);font-variant-numeric:tabular-nums}
+.chunk h4{font:600 1.22rem/1.2 var(--font-cond);margin:0;text-wrap:balance;flex:1;min-width:12ch}
+.chunk p{margin:0;font-size:.95rem}
+.chunk ul{margin:0;padding-left:18px;font-size:.93rem}
+.chunk li{margin:3px 0}
+.chunk li::marker{color:var(--fc)}
+.piece{font-family:var(--font-mono);font-size:11px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 14px}
+.piece b{color:var(--ink);font-weight:500}
+.signal{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--f-task) 9%,var(--sheet));border:1px solid color-mix(in srgb,var(--f-task) 25%,var(--line))}
+.signal .ico{width:18px;height:18px;flex:none;margin-top:2px;--fc:var(--f-task)}
+
+/* Plan */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--line)}
+.steps,.zoom{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.dots{display:flex;gap:4px;flex-wrap:wrap}
+.dot{width:28px;height:28px;border-radius:7px;border:1px solid var(--line);background:var(--surface);font:500 12px/1 var(--font-mono);color:var(--muted);cursor:pointer;font-variant-numeric:tabular-nums}
+.dot:hover{border-color:var(--accent);color:var(--ink)}
+.dot[aria-current="step"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.plan-panels{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-top:1px solid var(--line)}
+.plan-panels>div{padding:16px 18px 18px;min-width:0;display:grid;gap:8px;align-content:start;min-height:150px}
+.plan-panels>div+div{border-left:1px solid var(--line)}
+.step-t{font:600 1.15rem/1.2 var(--font-cond);margin:0;display:flex;gap:10px;align-items:baseline}
+.step-t span{font-family:var(--font-display);font-weight:800;font-size:1.6rem;color:var(--f-intent)}
+#stepPanel p{margin:0;max-width:72ch}
+
+/* Tables */
+.tblwrap{overflow-x:auto;background:var(--sheet);border:1px solid var(--line);border-radius:14px}
+.tbl{width:100%;border-collapse:collapse;font-size:.94rem;min-width:620px}
+.tbl th{text-align:left;font-family:var(--font-mono);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:12px 14px;border-bottom:1px solid var(--ink)}
+.tbl td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td:first-child{font-family:var(--font-cond);font-weight:600}
+.tbl td.nw{white-space:nowrap}
+.tbl td .muted,.tbl .muted{color:var(--muted)}
+.tbl td.mono{font-family:var(--font-mono);font-size:12px;white-space:nowrap}
+.mx{border-collapse:separate;border-spacing:0;font-size:13px;width:100%;min-width:1020px}
+.mx th,.mx td{padding:6px 5px;border-bottom:1px solid var(--line);text-align:center}
+.mx thead th{font-family:var(--font-mono);font-size:10.5px;font-weight:400;color:var(--muted);vertical-align:bottom;line-height:1.3;padding-top:12px;border-bottom:1px solid var(--ink)}
+.mx thead th b{display:block;color:var(--ink);font-weight:500;font-size:11px}
+.mx tbody th{text-align:left;font-family:var(--font-cond);font-weight:600;white-space:nowrap;position:sticky;left:0;background:var(--sheet);z-index:1;padding-left:14px;padding-right:12px}
+.mx thead th:first-child{position:sticky;left:0;background:var(--sheet);z-index:2;text-align:left;padding-left:14px}
+.mx tbody tr:last-child td,.mx tbody tr:last-child th{border-bottom:0}
+.mx tr.grp th{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500;background:color-mix(in srgb,var(--ink) 4%,var(--sheet))}
+.mx tr.grp td{background:color-mix(in srgb,var(--ink) 4%,var(--sheet))}
+.cap{display:inline-block;min-width:38px;padding:2px 6px;border-radius:6px;font-family:var(--font-mono);font-size:11px;line-height:1.45;border:1px solid transparent;color:var(--ink)}
+.cap.L{background:color-mix(in srgb,var(--f-context) 13%,var(--surface));border-color:color-mix(in srgb,var(--f-context) 38%,var(--line))}
+.cap.E{background:color-mix(in srgb,var(--f-task) 16%,var(--surface));border-color:color-mix(in srgb,var(--f-task) 45%,var(--line))}
+.cap.B{background:var(--surface);border:1px dashed var(--f-task)}
+.cap.Q{background:color-mix(in srgb,var(--f-verify) 13%,var(--surface));border-color:color-mix(in srgb,var(--f-verify) 45%,var(--line))}
+.cap.A{background:color-mix(in srgb,var(--f-learn) 13%,var(--surface));border-color:color-mix(in srgb,var(--f-learn) 45%,var(--line))}
+.cap.I{background:color-mix(in srgb,var(--f-control) 14%,var(--surface));border-color:color-mix(in srgb,var(--f-control) 45%,var(--line))}
+.cap.N{color:var(--muted);min-width:0}
+.caplegend{display:flex;flex-wrap:wrap;gap:8px 14px;padding:12px 14px;border-bottom:1px solid var(--line);font-size:.88rem;align-items:center}
+.caplegend span{display:inline-flex;gap:6px;align-items:center}
+.notes4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 24px;margin-top:14px}
+.notes4 p{margin:0;font-size:.94rem;position:relative;padding-left:20px}
+.notes4 p::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:8px;transform:rotate(45deg);background:var(--f-verify);border-radius:2px}
+.layers{list-style:none;margin:0;padding:0;display:grid;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--sheet)}
+.layers li{display:grid;grid-template-columns:150px minmax(0,1fr) 120px;gap:6px 18px;padding:12px 16px;border-top:1px solid var(--line);align-items:baseline}
+.layers li:first-child{border-top:0}
+.layers .ln{font:600 1rem/1.25 var(--font-cond);grid-column:1;grid-row:1}
+.layers li>p{grid-column:2;grid-row:1}
+.layers .strength{grid-column:3;grid-row:1}
+.layers p{margin:0;font-size:.94rem}
+.strength{font-family:var(--font-mono);font-size:11px;display:flex;gap:3px;align-items:center;justify-content:flex-end;color:var(--muted)}
+.strength i{width:10px;height:10px;border-radius:2px;background:var(--line);display:inline-block}
+.strength i.on{background:var(--f-task)}
+.v{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:999px;white-space:nowrap;border:1px solid color-mix(in srgb,var(--pc) 50%,var(--line));color:var(--pc);background:color-mix(in srgb,var(--pc) 8%,var(--surface))}
+
+/* Mise en oeuvre */
+.anti{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ap{border:1px solid var(--line);border-radius:12px;background:var(--sheet);padding:14px 16px;display:grid;gap:8px;align-content:start;min-width:0}
+.ap .bad{font:600 1.05rem/1.25 var(--font-cond);display:flex;gap:10px;align-items:center}
+.ap .bad::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--f-verify);transform:rotate(45deg);flex:none}
+.ap .fix{font-size:.93rem;color:var(--muted);margin:0}
+.ap .fix b{color:var(--f-task);font-weight:600}
+.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}
+.two>*{min-width:0}
+pre.tree,pre.code{margin:0;font-family:var(--font-mono);font-size:12.5px;line-height:1.65;padding:16px 18px;overflow-x:auto;background:var(--sheet);border:1px solid var(--line);border-radius:14px;color:var(--ink);min-width:0}
+pre .c{color:var(--muted)}
+pre .a{color:var(--f-task)}
+pre .h{color:var(--f-intent)}
+pre .r{color:var(--f-verify)}
+.codehead{font-family:var(--font-mono);font-size:11px;color:var(--muted);margin:0 0 6px;text-transform:uppercase;letter-spacing:.06em}
+.notes{display:grid;gap:10px;font-size:.95rem}
+.notes p{margin:0}
+.notes b{font-family:var(--font-cond);font-weight:600}
+.rules{margin:0;padding-left:34px;display:grid;gap:8px;font-size:.95rem;max-width:90ch}
+.rules li::marker{font-family:var(--font-mono);color:var(--f-intent);font-weight:500}
+.sources{margin:0;padding-left:34px;display:grid;gap:8px;font-size:.95rem;max-width:90ch}
+.sources li::marker{font-family:var(--font-mono);color:var(--muted)}
+.sources span{color:var(--muted)}
+footer{border-top:1px solid var(--line);margin-top:20px}
+footer .wrap{padding-block:22px 40px;font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+
+/* SVG diagrammes */
+svg.dg{font-family:var(--font-cond)}
+.dg .pn{fill:color-mix(in srgb,var(--tone) 6%,var(--sheet));stroke:color-mix(in srgb,var(--tone) 32%,var(--line));stroke-width:1}
+.dg .ph-n{font-family:var(--font-mono);font-size:12px;font-weight:500;fill:var(--tone)}
+.dg .ph-t{font-family:var(--font-display);font-weight:800;font-size:19px;letter-spacing:.05em;fill:var(--ink)}
+.dg .lh-t{font-family:var(--font-display);font-weight:800;font-size:18px;letter-spacing:.05em;fill:var(--ink)}
+.dg .lh-s{font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)}
+.dg .fr{fill:none;stroke:color-mix(in srgb,var(--tone) 55%,var(--line));stroke-width:1.2;stroke-dasharray:6 5}
+.dg .fr-t{font-family:var(--font-display);font-weight:800;font-size:18px;letter-spacing:.06em;fill:var(--tone)}
+.dg .fr-t.sm{font-size:13px}
+.dg .fr-s{font-family:var(--font-mono);font-weight:400;font-size:11px;letter-spacing:0;fill:var(--muted)}
+.dg .bubble{fill:color-mix(in srgb,var(--tone) 5%,transparent);stroke:color-mix(in srgb,var(--tone) 50%,var(--line));stroke-dasharray:4 4}
+.dg .bubble-t{font-family:var(--font-mono);font-size:10.5px;fill:var(--tone)}
+.dg .ghost{fill:var(--surface);stroke:var(--line);stroke-width:1}
+.dg .node{transition:opacity .25s}
+.dg .node.click{cursor:pointer}
+.dg .node:focus{outline:none}
+.dg .box{fill:var(--surface);stroke:var(--line);stroke-width:1;transition:stroke .2s,stroke-width .2s}
+.dg .gatebox{stroke:color-mix(in srgb,var(--tone) 55%,var(--line))}
+.dg .node.click:hover .box,.dg .node.sel .box{stroke:var(--tone);stroke-width:2.2}
+.dg .node:focus-visible .box{stroke:var(--accent);stroke-width:2.6}
+.dg .ic-bg{fill:color-mix(in srgb,var(--tone) 15%,var(--surface))}
+.dg .ic{fill:none;stroke:var(--tone);stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.dg .t{font-weight:600;fill:var(--ink)}
+.dg .s{font-family:var(--font-cond);font-weight:500;fill:var(--muted)}
+.dg .badge{font-family:var(--font-mono);font-size:12px;font-weight:500;fill:var(--tone)}
+.dg .chip{fill:color-mix(in srgb,var(--tone) 7%,var(--surface));stroke:color-mix(in srgb,var(--tone) 30%,var(--line))}
+.dg .chip-t{font-family:var(--font-mono);fill:var(--ink)}
+.dg .lane{fill:color-mix(in srgb,var(--tone) 5%,var(--surface));stroke:color-mix(in srgb,var(--tone) 45%,var(--line));stroke-dasharray:4 3}
+.dg .rl-t{font-family:var(--font-display);font-weight:800;font-size:18px;letter-spacing:.05em;fill:var(--ink)}
+.dg .rl-sep{stroke:var(--line)}
+.dg .ri{fill:var(--tone)}
+.dg .ln{fill:none;stroke:var(--fc);stroke-width:1.6;opacity:.72;transition:opacity .25s,stroke-width .25s}
+.dg .dash .ln{stroke-dasharray:5 4}
+html.playing .dg .dash .ln{animation:dashmove 1s linear infinite}
+@keyframes dashmove{to{stroke-dashoffset:-18}}
+.dg .ah{fill:var(--fc)}
+.dg .edge{transition:opacity .25s}
+.dg .elabel{font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)}
+.dg .elabel.sign{font-size:14px;font-weight:500;fill:var(--fc)}
+.dg .lbg{fill:var(--sheet)}
+.dg .pt{transition:opacity .25s}
+.dg .pt .halo{fill:var(--fc);opacity:.22}
+.dg .pt .core{fill:var(--fc)}
+.dg.focusing .edge:not(.on),.dg.focusing .edge-lbl:not(.on){opacity:.07}
+.dg .edge-lbl{transition:opacity .25s}
+.dg.focusing .pt:not(.on){opacity:0}
+.dg.focusing .node:not(.on){opacity:.24}
+.dg.focusing .edge.on .ln{opacity:1;stroke-width:2.5}
+.dg .spin{transform-box:fill-box;transform-origin:center}
+html.playing .dg .spin{animation:spin 2.4s linear infinite}
+html.playing .dg .spin.slow{animation-duration:7s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.dg .txt{font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)}
+.dg .loop-ic{fill:none;stroke:color-mix(in srgb,var(--tone) 45%,transparent);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.dg .loop-t{font-family:var(--font-display);font-weight:800;font-size:24px;fill:var(--tone)}
+.dg .loop-s{font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)}
+
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr;gap:24px}
+  .evidence,.axioms,.hz,.chain{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .laws,.anti{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .plan-panels,.two{grid-template-columns:minmax(0,1fr)}
+  .plan-panels>div+div{border-left:0;border-top:1px solid var(--line)}
+  .ladder li{grid-template-columns:44px minmax(0,1fr)}
+  .ladder .a{grid-column:2}
+  .layers li{grid-template-columns:minmax(0,1fr) auto}
+  .layers .strength{grid-column:2}
+  .layers li>p{grid-column:1/-1;grid-row:2}
+}
+@media (max-width:760px){
+  .hint{display:block}
+  .chunks,.loops,.verdict,.beliefs,.revlist,.notes4,.guards{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .laws,.anti,.evidence,.axioms,.hz,.chain{grid-template-columns:minmax(0,1fr)}
+  .brand{font-size:19px}
+  .cartouche>div:last-child{margin-left:0}
+}
+</style>
+<style>
+/* Surcouche de suivi : reprend les jetons du blueprint v3 (--sheet, --surface, --ink, --line, --f-*). */
+:root{--sv-lo:var(--f-verify);--sv-mid:var(--f-intent);--sv-hi:var(--f-task)}
+
+.sv-lo{--sv:var(--sv-lo)}.sv-mid{--sv:var(--sv-mid)}.sv-hi{--sv:var(--sv-hi)}
+
+/* Jauges dans les cellules SVG */
+.sv-gauge .sv-fill{fill:var(--sv);fill-opacity:.17;pointer-events:none}
+.sv-gauge .sv-bar{fill:var(--sv);fill-opacity:.95;pointer-events:none}
+.sv-pct{font:600 9px var(--font-mono);fill:var(--sv);pointer-events:none}
+.sv-cell{cursor:pointer}
+.sv-cell:focus{outline:none}
+.sv-cell:focus-visible .box,.sv-cell:hover .box{stroke:var(--tone);stroke-width:2}
+.sv-on .box{stroke:var(--accent)!important;stroke-width:2.6!important}
+
+/* Tableau de bord */
+#suivi{padding-top:28px}
+.sv-dash{display:grid;gap:18px}
+.sv-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.sv-tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.sv-tile b{display:block;font:600 26px/1.1 var(--font-display);letter-spacing:.01em}
+.sv-tile span{font:12px/1.35 var(--font-body);color:var(--muted)}
+.sv-tile.sv-global{grid-column:span 2;--sv:var(--sv-mid)}
+.sv-tile.sv-global b{font-size:40px;color:var(--sv)}
+.sv-block{background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:14px 16px 16px}
+.sv-block>h3{margin:0 0 10px;font:600 13px var(--font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.sv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.sv-piece,.sv-phase{display:grid;grid-template-columns:1fr auto;grid-template-areas:"n p" "t t";align-items:center;gap:4px 10px;
+  background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;color:var(--ink);font:13px var(--font-body);text-align:left}
+.sv-piece{cursor:pointer}
+.sv-piece:hover,.sv-piece:focus-visible{border-color:var(--sv);outline:none}
+.sv-pn{grid-area:n;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sv-piece b,.sv-phase b{grid-area:p;font:600 12px var(--font-mono);color:var(--sv)}
+.sv-track{grid-area:t;display:block;height:7px;border-radius:4px;background:var(--grid);overflow:hidden}
+.sv-track i{display:block;height:100%;background:var(--sv);border-radius:4px}
+.sv-phase{grid-template-areas:"n p" "t t" "s s"}
+.sv-phase small{grid-area:s;color:var(--muted);font-size:11.5px;line-height:1.35}
+.sv-feats{display:flex;flex-wrap:wrap;gap:6px}
+.sv-feat{font:12px var(--font-mono);padding:4px 8px;border-radius:7px;border:1px solid var(--line);background:var(--surface)}
+.sv-feat.ok{color:var(--f-task);border-color:var(--f-task)}
+.sv-feat.no{color:var(--muted)}
+.sv-legend{display:flex;flex-wrap:wrap;gap:14px;font:12px var(--font-body);color:var(--muted)}
+.sv-legend i{display:inline-block;width:26px;height:8px;border-radius:3px;margin-right:6px;vertical-align:middle;background:var(--sv)}
+.sv-stamp{font:11px var(--font-mono);color:var(--muted)}
+
+/* Vue locale */
+.sv-local{position:fixed;top:0;right:0;bottom:0;width:min(460px,100vw);z-index:80;background:var(--surface);
+  border-left:1px solid var(--line);box-shadow:-18px 0 40px rgba(0,0,0,.16);overflow:auto;padding:18px 20px 28px;
+  transform:translateX(100%);transition:transform .22s ease}
+.sv-local.open{transform:none}
+@media (prefers-reduced-motion: reduce){.sv-local{transition:none}}
+.sv-close{position:sticky;top:0;float:right}
+.sv-title{margin:6px 0 10px;font:600 22px/1.15 var(--font-display);letter-spacing:.01em}
+.sv-big{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px}
+.sv-big .sv-track{height:12px}
+.sv-big b{font:600 22px var(--font-mono);color:var(--sv)}
+.sv-target{margin:6px 0 14px;color:var(--muted);font-size:12px}
+.sv-h{margin:16px 0 6px;font:600 12px var(--font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.sv-h.done{color:var(--f-task)}.sv-h.todo{color:var(--f-intent)}
+.sv-local ul{margin:0;padding-left:20px;line-height:1.45;font-size:13.5px}
+.sv-done li::marker{content:"✓  ";color:var(--f-task)}
+.sv-todo li::marker{content:"○  ";color:var(--f-intent)}
+.sv-proof code{font:12px var(--font-mono);word-break:break-all}
+.sv-none{color:var(--muted);font-size:13px;margin:0}
+.sv-links{display:flex;flex-wrap:wrap;gap:6px}
+.sv-link{font:12px var(--font-mono);background:var(--sheet);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:5px 8px;cursor:pointer}
+.sv-link:hover{border-color:var(--accent)}
+@media (max-width:640px){.sv-tile.sv-global{grid-column:span 1}.sv-grid{grid-template-columns:1fr}}
+.sv-note{font:11px var(--font-mono);color:var(--muted);font-weight:400}
+.sv-big .sv-track{grid-area:auto}
+
+/* Évolution */
+.sv-hist{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}
+.sv-hpanel{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.sv-hhead{display:flex;justify-content:space-between;align-items:baseline;font:500 13px var(--font-body);margin-bottom:4px}
+.sv-hhead b{font:600 20px var(--font-mono);color:var(--ink)}
+.sv-hsvg{display:block;width:100%;height:auto}
+.sv-hgrid{stroke:var(--grid);stroke-width:1}
+.sv-haxis{font:10px var(--font-mono);fill:var(--muted)}
+.sv-hline{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round}
+.sv-hdot{fill:var(--accent);stroke:var(--surface);stroke-width:2}
+.sv-hcross{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+.sv-tip{position:absolute;top:34px;z-index:2;min-width:120px;background:var(--surface);color:var(--ink);border:1px solid var(--line);
+  border-radius:8px;padding:6px 8px;font:12px var(--font-body);box-shadow:0 6px 18px rgba(0,0,0,.12);pointer-events:none}
+.sv-htable{margin-top:6px;font:12px var(--font-mono);color:var(--muted)}
+.sv-htable td{padding:1px 10px 1px 0}
+
+/* Grille de notation */
+.sv-shead{display:grid;grid-template-columns:auto 1fr;gap:8px 26px;align-items:center;margin-bottom:10px}
+.sv-sbig{display:flex;align-items:baseline;gap:10px;margin:2px 0 8px}
+.sv-sbig b{font:600 56px/1 var(--font-display);color:var(--sv)}
+.sv-sbig span{font:12px/1.35 var(--font-body);color:var(--muted)}
+.sv-sref{display:flex;flex-wrap:wrap;gap:8px 26px;margin:0}
+.sv-sref div{display:flex;flex-direction:column}
+.sv-sref dt{font:11px var(--font-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.sv-sref dd{margin:0;font:600 28px/1.1 var(--font-display);color:var(--ink)}
+.sv-sread{grid-column:1/-1;margin:0;font:13px/1.5 var(--font-body);color:var(--ink)}
+.sv-slegend{display:flex;flex-wrap:wrap;gap:6px 18px;font:12px var(--font-body);color:var(--muted);margin:6px 0 8px}
+.sv-slegend span{display:inline-flex;align-items:center;gap:7px}
+.sv-slegend i{display:inline-block;flex:none}
+.lg-a{width:20px;height:10px;border-radius:0 4px 4px 0;background:linear-gradient(90deg,var(--sv-lo),var(--sv-mid),var(--sv-hi))}
+.lg-v{width:3px;height:16px;border-radius:1px;background:var(--ink)}
+.lg-o{width:11px;height:11px;border-radius:50%;border:2px solid var(--ink);background:var(--surface);box-sizing:border-box}
+.lg-x{width:9px;height:9px;background:var(--muted);transform:rotate(45deg)}
+.sv-scorewrap{position:relative}
+.sv-srows{display:grid;gap:2px}
+.sv-srow,.sv-saxis{display:grid;grid-template-columns:minmax(120px,220px) 1fr 30px 34px;align-items:center;gap:12px;padding:5px 8px}
+.sv-srow{width:100%;background:none;border:1px solid transparent;border-radius:8px;color:var(--ink);font:13px var(--font-body);text-align:left;cursor:pointer}
+.sv-srow:hover,.sv-srow:focus-visible{border-color:var(--line);background:var(--surface);outline:none}
+.sv-srow b{font:600 15px var(--font-mono);text-align:right}
+.sv-srow small{font:12px var(--font-mono);color:var(--muted)}
+.sv-stot{cursor:default;border-top:1px solid var(--line);border-radius:0;margin-top:4px;padding-top:10px;font-weight:600}
+.sv-stot:hover{background:none;border-color:transparent;border-top-color:var(--line)}
+.sv-saxis{padding-top:0;padding-bottom:0;font:10px var(--font-mono);color:var(--muted)}
+.sv-saxis span{position:relative;height:12px}
+.sv-saxis em{position:absolute;transform:translateX(-50%);font-style:normal}
+.sv-bul{position:relative;display:block;height:12px;border-radius:3px;background:color-mix(in srgb,var(--line) 38%,var(--surface))}
+.sv-bul::before{content:"";position:absolute;inset:0;border-radius:3px;opacity:.55;
+  background:repeating-linear-gradient(90deg,transparent 0 calc(25% - 1px),var(--line) calc(25% - 1px) 25%)}
+.sv-bul i{position:absolute;top:50%}
+.sv-bul .sv-bul-a{left:0;top:0;height:100%;border-radius:0 4px 4px 0;background:var(--sv)}
+.sv-bul-v{width:3px;height:20px;margin-left:-1.5px;transform:translateY(-50%);border-radius:1px;background:var(--ink)}
+.sv-bul-o{width:11px;height:11px;margin-left:-5.5px;transform:translateY(-50%);border-radius:50%;border:2px solid var(--ink);background:var(--surface);box-sizing:border-box}
+.sv-bul-x{width:9px;height:9px;margin-left:-4.5px;transform:translateY(-50%) rotate(45deg);background:var(--muted);outline:2px solid var(--surface)}
+.sv-stip{position:absolute;z-index:3;min-width:220px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;
+  padding:6px 9px;font:12px/1.5 var(--font-body);box-shadow:0 6px 18px rgba(0,0,0,.14);pointer-events:none}
+.sv-stable{margin-top:12px;font:13px var(--font-body)}
+.sv-stable summary{cursor:pointer;color:var(--accent);font:600 12px var(--font-mono)}
+.sv-scroll{overflow-x:auto}
+.sv-stable table{border-collapse:collapse;width:100%;min-width:680px;margin-top:8px}
+.sv-stable th,.sv-stable td{padding:4px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;color:var(--ink)}
+.sv-stable th{font:600 11px var(--font-mono);text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.sv-stable .n{text-align:right;font-family:var(--font-mono);white-space:nowrap}
+.sv-stable tr.grp td{font-weight:600;background:var(--surface)}
+.sv-stable tr.tot td{font-weight:700;border-top:2px solid var(--ink)}
+.sv-stable td.sub{padding-left:22px}
+.sv-stable td.w{color:var(--muted);font-size:12px}
+.sv-sub{border-top:1px solid var(--line);padding:10px 0 6px}
+.sv-subh{display:flex;align-items:baseline;gap:8px;font:600 14px var(--font-body)}
+.sv-subh span{flex:1}
+.sv-subh b{font:600 16px var(--font-mono)}
+.sv-subh small{font:12px var(--font-mono);color:var(--muted)}
+.sv-bul-sm{margin-top:7px}
+.sv-subv{margin:5px 0 0;font:11px var(--font-mono);color:var(--muted)}
+.sv-subw{margin:6px 0 0;font:12px/1.45 var(--font-body)}
+.sv-subt{margin:2px 0 0;font:13px/1.45 var(--font-body)}
+@media (max-width:560px){
+  .sv-shead{grid-template-columns:1fr}
+  .sv-srow,.sv-saxis{grid-template-columns:minmax(96px,130px) 1fr 26px 30px;gap:8px;padding-left:4px;padding-right:4px}
+}
+
+/* LLM-Engineering : verdicts des tests */
+.vd-mes{--sv:var(--f-context)}
+.tag.vd-hi{--fc:var(--f-task)}.tag.vd-mid{--fc:var(--f-intent)}.tag.vd-lo{--fc:var(--f-verify)}.tag.vd-mes{--fc:var(--f-context)}
+.vd-legend{display:flex;flex-wrap:wrap;gap:14px;font:12px var(--font-body);color:var(--muted)}
+.vd-legend i{display:inline-block;width:26px;height:8px;border-radius:3px;margin-right:6px;vertical-align:middle;background:var(--sv)}
+.fict{display:inline-block;font:600 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--f-verify);border:1px solid color-mix(in srgb,var(--f-verify) 45%,var(--line));border-radius:999px;padding:3px 10px;background:var(--surface)}
+.notes-why{width:100%;border-collapse:collapse;font:13px/1.45 var(--font-body);margin-top:14px}
+.notes-why th,.notes-why td{border-top:1px solid var(--line);padding:8px 8px;vertical-align:top;text-align:left}
+.notes-why thead th{font:600 11px var(--font-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);border-top:0}
+.notes-why td.n{font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap}
+.notes-why tbody th{font-weight:600;width:22%}
+.notes-scroll{overflow-x:auto}
+.sv-srow{cursor:default}
+.mail{font-family:var(--font-mono);user-select:all}
+</style>
+
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top">LLM<span>-</span>Engineering</a>
+    <nav class="nav" aria-label="Sections"><a href="#suivi">Niveau atteint</a><a href="#plan">Big picture</a><a href="#notation">Notation</a></nav>
+    <button class="btn" id="playBtn" type="button" aria-pressed="false" aria-label="Mettre les animations en pause"></button>
+  </div>
+</header>
+
+<main id="top">
+<div class="wrap"><section id="suivi" aria-labelledby="sv-title">
+  <div class="sec-head">
+    <div class="k">Optimisation de LLM · état au 17/10/2026</div>
+    <h2 id="sv-title">LLM-Engineering</h2>
+    <p>Faire rendre à un LLM la bonne réponse, au format attendu, et mesurer quelle stratégie d'optimisation paie
+    vraiment : affinage LoRA, distillation, compression, ensembles, cascade, face à des références fortes et sous un
+    protocole gelé avant la première mesure. Cas d'étude : le chapitre CIM-10 de comptes rendus cliniques, sur une seule RTX 5090.</p>
+    <p><span class="fict">Données fictives (PARHAF) · aucune donnée de patient réel</span></p>
+  </div>
+  <div class="sv-dash">
+    <div class="sv-tiles"><div class="sv-tile sv-global"><b>0,813</b><span>macro-F1 au test scellé, système final G</span></div><div class="sv-tile"><b>+7,3 pts</b><span>sur le TF-IDF réglé ; non résolu au seuil de 2 points</span></div><div class="sv-tile"><b>72,30</b><span>sur MorFITT, au niveau du meilleur publié (71,95)</span></div><div class="sv-tile"><b>82 %</b><span>des patients servis sans le LoRA, même qualité</span></div><div class="sv-tile"><b>7</b><span>résultats négatifs publiés</span></div><div class="sv-tile"><b>616</b><span>tests · 486 runs au registre</span></div></div>
+    <div class="vd-legend" role="list" aria-label="Verdicts des tests">
+      <span class="sv-hi" role="listitem"><i></i>retenu ou atteint</span>
+      <span class="sv-mid" role="listitem"><i></i>non résolu ou signalé</span>
+      <span class="sv-lo" role="listitem"><i></i>négatif publié</span>
+      <span class="vd-mes" role="listitem"><i></i>mesure</span>
+      <span>Verdicts écrits d'avance dans chaque fiche ; « non résolu » veut dire que l'intervalle ne franchit pas le seuil d'utilité de 2 points.</span>
+    </div>
+  </div>
+</section></div>
+
+<div class="wide">
+  <section id="plan" aria-labelledby="pl-title">
+    <div class="sec-head" style="max-width:1208px;margin-inline:auto">
+      <div class="k">Big picture · les tests du projet</div>
+      <h2 id="pl-title">Plan haute résolution des tests</h2>
+      <p>Chaque bloc est un test réalisé, coloré selon son verdict. Suivez le scénario étape par étape, isolez un type de flux, zoomez, ou cliquez sur un bloc pour lire le résultat, son intervalle et le run qui le prouve.</p>
+    </div>
+    <div class="sheet" id="planSheet">
+      <div class="toolbar">
+        <div class="steps">
+          <span class="k">Scénario</span>
+          <button class="btn" id="prevStep" type="button" aria-label="Étape précédente">◀</button>
+          <div class="dots" id="dots"></div>
+          <button class="btn" id="nextStep" type="button" aria-label="Étape suivante">▶</button>
+          <button class="btn" id="autoStep" type="button" aria-pressed="false">Dérouler</button>
+          <button class="btn" id="allStep" type="button">Tout voir</button>
+        </div>
+        <div class="zoom">
+          <span class="k">Vitesse</span>
+          <button class="btn sp" type="button" data-s="0.5" aria-pressed="false">×0,5</button>
+          <button class="btn sp" type="button" data-s="1" aria-pressed="true">×1</button>
+          <button class="btn sp" type="button" data-s="2" aria-pressed="false">×2</button>
+          <span class="k">Zoom</span>
+          <button class="btn" id="zoomOut" type="button" aria-label="Dézoomer">−</button>
+          <span class="k" id="zoomVal">100 %</span>
+          <button class="btn" id="zoomIn" type="button" aria-label="Zoomer">+</button>
+          <button class="btn" id="fsBtn" type="button">Plein écran</button>
+        </div>
+      </div>
+      <div class="legend" id="planLegend"></div>
+      <p class="hint">Faites glisser horizontalement pour parcourir le plan.</p>
+      <div class="scroll" id="planScroll"><svg id="planSvg" class="plan-svg" role="img" aria-label="Plan de LLM-Engineering : la question, le protocole gelé, huit étapes de tests (données, références, affinage, allègement par distillation et compression, système final, évaluation, incertitude, service), ingénierie et matériel."></svg></div>
+      <div class="plan-panels">
+        <div id="stepPanel" aria-live="polite"></div>
+        <div id="nodePanel" aria-live="polite"></div>
+      </div>
+      <div class="cartouche"><div>Plan <b>LLM-Engineering</b></div><div>Big picture des tests</div><div><b>38</b> tests · <b>8</b> étapes · <b>11</b> pas de scénario</div><div>État au <b>17/10/2026</b></div></div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap"><section id="notation" aria-labelledby="nt-title">
+  <div class="sec-head">
+    <div class="k">Grille de notation · estimation à ±1 point · 17/10/2026</div>
+    <h2 id="nt-title">Notes par composante</h2>
+    <p>Moyenne de 8,25 sur 10, contre 7,63 estimé pour le SOTA open source et 9,25 pour le SOTA absolu ; plafond
+    réaliste estimé à 9,25 ; moyennes recalculées depuis les huit composantes. Ces notes sont une estimation structurée, non une mesure : jugement de l'assistant IA du
+    projet à plus ou moins 1 point, à contre-expertiser. Le SOTA est le meilleur niveau connu par composante, pas un système
+    unique. Échelle : 5 bonne pratique d'un dépôt de recherche, 7 meilleurs projets ouverts de même nature, 9 à 10 niveau
+    industriel ou clinique réglementé.</p>
+  </div>
+  <div class="sv-block">
+    <div class="sv-scorewrap"><div class="sv-slegend"><span><i class="lg-a"></i>ce projet</span><span><i class="lg-v"></i>plafond réaliste estimé</span><span><i class="lg-o"></i>SOTA open source</span><span><i class="lg-x"></i>SOTA absolu</span></div><div class="sv-saxis" aria-hidden="true"><span></span><span><em style="left:0%">0</em><em style="left:20%">2</em><em style="left:40%">4</em><em style="left:60%">6</em><em style="left:80%">8</em><em style="left:100%">10</em></span><span></span><span></span></div><div class="sv-srows" role="list"><div class="sv-srow" role="listitem" aria-label="Performance du modèle : projet 8, plafond 8, SOTA open source 8, SOTA absolu 9"><span class="sv-sn">Performance du modèle</span><span class="sv-bul sv-hi" aria-hidden="true"><i class="sv-bul-a" style="width:80%"></i><i class="sv-bul-v" style="left:80%"></i><i class="sv-bul-o" style="left:80%"></i><i class="sv-bul-x" style="left:90%"></i></span><b>8</b><small>/ 10</small></div><div class="sv-srow" role="listitem" aria-label="Rigueur statistique et protocole : projet 9, plafond 10, SOTA open source 8, SOTA absolu 9"><span class="sv-sn">Rigueur statistique et protocole</span><span class="sv-bul sv-hi" aria-hidden="true"><i class="sv-bul-a" style="width:90%"></i><i class="sv-bul-v" style="left:100%"></i><i class="sv-bul-o" style="left:80%"></i><i class="sv-bul-x" style="left:90%"></i></span><b>9</b><small>/ 10</small></div><div class="sv-srow" role="listitem" aria-label="Données et anti-fuite : projet 8, plafond 9, SOTA open source 8, SOTA absolu 10"><span class="sv-sn">Données et anti-fuite</span><span class="sv-bul sv-hi" aria-hidden="true"><i class="sv-bul-a" style="width:80%"></i><i class="sv-bul-v" style="left:90%"></i><i class="sv-bul-o" style="left:80%"></i><i class="sv-bul-x" style="left:100%"></i></span><b>8</b><small>/ 10</small></div><div class="sv-srow" role="listitem" aria-label="Fiabilité de l&#x27;incertitude : projet 8, plafond 9, SOTA open source 7, SOTA absolu 9"><span class="sv-sn">Fiabilité de l&#x27;incertitude</span><span class="sv-bul sv-hi" aria-hidden="true"><i class="sv-bul-a" style="width:80%"></i><i class="sv-bul-v" style="left:90%"></i><i class="sv-bul-o" style="left:70%"></i><i class="sv-bul-x" style="left:90%"></i></span><b>8</b><small>/ 10</small></div><div class="sv-srow" role="listitem" aria-label="Analyse d&#x27;erreurs et robustesse : projet 7, plafond 9, SOTA open source 7, SOTA absolu 9"><span class="sv-sn">Analyse d&#x27;erreurs et robustesse</span><span class="sv-bul sv-hi" aria-hidden="true"><i class="sv-bul-a" style="width:70%"></i><i class="sv-bul-v" style="left:90%"></i><i class="sv-bul-o" style="left:70%"></i><i class="sv-bul-x" style="left:90%"></i></span><b>7</b><small>/ 10</small></div><div class="sv-srow" role="listitem" aria-label="Reproductibilité et ingénierie : projet 9, plafond 10, SOTA open source 8, SOTA absolu 9"><span class="sv-sn">Reproductibilité et ingénierie</span><span class="sv-bul sv-hi" aria-hidden="true"><i class="sv-bul-a" style="width:90%"></i><i class="sv-bul-v" style="left:100%"></i><i class="sv-bul-o" style="left:80%"></i><i class="sv-bul-x" style="left:90%"></i></span><b>9</b><small>/ 10</small></div><div class="sv-srow" role="listitem" aria-label="Efficience et déploiement : projet 8, plafond 9, SOTA open source 8, SOTA absolu 10"><span class="sv-sn">Efficience et déploiement</span><span class="sv-bul sv-hi" aria-hidden="true"><i class="sv-bul-a" style="width:80%"></i><i class="sv-bul-v" style="left:90%"></i><i class="sv-bul-o" style="left:80%"></i><i class="sv-bul-x" style="left:100%"></i></span><b>8</b><small>/ 10</small></div><div class="sv-srow" role="listitem" aria-label="Sûreté, conformité, honnêteté : projet 9, plafond 10, SOTA open source 7, SOTA absolu 9"><span class="sv-sn">Sûreté, conformité, honnêteté</span><span class="sv-bul sv-hi" aria-hidden="true"><i class="sv-bul-a" style="width:90%"></i><i class="sv-bul-v" style="left:100%"></i><i class="sv-bul-o" style="left:70%"></i><i class="sv-bul-x" style="left:90%"></i></span><b>9</b><small>/ 10</small></div><div class="sv-srow sv-stot" role="listitem"><span class="sv-sn">Moyenne</span><span class="sv-bul sv-hi" aria-hidden="true"><i class="sv-bul-a" style="width:82.5%"></i><i class="sv-bul-v" style="left:92.5%"></i><i class="sv-bul-o" style="left:76.25%"></i><i class="sv-bul-x" style="left:92.5%"></i></span><b>8,25</b><small>/ 10</small></div></div></div>
+    <div class="notes-scroll"><table class="notes-why">
+      <thead><tr><th scope="col">Composante</th><th scope="col">Projet</th><th scope="col">Plafond</th><th scope="col">SOTA open source</th><th scope="col">SOTA absolu</th><th scope="col">Ce qui justifie la note</th></tr></thead>
+      <tbody><tr><th scope="row">Performance du modèle</th><td class="n">8</td><td class="n">8</td><td class="n">8</td><td class="n">9</td><td>Test scellé : G à 0,8131, +7,28 points sur le TF-IDF, non résolu à 2 points ; MorFITT au niveau du meilleur publié (72,30 contre 71,95). Le plafond passerait à 9 si un chiffre publié était dépassé.</td></tr><tr><th scope="row">Rigueur statistique et protocole</th><td class="n">9</td><td class="n">10</td><td class="n">8</td><td class="n">9</td><td>Protocole gelé et haché, test scellé ouvert une fois, bootstrap par blocs d&#x27;auteurs, prédiction préenregistrée notée (4 sur 6).</td></tr><tr><th scope="row">Données et anti-fuite</th><td class="n">8</td><td class="n">9</td><td class="n">8</td><td class="n">10</td><td>Découpage par patient, raccourci d&#x27;auteur mesuré, audit de 65 erreurs confiantes, second jeu (MorFITT) avec le même outillage ; corpus fictif.</td></tr><tr><th scope="row">Fiabilité de l&#x27;incertitude</th><td class="n">8</td><td class="n">9</td><td class="n">7</td><td class="n">9</td><td>ECE 0,016, couverture conforme 0,924 au test, exactitude 0,962 à 70 % traités ; la pire famille reste sous la cible (0,821).</td></tr><tr><th scope="row">Analyse d&#x27;erreurs et robustesse</th><td class="n">7</td><td class="n">9</td><td class="n">7</td><td class="n">9</td><td>Taxonomie d&#x27;erreurs, perturbations, nouveaux auteurs pour l&#x27;encodeur ; fragilité du LoRA en fin de texte corrigée sur un pli, hors du système gelé.</td></tr><tr><th scope="row">Reproductibilité et ingénierie</th><td class="n">9</td><td class="n">10</td><td class="n">8</td><td class="n">9</td><td>Chiffre clé reconstruit à l&#x27;identique depuis un clone neuf, image Docker reconstruite, 616 tests, registre en ajout seul ; version taguée à faire.</td></tr><tr><th scope="row">Efficience et déploiement</th><td class="n">8</td><td class="n">9</td><td class="n">8</td><td class="n">10</td><td>G servi par HTTP en cascade : 38,4 ms attendus contre 97,4 ms, 3,5 fois moins d&#x27;énergie ; compression jamais réussie, pas d&#x27;image GPU.</td></tr><tr><th scope="row">Sûreté, conformité, honnêteté</th><td class="n">9</td><td class="n">10</td><td class="n">7</td><td class="n">9</td><td>Claim-gate sur tout texte sortant, sept résultats négatifs publiés, carte de modèle, checklist TRIPOD-LLM ; relecture humaine externe à faire.</td></tr></tbody>
+    </table></div>
+  </div>
+</section></div>
+
+<div class="wrap"><p class="sv-stamp" style="margin:8px 0 40px">Cyril Bourgeois · code : <a href="https://github.com/cyril-bgs-dev-tech/llm-engineering">github.com/cyril-bgs-dev-tech/llm-engineering</a> ·
+<span class="mail">cyril.bgs.dev@gmail.com</span> · chiffres tirés du registre des runs du projet (RESULTATS.md),
+notes tirées de docs/SUIVI_NOTES_ET_LEVIERS.md.</p></div>
+</main>
+
+<script>
+(function(){
+"use strict";
+const NS="http://www.w3.org/2000/svg";
+const ICONS={
+user:"M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 20.5c1.4-3.6 4.4-5.5 8-5.5s6.6 1.9 8 5.5",
+hub:"M12 9.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zM5 3.5a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM19 3.5a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM12 18.4a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM6.4 6.4l3.6 3.6M17.6 6.4L14 10M12 14.8v3.6",
+doc:"M7 3h7l4 4v14H7zM14 3v4h4M9.5 11.5h6M9.5 15h6M9.5 18.5h3.5",
+code:"M9 7l-5 5 5 5M15 7l5 5-5 5",
+check:"M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM8 12.5l2.8 2.8 5.2-5.6",
+shield:"M12 3l7.5 3v5.5c0 4.4-3.1 7.9-7.5 9.5-4.4-1.6-7.5-5.1-7.5-9.5V6zM9 12l2.2 2.2L15.5 10",
+db:"M5 6c0-1.7 3.1-3 7-3s7 1.3 7 3-3.1 3-7 3-7-1.3-7-3zM5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3",
+plug:"M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4",
+eye:"M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12zM12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z",
+loop:"M20 12a8 8 0 1 1-2.4-5.7M20 3.5v4.8h-4.8",
+branch:"M6 3v12M6 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM18 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM18 9c0 5-6 4-11.2 7.5",
+search:"M10.5 4a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM15.5 15.5l5 5",
+lock:"M6 11h12v9.5H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3",
+key:"M7.5 10.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM10 12l9.5-9.5M16 6l2.5 2.5M13.5 8.5l2 2",
+flask:"M9 3h6M10 3v6.2L4.8 18.3A1.8 1.8 0 0 0 6.4 21h11.2a1.8 1.8 0 0 0 1.6-2.7L14 9.2V3M7.4 15h9.2",
+graph:"M4 4h5v5H4zM15 4h5v5h-5zM9.5 15h5v5h-5zM6.5 9l4.5 6M17.5 9L13 15",
+gate:"M12 2.8l9.2 9.2-9.2 9.2L2.8 12zM8.6 12l2.4 2.4 4.4-4.6",
+rocket:"M14 4.5c3.2-.6 5.6.1 5.6.1s.7 2.4.1 5.6L12.8 17l-5.8-5.8zM7 11.2l-3 .3-.8 2.5 3.4.6M12.8 17l-.3 3-2.5.8-.6-3.4M15.5 8.5h.01",
+leaf:"M5 19c0-8 5.5-14 14.5-14.5C19 13.5 13 19 5 19zM5 19l7.5-7.5",
+stack:"M12 3.5l9 4.8-9 4.8-9-4.8zM3 12.5l9 4.8 9-4.8M3 16.5l9 4.8 9-4.8",
+users:"M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20c.9-3 3.4-4.8 6.5-4.8s5.6 1.8 6.5 4.8M15.5 4.3a3.5 3.5 0 0 1 0 6.4M18 15.5c1.8.6 3 2.1 3.5 4.5",
+chart:"M4 4v16h16M8 16v-4M12 16V8M16 16v-6",
+coin:"M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM14.6 9.4c-.5-.9-1.5-1.4-2.6-1.4-1.4 0-2.5.8-2.5 2s1.1 1.6 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1.1 0-2.1-.5-2.6-1.4M12 6.4V8M12 16v1.6",
+tag:"M3.5 12V3.5H12l8.5 8.5-8.5 8.5zM8 8h.01",
+book:"M4 5.5c2.5-1.2 5.5-1 8 .8 2.5-1.8 5.5-2 8-.8v13.5c-2.5-1.2-5.5-1-8 .8-2.5-1.8-5.5-2-8-.8zM12 6.3v14",
+map:"M3 6l6-2.2 6 2.2 6-2.2v14.4L15 20.4l-6-2.2-6 2.2zM9 3.8v14.4M15 6v14.4",
+list:"M10 6h10M10 12h10M10 18h10M4 6l1.2 1.2L7.5 5M4 12l1.2 1.2L7.5 11M4.5 18h1.5",
+clock:"M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4v4h4M12 8v4.2l3 1.8",
+index:"M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 17h6M17 14v6",
+scales:"M12 4v16M6 20h12M5.5 7.5h13M6.5 7.5L3.5 14a3 3 0 0 0 6 0zM17.5 7.5L14.5 14a3 3 0 0 0 6 0z",
+contract:"M6.5 3h11v18h-11zM9.5 8h5M9.5 11.5h5M9.5 16l1.6 1.6 3-3",
+merge:"M7 3v6a6 6 0 0 0 6 6h4M7 21v-6M14 12l3 3-3 3",
+signal:"M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM8 12.5l2.8 2.8 5.2-5.6",
+power:"M12 3v8M7.2 6.3a7.5 7.5 0 1 0 9.6 0",
+radar:"M12 12l6.5-6.5M12 3a9 9 0 1 0 9 9M12 7.5a4.5 4.5 0 1 0 4.5 4.5",
+nodes:"M3 4h5v5H3zM16 4h5v5h-5zM9.5 15h5v5h-5zM8 6.5h8M5.5 9v3.5a2 2 0 0 0 2 2h2M18.5 9v3.5a2 2 0 0 1-2 2h-2",
+play:"M7 4.5v15l12-7.5z",
+relay:"M4 8h13l-3.5-3.5M20 16H7l3.5 3.5",
+target:"M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zM12 11.6v.8",
+impact:"M12 10.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM8 8a5.7 5.7 0 0 0 0 8M16 8a5.7 5.7 0 0 1 0 8M5 5a10 10 0 0 0 0 14M19 5a10 10 0 0 1 0 14"
+};
+const TONE={human:"intent",control:"control",boot:"control",define:"context",plan:"intent",build:"task",verify:"verify",operate:"learn",tools:"control",memory:"context",obs:"learn",intent:"intent",task:"task",context:"context",learn:"learn"};
+const tv=g=>"var(--f-"+(TONE[g]||"control")+")";
+function S(tag,attrs,parent){const e=document.createElementNS(NS,tag);if(attrs){for(const k in attrs){if(attrs[k]!==undefined&&attrs[k]!==null)e.setAttribute(k,attrs[k]);}}if(parent)parent.appendChild(e);return e;}
+function T(parent,x,y,str,cls,fs,maxw,extra){const a=Object.assign({x:x,y:y,class:cls},extra||{});const t=S("text",a,parent);t.textContent=str;if(fs){t.style.fontSize=fs+"px";t.dataset.fs=fs;}if(maxw){t.dataset.maxw=Math.max(10,maxw);}return t;}
+function icon(parent,name,x,y,size,cls){const sc=size/24;S("path",{class:cls||"ic",d:ICONS[name]||ICONS.doc,transform:"translate("+x+","+y+") scale("+sc+")"},parent);}
+function dedupe(pts){const o=[];pts.forEach(p=>{const l=o[o.length-1];if(!l||l[0]!==p[0]||l[1]!==p[1])o.push(p);});return o;}
+function pathD(pts,r){r=r||8;let d="M"+pts[0][0]+","+pts[0][1];for(let i=1;i<pts.length-1;i++){const a=pts[i-1],b=pts[i],c=pts[i+1];const d1=Math.hypot(b[0]-a[0],b[1]-a[1]),d2=Math.hypot(c[0]-b[0],c[1]-b[1]);const rr=Math.min(r,d1/2,d2/2);const ax=b[0]-(b[0]-a[0])/d1*rr,ay=b[1]-(b[1]-a[1])/d1*rr,bx=b[0]+(c[0]-b[0])/d2*rr,by=b[1]+(c[1]-b[1])/d2*rr;d+=" L"+ax.toFixed(2)+","+ay.toFixed(2)+" Q"+b[0]+","+b[1]+" "+bx.toFixed(2)+","+by.toFixed(2);}const l=pts[pts.length-1];d+=" L"+l[0]+","+l[1];return d;}
+function arrowAt(g,from,to){const a=Math.atan2(to[1]-from[1],to[0]-from[0])*180/Math.PI;S("path",{class:"ah",d:"M0,0 L-8,-4.2 L-8,4.2 Z",transform:"translate("+to[0]+","+to[1]+") rotate("+a.toFixed(1)+")"},g);}
+
+function drawPanel(g,p){
+  const tone=tv(p.g||"control");
+  if(p.kind==="lanehead"){T(g,p.x+4,p.y+p.h/2-1,p.t,"lh-t");if(p.s)T(g,p.x+4,p.y+p.h/2+16,p.s,"lh-s");return;}
+  if(p.kind==="ghost"){S("rect",{class:"ghost",x:p.x,y:p.y,width:p.w,height:p.h,rx:9},g);return;}
+  if(p.kind==="frame"){const gg=S("g",{style:"--tone:"+tone},g);S("rect",{class:"fr",x:p.x,y:p.y,width:p.w,height:p.h,rx:p.small?12:16},gg);const tx=S("text",{x:p.x+(p.small?12:20),y:p.y+(p.small?18:30),class:"fr-t"+(p.small?" sm":"")},gg);const a=S("tspan",{},tx);a.textContent=p.t;if(p.s){const b=S("tspan",{class:"fr-s",dx:10},tx);b.textContent=p.s;}return;}
+  if(p.kind==="bubble"){const gg=S("g",{style:"--tone:"+tone},g);S("rect",{class:"bubble",x:p.x,y:p.y,width:p.w,height:p.h,rx:11},gg);if(p.t)T(gg,p.x+12,p.y+17,p.t,"bubble-t");return;}
+  if(p.kind==="loopc"){const gg=S("g",{style:"--tone:"+tone},g);const sp=S("g",{class:"spin slow"},gg);icon(sp,"loop",p.x-42,p.y-48,84,"loop-ic");T(gg,p.x,p.y+2,p.t,"loop-t",null,null,{"text-anchor":"middle"});T(gg,p.x,p.y+40,p.s,"loop-s",null,null,{"text-anchor":"middle"});return;}
+  const gg=S("g",{style:"--tone:"+tone},g);
+  S("rect",{class:"pn",x:p.x,y:p.y,width:p.w,height:p.h,rx:12},gg);
+  if(p.kind==="phase"){T(gg,p.x+16,p.y+26,p.n,"ph-n");T(gg,p.x+40,p.y+27,p.t,"ph-t");}
+}
+
+function drawNode(parent,n){
+  const kind=n.kind||"node";
+  const g=S("g",{class:"node k-"+kind,style:"--tone:"+tv(n.g),"data-id":n.id},parent);
+  const cy=n.y+n.h/2;
+  if(kind==="node"||kind==="gate"){
+    S("rect",{class:"box"+(kind==="gate"?" gatebox":""),x:n.x,y:n.y,width:n.w,height:n.h,rx:9},g);
+    let tx=n.x+12;
+    if(n.icon){const s=n.h>=46?26:(n.h>=40?22:20);const iy=n.y+(n.h-s)/2;S("rect",{class:"ic-bg",x:n.x+9,y:iy,width:s,height:s,rx:6},g);icon(g,n.icon,n.x+9+s*.14,iy+s*.14,s*.72);tx=n.x+9+s+9;}
+    const mw=n.x+n.w-9-tx, fs=n.fs||13;
+    if(n.s){T(g,tx,cy-2.5,n.t,"t",fs,mw);T(g,tx,cy+12.5,n.s,"s",n.sfs||11,mw);}else{T(g,tx,cy+4.5,n.t,"t",fs,mw);}
+  } else if(kind==="tool"){
+    S("rect",{class:"box",x:n.x,y:n.y,width:n.w,height:n.h,rx:8},g);
+    const fs=n.fs||12.5, mw=n.w-16;
+    if(n.s){T(g,n.x+n.w/2,cy-3,n.t,"t",fs,mw,{"text-anchor":"middle"});T(g,n.x+n.w/2,cy+12,n.s,"s",10.5,mw,{"text-anchor":"middle"});}else{T(g,n.x+n.w/2,cy+4.3,n.t,"t",fs,mw,{"text-anchor":"middle"});}
+  } else if(kind==="wide"){
+    S("rect",{class:"box",x:n.x,y:n.y,width:n.w,height:n.h,rx:11},g);
+    const s=n.h>=80?34:28, iy=cy-s/2;
+    S("rect",{class:"ic-bg",x:n.x+12,y:iy,width:s,height:s,rx:8},g);icon(g,n.icon,n.x+12+s*.14,iy+s*.14,s*.72);
+    const tx=n.x+12+s+12, lw=n.leftW||Math.round(n.w*.32), mw=n.x+lw-tx-8;
+    T(g,tx,cy-(n.h>=80?4:2),n.t,"t",n.fs||14,mw);T(g,tx,cy+(n.h>=80?15:13),n.s,"s",n.sfs||11.5,mw);
+    const chips=n.chips||[], rows=n.chipRows||2, cols=Math.ceil(chips.length/rows), gap=8, ch=n.chipH||28;
+    const ax=n.x+lw, aw=n.w-lw-12, cw=(aw-(cols-1)*gap)/cols, th=rows*ch+(rows-1)*gap, y0=n.y+(n.h-th)/2;
+    chips.forEach((c,i)=>{const r=Math.floor(i/cols),k=i%cols,x=ax+k*(cw+gap),y=y0+r*(ch+gap);S("rect",{class:"chip",x:x,y:y,width:cw,height:ch,rx:7},g);T(g,x+cw/2,y+ch/2+4,c,"chip-t",n.chipFs||11.5,cw-12,{"text-anchor":"middle"});});
+  } else if(kind==="stack"){
+    S("rect",{class:"box",x:n.x,y:n.y,width:n.w,height:n.h,rx:10},g);
+    S("rect",{class:"ic-bg",x:n.x+9,y:n.y+7,width:20,height:20,rx:5},g);icon(g,n.icon,n.x+11.8,n.y+9.8,14.4);
+    T(g,n.x+36,n.y+22,n.t,"t",13,n.w-90);
+    if(n.badge)T(g,n.x+n.w-12,n.y+22,n.badge,"badge",12,null,{"text-anchor":"end"});
+    const nl=n.lanes.length, ls=(n.h-40)/nl, lh=ls-8;
+    n.lanes.forEach((ln,k)=>{const ly=n.y+32+k*ls;S("rect",{class:"lane",x:n.x+10,y:ly,width:n.w-20,height:lh,rx:8},g);const mid=ly+lh/2;T(g,n.x+22,mid-3,ln[0],"t",12.5,n.w-(n.noSpin?40:80));T(g,n.x+22,mid+12,ln[1],"s",10.5,n.w-(n.noSpin?40:80));if(!n.noSpin){const sp=S("g",{class:"spin"},g);icon(sp,"loop",n.x+n.w-42,mid-12,24);}});
+  } else if(kind==="rail"){
+    S("rect",{class:"box",x:n.x,y:n.y,width:n.w,height:n.h,rx:11},g);
+    n.t.split("\n").forEach((l,i)=>T(g,n.x+14,n.y+30+i*20,l,"rl-t"));
+    S("line",{class:"rl-sep",x1:n.x+14,x2:n.x+n.w-14,y1:n.y+66,y2:n.y+66},g);
+    const step=n.step||48;
+    n.items.forEach((it,i)=>{const y=n.y+92+i*step;S("rect",{class:"ri",x:n.x+16,y:y-8,width:7,height:7,rx:1,transform:"rotate(45 "+(n.x+19.5)+" "+(y-4.5)+")"},g);it.split("\n").forEach((l,j)=>T(g,n.x+31,y-1+j*15,l,j?"s":"t",j?11:12.5,n.w-40));});
+  }
+  return g;
+}
+
+function drawEdge(gE,gPt,e,gL){
+  const pts=dedupe(e.pts);
+  const g=S("g",{class:"edge"+(e.dash?" dash":""),style:"--fc:var(--f-"+e.f+")"},gE);
+  const n=pts.length, last=pts[n-1], prev=pts[n-2];
+  const dl=Math.hypot(last[0]-prev[0],last[1]-prev[1]);
+  const draw=pts.map(p=>p.slice());
+  if(dl>10){draw[n-1]=[last[0]-(last[0]-prev[0])/dl*5,last[1]-(last[1]-prev[1])/dl*5];}
+  if(e.bi){const f0=pts[0],f1=pts[1],d0=Math.hypot(f1[0]-f0[0],f1[1]-f0[1]);if(d0>10)draw[0]=[f0[0]+(f1[0]-f0[0])/d0*5,f0[1]+(f1[1]-f0[1])/d0*5];}
+  S("path",{class:"ln",d:pathD(draw)},g);
+  const path=S("path",{d:pathD(pts),fill:"none",stroke:"none"},g);
+  arrowAt(g,prev,last);
+  if(e.bi)arrowAt(g,pts[1],pts[0]);
+  let lg=null;
+  if(e.label){const L=e.label;lg=S("g",Object.assign({class:"edge-lbl",style:"--fc:var(--f-"+e.f+")"},L.rot?{transform:"rotate("+L.rot+" "+L.x+" "+L.y+")"}:{}),gL||g);S("rect",{class:"lbg",rx:3},lg);T(lg,L.x,L.y,L.t,"elabel"+(L.sign?" sign":""),null,null,{"text-anchor":L.anchor||"middle"});}
+  const len=path.getTotalLength();
+  const cnt=Math.max(e.bi?2:1,Math.round(len/150));
+  const period=Math.max(len/72,1.5);
+  const parts=[];
+  for(let i=0;i<cnt;i++){const pg=S("g",{class:"pt",style:"--fc:var(--f-"+e.f+")"},gPt);S("circle",{class:"halo",r:6.5},pg);S("circle",{class:"core",r:2.9},pg);parts.push(pg);}
+  return {id:e.id,f:e.f,a:e.a,b:e.b,bi:!!e.bi,g:g,lg:lg,path:path,len:len,parts:parts,period:period};
+}
+
+const DIAGS=[];
+class Diagram{
+  constructor(svg,spec,opts){this.svg=svg;this.spec=spec;this.opts=opts||{};this.E=[];this.N={};this.t=Math.random()*6;this.visible=true;this.sel=null;this.render();DIAGS.push(this);svg.__dg=this;}
+  render(){
+    const s=this.spec,svg=this.svg;
+    svg.setAttribute("viewBox","0 "+(s.y0||0)+" "+s.w+" "+s.h);svg.classList.add("dg");
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    const gP=S("g",{},svg),gE=S("g",{},svg),gPt=S("g",{"aria-hidden":"true"},svg),gL=S("g",{},svg),gN=S("g",{},svg),gX=S("g",{},svg);
+    (s.panels||[]).forEach(p=>drawPanel(gP,p));
+    (s.edges||[]).forEach(e=>this.E.push(drawEdge(gE,gPt,e,gL)));
+    (s.nodes||[]).forEach(n=>{
+      const g=drawNode(gN,n);this.N[n.id]=g;
+      if(this.opts.onNode){
+        g.classList.add("click");g.setAttribute("tabindex","0");g.setAttribute("role","button");g.setAttribute("aria-label",n.t.replace("\n"," "));
+        const go=()=>{this.select(n.id);this.opts.onNode(n.ref||n.id,n);};
+        g.addEventListener("click",go);
+        g.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();go();}});
+      }
+    });
+    (s.texts||[]).forEach(t=>T(gX,t.x,t.y,t.t,"txt",null,null,{"text-anchor":t.anchor||"middle"}));
+    this.tick(0);
+  }
+  select(id){if(this.sel&&this.N[this.sel])this.N[this.sel].classList.remove("sel");this.sel=id;if(id&&this.N[id])this.N[id].classList.add("sel");}
+  focus(f){
+    const svg=this.svg;
+    if(!f){svg.classList.remove("focusing");this.E.forEach(E=>{E.g.classList.remove("on");if(E.lg)E.lg.classList.remove("on");E.parts.forEach(p=>p.classList.remove("on"));});Object.values(this.N).forEach(n=>n.classList.remove("on"));return;}
+    svg.classList.add("focusing");
+    const on=new Set(f.nodes||[]);
+    this.E.forEach(E=>{const hit=(f.edges&&f.edges.indexOf(E.id)>=0)||(f.flows&&f.flows.has(E.f));E.g.classList.toggle("on",!!hit);if(E.lg)E.lg.classList.toggle("on",!!hit);E.parts.forEach(p=>p.classList.toggle("on",!!hit));if(hit&&f.flows){if(E.a)on.add(E.a);if(E.b)on.add(E.b);}});
+    Object.keys(this.N).forEach(id=>this.N[id].classList.toggle("on",on.has(id)));
+  }
+  tick(dt){
+    this.t+=dt;
+    for(const E of this.E){
+      const c=E.parts.length;
+      for(let i=0;i<c;i++){
+        let f=((this.t/E.period)+i/c)%1;
+        if(E.bi&&i%2)f=1-f;
+        const p=E.path.getPointAtLength(f*E.len);
+        const op=Math.min(1,f*7,(1-f)*7);
+        E.parts[i].setAttribute("transform","translate("+p.x.toFixed(1)+","+p.y.toFixed(1)+")");
+        E.parts[i].setAttribute("opacity",op.toFixed(2));
+      }
+    }
+  }
+}
+function fitAll(root){
+  root.querySelectorAll("text[data-maxw]").forEach(t=>{
+    const max=+t.dataset.maxw;let fs=parseFloat(t.dataset.fs)||12;t.style.fontSize=fs+"px";let guard=0;
+    try{while(t.getComputedTextLength()>max&&fs>8&&guard++<30){fs-=.5;t.style.fontSize=fs+"px";}}catch(err){}
+  });
+  root.querySelectorAll("rect.lbg").forEach(r=>{
+    const t=r.nextSibling;if(!t)return;
+    try{const b=t.getBBox();r.setAttribute("x",(b.x-4).toFixed(1));r.setAttribute("y",(b.y-1).toFixed(1));r.setAttribute("width",(b.width+8).toFixed(1));r.setAttribute("height",(b.height+2).toFixed(1));}catch(err){}
+  });
+}
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let PLAYING=!reduce, SPEED=1, last=performance.now();
+const root=document.documentElement;
+const playBtn=document.getElementById("playBtn");
+function setPlaying(v){
+  PLAYING=v;root.classList.toggle("playing",v);
+  playBtn.innerHTML=v?'<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1h3v10H2zM7 1h3v10H7z"/></svg>Pause':'<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Animer';
+  playBtn.setAttribute("aria-label",v?"Mettre les animations en pause":"Lancer les animations");
+}
+playBtn.addEventListener("click",()=>setPlaying(!PLAYING));
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;if(PLAYING){for(const d of DIAGS){if(d.visible)d.tick(dt*SPEED);}}requestAnimationFrame(loop);}
+
+
+/* ---------- Plan de LLM-Engineering ---------- */
+const SPEC={"cols": [{"n": "01", "t": "DONNÉES", "g": "define", "nodes": [{"id": "d1", "t": "PARHAF, 4 219 patients", "s": "comptes rendus fictifs", "v": "mes"}, {"id": "d2", "t": "Étiquettes CIM-10", "s": "17 chapitres, par script", "v": "mes"}, {"id": "d3", "t": "Découpage par patient", "s": "5 plis · test scellé 633", "v": "mes"}, {"id": "d4", "t": "Contrôles anti-fuite", "s": "patient, auteur, doublons", "v": "mes"}, {"id": "d5", "t": "Raccourci d'auteur", "s": "+3,87 pts selon le découpage", "v": "mid"}]}, {"n": "02", "t": "RÉFÉRENCES", "g": "boot", "nodes": [{"id": "r1", "t": "Borne sans modèle", "s": "majoritaire : 0,025", "v": "mes"}, {"id": "r2", "t": "TF-IDF caractères réglé", "s": "0,720 sur 5 plis", "v": "mes"}, {"id": "r3", "t": "Zéro-shot Qwen3.5", "s": "4B 0,493 · 9B 0,473", "v": "mes"}, {"id": "r4", "t": "Encodeur CamemBERT-bio", "s": "0,753 · 5 graines", "v": "mid"}]}, {"n": "03", "t": "AFFINAGE", "g": "build", "nodes": [{"id": "a1", "t": "Criblage des LLM", "s": "Qwen3.5-4B retenu", "v": "mes"}, {"id": "a2", "t": "LoRA Qwen3.5-4B", "s": "0,767 · +4,7 pts", "v": "hi"}, {"id": "a3", "t": "Gain de l'affinage", "s": "+28,8 pts sur le zéro-shot", "v": "hi"}, {"id": "a4", "t": "Fin de texte aléatoire", "s": "0,79 au lieu de 0,14", "v": "hi"}]}, {"n": "04", "t": "ALLÉGER", "g": "plan", "nodes": [{"id": "c1", "t": "Distillation vers encodeur", "s": "gain non préservé", "v": "lo"}, {"id": "c2", "t": "INT8 statique", "s": "effondré : 0,0227", "v": "lo"}, {"id": "c3", "t": "ONNX 32 bits", "s": "même score, +8 % latence", "v": "mes"}, {"id": "c4", "t": "Élagage", "s": "−13,1 points", "v": "lo"}, {"id": "c5", "t": "Recette d'encodeur v2", "s": "aucun facteur ne gagne", "v": "lo"}]}, {"n": "05", "t": "SYSTÈME FINAL", "g": "build", "nodes": [{"id": "g1", "t": "Encodeur + TF-IDF (E)", "s": "0,772 · +5,2 pts", "v": "hi"}, {"id": "g2", "t": "Empilement appris", "s": "+0,41 pt, non résolu", "v": "lo"}, {"id": "g3", "t": "G : LoRA + encodeur + TF-IDF", "s": "0,780 · gelé avant le test", "v": "hi"}, {"id": "g4", "t": "Cascade E puis G", "s": "82 % sans le LoRA", "v": "hi"}]}, {"n": "06", "t": "ÉVALUATION", "g": "verify", "nodes": [{"id": "e1", "t": "Test scellé, une ouverture", "s": "G 0,8131 · TF-IDF 0,7402", "v": "mid"}, {"id": "e2", "t": "Question primaire, δ = 2", "s": "+7,28 [+1,55 ; +12,62]", "v": "mid"}, {"id": "e3", "t": "Prédiction préenregistrée", "s": "4 réussites sur 6", "v": "mes"}, {"id": "e4", "t": "MorFITT, benchmark public", "s": "72,30 · publié 71,95", "v": "hi"}, {"id": "e5", "t": "Nouveaux auteurs", "s": "−5,2 pts pour l'encodeur", "v": "mes"}, {"id": "e6", "t": "Robustesse du LoRA", "s": "fragile en fin de texte", "v": "lo"}]}, {"n": "07", "t": "INCERTITUDE", "g": "define", "nodes": [{"id": "u1", "t": "Calibration de G", "s": "ECE 0,016", "v": "hi"}, {"id": "u2", "t": "Prédiction conforme", "s": "0,924 au test, visé 0,90", "v": "hi"}, {"id": "u3", "t": "Pire famille", "s": "0,821, sous la cible", "v": "lo"}, {"id": "u4", "t": "Abstention", "s": "0,962 à 70 % traités", "v": "hi"}]}, {"n": "08", "t": "SERVICE ET COÛT", "g": "operate", "nodes": [{"id": "s1", "t": "Frontière coût-qualité", "s": "E domine le LoRA seul", "v": "mes"}, {"id": "s2", "t": "Service HTTP en cascade", "s": "38,4 ms contre 97,4", "v": "hi"}, {"id": "s3", "t": "Énergie mesurée", "s": "3,06 contre 10,67 Wh", "v": "hi"}, {"id": "s4", "t": "TF-IDF en conteneur", "s": "2,1 ms par patient", "v": "mes"}, {"id": "s5", "t": "Surveillance de dérive", "s": "nouveaux auteurs invisibles", "v": "lo"}, {"id": "s6", "t": "Échantillon étiqueté", "s": "1 000 patients, 81 %", "v": "mes"}]}], "tools": [{"id": "i1", "t": "616 tests", "s": "typage strict"}, {"id": "i2", "t": "486 runs", "s": "registre en ajout seul"}, {"id": "i3", "t": "Reconstruction à froid", "s": "identique à 1e-9"}, {"id": "i4", "t": "Image Docker", "s": "514 tests dans le conteneur"}, {"id": "i5", "t": "Revue indépendante", "s": "72 mutants tués, 88 tests"}, {"id": "i6", "t": "Tokenizer instable", "s": "25 pannes sur 31, 0 sur 78"}, {"id": "i7", "t": "57 fiches hachées", "s": "avant les runs"}, {"id": "i8", "t": "Claim-gate", "s": "une affirmation, une preuve"}], "hw": [{"id": "m1", "t": "RTX 5090, 32 Go", "s": "aucune location de GPU"}, {"id": "m2", "t": "LoRA, 10 époques", "s": "12 467 s · pic 12,9 Gio"}, {"id": "m3", "t": "Encodeur, 10 époques", "s": "215 s par pli"}, {"id": "m4", "t": "Machine instable", "s": "11 % de pannes, BIOS sans effet"}, {"id": "m5", "t": "Lots de nuit encadrés", "s": "36 règles, relances plafonnées"}]};
+const INFO={"d1": {"t": "PARHAF, 4 219 patients", "r": "Corpus ouvert de comptes rendus cliniques français fictifs, écrits par des internes et relus par des pairs (CC BY 4.0). 4 254 comptes rendus lus, 4 219 patients de travail. Aucune donnée de patient réel.", "v": "mes", "src": "ADR-005, results/measures/splits_summary.json", "g": "define"}, "d2": {"t": "Étiquettes CIM-10", "r": "Le chapitre CIM-10 du diagnostic du scénario, dérivé par un script déterministe depuis la nomenclature de l'ATIH. 17 chapitres évalués ; les plus rares sont regroupés dans AUTRE, hors de la moyenne. L'étiquette est le diagnostic du scénario, pas un codage hospitalier.", "v": "mes", "src": "ADR-006, fiche de données PARHAF", "g": "define"}, "d3": {"t": "Découpage par patient", "r": "Cinq plis stratifiés de 717 à 718 patients pour le développement ; 633 patients mis sous scellé, ouverts une seule fois. Le plus petit chapitre compte 4 patients au test : intervalles larges, annoncés d'avance.", "v": "mes", "src": "results/measures/splits_summary.json, ADR-005", "g": "define"}, "d4": {"t": "Contrôles anti-fuite", "r": "Aucun patient partagé entre plis, quasi-doublons gardés dans la même partition, témoin entraîné sur l'auteur seul pour mesurer le raccourci de style.", "v": "mes", "src": "tests leakage-guard, RM-14", "g": "define"}, "d5": {"t": "Raccourci d'auteur", "r": "Le même TF-IDF gagne 3,87 points [+1,27 ; +6,31] avec des plis par patient plutôt que par auteur (0,684 contre 0,646). Trois lectures restent ouvertes : fuite de style, recouvrement thématique légitime, artefact de découpage. Les deux chiffres sont rapportés.", "v": "mid", "src": "runs rm-14-author-shortcut-tfidf et -v2, ADR-011", "g": "define"}, "r1": {"t": "Borne sans modèle", "r": "La classe majoritaire donne une macro-F1 de 0,025 : toute la marge vient des modèles.", "v": "mes", "src": "run p1-03-bounds", "g": "boot"}, "r2": {"t": "TF-IDF caractères réglé", "r": "Référence non neuronale réglée (caractères, poids de classes équilibrés) : macro-F1 0,7202 hors pli sur 3 586 patients. C'est la barre de la question primaire. Recalculée depuis un clone neuf : identique à 1e-9 près.", "v": "mes", "src": "runs tfidf-variant-char-balanced, 20261006-230806-reconstruction-a-froid-chiffre-cle", "g": "boot"}, "r3": {"t": "Zéro-shot Qwen3.5", "r": "Les mêmes LLM sans affinage : 0,4929 pour le 4B et 0,4725 pour le 9B au pli 0. Le plus gros modèle ne fait pas mieux sans adaptation.", "v": "mes", "src": "runs zero-shot-qwen3-5-4b-pli0, zero-shot-qwen3-5-9b-pli0", "g": "boot"}, "r4": {"t": "Encodeur CamemBERT-bio", "r": "Encodeur biomédical français, 10 époques, cinq graines moyennées : 0,753 sur cinq plis, +3,27 points [+1,00 ; +5,55] sur le TF-IDF, sous le seuil d'utilité de 2 points en borne basse. La recette gelée à 2 époques le sous-entraînait (0,448).", "v": "mid", "src": "runs camembert-*-ep10, v2-power-preview-5-plis", "g": "boot"}, "a1": {"t": "Criblage des LLM", "r": "Trois candidats affinés 2 époques au pli 0 : Qwen3.5-4B 0,587, Qwen3.5-9B 0,565, Gemma-4-E4B 0,456. Le 4B est retenu : le 9B ne fait pas mieux et coûte plus.", "v": "mes", "src": "runs p1-11-*, ADR-014", "g": "build"}, "a2": {"t": "LoRA Qwen3.5-4B", "r": "Affinage LoRA avec une tête de classification : la réponse est toujours un chapitre valide. 0,767 sur cinq plis, +4,7 points [+2,4 ; +7,2] sur le TF-IDF en développement. Face à l'encodeur : +1,45 [−1,1 ; +4,1], non distingués.", "v": "hi", "src": "run cinq-plis-llm-mur-moins-tfidf-variant-char-balanced", "g": "build"}, "a3": {"t": "Gain de l'affinage", "r": "À modèle égal, l'affinage LoRA apporte +28,8 points [+22,5 ; +35,0] sur le zéro-shot au pli 0.", "v": "hi", "src": "run zero-shot-contre-lora-pli0", "g": "build"}, "a4": {"t": "Fin de texte aléatoire", "r": "Le LoRA classait sur la fin du texte : à 10 % de fin retirée, il tombait à 0,1436. Entraîné avec des fins aléatoires, il garde 0,794 (pli 0, une graine). Correction hors du système gelé ; réplication en plis d'auteurs inachevée.", "v": "hi", "src": "run 20261007-022108-lora-fin-aleatoire-pli0", "g": "build"}, "c1": {"t": "Distillation vers encodeur", "r": "Un élève encodeur appris sur les sorties de l'ensemble semble gagner 3,5 points ; avec des professeurs imbriqués, sans fuite, l'écart tombe à −0,77 [−2,46 ; +0,96]. Fuite de second ordre significative : résultat négatif publié.", "v": "lo", "src": "runs distill-nested-*, distillation-analyse-cinq-plis (RM-56)", "g": "plan"}, "c2": {"t": "INT8 statique", "r": "Quantification INT8 statique min-max de l'encodeur : macro-F1 0,0227 et 39 % de latence en plus. Variantes par centiles impossibles à mesurer (plus de 40 Go de RAM). Voie close.", "v": "lo", "src": "run 20261006-091535-onnx-int8-statique-partiel-camembert-deploy-ep10-lr1e-4", "g": "plan"}, "c3": {"t": "ONNX 32 bits", "r": "Export ONNX en 32 bits : score identique (0,7362), latence p50 en hausse de 8 %. Aucun intérêt à servir ainsi.", "v": "mes", "src": "run 20261006-091535-onnx-int8-statique-partiel-camembert-deploy-ep10-lr1e-4", "g": "plan"}, "c4": {"t": "Élagage", "r": "L'élagage de l'encodeur coûte 13,1 points de macro-F1 : non retenu.", "v": "lo", "src": "RM-45, docs/SUIVI_NOTES_ET_LEVIERS.md", "g": "plan"}, "c5": {"t": "Recette d'encodeur v2", "r": "Lissage d'étiquettes, moyenne de poids, curriculum : testés un par un sur cinq plis, aucun ne gagne.", "v": "lo", "src": "run encodeur-v2-analyse-cinq-plis (RM-55)", "g": "plan"}, "g1": {"t": "Encodeur + TF-IDF (E)", "r": "Moyenne des probabilités de l'encodeur (5 graines) et du TF-IDF : 0,772, +5,2 points [+3,7 ; +6,8] sur le meilleur TF-IDF, en développement. C'est la référence à battre côté coût.", "v": "hi", "src": "run v2-power-preview-5-plis", "g": "build"}, "g2": {"t": "Empilement appris", "r": "Remplacer le mélange à parts égales par une régression logistique : +0,41 [−0,25 ; +1,13], non résolu, avec surajustement. Le mélange 50/50 reste.", "v": "lo", "src": "run glm-v6-empilement", "g": "build"}, "g3": {"t": "G : LoRA + encodeur + TF-IDF", "r": "Seul système admissible selon la règle écrite d'avance : 0,780 en développement. Gelé le 6 octobre avec une prédiction chiffrée et hachée de son score au test.", "v": "hi", "src": "selection-systeme-final-apres-rm56, ADR-016", "g": "build"}, "g4": {"t": "Cascade E puis G", "r": "E répond seul quand il est sûr (probabilité d'au moins 0,6), sinon G complet. Même qualité que G : −0,10 point [−0,23 ; +0,02], avec 82,3 % des patients traités sans le LoRA.", "v": "hi", "src": "run 20261017-012416-cascade-e-puis-g", "g": "build"}, "e1": {"t": "Test scellé, une ouverture", "r": "633 patients ouverts une seule fois, le 6 octobre. G 0,8131 de macro-F1 (exactitude 0,891) ; TF-IDF 0,7402 ; encodeur 0,7737 ; ensemble E 0,8031 ; LoRA seul 0,8033.", "v": "mid", "src": "run 20261006-210015-ouverture-test-scelle-g", "g": "verify"}, "e2": {"t": "Question primaire, δ = 2", "r": "G moins TF-IDF : +7,28 points, intervalle à 95 % par blocs d'auteurs [+1,55 ; +12,62]. Positif et loin de zéro, mais la borne basse est sous le seuil d'utilité de 2 points : verdict « non résolu », annoncé comme le plus probable.", "v": "mid", "src": "run 20261006-210015-ouverture-test-scelle-g, ADR-007", "g": "verify"}, "e3": {"t": "Prédiction préenregistrée", "r": "Six prédictions hachées avant l'ouverture : quatre réussies, deux échecs publiés (score plus haut que prévu, couverture de la pire famille plus basse que prévu).", "v": "mes", "src": "ADR-016, run 20261006-210015-ouverture-test-scelle-g", "g": "verify"}, "e4": {"t": "MorFITT, benchmark public", "r": "G gelé, transposé sans réglage : F1 pondéré 72,30 [70,15 ; 74,35] contre 71,95 pour le meilleur chiffre publié (DrLongformer-CP). Au niveau du meilleur publié, pas au-dessus ; un ensemble de sept modèles face à des modèles seuls.", "v": "hi", "src": "run 20261017-113948-morfitt-g-gele", "g": "verify"}, "e5": {"t": "Nouveaux auteurs", "r": "En plis groupés par auteur, l'encodeur passe à 0,7075 (TF-IDF 0,6742) : il perd 5,2 points, le TF-IDF 4,6. Le biais d'auteur est un trait du corpus, pas d'une famille de modèles.", "v": "mes", "src": "run 20261006-213214-encodeur-plis-auteurs-analyse", "g": "verify"}, "e6": {"t": "Robustesse du LoRA", "r": "Perturbations du texte : retirer 10 % de la fin fait tomber le LoRA à 0,1436. Défaut trouvé par la mesure, corrigé ensuite à l'entraînement (bloc « Fin de texte aléatoire »).", "v": "lo", "src": "run robustness-llm-mur2-qwen3-5-4b-ep10-lr1e-4", "g": "verify"}, "u1": {"t": "Calibration de G", "r": "Erreur de calibration attendue de 0,016 en développement ; la température n'améliore pas G.", "v": "hi", "src": "run cinq-plis-ensemble-g", "g": "define"}, "u2": {"t": "Prédiction conforme", "r": "Ensembles de classes à 90 % visés, quantiles calibrés sur le développement seul : couverture marginale 0,924 au test (taille moyenne 1,10), 0,916 par famille de chapitres.", "v": "hi", "src": "run 20261006-210015-ouverture-test-scelle-g (RM-51)", "g": "define"}, "u3": {"t": "Pire famille", "r": "La garantie par famille tient partout sauf pour une famille de 56 patients, à 0,821. La prédiction préenregistrée (au moins 0,87) échoue : publié.", "v": "lo", "src": "run 20261006-210015-ouverture-test-scelle-g", "g": "define"}, "u4": {"t": "Abstention", "r": "En renvoyant à un humain les 30 % de cas les moins sûrs, l'exactitude passe de 0,891 à 0,962 au test.", "v": "hi", "src": "run 20261006-210015-ouverture-test-scelle-g", "g": "define"}, "s1": {"t": "Frontière coût-qualité", "r": "Sur la frontière coût-qualité, le LoRA seul et les cascades à seuil sont dominés par E. G coûte 7,9 fois l'entraînement de E et 3,2 fois sa latence pour +0,78 point non résolu.", "v": "mes", "src": "run 20261007-094900-frontiere-cout-qualite", "g": "operate"}, "s2": {"t": "Service HTTP en cascade", "r": "G servi par HTTP en cascade E puis G : latence moyenne attendue 38,4 ms contre 97,4 ms pour G complet (deux chemins mesurés, part de routage hors pli) ; mémoire GPU 10,3 Gio.", "v": "hi", "src": "run 20261017-015754-service-g-cascade", "g": "operate"}, "s3": {"t": "Énergie mesurée", "r": "Énergie de la carte pour 1 000 patients : 3,06 Wh en cascade contre 10,67 Wh pour G complet, soit 3,5 fois moins.", "v": "hi", "src": "run 20261017-025855-energie-service-g-cascade", "g": "operate"}, "s4": {"t": "TF-IDF en conteneur", "r": "Image de service durcie, processeur seul : démarrage en 2,6 s, environ 470 patients par seconde, 182 Mio.", "v": "mes", "src": "run 20261007-101943-image-de-service-tfidf-test-de-fumee", "g": "operate"}, "s5": {"t": "Surveillance de dérive", "r": "Trois signaux sans étiquette, seuils mesurés : la dérive de prévalence et les textes courts se détectent, pas le changement d'auteurs, qui coûte pourtant 5 points. Il faut un échantillon étiqueté.", "v": "lo", "src": "run 20261017-090325-simulation-derive", "g": "operate"}, "s6": {"t": "Échantillon étiqueté", "r": "Pour détecter la perte due à de nouveaux auteurs, 1 000 patients étiquetés suivis en macro-F1 donnent 81 % de puissance.", "v": "mes", "src": "run 20261017-091931-taille-echantillon-etiquete", "g": "operate"}, "i1": {"t": "616 tests", "r": "Tests automatiques, typage strict et analyse statique, compteur du 17/10.", "v": "mes", "src": "pytest --collect-only", "g": "tools"}, "i2": {"t": "486 runs", "r": "Un fichier par run, jamais réécrit ; chaque chiffre publié renvoie à un run.", "v": "mes", "src": "results/runs", "g": "tools"}, "i3": {"t": "Reconstruction à froid", "r": "Clone neuf, environnement verrouillé, données retéléchargées : le chiffre clé du TF-IDF est retrouvé à 1e-9 près.", "v": "mes", "src": "run 20261006-230806-reconstruction-a-froid-chiffre-cle", "g": "tools"}, "i4": {"t": "Image Docker", "r": "Image de développement reconstruite et suite de tests rejouée dans le conteneur.", "v": "mes", "src": "run 20261007-102010-image-de-developpement-reconstruite", "g": "tools"}, "i5": {"t": "Revue indépendante", "r": "Trois agents de revue : 72 mutations survivantes dans les tests, tuées par 88 tests ajoutés ; 12 défauts corrigés.", "v": "mes", "src": "docs/revue_independante", "g": "tools"}, "i6": {"t": "Tokenizer instable", "r": "Plantage aléatoire du tokenizer diagnostiqué par la mesure : 25 échecs sur 31 runs, 0 sur 78 une fois le processus épinglé ; contournement testé.", "v": "mes", "src": "run 20261005-224632-tokenizers-course-threads-qwen35", "g": "tools"}, "i7": {"t": "57 fiches hachées", "r": "Chaque expérience a sa fiche, hachée avant le run : hypothèse, règle de décision, prédiction.", "v": "mes", "src": "experiments/INDEX.md", "g": "tools"}, "i8": {"t": "Claim-gate", "r": "Une affirmation ne sort du dépôt qu'avec sa preuve : tableau de preuve joint à chaque texte.", "v": "mes", "src": "docs/presentation/PREUVES.md", "g": "tools"}, "m1": {"t": "RTX 5090, 32 Go", "r": "Tout tourne sur une seule carte, sans location ni API payante.", "v": "mes", "src": "PLAN_PROJET_V6.md", "g": "obs"}, "m2": {"t": "LoRA, 10 époques", "r": "Entraînement du LoRA de Qwen3.5-4B sur un pli : 12 467 s, pic de 12,9 Gio.", "v": "mes", "src": "présentation, diapositive 11", "g": "obs"}, "m3": {"t": "Encodeur, 10 époques", "r": "Entraînement de l'encodeur CamemBERT-bio sur un pli : 215 s.", "v": "mes", "src": "présentation, diapositive 11", "g": "obs"}, "m4": {"t": "Machine instable", "r": "11 % d'échecs, un résultat faux sur 120, 10 pannes sur 46 avant comme après la mise à jour du BIOS : double exécution, aucun long calcul publié sans contrôle.", "v": "mes", "src": "runs 20261016-230229 et 20261017-012310 (vérification machine)", "g": "obs"}, "m5": {"t": "Lots de nuit encadrés", "r": "Travail autonome sous contrat écrit : périmètre disque, jamais le test scellé, chaque erreur répétée devient un garde-fou.", "v": "mes", "src": "tasks/CONTRAT_NUIT.md", "g": "obs"}, "q": {"t": "La question", "g": "human", "v": "mes", "src": "PLAN_PROJET_V6.md, présentation diapositive 2", "r": "Faire rendre à un LLM la bonne réponse, au format attendu (le chapitre CIM-10 d'un compte rendu clinique fictif, 17 classes), et mesurer ce que chaque stratégie d'optimisation apporte vraiment face à des références fortes, sur une seule RTX 5090."}, "rail": {"t": "Protocole gelé", "g": "control", "v": "mes", "src": "PROTOCOLE.md, PROTOCOLE_V2.md, ADR-007", "r": "Métrique (macro-F1 sur 17 chapitres), seuil utile δ = 2,0 points, verdict en trois valeurs (gain confirmé, absence de gain utile, non résolu), bootstrap apparié par blocs d'auteurs, 9 instantanés SHA-256, trois relectures adversariales avant le gel."}};
+const VERDICT={"hi": "retenu ou atteint", "mid": "non résolu ou signalé", "lo": "négatif publié", "mes": "mesure"};
+const STEPS=[{"t": "La question", "d": "Faire rendre à un LLM la bonne réponse, au format attendu, et mesurer quelle stratégie d'optimisation paie vraiment.", "n": ["q"], "e": ["q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7"]}, {"t": "Un protocole gelé", "d": "Règles écrites et hachées avant la première mesure, seuil d'utilité de 2 points, test scellé ouvert une seule fois, prédictions préenregistrées.", "n": ["rail"], "e": ["rl"]}, {"t": "Données et anti-fuite", "d": "PARHAF, découpage par patient, contrôles de fuite ; le raccourci d'auteur est mesuré et rapporté.", "n": ["d1", "d2", "d3", "d4", "d5"], "e": ["q0", "p0"]}, {"t": "Des références fortes", "d": "Le TF-IDF réglé fixe la barre ; le zéro-shot et l'encodeur situent les LLM.", "n": ["r1", "r2", "r3", "r4"], "e": ["p0", "p1"]}, {"t": "Affiner un LLM", "d": "Criblage de trois LLM, LoRA sur Qwen3.5-4B : +28,8 points sur le zéro-shot, et une fragilité corrigée.", "n": ["a1", "a2", "a3", "a4"], "e": ["p1", "p2"]}, {"t": "Distiller, compresser", "d": "Distillation, INT8, élagage, recette v2 : aucun gain ne tient. Les négatifs sont publiés.", "n": ["c1", "c2", "c3", "c4", "c5"], "e": ["p2", "p3"]}, {"t": "Le système final", "d": "Ensembles, empilement écarté, G gelé avant le test, puis servi en cascade sans perte.", "n": ["g1", "g2", "g3", "g4"], "e": ["p3", "p4"]}, {"t": "Le test scellé", "d": "Une seule ouverture : +7,28 points sur le TF-IDF, non résolu à 2 points ; MorFITT au niveau du meilleur publié.", "n": ["e1", "e2", "e3", "e4", "e5", "e6"], "e": ["p4", "p5", "lr"]}, {"t": "L'incertitude", "d": "Calibration, prédiction conforme et abstention ; la pire famille reste sous la cible.", "n": ["u1", "u2", "u3", "u4"], "e": ["p5", "p6"]}, {"t": "Servir et surveiller", "d": "Cascade servie par HTTP, latence et énergie mesurées ; la dérive d'auteur exige un échantillon étiqueté.", "n": ["s1", "s2", "s3", "s4", "s5", "s6"], "e": ["p6"]}, {"t": "Ingénierie et machine", "d": "Tests, registre, reconstruction à froid, revue indépendante ; une seule carte, une machine instable, mesurée.", "n": ["i1", "i2", "i3", "i4", "i5", "i6", "i7", "i8", "m1", "m2", "m3", "m4", "m5"], "e": ["x0", "x1", "x6", "x7"]}];
+function infoHTML(key){
+  const I=INFO[key];if(!I)return "";
+  return '<div class="info" style="--fc:'+tv(I.g)+'"><div class="info-h"><span class="sw"></span>'+esc(I.t)+'</div><p>'+esc(I.r)+'</p><div class="meta"><span class="tag vd-'+I.v+'">Verdict · '+esc(VERDICT[I.v])+'</span><span class="tag">Preuve · '+esc(I.src)+'</span></div></div>';
+}
+function llmSpec(){
+  const P={w:1810,h:762,panels:[],nodes:[],edges:[]};
+  const pan=o=>P.panels.push(o),nod=o=>P.nodes.push(o),edg=o=>P.edges.push(o);
+  const X0=172,PW=185,PG=20,N=SPEC.cols.length,X=[],CX=[];
+  for(let i=0;i<N;i++){X.push(X0+i*(PW+PG));CX.push(X0+i*(PW+PG)+PW/2);}
+  const RW=N*PW+(N-1)*PG, Y0=134, PH=444;
+  pan({kind:"lanehead",x:16,y:16,w:140,h:96,t:"QUESTION",s:"et stratégies"});
+  nod({id:"q",kind:"wide",x:X0,y:16,w:RW,h:96,t:"Une réponse juste, au format attendu",s:"compte rendu clinique fictif → chapitre CIM-10 · 17 classes · une RTX 5090",icon:"target",g:"human",leftW:640,fs:19,sfs:12,chips:["Affinage LoRA","Distillation","Compression","Ensembles","Cascade","Zéro-shot"]});
+  nod({id:"rail",kind:"rail",x:16,y:Y0,w:140,h:PH,t:"PROTOCOLE\nGELÉ",g:"control",step:58,items:["Règles hachées\navant la mesure","Seuil utile\nδ = 2,0 points","Blocs d'auteurs\nbootstrap apparié","Test scellé\nouvert une fois","Prédictions\npréenregistrées","Claim-gate\nun chiffre, un run"]});
+  edg({id:"rl",f:"control",dash:true,pts:[[156,356],[X0,356]],a:"rail",b:SPEC.cols[0].nodes[0].id});
+  const flows=["context","task","task","task","verify","verify","learn"];
+  SPEC.cols.forEach((c,i)=>{
+    pan({kind:"phase",x:X[i],y:Y0,w:PW,h:PH,n:c.n,t:c.t,g:c.g});
+    c.nodes.forEach((n,k)=>nod({id:n.id,x:X[i]+9,y:Y0+44+k*66,w:PW-18,h:56,t:n.t,s:n.s,g:c.g,v:n.v,fs:12.5,sfs:10.5}));
+    edg({id:"q"+i,f:"intent",pts:[[CX[i],112],[CX[i],Y0]],a:"q",b:c.nodes[0].id});
+    if(i<N-1)edg({id:"p"+i,f:flows[i],pts:[[X[i]+PW,Y0+22],[X[i+1],Y0+22]],a:c.nodes[0].id,b:SPEC.cols[i+1].nodes[0].id});
+  });
+  edg({id:"lr",f:"learn",pts:[[CX[5]-40,Y0+PH],[CX[5]-40,Y0+PH+11],[CX[2]+40,Y0+PH+11],[CX[2]+40,Y0+PH]],a:"e2",b:"a2"});
+  const rows=[["INGÉNIERIE","tests · preuves",SPEC.tools,"tools",600],["MATÉRIEL","une seule carte",SPEC.hw,"obs",682]];
+  rows.forEach(([t,s,items,g,y])=>{
+    pan({kind:"lanehead",x:16,y:y,w:140,h:64,t:t,s:s});
+    pan({kind:"panel",x:X0,y:y,w:RW,h:64,g:g});
+    const w=(RW-16-(items.length-1)*8)/items.length;
+    items.forEach((it,k)=>nod({id:it.id,kind:"tool",x:X0+8+k*(w+8),y:y+9,w:w,h:46,t:it.t,s:it.s,g:g,fs:12.5}));
+  });
+  [0,1,6,7].forEach(i=>edg({id:"x"+i,f:"control",dash:true,pts:[[CX[i],Y0+PH],[CX[i],600]],a:SPEC.cols[i].nodes[0].id,b:"i1"}));
+  return P;
+}
+/* Verdict de chaque test : voile coloré et barre basse, comme les jauges de Fonderie. */
+function verdicts(svg,spec){
+  let defs=svg.querySelector("defs.vd");
+  if(!defs){defs=S("defs",{class:"vd"});svg.insertBefore(defs,svg.firstChild);}
+  let n=0;
+  spec.nodes.forEach(nd=>{
+    if(!nd.v)return;
+    const g=svg.querySelector('g.node[data-id="'+nd.id+'"]'),box=g&&g.querySelector("rect.box");
+    if(!box)return;
+    const x=+box.getAttribute("x"),y=+box.getAttribute("y"),w=+box.getAttribute("width"),h=+box.getAttribute("height");
+    const id="vd-clip-"+(++n),cp=S("clipPath",{id:id},defs);S("rect",{x:x,y:y,width:w,height:h,rx:9},cp);
+    const cls={hi:"sv-hi",mid:"sv-mid",lo:"sv-lo",mes:"vd-mes"}[nd.v];
+    const fill=S("g",{"clip-path":"url(#"+id+")",class:"sv-gauge "+cls});
+    S("rect",{x:x,y:y,width:w,height:h,class:"sv-fill"},fill);S("rect",{x:x,y:y+h-3.5,width:w,height:3.5,class:"sv-bar"},fill);
+    box.after(fill);
+    g.setAttribute("aria-label",(g.getAttribute("aria-label")||nd.t)+" · "+VERDICT[nd.v]);
+  });
+}
+const FLOWS=[["intent","Question"],["context","Données"],["task","Modèles et stratégies"],["verify","Évaluation"],["control","Protocole et ingénierie",1],["learn","Service et retours"]];
+const planSvg=document.getElementById("planSvg");
+const nodePanel=document.getElementById("nodePanel"),stepPanel=document.getElementById("stepPanel");
+const SPEC_P=llmSpec();
+const plan=new Diagram(planSvg,SPEC_P,{onNode:key=>{nodePanel.innerHTML='<div class="k">Bloc sélectionné</div>'+infoHTML(key);}});
+verdicts(planSvg,SPEC_P);
+plan.select("e2");nodePanel.innerHTML='<div class="k">Bloc sélectionné</div>'+infoHTML("e2");
+const planLegend=document.getElementById("planLegend");
+planLegend.innerHTML='<span class="k" style="margin-right:4px">Isoler un flux</span>'+FLOWS.map(f=>'<button type="button" class="lg'+(f[2]?" dash":"")+'" data-f="'+f[0]+'" aria-pressed="false" style="--fc:var(--f-'+f[0]+')"><i></i>'+f[1]+'</button>').join("");
+const activeFlows=new Set();
+let curStep=-1, autoTimer=null;
+const dotsEl=document.getElementById("dots");
+dotsEl.innerHTML=STEPS.map((s,i)=>'<button type="button" class="dot" data-i="'+i+'" aria-label="Étape '+(i+1)+' : '+esc(s.t)+'">'+(i+1)+'</button>').join("");
+function renderIntro(){stepPanel.innerHTML='<div class="k">Scénario · '+STEPS.length+' étapes</div><p class="step-t"><span>0</span>Vue complète</p><p>Tous les flux sont actifs. Lancez le scénario avec ▶ ou « Dérouler » pour suivre le projet, de la question jusqu’au service.</p>';}
+function syncLegend(){planLegend.querySelectorAll("button.lg").forEach(b=>b.setAttribute("aria-pressed",activeFlows.has(b.dataset.f)?"true":"false"));}
+function showStep(i){
+  curStep=i;activeFlows.clear();syncLegend();
+  dotsEl.querySelectorAll(".dot").forEach((d,k)=>{if(k===i)d.setAttribute("aria-current","step");else d.removeAttribute("aria-current");});
+  if(i<0){plan.focus(null);renderIntro();return;}
+  const s=STEPS[i];plan.focus({edges:s.e,nodes:s.n});
+  stepPanel.innerHTML='<div class="k">Étape '+(i+1)+' / '+STEPS.length+'</div><p class="step-t"><span>'+(i+1)+'</span>'+esc(s.t)+'</p><p>'+esc(s.d)+'</p>';
+}
+planLegend.addEventListener("click",ev=>{
+  const b=ev.target.closest("button.lg");if(!b)return;stopAuto();
+  const f=b.dataset.f;if(activeFlows.has(f))activeFlows.delete(f);else activeFlows.add(f);
+  curStep=-1;dotsEl.querySelectorAll(".dot").forEach(d=>d.removeAttribute("aria-current"));
+  syncLegend();
+  if(activeFlows.size){plan.focus({flows:activeFlows});stepPanel.innerHTML='<div class="k">Filtre actif</div><p class="step-t">'+[...activeFlows].map(k=>FLOWS.find(x=>x[0]===k)[1]).join(" · ")+'</p><p>Seuls ces flux et les blocs qu’ils relient restent visibles. Cliquez à nouveau sur un flux pour le retirer.</p>';}
+  else{plan.focus(null);renderIntro();}
+});
+dotsEl.addEventListener("click",ev=>{const d=ev.target.closest(".dot");if(!d)return;stopAuto();showStep(+d.dataset.i);});
+document.getElementById("prevStep").addEventListener("click",()=>{stopAuto();showStep(curStep<=0?STEPS.length-1:curStep-1);});
+document.getElementById("nextStep").addEventListener("click",()=>{stopAuto();showStep(curStep>=STEPS.length-1?0:curStep+1);});
+document.getElementById("allStep").addEventListener("click",()=>{stopAuto();showStep(-1);});
+const autoBtn=document.getElementById("autoStep");
+function stopAuto(){if(autoTimer){clearInterval(autoTimer);autoTimer=null;}autoBtn.setAttribute("aria-pressed","false");}
+autoBtn.addEventListener("click",()=>{
+  if(autoTimer){stopAuto();return;}
+  autoBtn.setAttribute("aria-pressed","true");
+  if(!PLAYING)setPlaying(true);
+  showStep(curStep>=STEPS.length-1?0:curStep+1);
+  autoTimer=setInterval(()=>showStep(curStep>=STEPS.length-1?0:curStep+1),6500);
+});
+renderIntro();
+
+document.querySelectorAll(".sp").forEach(b=>b.addEventListener("click",()=>{SPEED=+b.dataset.s;document.querySelectorAll(".sp").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));}));
+const ZOOMS=[1,1.35,1.75,2.25];let zi=0;
+const zoomVal=document.getElementById("zoomVal");
+function applyZoom(){const z=ZOOMS[zi];planSvg.style.width=(z*100)+"%";planSvg.style.minWidth=Math.round(1240*z)+"px";zoomVal.textContent=Math.round(z*100)+" %";}
+document.getElementById("zoomIn").addEventListener("click",()=>{if(zi<ZOOMS.length-1){zi++;applyZoom();}});
+document.getElementById("zoomOut").addEventListener("click",()=>{if(zi>0){zi--;applyZoom();}});
+const fsBtn=document.getElementById("fsBtn"),planSheet=document.getElementById("planSheet");
+if(!(document.fullscreenEnabled&&planSheet.requestFullscreen)){fsBtn.hidden=true;}
+else{fsBtn.addEventListener("click",()=>{if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});}else{planSheet.requestFullscreen().catch(()=>{fsBtn.hidden=true;});}});
+  document.addEventListener("fullscreenchange",()=>{fsBtn.textContent=document.fullscreenElement?"Quitter":"Plein écran";});}
+
+
+if("IntersectionObserver" in window){
+  const io=new IntersectionObserver(ents=>ents.forEach(en=>{if(en.target.__dg)en.target.__dg.visible=en.isIntersecting;}),{rootMargin:"120px"});
+  DIAGS.forEach(d=>{d.visible=false;io.observe(d.svg);});
+}
+const refit=()=>DIAGS.forEach(d=>fitAll(d.svg));
+refit();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(refit);
+setPlaying(PLAYING);
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

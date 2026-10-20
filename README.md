@@ -8,6 +8,11 @@ protocole gelé et haché avant la première mesure.
 
 > Données fictives : aucune donnée de patient réel n'est utilisée ni versionnée.
 
+**[Ouvrir le plan interactif](https://cyril-bgs-dev-tech.github.io/llm-engineering/)** : les 38 tests du projet dans une big picture,
+chacun coloré par son verdict et rattaché à son run, avec un scénario pas à pas, des flux isolables et le zoom ;
+puis les notes par composante face au SOTA open source et au SOTA absolu (estimations à plus ou moins 1 point).
+Fichier : `docs/presentation/plan_llm_engineering.html`.
+
 ## Ce qui a été mesuré
 
 | Question | Résultat | Verdict |
